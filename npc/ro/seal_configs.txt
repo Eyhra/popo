@@ -1,0 +1,96 @@
+//      ______  __    __                                 
+//     /\  _  \/\ \__/\ \ 
+//     \ \ \_\ \ \ ,_\ \ \___      __    ___      __     
+// _____\ \  __ \ \ \/\ \  _ `\  /'__`\/' _ `\  /'__`\   
+///\  __\\ \ \/\ \ \ \_\ \ \ \ \/\  __//\ \/\ \/\ \_\.\_ 
+//\ \_\_/ \ \_\ \_\ \__\\ \_\ \_\ \____\ \_\ \_\ \__/.\_\
+// \/_/    \/_/\/_/\/__/ \/_/\/_/\/____/\/_/\/_/\/__/\/_/
+//
+//========================================================
+// ---                  by NRCRO                  ---
+//========================================================
+
+//========================================================
+// ---                  MapFlag Seal-RO Inns/City                 ---
+//========================================================
+// seal - Seal City
+//========================================================
+seal	mapflag	town
+seal	mapflag	restricted	7
+seal	mapflag	reset
+seal	mapflag	novending
+seal	mapflag	nopenalty
+seal	mapflag	nobranch
+seal	mapflag	nightenabled
+
+// seal_in - Seal Inn
+//========================================================
+seal_in	mapflag	nomemo
+seal_in	mapflag	nopenalty
+seal_in	mapflag	pvp	off
+seal_in	mapflag	noteleport
+seal_in	mapflag	novending
+seal_in	mapflag	nobranch
+
+// seal_in01 - Seal Inn
+//========================================================
+seal_in01	mapflag	nomemo
+seal_in01	mapflag	nopenalty
+seal_in01	mapflag	pvp	off
+seal_in01	mapflag	noteleport
+seal_in01	mapflag	novending
+seal_in01	mapflag	nobranch
+
+// seal_in02 - Training
+//========================================================
+seal_in02	mapflag	nomemo
+seal_in02	mapflag	nopenalty
+seal_in02	mapflag	pvp	off
+seal_in02	mapflag	noteleport
+seal_in02	mapflag	novending
+seal_in02	mapflag	nobranch
+
+// vend_zone - Zona Vending
+//========================================================
+vend_zone	mapflag	nomemo
+vend_zone	mapflag	nopenalty
+vend_zone	mapflag	pvp	off
+vend_zone	mapflag	noteleport
+vend_zone	mapflag	nobranch
+
+//========================================================
+// ---                  warps Seal-RO Inns/City                 ---
+//========================================================
+seal,81,103,0	warp	swarp	1,1,seal_in01,99,10
+seal_in01,100,5,0	warp	swarp1	1,1,seal,81,98
+seal_in01,93,49,0	warp	swarp2	1,1,seal_in01,11,47
+seal_in01,14,48,0	warp	swarp3	1,1,seal_in01,97,50
+seal,55,72,0	warp	swarp4	1,1,seal_in,33,10
+seal_in,33,5,0	warp	swarp5	1,1,seal,58,72
+seal_in01,94,8,0	warp	swarp6	1,1,seal_in01,165,7
+seal_in01,163,7,0	warp	swarp7	1,1,seal_in01,98,9		
+
+
+
+//========================================================
+// ---                  Seal Coins Mob                ---
+//========================================================
+
+-	script	Poring_Coin	-1,{
+OnNPCKillEvent:
+
+if ( rand( 100 ) <= 5 ) {
+
+.@item_id = F_Rand( 19500 );
+
+getitem .@item_id,1;
+
+}
+
+end;
+
+}
+
+//========================================================
+// ---                 Mapflag no @go              ---
+//========================================================

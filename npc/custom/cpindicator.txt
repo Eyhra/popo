@@ -1,0 +1,33 @@
+//===== eAthena Script ======================================= 
+//= Aglaophotis RO CP Status Script
+//===== By: ================================================== 
+//= Aglao / Aglao
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= eAthena SVN/eamod/3CeAM
+//===== Description: ========================================= 
+//= Script for change status of instances/maps battle in
+//= Control Panel Ceres (Mod).
+//============================================================ 
+
+-	script	IndicadoresCP	-1,{
+
+OnClock0423:
+	goto L_Indica;
+	end;
+
+L_Indica:
+	//Para mapas battle:
+	if ((getmapusers("bat_a01.gat") > 0) || (getmapusers("bat_a02.gat") > 0) || (getmapusers("bat_a03.gat") > 0) || (getmapusers("bat_a04.gat") > 0) || (getmapusers("bat_b01.gat") > 0) || (getmapusers("bat_b02.gat") > 0) || (getmapusers("bat_b03.gat") > 0) || (getmapusers("bat_b04.gat") > 0) || (getmapusers("bat_c01.gat") > 0) || (getmapusers("bat_c02.gat") > 0) || (getmapusers("bat_c03.gat") > 0) || (getmapusers("bat_c04.gat") > 0) || (getmapusers("rush_cas01.gat") > 0) || (getmapusers("rush_cas02.gat") > 0) || (getmapusers("rush_cas03.gat") > 0) || (getmapusers("rush_cas04.gat") > 0) || (getmapusers("arug_cas06.gat") > 0) || (getmapusers("arug_cas07.gat") > 0) || (getmapusers("arug_cas08.gat") > 0) || (getmapusers("schg_cas06.gat") > 0) || (getmapusers("schg_cas07.gat") > 0) || (getmapusers("schg_cas08.gat") > 0) || (getmapusers("region_8.gat") > 0)) { query_sql "UPDATE `indicator` SET `status` = '1' WHERE `indiname` = 'bg'"; } else { query_sql "UPDATE `indicator` SET `status` = '0' WHERE `indiname` = 'bg'"; }
+	if ((getmapusers("guild_vs2.gat") > 0) || (getmapusers("guild_vs3.gat") > 0) || (getmapusers("pvp_n_1-3.gat") > 0) || (getmapusers("pvp_n_1-5.gat") > 0)) { query_sql "UPDATE `indicator` SET `status` = '1' WHERE `indiname` = 'pvp'"; } else { query_sql "UPDATE `indicator` SET `status` = '0' WHERE `indiname` = 'pvp'"; }
+	if ((getmapusers("guild_vs4.gat") > 0)) { query_sql "UPDATE `indicator` SET `status` = '1' WHERE `indiname` = 'gvg'"; } else { query_sql "UPDATE `indicator` SET `status` = '0' WHERE `indiname` = 'gvg'"; }
+
+	sleep 10000;
+	goto L_Indica;
+	end;
+
+OnInit:
+	goto L_Indica;
+	end;
+}

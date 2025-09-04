@@ -1,0 +1,43 @@
+paramk,100,102,6	script	Balloon Hat	617,{
+	mes "[^000000Balloon Hat^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte una Balloon Hat, te interesa?";
+	next;
+	menu "Qué necesito?",L_required,"Claro que sí, aquí están tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Balloon Hat^000000]";
+		mes "^FF0000100^000000 Green Bijou"; //7445
+		mes "^FF000010^000000 Gold"; //969
+		mes "^FF0000100^000000 Flame Heart"; //994
+		mes "^FF000015^000000 Pipe"; //2268
+		close;
+
+	L_check:
+		if(countitem(7445) < 100) goto L_manque;
+		if(countitem(969) < 10) goto L_manque;
+		if(countitem(994) < 100) goto L_manque;
+		if(countitem(2268) < 15) goto L_manque;
+		mes "[^000000Balloon Hat^000000]";
+		mes "Aquí está tu Balloon Hat";
+		delitem 7445,100;
+		delitem 969,10;
+		delitem 994,100;
+		delitem 2268,15;
+		getitem 5377,1;
+		close;
+
+	L_manque:
+		mes "[^000000SBalloon Hat^000000]";
+		mes "Te faltan: ";
+		if(countitem(7445) < 100) mes "^FF0000"+(100 - countitem(7445)) +"^000000 Tiger's Footskin";
+		if(countitem(969) < 10) mes "^FF0000"+(10 - countitem(969)) +"^000000 Gold";
+		if(countitem(994) < 100) mes "^FF0000"+(100 - countitem(994)) +"^000000 Flame Hearts";
+		if(countitem(2268) < 15) mes "^FF0000"+(15 - countitem(2268)) +"^000000 Pipe";
+		close;
+
+	L_partir:
+		mes "[^000000Balloon Hat^000000]";
+		mes "Disfruta de tu nuevo item, que tengas un buen día en Chi Low Rates.";
+		close;
+}

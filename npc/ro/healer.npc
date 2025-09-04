@@ -1,0 +1,131 @@
+// ________                   .__         .__      _____             __
+// \______ \  _____     ____  |__|  ____  |  |    /  _  \  _______ _/  |_
+//  |    |  \ \__  \   /    \ |  |_/ __ \ |  |   /  /_\  \ \_  __ \\   __\
+//  |    `   \ / __ \_|   |  \|  |\  ___/ |  |__/    |    \ |  | \/ |  |
+// /_______  /(____  /|___|  /|__| \___  >|____/\____|__  / |__|    |__|
+//         \/      \/      \/          \/               \/
+//                             www.danielart.net
+//==========================================================================
+// ---                    Healer                       ---
+//========================================================
+// ---                  by DanielArt                   ---
+//========================================================
+-	script	Healer	-1,{
+	    
+    if(BaseLevel<=70) {
+    set .@Buffs,1;    // Buff players level 70 or lower? (1: yes / 0: no)
+    set .@Price,0;    // Zeny required for heal if level is 70 or lower
+    set .@Delay,3;    // Heal delay, in seconds if level is 70 or lower
+    callfunc "F_ClearGarbage",0;
+    if (@HD > gettimetick(2)) end;
+    if (.@Price) {
+        message strcharinfo(0),"¿Deseas curar tus heridas por "+.@Price+"z?.";
+        if (Zeny < .@Price) end;
+        if(select("^0055FFHeal^000000:^777777Cancel^000000") == 2) end;
+        set Zeny, Zeny-.@Price;
+    }
+    specialeffect2 EF_HEAL2; percentheal 100,100;
+    if (.@Buffs) {
+        specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,240000,10;
+        specialeffect2 EF_BLESSING; sc_start SC_BLESSING,240000,10;
+    }
+    if (.@Delay) set @HD, gettimetick(2)+.@Delay;
+    end;
+    }
+	if(vip_status(VIP_STATUS_ACTIVE)) {
+    set .@Buffs,1;    // Buff players level 70 or higher? (1: yes / 0: no)
+    set .@Price,0;    // Zeny required for heal if level is 70 or higher
+    set .@Delay,3;    // Heal delay, in seconds if level is 70 or higher
+    callfunc "F_ClearGarbage",0;
+    if (@HD > gettimetick(2)) end;
+    if (.@Price) {
+        message strcharinfo(0),"¿Deseas curar tus heridas por "+.@Price+"z?.";
+        if (Zeny < .@Price) end;
+        if(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No") == 2) end;
+        set Zeny, Zeny-.@Price;
+    }
+    specialeffect2 EF_HEAL2; percentheal 100,100;
+    if (.@Buffs) {
+        specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,240000,10;
+        specialeffect2 EF_BLESSING; sc_start SC_BLESSING,240000,10;
+    }
+    if (.@Delay) set @HD, gettimetick(2)+.@Delay;
+    end;
+	}
+    set .@Buffs,1;    // Buff players level 70 or higher? (1: yes / 0: no)
+    set .@Price,0;    // Zeny required for heal if level is 70 or higher
+    set .@Delay,3;    // Heal delay, in seconds if level is 70 or higher
+    callfunc "F_ClearGarbage",0;
+    if (@HD > gettimetick(2)) end;
+    if (.@Price) {
+        message strcharinfo(0),"¿Deseas curar tus heridas por "+.@Price+"z?.";
+        if (Zeny < .@Price) end;
+        if(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No") == 2) end;
+        set Zeny, Zeny-.@Price;
+    }
+    specialeffect2 EF_HEAL2; percentheal 100,100;
+    if (.@Buffs) {
+        specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,240000,10;
+        specialeffect2 EF_BLESSING; sc_start SC_BLESSING,240000,10;
+    }
+    if (.@Delay) set @HD, gettimetick(2)+.@Delay;
+    end;
+	
+	OnInit:
+OnTimer3000:
+	initnpctimer;
+	getmapxy(.@map$,.@x,.@y,BL_NPC,strnpcinfo(0));
+	if(.@map$ != "")
+		areapercentheal .@map$,.@x-5,.@y-5,.@x+5,.@y+5,10,3;
+	end;	
+	}		
+	
+		
+// Duplicates
+//============================================================
+alberta,25,240,6	duplicate(Healer)	Healer#alb	569,10,10
+aldebaran,133,115,4	duplicate(Healer)	Healer#alde	569,10,10
+amatsu,100,159,5	duplicate(Healer)	Healer#ama	569,10,10
+ayothaya,207,169,6	duplicate(Healer)	Healer#ayo	569,10,10
+comodo,184,158,6	duplicate(Healer)	Healer#com	569,10,10
+einbech,168,129,6	duplicate(Healer)	Healer#einbe	569,10,10
+einbroch,57,202,6	duplicate(Healer)	Healer#einbr	569,10,10
+geffen,115,72,6	duplicate(Healer)	Healer#gef	569,10,10
+gonryun,156,122,6	duplicate(Healer)	Healer#gon	569,10,10
+hugel,89,150,6	duplicate(Healer)	Healer#hug	569,10,10
+izlude,134,94,6	duplicate(Healer)	Healer#izl	569,10,10	//Pre-RE: (125,118)
+jawaii,250,139,4	duplicate(Healer)	Healer#jaw	569,10,10
+lighthalzen,156,100,6	duplicate(Healer)	Healer#lhz	569,10,10
+louyang,226,103,4	duplicate(Healer)	Healer#lou	569,10,10
+manuk,272,144,6	duplicate(Healer)	Healer#man	569,10,10
+mid_camp,203,289,6	duplicate(Healer)	Healer#mid	569,10,10
+moscovia,224,199,4	duplicate(Healer)	Healer#mos	569,10,10
+morocc,165,97,3	duplicate(Healer)	Healer#mor	569,10,10
+niflheim,212,182,5	duplicate(Healer)	Healer#nif	569,10,10
+payon,166,100,4	duplicate(Healer)	Healer#pay	569,10,10
+prontera,163,191,4	duplicate(Healer)	Healer#prt	569,10,10
+rachel,122,145,4	duplicate(Healer)	Healer#rac	569,10,10
+splendide,201,153,4	duplicate(Healer)	Healer#spl	569,10,10
+thor_camp,249,74,4	duplicate(Healer)	Healer#thor	569,10,10
+umbala,105,148,3	duplicate(Healer)	Healer#umb	569,10,10
+veins,217,138,4	duplicate(Healer)	Healer#ve	569,10,10
+xmas,140,132,5	duplicate(Healer)	Healer#xmas	569,10,10
+yuno,142,187,5	duplicate(Healer)	Healer#yuno	569,10,10
+prontera,271,212,4	duplicate(Healer)	Healer#Prontera21	569,10,10
+prontera,38,212,5	duplicate(Healer)	Healer#Prontera22	569,10,10
+manuk,290,241,4	duplicate(Healer)	Healer#Prontera23	569,10,10
+bat_room,163,154,3	duplicate(Healer)	Healer#Prontera24	569,10,10
+prontera,148,283,5	duplicate(Healer)	Healer#MWOE SHOP	569,10,10
+britoniah,66,54,5	duplicate(Healer)	Healer#bri	569,10,10
+mid_camp,216,232,6	duplicate(Healer)	Healer#office	569,10,10
+brasilis,194,221,6	duplicate(Healer)	Healer#bra	569,10,10
+dicastes01,201,194,4	duplicate(Healer)	Healer#dic	569,10,10
+seal,88,87,4	duplicate(Healer)	Healer#sea1	569,10,10
+seal_in01,91,19,4	duplicate(Healer)	Healer#sea	569,10,10
+novice,68,39,3	duplicate(Healer)	Diana#t1	2559,20,20
+novice,30,40,5	duplicate(Healer)	Artemisa#t2	2559,20,20
+novice,51,24,1	duplicate(Healer)	Acaya#t3	2559,20,20
+novice,52,51,4	duplicate(Healer)	Juno#t4	2559,20,20
+pvp_n_3-3,102,97,4	duplicate(Healer)	Ocimum basilicum	971,20,20
+
+

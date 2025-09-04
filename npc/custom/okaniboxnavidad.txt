@@ -1,0 +1,10 @@
+function	script	MvPBox4	{
+	setarray .BoxItems[0],19697,31166,31315,19848,19678,19936,31390,31440,31300,19990,20200,31545,19955;
+	
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	end;
+}
+
+
+// Caja de Navidad

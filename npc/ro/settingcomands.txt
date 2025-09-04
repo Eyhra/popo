@@ -1,0 +1,151 @@
+//===== rAthena Script =======================================
+//= OnPCLogin NPC
+//===== By: ==================================================
+//= Akkarin
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= This NPC saves your settings, then next time you login, it
+//= will auto perform the commands you selected. Easy to edit
+//= or duplicate/modify based on cmds you want to allow.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//============================================================
+seal,101,79,3	script	Juni	612,{
+cutin "bu_maggi1",2;
+        set @n$,"[^484848Juni^000000]";
+        set @reset$,"^000000";
+        set @disabled$,"^BE1C1C";
+        set @enabled$,"^0DB40D";
+UserMenu:
+        mes @n$;
+        mes "Puedes cambiar a tu modo los comandos basicos para cuando logees";
+        mes "^FF3300 Nota: Esta configuracion esta basada por cuenta no por personaje.^000000";
+        mes "^9900FF Nota 2: Debes relojear para que surga efecto.^000000";
+        next;
+        if (#set_autoloot == 0) set @st_autoloot$,@disabled$+"Off"+@reset$;
+        if (#set_autoloot > 0) set @st_autoloot$,@enabled$+#set_autoloot+"%"+@reset$;
+        if (#set_showdelay == 0) set @st_showdelay$,@disabled$+"Off"+@reset$;
+        if (#set_showdelay > 0) set @st_showdelay$,@enabled$+"On"+@reset$;
+        if (#set_showexp == 0) set @st_showexp$,@disabled$+"Off"+@reset$;
+        if (#set_showexp > 0) set @st_showexp$,@enabled$+"On"+@reset$;
+        if (#set_showzeny == 0) set @st_showzeny$,@disabled$+"Off"+@reset$;
+        if (#set_showzeny > 0) set @st_showzeny$,@enabled$+"On"+@reset$;
+        if (#set_noks == 0) set @st_noks$,@disabled$+"Off"+@reset$;
+        if (#set_noks > 0) set @st_noks$,@enabled$+"On"+@reset$;
+        if (#set_rates == 0) set @st_rates$,@disabled$+"Off"+@reset$;
+        if (#set_rates > 0) set @st_rates$,@enabled$+"On"+@reset$;
+        menu    "^10B2D2 [ > ] ^000000 Auto Loot ["+@st_autoloot$+"]",e_autoloot,"^10B2D2 [ > ] ^000000 Show Delay ["+@st_showdelay$+"]",e_showdelay,"^10B2D2 [ > ] ^000000 Show Exp ["+@st_showexp$+"]",e_showexp,"^10B2D2 [ > ] ^000000 Show Zeny ["+@st_showzeny$+"]",e_showzeny,"^10B2D2 [ > ] ^000000 NoKS ["+@st_noks$+"]",e_noks,"^10B2D2 [ > ] ^000000 Rates on login ["+@st_rates$+"]",e_rates;
+		close2;
+                cutin "",255;
+                end; 
+e_autoloot:
+        mes @n$;
+        mes "Auto Loot es actualmente "+@st_autoloot$;
+        mes "Desc: Auto loot agrega items a tu inventario automaticamente.";
+        next;
+        menu "Lo quiero!",-,"Atras",UserMenu;
+        mes @n$;
+        mes "Auto Loot es actualmente "+@st_autoloot$;
+        mes "Ingrese el porcentaje minimo en el cual caeran los items al inventario, 100 para recojer todos los items, 1 para solo recojer cartas, 0 para deshabilitar autoloot.";
+        next;
+        input @rate;
+        if ((@rate >= 0) && (@rate <= 100)) set #set_autoloot,@rate;
+        goto UserMenu;	
+e_showdelay:
+        mes @n$;
+        mes "Show Delay es actualmente "+@st_showdelay$;
+        mes "Desc: Cuando un skill falla debido al delay, se ocultara.";
+        next;
+        menu "Lo quiero!",-,"Atras",UserMenu;
+        if (#set_showdelay == 0) {
+                set #set_showdelay,1;
+                goto UserMenu;
+        }
+        if (#set_showdelay == 1) {
+                set #set_showdelay,0;
+                goto UserMenu;
+        }
+        set #set_showdelay,1; mes "Error Desconocido"; next; goto UserMenu;
+e_rates:
+        mes @n$;
+        mes "Rates on login es actualmente "+@st_rates$;
+        mes "Desc: Muestra los rates del servidor al logear.";
+        next;
+        menu "Lo quiero!",-,"Atras",UserMenu;
+        if (#set_rates == 0) {
+                set #set_rates,1;
+                goto UserMenu;
+        }
+        if (#set_rates == 1) {
+                set #set_rates,0;
+                goto UserMenu;
+        }
+        set #set_rates,1; mes "Error desconocido"; next; goto UserMenu;
+e_showexp:
+        mes @n$;
+        mes "Show Exp es actualmente "+@st_showexp$;
+        mes "Desc: Cuando ganes experencia se mostrara.";
+        next;
+        menu "Lo quiero!",-,"Atras",UserMenu;
+        if (#set_showexp == 0) {
+                set #set_showexp,1;
+                goto UserMenu;
+        }
+        if (#set_showexp == 1) {
+                set #set_showexp,0;
+                goto UserMenu;
+        }
+        set #set_showexp,1; mes "Error Desconocido"; next; goto UserMenu;
+e_showzeny:
+        mes @n$;
+        mes "Show Zeny es actualmente "+@st_showzeny$;
+        mes "Desc: Cuando ganes zeny se mostrara.";
+        next;
+        menu "Lo quiero!",-,"Atras",UserMenu;
+        if (#set_showzeny == 0) {
+                set #set_showzeny,1;
+                goto UserMenu;
+        }
+        if (#set_showzeny == 1) {
+                set #set_showzeny,0;
+                goto UserMenu;
+        }
+        set #set_showzeny,1; mes "unknown error"; next; goto UserMenu;
+e_noks:
+        mes @n$;
+        mes "noks es actualmente "+@st_noks$;
+        mes "Desc: cuando inicie sesion, usted podra elegir si quiere o no tener la proteccion anti kill-steal.";
+        next;
+        menu "Lo quiero!",-,"Atras",UserMenu;
+        if (#set_noks == 0) {
+                set #set_noks,1;
+                goto UserMenu;
+        }
+        if (#set_noks == 1) {
+                set #set_noks,0;
+                goto UserMenu;
+        }
+        set #set_noks,1; mes "unknown error"; next; goto UserMenu;
+		close2;
+                cutin "",255;
+                end; 
+ 
+OnPCLoginEvent:
+sleep2 1000;
+if (#set_autoloot > 0)  atcommand "@autoloot " + #set_autoloot;
+if (#set_showdelay == 1)        atcommand "@showdelay";
+if (#set_showexp == 1)  atcommand "@showexp";
+if (#set_showzeny == 1) atcommand "@showzeny";
+if (#set_rates == 1)    atcommand "@rates";
+if (#set_noks == 1)   atcommand "@noks";
+
+//atcommand "@main on";
+end;
+OnInit:
+waitingroom "Ajustes",0;
+end;
+	close;
+}

@@ -1,0 +1,228 @@
+seal_in01,30,39,5	script	Seal Costume Maker	10209,{
+function Add3; function Chk3; function Slot3; function A_An23;
+
+	mes "[ ^ee978aCostume Maker^000000 ]";
+	mes "Woohoo ~ ¡Saludos!.";
+	if(sex) mes "Bienvenido a mi tienda, puedo intercambiarte algunos objetos por Hats Costumes.", " ", "¿Que se te ofrece?";
+	else mes "Bienvenida a mi tienda, puedo intercambiarte algunos objetos por Hats Costumes.", " ", "¿Que se te ofrece?";
+
+	if(.Shops$ != "") set .@i,1;
+	else {
+		set .@menu$,"";
+		for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1)
+			set .@menu$, .@menu$+.Shops$[.@i]+":";
+		set .@i, select(.@menu$); }
+	next;
+	mes "[ ^ee978aCostume Maker^000000 ]";
+	mes "Por favor, selecciona solo un objeto a la vez.";
+	dispbottom "Selecciona solo un objeto a la vez.";
+	callshop "costume"+.@i,1;
+	npcshopattach "costume"+.@i;
+	end;
+
+function Add3 {
+	if (getitemname(getarg(1))=="null") {
+		debugmes "Quest reward #"+getarg(1)+" invalid (skipped)."; return; }
+	for(set .@n,5; .@n<127; set .@n,.@n+2) {
+		if (!getarg(.@n,0)) break;
+		if (getitemname(getarg(.@n))=="null") {
+			debugmes "Quest requirement #"+getarg(.@n)+" invalid (skipped)."; return; } }
+	for(set .@i,2; .@i<.@n; set .@i,.@i+1)
+		set getd(".q_"+getarg(1)+"["+(.@i-2)+"]"), getarg(.@i);
+	npcshopadditem "costume"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+	sleep 1;
+	return; }
+function Chk3 {
+	if (getarg(0)<getarg(1)) { set @qe0,1; return "^FF0000"; }
+	else return "^279634"; }
+function Slot3 {
+	set .@s$,getitemname(getarg(0));
+	switch(.ShowSlot3){
+		case 1: if (!getitemslots(getarg(0))) return .@s$;
+		case 2: if (getiteminfo(getarg(0),11)>0) return .@s$+" ["+getitemslots(getarg(0))+"]";
+		default: return .@s$; } }
+function A_An23 {
+	setarray .@A$[0],"a","e","i","o","u";
+	set .@B$, "_"+getarg(0);
+	for(set .@i,0; .@i<5; set .@i,.@i+1)
+		if (compare(.@B$,"_"+.@A$[.@i])) return "un "+getarg(0);
+	return "un "+getarg(0); }
+
+OnBuyItem:
+	set .@q[0],@bought_nameid;
+	copyarray .@q[1],getd(".q_"+@bought_nameid+"[0]"),getarraysize(getd(".q_"+@bought_nameid+"[0]"));
+	if (!.@q[1]) { message strcharinfo(0),"An error has occurred."; end; }
+	mes "[ ^42425ACostume Maker^000000 ]";
+	mes "Ítem:";
+	mes "   • ^00A5E7"+((.@q[1]>1)?.@q[1]+"x ":"")+Slot3(.@q[0])+"^000000";
+	mes "Requerimentos:";
+	if (.@q[2]) mes "   • "+Chk3(Zeny,.@q[2])+.@q[2]+" Zeny^000000";
+	if (.@q[3]) mes "   • "+Chk3(getd(.Points$[0]),.@q[3])+.@q[3]+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+.@q[3]+")^000000";
+	if (.@q[4]) for(set .@i,4; .@i<getarraysize(.@q); set .@i,.@i+2)
+		//mes "   • "+Chk3(countitem(.@q[.@i]),.@q[.@i+1])+((.DisplayID)?"{"+.@q[.@i]+"} ":"")+Slot3(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+.@q[.@i+1]+")^000000";
+		mes "   • "+Chk3(countitem(.@q[.@i]),.@q[.@i+1])+"("+countitem(.@q[.@i])+"/"+.@q[.@i+1]+")^000000 <ITEM>"+Slot3(.@q[.@i])+"<INFO>"+.@q[.@i]+"</INFO></ITEM>";
+
+	next;
+	set @qe1, getiteminfo(.@q[0],5); set @qe2, getiteminfo(.@q[0],11);
+	addtimer 1000, strnpcinfo(1)+"::OnEnd";
+	while(1){
+		switch(select("Hacer ^00A5E7"+getitemname(.@q[0])+"^000000:"+((((@qe1&1024) || (@qe1&2048) || (@qe1&4096)) && @qe2>0 && !@qe6)?"Probarselo...":"")+":^777777Cancelar^000000")) {
+			case 1:
+				if (@qe0) { 
+					mes "[ ^42425ACostume Maker^000000 ]";
+					mes "Te hacen falta objetos, por favor revisa tu inventario.";
+					close; }
+				if (!checkweight(.@q[0],.@q[1])) {
+					mes "[ ^42425ACostume Maker^000000 ]";
+					mes "^FF0000Necesitas "+(((.@q[1]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" capacidad de peso adicional para poder hacer este objeto.^000000";
+					close; }
+				if (.@q[2]) set Zeny, Zeny-.@q[2];
+				if (.@q[3]) setd .Points$[0], getd(.Points$[0])-.@q[3];
+				if (.@q[4]) for(set .@i,4; .@i<getarraysize(.@q); set .@i,.@i+2)
+					delitem .@q[.@i],.@q[.@i+1];
+				getitem .@q[0],.@q[1];
+				if (.Announce) announce "¡"+strcharinfo(0)+" ha creado "+A_An23(getitemname(.@q[0]))+"!",0;
+				specialeffect2 699;
+				close;
+			case 2:
+				set @qe3, getlook(3); set @qe4, getlook(4); set @qe5, getlook(5);
+				if (@qe1&1024) atcommand "@changelook 3 "+@qe2;
+				if (@qe1&2048) atcommand "@changelook 1 "+@qe2;
+				if (@qe1&4096) atcommand "@changelook 2 "+@qe2;
+				set @qe6,1;
+				break;
+			case 3:
+				mes "[ ^ee978aCostume Maker^000000 ]";
+				mes "¡Suerte! Nos vemos.";
+				close; } }
+OnEnd:
+	if (@qe6) { atcommand "@changelook 3 "+@qe3; atcommand "@changelook 1 "+@qe4; atcommand "@changelook 2 "+@qe5; }
+	for(set .@i,0; .@i<7; set .@i,.@i+1) setd "@qe"+.@i,0;
+	end;
+OnInit:
+// --------------------- Config ---------------------
+// Custom points, if needed: "<variable>","<name to display>"
+	setarray .Points$[0],"#CASHPOINTS","Cash Points";
+
+	set .Announce,1;	// Announce quest completion? (1: yes / 0: no)
+	set .ShowSlot3,1;	// Show item Slot3s? (2: all equipment / 1: if Slot3s > 0 / 0: never)
+	set .DisplayID,1;	// Show item IDs? (1: yes / 0: no)
+	set .ShowZeny,0;	// Show Zeny cost, if any? (1: yes / 0: no)
+
+// Shop categories, if needed: "<Shop 1>","<Shop 2>"{,...};
+// Duplicate dummy data for any Add3itional shops (bottom of script).
+// If no categories, use the second line instead (remove //).
+
+	setarray .Shops$[1],"Upper Costume","Middle Costume","Lower Costume";
+	// set .Shops$,"n/a";
+
+// Add3(<shop number>,<reward ID>,<reward amount>,<Zeny cost>,<point cost>,
+//     <required item ID>,<required item amount>{,...});
+// Shop number corresponds with order above (default is 1).
+// Note: Do NOT use a reward item more than once!
+
+
+
+	//Shop 1 (Upper)
+	Add3(1,19546,1,1000000,0,5171,1,32016,1);	
+	Add3(1,19797,1,1000000,0,2285,1,32016,1);
+    Add3(1,19546,1,1000000,0,5171,1,32016,1);
+    Add3(1,19526,1,1000000,0,2228,1,32016,1);	
+    Add3(1,19530,1,1000000,0,5557,1,32016,1);
+    Add3(1,19545,1,1000000,0,5016,1,32016,1);	
+    Add3(1,19547,1,1000000,0,5038,1,32016,1);
+	Add3(1,19549,1,1000000,0,2256,1,32016,1);
+	Add3(1,19733,1,1000000,0,5030,1,32016,1);
+	Add3(1,20304,1,1000000,0,5033,1,32016,1);
+	Add3(1,20186,1,1000000,0,5122,1,32016,1);
+	Add3(1,20187,1,1000000,0,5124,1,32016,1);
+	Add3(1,20188,1,1000000,0,5126,1,32016,1);
+	Add3(1,19637,1,1000000,0,2277,1,32016,1);
+	Add3(1,19529,1,1000000,0,2254,1,32016,1);
+	Add3(1,19731,1,1000000,0,2255,1,32016,1);
+	Add3(1,19578,1,1000000,0,2224,1,32016,1);
+	Add3(1,19585,1,1000000,0,5170,1,32016,1);
+    Add3(1,19619,1,1000000,0,5019,1,32016,1); 
+	Add3(1,19662,1,1000000,0,5045,1,32016,1);
+	Add3(1,20285,1,1000000,0,5025,1,32016,1);
+	Add3(1,20330,1,1000000,0,5067,1,32016,1);
+	Add3(1,19533,1,1000000,0,5029,1,32016,1);
+	Add3(1,20182,1,1000000,0,5039,1,32016,1);
+	Add3(1,19146,1,1000000,0,5050,1,32016,1);
+	Add3(1,19147,1,1000000,0,5075,1,32016,1);
+	Add3(1,20184,1,1000000,0,5060,1,32016,1);
+	Add3(1,19639,1,1000000,0,2280,1,32016,1);
+	Add3(1,19148,1,1000000,0,2273,1,32016,1);
+	Add3(1,19851,1,1000000,0,5059,1,32016,1);
+	Add3(1,19618,1,1000000,0,5069,1,32016,1);
+	Add3(1,19620,1,1000000,0,5108,1,32016,1);
+	Add3(1,19625,1,1000000,0,2214,1,32016,1);
+	Add3(1,19628,1,1000000,0,5001,1,32016,1);
+	Add3(1,19629,1,1000000,0,2234,1,32016,1);
+	Add3(1,19630,1,1000000,0,2235,1,32016,1);
+	Add3(1,19931,1,1000000,0,5084,1,32016,1);
+	Add3(1,19939,1,1000000,0,2284,1,32016,1);
+	Add3(1,19782,1,1000000,0,5058,1,32016,1);
+	Add3(1,19932,1,1000000,0,5073,1,32016,1);
+	Add3(1,19149,1,1000000,0,5070,1,32016,1);
+	Add3(1,20224,1,1000000,0,5083,1,32016,1);
+	Add3(1,20050,1,1000000,0,5012,1,32016,1);
+	Add3(1,19854,1,1000000,0,5057,1,32016,1);
+	Add3(1,19796,1,1000000,0,5017,1,32016,1);
+	Add3(1,25068,1,1000000,0,25278,1,32016,1);
+	Add3(1,19716,1,1000000,0,5137,1,32016,1);
+	Add3(1,25070,1,1000000,0,25133,1,32016,1);
+	Add3(1,25080,1,1000000,0,25134,1,32016,1);
+	Add3(1,19432,1,1000000,0,5053,1,32016,1);
+	Add3(1,19429,1,1000000,0,28034,1,32016,1);
+	Add3(1,19428,1,1000000,0,28033,1,32016,1);
+	Add3(1,19426,1,1000000,0,28027,1,32016,1);
+	
+	//Shop 2 (Mid)
+	Add3(2,19511,1,500000,0,2212,1,32016,1);			
+	Add3(2,19504,1,1000000,0,2201,1,32016,1);
+	Add3(2,19550,1,1000000,0,5040,1,32016,1);			
+	Add3(2,20142,1,1000000,0,5006,1,32016,1);			
+	Add3(2,20244,1,1000000,0,5121,1,32016,1); 
+	Add3(2,19781,1,1000000,0,5074,1,32016,1); 
+	Add3(2,20211,1,1000000,0,5068,1,32016,1); 
+	Add3(2,19734,1,1000000,0,2296,1,32016,1); 
+	Add3(2,19846,1,1000000,0,5043,1,32016,1); 
+	Add3(2,19150,1,1000000,0,2281,1,32016,1); 
+	Add3(2,19791,1,1000000,0,5086,1,32016,1); 
+	Add3(2,19792,1,1000000,0,5087,1,32016,1);
+	Add3(2,19793,1,1000000,0,5088,1,32016,1);
+	Add3(2,19794,1,1000000,0,5089,1,32016,1);
+	Add3(2,19638,1,1000000,0,2278,1,32016,1);
+	Add3(2,19735,1,1000000,0,5014,1,32016,1); 
+	Add3(2,19736,1,1000000,0,5005,1,32016,1); 
+	Add3(2,19151,1,1000000,0,5171,1,32016,1);
+	Add3(2,19885,1,1000000,0,2295,1,32016,1);
+	Add3(2,19433,1,1000000,0,5104,1,32016,1);
+	Add3(2,19427,1,1000000,0,28032,1,32016,1);
+
+	//Shop 3 (Low)
+	Add3(3,20054,1,1000000,0,5110,1,32016,1); 
+	Add3(3,19528,1,1000000,0,2266,1,32016,1); 
+	Add3(3,19505,1,1000000,0,2267,1,32016,1); 
+	Add3(3,19552,1,1000000,0,2269,1,32016,1);
+	Add3(3,19605,1,1000000,0,5361,1,32016,1);
+	Add3(3,19152,1,1000000,0,5107,1,32016,1);
+	Add3(3,19153,1,1000000,0,5004,1,32016,1);
+	Add3(3,19726,1,1000000,0,5548,1,32016,1);
+	Add3(3,19553,1,1000000,0,5096,1,32016,1);
+	Add3(3,19431,1,1000000,0,28036,1,32016,1);
+	
+	
+// --------------------------------------------------
+	for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1)
+		npcshopdelitem "costume"+.@i,909;
+	end;
+}
+
+// -------- Dummy data (duplicate as needed) --------
+-	shop	costume1	-1,909:-1
+-	shop	costume2	-1,909:-1
+-	shop	costume3	-1,909:-1
+-	shop	costume4	-1,909:-1
+//niflheim,189,192,4	duplicate(Votacion)	Votacion#niflheim1	920

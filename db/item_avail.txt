@@ -1,0 +1,50 @@
+// Item Availability and Alias Database
+//
+// Structure of Database:
+// ItemID,SpriteID
+//
+// 01. ItemID       Item ID to change.
+// 02. SpriteID     Item ID which will be sent to the client instead of ItemID.
+//                  If 0, the item becomes unavailable for use. If item_check is enabled and a player owns such an item, it will be removed upon next login/teleport.
+//
+// NOTE: Replaces an item client-side while keeping them separate server-side.
+// Think of it as a way to disguise items.
+// Don't sell the item in same shop with the source. Example, don't put 2240 & 2241 in same place!
+
+2240,2241 //Beard - Grampa Beard
+
+//Treasure Hunters Quest Items
+//use these aliases if your game client doesn't support them normally
+//7950,7021
+//7951,7042
+//1998,1250
+//1999,1472
+
+//St. Patric's Day Quest (2008) Items
+//Enable if you plan to use the quest.
+//12715,7721
+//7915,673
+//7916,675
+
+//duplicados pack inicial
+40010,12214
+40011,12016
+40012,12212
+
+//duplicados para guild pack
+30002,2366
+30003,2114
+30004,2528
+30005,2424
+30006,1228
+30007,2423
+30008,2357
+30009,5808
+30010,2554
+30011,5170
+30012,4105
+30013,4058
+30014,4334
+30015,4107
+30016,12210
+30017,14533

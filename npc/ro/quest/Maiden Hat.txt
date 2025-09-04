@@ -1,0 +1,65 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= Republic of Midgard [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eA SVN 5000+
+//===== Additional Comments: =================================
+//= v1.0 thanks to QM
+//============================================================
+
+paramk,115,100,4	script	Maiden Hat	408,{
+	mes "[^008080Maiden Hat^000000]";
+	mes "Hola Visitante!, Vienes por el Maiden Hat cierto?, Te digo que el ";
+	mes "maiden hat es uno de los hats mas bonitos que tengo guardados.. ";
+	mes "Tiene un cierto toque que hace que se vea lindo en cualquier ";
+	mes "persona... ";
+	next;
+	menu "¿Qué necesito?",L_required,"Tengo todos los items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^008080Maiden Hat^000000]";
+		mes "^FF00005^000000 Witherless Rose"; //748
+		mes "^FF00001^000000 Black Dyestuffs"; //983
+		mes "^FF00002^000000 White Dyestuffs "; //982
+		mes "^FF00001^000000 Ribbon"; //2208
+		mes "^FF000010^000000 Gold"; //969
+		mes "^0000FF10000000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(748) < 5) goto L_manque;
+		if(countitem(983) < 1) goto L_manque;
+		if(countitem(982) < 2) goto L_manque;
+		if(countitem(2208) < 1) goto L_manque;
+		if(countitem(969) < 10) goto L_manque;
+		if(Zeny < 10000000) goto L_manque;
+		mes "[^008080Maiden Hat^000000]";
+		mes "Muy buena eleccion te veras muy bien!";
+		delitem 748,5;
+		delitem 983,1;
+		delitem 982,2;
+		delitem 2208,1;
+		delitem 969,10;
+		set Zeny, Zeny - 10000000;
+		getitem 5211,1;
+		close;
+
+	L_manque:
+		mes "[^008080Maiden Hat^000000]";
+		mes "Vuelve cuando quieres verte bien";
+		if(countitem(748) < 5) mes "^FF0000"+(5 - countitem(748)) +"^000000 Witherless Rose";
+		if(countitem(983) < 1) mes "^FF0000"+(1 - countitem(983)) +"^000000 Black Dyestuffs";
+		if(countitem(982) < 2) mes "^FF0000"+(2 - countitem(982)) +"^000000 White Dyestuffs ";
+		if(countitem(2208) < 1) mes "^FF0000"+(1 - countitem(2208)) +"^000000 Ribbon";
+		if(countitem(969) < 10) mes "^FF0000"+(10 - countitem(969)) +"^000000 Gold";
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^008080Maiden Hat^000000]";
+		mes "Espero volver a verte!..";
+		close;
+}

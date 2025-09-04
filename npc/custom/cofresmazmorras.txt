@@ -1,0 +1,37 @@
+//==================================================
+// Cofres Mazmorras (Custom)
+//==================================================
+//prontera,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+abyss_03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+ama_dun03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+anthell02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+ayo_dun02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+beach_dun,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+lhz_dun03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+iz_dun04,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+mjo_dun03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+abbey03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+ein_dun02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+gef_dun02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+gefenia04,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+gon_dun03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+prt_maze03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+ice_dun03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+jupe_core,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+kh_dun02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+lou_dun03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+mag_dun02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+mosk_dun03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+odin_tem03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+orcsdun02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+pay_dun04,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+prt_sewb4,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+moc_pryd04,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+ra_san05,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+in_sphinx5,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+treasure02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+thana_boss,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+thor_v03,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+xmas_dun02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+tur_dun04,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000
+um_dun02,0,0,0,0	monster	Treasure Chest	1798,1,86400000,600000

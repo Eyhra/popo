@@ -1,0 +1,125 @@
+// -------------------------------------------------------------------------------
+// 	Script Name : Headgear to Costume converter >> Costume to Headgear converter
+// -------------------------------------------------------------------------------
+// Description :
+// - Allows a user to convert the equipped headgear (on Top, Mid or Low) into a
+//   costume item. It will remove any card and refine of the Item.
+// - Allows a user to restore the equipped costume headgear (on Top, Mid or Low)
+//     into its original form. It will not return any card or refine of the item.
+// -------------------------------------------------------------------------------
+-	script	Costume Arthurian	-1,{
+//cutin "khellesia01",2;
+	mes "[Arthurian]";
+	mes "¡Hola!";
+	mes "Aquí puedes convertir tus hats en un costume de vestuario.";
+	mes "Necesitarás unos items para poder transformar tu Hat.";
+	mes "¡Recuerda, no hay vuelta atras!";
+	next;
+	mes "[Arthurian]";
+		mes "¡Aquí tienes la lista!.";
+		mes "^FF00002^000000 Costume Ticket"; //32016
+		mes "^0000FF2.000.000^000000 zeny";
+		next;
+	switch(select("Transforma mi Hat.:No Gracias.")) {
+	case 1:
+			next;
+			mes "[Arthurian]";
+			mes "Por favor , seleccione qué convertir.";
+			mes "Recuerda, que las cartas y el refine seran removidos.";
+			mes "Y este perderá todo sus efecto.";
+			next;
+				setarray .@Position$[1],"Top","Mid","Low";
+				setarray .@Position[1],     6,    5,   4;
+				set .@Menu$,"";
+			for( set .@i, 1; .@i < 5; set .@i, .@i + 1 )
+			{
+				if( getequipisequiped(.@Position[.@i]) )
+				set .@Menu$, .@Menu$ + .@Position$[.@i] + "-" + "[" + getequipname(.@Position[.@i]) + "]";
+				set .@Menu$, .@Menu$ + ":";
+			}
+			set .@Part, .@Position[ select(.@Menu$) ];
+			if( !getequipisequiped(.@Part) )
+			{
+				mes "[Arthurian]";
+				mes "Tu no llevas nada...";
+				close;
+			}
+			mes "[Arthurian]";
+			mes "Quieres costumizar " + getitemname(getequipid(.@Part)) + "?";
+			next;
+			if( select("Si, procede:No, me arrepenti.") == 2 )
+			{
+				mes "[Arthurian]";
+				mes "Necesitas algo de tiempo para pensar en ello, ¿eh ?";
+				mes "Bien, yo te entiendo.";
+				close;
+			}
+		if(countitem(32016) < 2) goto L_manque;
+		if(Zeny < 2000000) goto L_manque;
+		mes "[Arthurian]";
+		mes "Genial, aqui tienes tu hat.";
+		delitem 32016,2;
+		set Zeny, Zeny - 2000000;
+		costume .@Part; // Convert the Headgear
+		mes "Listo, Disfruta de tu costume headgear.";
+		close;
+			
+		L_manque:
+		mes "[Arthurian]";
+		mes "Te faltan items.";
+		if(countitem(32016) < 2) mes "^FF0000"+(2 - countitem(32016)) +"^000000 Costume Ticket";
+		if(Zeny < 2000000) mes "^0000FF"+(2000000 - Zeny)+"^000000 Zeny";
+		close;
+	/*case 2:
+			next;
+			mes "Por Favor, selecciona que hat deseas restaurar.";
+			mes "Recuerda, Yo voy a restaurar solo items sin refine ni cartas.";
+			next;
+				setarray .@Position$[1],"Top","Mid","Low";
+				setarray .@Position[1],     13,    12,   11;
+				set .@Menu$,"";
+			for( set .@i, 1; .@i < 5; set .@i, .@i + 1 )
+			{
+				if( getequipisequiped(.@Position[.@i]) )
+				set .@Menu$, .@Menu$ + .@Position$[.@i] + "-" + "[" + getequipname(.@Position[.@i]) + "]";
+				set .@Menu$, .@Menu$ + ":";
+			}
+			set .@Part, .@Position[ select(.@Menu$) ];
+			if( !getequipisequiped(.@Part) )
+			{
+				mes "[Arthurian]";
+				mes "Tu no llevas nada....";
+				close;
+			}
+			mes "[Arthurian]";
+			mes "Usted quiere restaurar su " + getitemname(getequipid(.@Part)) + "?";
+			next;
+			if( select("Si, procede:No, me arrepenti.") == 2 )
+			{
+				mes "[Arthurian]";
+				mes "Necesitas algo de tiempo para pensar en ello, eh?";
+				mes "Bien, yo te entiendo..";
+				close;
+			}
+			a = getequipid(.@Part);			
+			delitem a,1;
+			getitem a,1;
+			
+			mes "[Arthurian]";
+			mes "Listo, Disfruta de tu costume headgear.";
+			close;*/
+	case 2:
+		mes "[Arthurian]";
+		mes "Muy bien. Regresa cuando requieras de mis servicios.";
+		close;
+	}
+	OnInit:
+        set .party,0;
+        waitingroom "Transforma tu Hat",0;
+		initnpctimer;
+		end;
+}
+// --------------------------------------------------------------------------
+// Use duplicates to put your npc on different cities
+// --------------------------------------------------------------------------
+itemmall,165,72,3	duplicate(Costume Arthurian)	Costume Arthurian#1	676

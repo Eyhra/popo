@@ -1,0 +1,12 @@
+lroom00,114,58,5	script	Kafra Employee::kaf_office45	113,{
+	cutin "kafra_05",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "How may I be of assistance?";
+	callfunc "F_Kafra",5,0,1,20,600;
+	savepoint "lroom00",138,58,1,1;;
+	callfunc "F_KafEnd",0,1,"Main Office OkaniRO";
+}

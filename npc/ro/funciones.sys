@@ -1,0 +1,470 @@
+// ________                   .__         .__      _____             __
+// \______ \  _____     ____  |__|  ____  |  |    /  _  \  _______ _/  |_
+//  |    |  \ \__  \   /    \ |  |_/ __ \ |  |   /  /_\  \ \_  __ \\   __\
+//  |    `   \ / __ \_|   |  \|  |\  ___/ |  |__/    |    \ |  | \/ |  |
+// /_______  /(____  /|___|  /|__| \___  >|____/\____|__  / |__|    |__|
+//         \/      \/      \/          \/               \/
+//                        www.rmontor.com/ragnarok
+//==========================================================================
+// ---          Funciones y Sistemas Vitales           ---
+//========================================================
+// ---                  by DanielArt                   ---
+//========================================================
+
+// Bloqueos de celdas para chat y vending en prontera.
+-	script	GLOBAL_CELL_PRONTERA	-1,{
+OnInit:
+	setcell "prontera",143,191,163,130,cell_nochat,1;
+	setcell "prontera",133,184,181,130,cell_novending,1;
+	setcell "prontera",132,175,147,130,cell_novending,1;
+	end;
+}
+
+-	script	OnPCDieViewMap	-1,{
+OnPCDieEvent:
+	if( getcharid(1) )
+	{
+		getmapxy( .map$, .x, .y, BL_PC );
+		getpartymember getcharid(1), 1;
+		getpartymember getcharid(1), 2;
+
+		copyarray .@paid[0], $@partymemberaid[0], $@partymembercount;
+		copyarray .@caid[0], $@partymembercid[0], $@partymembercount;
+
+		for( .@i = 0; .@i < getarraysize(.@paid); .@i ++ )
+		{
+			if( isloggedin( .@paid[.@i], .@caid[.@i] ) )
+			{
+				attachrid( .@paid[.@i] );
+				.@id = rand(500);
+				if( strcharinfo(3) == .map$ )
+					viewpoint 0, .x, .y, .@id, 0xFF0000;
+				detachrid;
+			}
+
+		}
+	}
+	end;
+}
+
+/**
+ * Controlador de Tiempo y Reloj de Adelabaran
+**/
+-	script	ControlReloj	-1,{
+OnInit:
+	if( gettime(DT_HOUR) >= 7 && gettime(DT_HOUR) < 19 )
+		day;
+	else
+		night;
+	end;
+OnClock0000:
+OnClock0100:
+OnClock0200:
+OnClock0300:
+OnClock0400:
+OnClock0500:
+OnClock0600:
+OnClock0700:
+OnClock0800:
+OnClock0900:
+OnClock1000:
+OnClock1100:
+	callsub S_Bell,"a.m.";
+	end;
+OnClock1200:
+OnClock1300:
+OnClock1400:
+OnClock1500:
+OnClock1600:
+OnClock1700:
+OnClock1800:
+OnClock1900:
+OnClock2000:
+OnClock2100:
+OnClock2200:
+OnClock2300:
+	callsub S_Bell,"p.m.";
+	end;
+S_Bell:
+	.c = 0;
+	.h = gettime(DT_HOUR);
+	if( .h == 7 )
+		day;
+	if( .h == 19 )
+		night;
+	if( .h > 12 )
+		.nh = .h - 12;
+	else if( .h == 0 )
+		.nh = 12;
+	else
+		.nh = .h;
+	announce "[Aldebaran Clock Tower - " + .nh + ":00 " + getarg(0) + "]",0,0x00CCFF;
+	initnpctimer;
+	end;
+OnTimer1000:
+OnTimer3000:
+OnTimer5000:
+OnTimer7000:
+OnTimer9000:
+OnTimer11000:
+OnTimer13000:
+OnTimer15000:
+OnTimer17000:
+OnTimer19000:
+OnTimer21000:
+OnTimer23000:
+	setarray .city$,"prontera","morocc","payon","aldebaran","geffen","izlude","hugel";
+	for(.i = 0; .i < getarraysize(.city$); .i++)
+		soundeffectall "effect\\ef_angelus.wav",0,.city$[.i];
+	.c++;
+	if( .c >= .nh ){
+		stopnpctimer;
+		.c = 0;
+	}
+	end;
+}
+
+function	script	F_DispellEnter	{
+	npcskill 289,5,135,185;
+	return;
+}
+
+/**
+ * Ejecuta un efecto de estado obligado mediante comando
+**/
+-	script	SC_START_GM	-1,{
+OnInit:
+	bindatcmd "scstart","SC_START_GM::OnCommand",99,99;
+	end;
+OnCommand:
+	.@t = atoi(.@atcmd_parameters$[1]);
+	sc_start getd(.@atcmd_parameters$[0]),((.@t > 0) ? .@t : 60000),0;
+	end;
+}
+
+/**
+ * Comprueba el rango de niveles.
+ * @author DanielArt
+**/
+function	script	F_IsRangeLevel	{
+	if(	(BaseLevel > getarg(0) && (BaseLevel - getarg(0)) < getarg(1)) || (getarg(0) > BaseLevel && (getarg(0) - BaseLevel) < getarg(1)) )
+		return 1;
+	else
+		return 0;
+}
+
+// Revisa la prohibici�n de diversos elementos.
+function	script	F_CheckEvent	{
+	if(checkcart() || checkriding() || ismounting() || checkmadogear())
+		return 1;
+	if(getarg(0) == 1 && checkhomcall() >= 0) {
+		if(checkhomcall() == 1)
+			return 0;
+		else
+			return 1;
+	}
+	return 0;
+}
+
+function	script	F_CardToMob	{
+	query_sql("SELECT `ID` FROM `mob_db` WHERE `dropcardid` = '"+getarg(0)+"'",$@mid);
+	return $@mid[0];
+}
+
+// Revisa si una carta pertenece a un MvP.
+function	script	F_IsMVPCard	{
+	query_sql("SELECT `dropcardid` FROM `mob_db` WHERE `mexp` != 0 AND `dropcardid` != 0 AND `mode` > 103000000", .@card);
+	for(.@i = 0; .@i < getarraysize(.@card); .@i++)
+		if(.@card[.@i] == getarg(0))
+			return 1;
+	return 0;
+}
+
+-	script	cmd_cutin	-1,{
+OnCutinCmd:
+	if(.@atcmd_parameters$[0] != "") {
+		cutin .@atcmd_parameters$[0],(atoi(.@atcmd_parameters$[1]) ? atoi(.@atcmd_parameters$[1]) : 3);
+		sleep2 2000;
+		cutin "",255;
+	} else {
+		dispbottom "@cutin <filename> <position>";
+		dispbottom " - Positions:";
+		dispbottom "0 - bottom left corner";
+		dispbottom "1 - bottom middle";
+		dispbottom "2 - bottom right corner";
+		dispbottom "3 - middle of screen in a movable window with an empty title bar";
+		dispbottom "4 - middle of screen without the window header, but still movable";
+	}
+	end;
+OnInit:
+	bindatcmd "cutin",strnpcinfo(3)+"::OnCutinCmd",99,99;
+	end;
+}
+
+
+// Revision de Gepard usando el Account ID
+function	script	F_CheckMac	{
+	query_sql("SELECT `online` FROM `login` WHERE `last_unique_id` = '"+get_unique_id()+"' AND `online` > '0'", .@c);
+	if(getarraysize(.@c) > 1) {
+		debugmes "The user "+strcharinfo(0,getcharid(0))+" is double-login at same PC.";
+		return 1;
+	} else
+		return 0;
+}
+
+// Revision de Gepard usando el Char ID
+function	script	F_CheckMacChar	{
+	query_sql("SELECT `online` FROM `login` WHERE `last_unique_id` = '"+get_unique_id2(getarg(0))+"' AND `online` > '0'", .@c);
+	if(getarraysize(.@c) > 1) {
+		debugmes "The user "+strcharinfo(0,getarg(0))+" is double-login at same PC.";
+		return 1;
+	} else
+		return 0;
+}
+
+-	script	ONLINE_SQL	-1,{
+
+OnPCLoginEvent:
+	// Si entra con autotrade, no lo cuentes.
+	if (checkvending(strcharinfo(0)) >= 2)
+		end;
+
+	// Actualiza pico online usando el conteo real del core.
+	if (getusers(1) > $peakonline)
+		set $peakonline, getusers(1);
+
+	end;
+
+OnPCLogoutEvent:
+	// Nada que hacer: el core actualiza char.online automáticamente.
+	end;
+}
+
+function	script	epoch_time	{
+	.@time = getarg(0);
+	.@hour = ( .@time / 3600 );
+	.@min = ( .@time % 3600 ) / 60 ;
+	.@sec = ( ( .@time % 3600 ) % 60 ) % 60;
+
+	return sprintf( "%02d:%02d:%02d",.@hour,.@min,.@sec );
+}
+
+function	script	F_getitemname	{
+	.@itemid = getarg(0);
+	.@name$ = getitemname( .@itemid );
+	if( .@name$ == "null" )
+		return "^FF0000[Desconocido-"+.@itemid+"]^000000";
+	.@type = getiteminfo( .@itemid,2 );
+	if( .@type == IT_ARMOR || .@type == IT_WEAPON ){
+		.@name$ = .@name$ +" ["+getitemslots( .@itemid )+"]";
+	}
+	return "<ITEM>"+.@name$+"<INFO>"+.@itemid+"</INFO></ITEM>";
+}
+
+-	script	itemdescs	-1,{
+OnInit:
+	bindatcmd "ii2",strnpcinfo(3)+"::OnAtcommand";
+	bindatcmd "itemdesc",strnpcinfo(3)+"::OnAtcommand";
+	end;
+OnAtcommand:
+  mes "^3355FF[ Descripci�n de Objetos ]^000000";
+  .@item = atoi(.@atcmd_parameters$[0]);
+  if( .@item < 500 ) {
+	mes " - Objeto no encontrado.";
+	close;
+  }
+  mes " *^FF7070Ver descripci�n:^000000"," <ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>"," ";
+  mes " *^5533ffVer base de datos:^000000","<URL> Ver en base de datos<INFO>http://db.irowiki.org/olddb/item-info/"+.@item+"/,800,600</INFO></URL>"," ";
+  close;
+}
+
+function	script	npc_talk	{
+	.@argcount = getargcount();
+	.@npc_name$ = strnpcinfo(1);
+	for(.@i = 0; .@i < .@argcount; .@i++) {
+		mes "^0055FF[ "+.@npc_name$+" ]^000000";
+		.@message$ = getarg(.@i);
+		mes .@message$;
+		npctalk .@message$;
+	}
+	return;
+}
+
+-	script	cmd_back	-1,{
+OnCommand:
+	showscript "Back !!";
+	specialeffect2 12;
+	if(getmapflag(strcharinfo(3),mf_pvp) || getmapflag(strcharinfo(3),mf_gvg) || getmapflag(strcharinfo(3),mf_battleground)) {
+		dispbottom "@back no puede usarse en el mapa actual.";
+		end;
+	}
+	if(countitem(602) > 0) {
+		delitem 602,1;
+		specialeffect2 72;
+		progressbar "008800",3;
+		specialeffect2 30;
+		warp "SavePoint",0,0;
+		end;
+	}
+	if(Zeny < (16*BaseLevel)) {
+		dispbottom "@back ha fallado, zeny insuficiente.";
+		end;
+	}
+	specialeffect2 72;
+	progressbar "008800",(BaseLevel / 10);
+	Zeny -= (16*BaseLevel);
+	specialeffect2 30;
+	warp "SavePoint",0,0;
+	end;
+OnInit:
+	bindatcmd "back","cmd_back::OnCommand",0,99;
+	end;
+}
+
+-	script	cmd_quest	-1,{
+OnCommand:
+	.@q = atoi(.@atcmd_parameters$[1]);
+	if(.@atcmd_numparameters < 2 || !.@q || .@q < 1) {
+		dispbottom "@quest <set-del> <quest_id>";
+		end;
+	}
+	if(.@atcmd_parameters$[0] == "set") {
+		if(checkquest(.@q) == 1) {
+			dispbottom "@quest - esta quest ya est� pose�da.";
+			end;
+		}
+		dispbottom "@quest - se ha otorgado la quest "+.@q;
+		setquest .@q;
+		end;
+	} else if(.@atcmd_parameters$[0] == "del") {
+		if(checkquest(.@q) == -1) {
+			dispbottom "@quest - no posees esta quest.";
+			end;
+		}
+		dispbottom "@quest - se ha eliminado la quest "+.@q;
+		erasequest .@q;
+		end;
+	}
+	dispbottom "@quest <set-del> <quest_id>";
+	end;
+OnInit:
+	bindatcmd "quest",strnpcinfo(3)+"::OnCommand",99,99;
+	end;
+}
+
+-	script	cmd_scend	-1,{
+OnCommand:
+	sc_end SC_ALL;
+	end;
+OnInit:
+	bindatcmd "scend",strnpcinfo(3)+"::OnCommand",99,99;
+	end;
+}
+
+-	script	atcmd_hide	-1,{
+OnInit:
+	bindatcmd "hide",strnpcinfo(3)+"::OnAtcommand",99,99;
+	end;
+OnAtcommand:
+
+	if(checkoption(OPTION_INVISIBLE) == 1){
+		specialeffect2 587;
+		specialeffect2 589;
+		setoption OPTION_INVISIBLE,0;
+	} else {
+		specialeffect2 587;
+		specialeffect2 589;
+		setoption OPTION_INVISIBLE,1;
+	}
+	end;
+}
+
+-	script	delallitem	-1,{
+OnCommand:
+	.@item = atoi(.@atcmd_parameters$[0]);
+	if( .@item < 500 ) {
+		dispbottom "Item don't found.",0x000000;
+		end;
+	}
+	query_logsql("SELECT `item` FROM `prizelog` WHERE `get` = '2'",.@iy);
+	setarray .db$,"auction","cart_inventory","guild_storage","inventory","mail","mail_wait","storage";
+	for(.@i = 0; .@i < getarraysize(.db$); .@i++) {
+		query_sql("UPDATE `"+.db$[.@i]+"` SET `nameid` = '501' WHERE `nameid` = '"+.@item+"'");
+		query_sql("UPDATE `"+.db$[.@i]+"` SET `card0` = '4001' WHERE `card0` = '"+.@item+"'");
+		query_sql("UPDATE `"+.db$[.@i]+"` SET `card0` = '4001' WHERE `card1` ='"+.@item+"'");
+		query_sql("UPDATE `"+.db$[.@i]+"` SET `card0` = '4001' WHERE `card2` =  '"+.@item+"'");
+		query_sql("UPDATE `"+.db$[.@i]+"` SET `card0` = '4001' WHERE `card3` = '"+.@item+"'");
+	}
+	dispbottom getitemname(.@item)+" changed for Red Potion and Poring Card",0x000000;
+	end;
+OnInit:
+	bindatcmd "delallitem","delallitem::OnCommand",99,99;
+	bindatcmd "delitemall","delallitem::OnCommand",99,99;
+	end;
+}
+
+function	script	F_ChangeCharSex	{
+	if(callsub(S_HasChangeSex) == 1) {
+		dispbottom "Lo siento, pero tu clase no puede usar este objeto.";
+		getitem 8232,1;
+		end;
+	}
+	query_sql("SELECT `sex` FROM `char` WHERE `char_id`='"+getcharid(0)+"'",.@AC_sex$);
+	if(.@AC_sex$ == "S")
+		end;
+	else if(.@AC_sex$ == "M")
+		.@NEW_sex$ = "F";
+	else if(.@AC_sex$ == "F")
+		.@NEW_sex$ = "M";
+	.@cid = getcharid(0);
+	atcommand "@kick "+strcharinfo(0);
+	query_sql("UPDATE `char` SET `sex` = '"+.@NEW_sex$+"' WHERE `char_id`='"+.@cid+"'");
+	end;
+S_HasChangeSex:
+	switch(Class) {
+		default:
+			return 0;
+		case Job_Dancer:
+		case Job_Bard:
+		case Job_Clown:
+		case Job_Gypsy:
+		case Job_Minstrel:
+		case Job_Wanderer:
+		case Job_Kagerou:
+		case Job_Oboro:
+		case Job_Baby_Dancer:
+		case Job_Baby_Minstrel:
+		case Job_Baby_Kagerou:
+		case Job_Baby_Oboro:
+			return 1;
+	}
+	return 0;
+}
+
+function	script	F_Identificar	{
+
+// Precio
+// ========
+// Costo por identificar cada Item
+
+set @price, 40;
+
+	getinventorylist;
+	for( .@i = 0; .@i < (@inventorylist_count); .@i++ ) {
+		if ( @inventorylist_identify[.@i] == 1 )
+			continue;
+		if ( getskilllv(40) == 1 && sp >= 10 )
+			heal 0,-10;
+		else if ( countitem(611) )
+			delitem 611,1;
+		else if ( getskilllv(224) && Zeny >= ( 100 - ( 5 + 4 * getskilllv(224) ) )* 2/5 )
+			Zeny -= ( 100 - ( 5 + 4 * getskilllv(224) ) )* 2/5;
+		else if ( getskilllv(37) && Zeny >= ( 100 - ( 5 + 2 * getskilllv(37) ) )* 2/5 )
+			Zeny -= ( 100 - ( 5 + 2 * getskilllv(37) ) )* 2/5;
+		else if ( Zeny >= 40 )
+			set Zeny, Zeny - @price;
+		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
+		getitem @inventorylist_id[.@i],1;
+	}
+	return;
+}

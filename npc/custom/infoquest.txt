@@ -1,0 +1,40 @@
+lroom00,119,73,4	script	Information#0557::note	804,{
+	delwaitingroom;
+	//goto L_chat;	
+	//------------------Aquí­ va tu contenido----------------------
+	
+	mes"[^0000FFInformation^000000]";
+
+	
+	mes"On the top room you will find many Quests for Headgears";
+	next;
+	mes"Remember to visit the Forums at the section 'Headgears Quests'. Every week a new one will appear with a new NPC on the top floor or in any zone of Rune Midgard";
+	next;
+	mes"^0000FFhttp://www.forum.mahoneyro.es/^000000";
+	next;
+	mes"Good luck on your adventures!";
+		
+	
+	
+	//--------------------Fin del contenido-----------------------	
+	end;	
+	
+	
+	
+OnInit:
+	goto L_chat;
+	end;
+
+L_chat:
+setarray .message$,
+	"Quests Room --->",
+	"";
+set .message_size,getarraysize( .message$ );
+while( .message_size ){
+	delwaitingroom; 
+	waitingroom ""+.message$[ rand( .message_size ) ],0;
+	sleep 1000;
+}
+end;
+
+}

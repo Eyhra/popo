@@ -1,0 +1,77 @@
+prontera,1,1,0	script	MaxOnlineAnnouncer	-1,{
+	end;
+	
+OnPcLoginEvent:
+	if ( getusers(1) > $peakonline ) {
+		set $peakonline, getusers(1);
+		end;
+	}
+}
+
+-	script	UserOnline	-1,{
+	query_sql "SELECT `name` , `class` FROM `char` WHERE `online` = '1'", .@name$, .@class;
+    mes "^0000FF[Seal Private Server]^000000";
+	mes "Rates: 30/30/30";
+    mes "Episodio 13.3 El Discates Pre-Renewall";
+    mes "Peak Online: " + $peakonline;
+    next;
+    mes "^c50000[Lista de Usuarios]^000000";
+    for( set .@a,0; .@a < getarraysize(.@name$); set .@a,.@a + 1)
+        mes "^0000FF"+.@name$[.@a]+ "^000000 | ^c50000Job: " +jobname(.@class[.@a])+".^000000";
+    close;
+OnInit:
+	do {
+		delwaitingroom;
+		waitingroom "Usuarios Online ("+getusers(1)+")",0;
+		sleep 5000;
+	} while(1);
+end;
+}
+
+
+//duplicados
+prontera,146,195,3	duplicate(UserOnline)	Horadrim#prt	10023
+payon,166,108,5	duplicate(UserOnline)	Horadrim#pay	10023
+geffen,127,64,5	duplicate(UserOnline)	Horadrim#gef	10023
+alberta,32,245,5	duplicate(UserOnline)	Horadrim#alb	10023
+aldebaran,133,123,5	duplicate(UserOnline)	Horadrim#ald	10023
+izlude,120,104,5	duplicate(UserOnline)	Horadrim#izl	10023
+xmas,140,139,5	duplicate(UserOnline)	Horadrim#lut	10023
+comodo,188,163,5	duplicate(UserOnline)	Horadrim#cmd	10023
+yuno,168,187,5	duplicate(UserOnline)	Horadrim#yun	10023
+amatsu,107,164,5	duplicate(UserOnline)	Horadrim#ama	10023
+gonryun,168,126,5	duplicate(UserOnline)	Horadrim#gon	10023
+umbala,106,160,5	duplicate(UserOnline)	Horadrim#um	10023
+niflheim,201,195,5	duplicate(UserOnline)	Horadrim#nif	10023
+louyang,226,110,5	duplicate(UserOnline)	Horadrim#lou	10023
+port,120,242,5	duplicate(UserOnline)	Horadrim#tra	10023
+jawaii,243,144,5	duplicate(UserOnline)	Horadrim#jaw	10023
+ayothaya,216,185,5	duplicate(UserOnline)	Horadrim#ayo	10023
+lighthalzen,158,105,5	duplicate(UserOnline)	Horadrim#lhz	10023
+einbech,181,123,5	duplicate(UserOnline)	Horadrim#ein	10023
+einbroch,77,202,5	duplicate(UserOnline)	Horadrim#ei	10023
+hugel,102,136,5	duplicate(UserOnline)	Horadrim#hu	10023
+rachel,132,142,5	duplicate(UserOnline)	Horadrim#rac	10023
+moscovia,230,184,5	duplicate(UserOnline)	Horadrim#mos	10023
+veins,223,125,5	duplicate(UserOnline)	Horadrim#vei	10023
+mid_camp,230,242,5	duplicate(UserOnline)	Horadrim#mid	10023
+manuk,272,152,5	duplicate(UserOnline)	Horadrim#man	10023
+britoniah,77,58,4	duplicate(UserOnline)	Horadrim#bri	10023
+splendide,210,148,5	duplicate(UserOnline)	Horadrim#spl	10023
+brasilis,207,218,5	duplicate(UserOnline)	Horadrim#bra	10023
+dicastes01,189,195,5	duplicate(UserOnline)	Horadrim#dis	10023
+mora,110,117,5	duplicate(UserOnline)	Horadrim#mor	10023
+dewata,204,186,5	duplicate(UserOnline)	Horadrim#dew	10023
+malangdo,143,117,5	duplicate(UserOnline)	Horadrim#mal	10023
+malaya,231,204,5	duplicate(UserOnline)	Horadrim#may	10023
+prt_vilg01,111,128,5	duplicate(UserOnline)	Horadrim#prt1	10023
+prt_vilg02,99,90,5	duplicate(UserOnline)	Horadrim#prt2	10023
+prt_vilg00,80,106,5	duplicate(UserOnline)	Horadrim#prt0	10023
+moc_vilg01,146,122,5	duplicate(UserOnline)	Horadrim#moc1	10023
+moc_vilg02,103,118,5	duplicate(UserOnline)	Horadrim#moc2	10023
+gef_vilg00,99,93,5	duplicate(UserOnline)	Horadrim#gef2	10023
+verus04,128,262,5	duplicate(UserOnline)	Horadrim#ver	10023
+morocc,167,88,5	duplicate(UserOnline)	Horadrim#mrc	10023
+jupe_core2,140,138,5	duplicate(UserOnline)	Horadrim#jupe	10023
+seal,94,102,5	duplicate(UserOnline)	Horadrim#seal	10023
+

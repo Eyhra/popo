@@ -1,0 +1,22 @@
+prontera,165,167,0	warp	nuevowarp5	1,1,lroom00,153,70
+lroom00,153,74,0	warp	nuevowarp6	1,1,prontera,162,167
+lroom00,123,74,0	warp	nuevowarp7	1,1,lroom00,46,160
+lroom00,45,163,0	warp	nuevowarp8	1,1,lroom00,123,70
+//lroom00,76,163,0	warp	nuevowarp9	1,2,lroom00,123,170
+
+// Warp Prontera castillo Norte
+
+prt_gld,159,298,0	warp	prtg01_NorthField	1,1,prt_fild01,199,30
+
+paramk,97,4,0	warp	prtg01_NorthField22	1,1,prontera,156,193
+
+
+// Warp Mnster Hunting
+
+cus_in03,49,29,0	warp	nuevowarp58	1,1,lroom00,76,159
+lroom00,75,163,0	warp	nuevowarp59	1,1,cus_in03,49,32
+
+
+
+
+

@@ -1,0 +1,272 @@
+prontera,155,175,5	script	Auction Manager	4_F_KAFRA9,{
+    doevent "auction_bid_main::OnTalk";
+}
+
+-	script	auction_bid_main	FAKE_NPC,{
+    function func_getitemname {
+        .@refine = getarg(0, 0);
+        .@itemid = getarg(1, 0);
+        .@amount = getarg(2, 0);
+        .@card1 = getarg(3, 0);
+        .@card2 = getarg(4, 0);
+        .@card3 = getarg(5, 0);
+        .@card4 = getarg(6, 0);
+        .@name$ = getitemname(.@itemid);
+        if (.@name$ != "null" && .@amount > 0) {
+            .@slot = getitemslots(.@itemid);
+            .@itemtype = getiteminfo(.@itemid, 2);
+            if (.@itemtype == IT_ARMOR || .@itemtype == IT_WEAPON) {
+                .@name$ = .@name$ + " ["+.@slot+"]";
+                if (.@refine) .@name$ = "+"+.@refine+" "+.@name$;
+            }
+            if (.@card1 || .@card2 || .@card3 || .@card4) {
+                .@name$ += " (Cartas: "+getitemname(.@card1)+", "+getitemname(.@card2)+", "+getitemname(.@card3)+", "+getitemname(.@card4)+")";
+            }
+            if (.@amount > 1) .@name$ = .@amount+"x "+.@name$;
+        } else {
+            .@name$ = "ID#"+.@itemid;
+        }
+        return .@name$;
+    }
+
+    OnInit:
+        .npc_name$ = strnpcinfo(3);
+        bindatcmd "auction", .npc_name$+"::OnAtcommand";
+        bindatcmd "auctionbid", .npc_name$+"::OnAuctionBid";
+        end;
+
+    OnAtcommand:
+        if (!getcharid(0)) {
+            debugmes "Error: @auction called without an active character.";
+            end;
+        }
+        doevent "auction_bid_main::OnTalk";
+        end;
+
+    OnAuctionBid:
+        if (!getcharid(0)) {
+            debugmes "Error: @auctionbid called without an active character.";
+            end;
+        }
+        .@aid = getcharid(3);
+        .@cid = getcharid(0);
+        .@auction_id = atoi(.@atcmd_parameters$[0]);
+        if (!.@auction_id) {
+            dispbottom "Uso: @auctionbid <ID de subasta> [cantidad Zeny]", 0xFF0000;
+            end;
+        }
+        query_sql("SELECT `aid`, `nameid`, `refine`, `amount`, `bid_min`, `bid_max`, `card1`, `card2`, `card3`, `card4`, UNIX_TIMESTAMP(`date`) FROM `e_auction_bid_list` WHERE `id` = "+.@auction_id+" AND `status` = 2", .@seller_aid, .@nameid, .@refine, .@amount, .@bid_min, .@bid_max, .@card1, .@card2, .@card3, .@card4, .@start_time);
+        if (!getarraysize(.@seller_aid)) {
+            dispbottom "Subasta ID "+.@auction_id+" no encontrada o no activa.", 0xFF0000;
+            end;
+        }
+        .@time_left = (.@minute * 60) - (gettimetick(2) - .@start_time);
+        if (.@time_left <= 0) {
+            donpcevent .npc_name$+"::OnAuctionEnd::"+.@auction_id;
+            dispbottom "La subasta ha finalizado.", 0xFF0000;
+            end;
+        }
+        .@bid = atoi(.@atcmd_parameters$[1]);
+        if (.@bid) {
+            if (.@bid < .@bid_min || .@bid > .@bid_max) {
+                dispbottom "Puja inválida. Debe estar entre "+F_InsertComma(.@bid_min)+" y "+F_InsertComma(.@bid_max)+" Zeny.", 0xFF0000;
+                end;
+            }
+            query_sql("SELECT MAX(`bid`) FROM `e_auction_bid_log` WHERE `auction_id` = "+.@auction_id, .@highest_bid);
+            if (.@bid <= .@highest_bid) {
+                dispbottom "Tu puja debe superar la más alta actual de "+F_InsertComma(.@highest_bid)+" Zeny.", 0xFF0000;
+                end;
+            }
+            if (Zeny < .@bid) {
+                dispbottom "No tienes suficiente Zeny.", 0xFF0000;
+                end;
+            }
+            if (!checkweight(.@nameid, .@amount)) {
+                dispbottom "No tienes espacio/peso.", 0xFF0000;
+                end;
+            }
+            query_sql("SELECT `aid`, `bid` FROM `e_auction_bid_log` WHERE `auction_id` = "+.@auction_id+" AND `bid` > 0 ORDER BY `bid` DESC LIMIT 1", .@old_aid, .@old_bid);
+            Zeny -= .@bid;
+            query_sql("INSERT INTO `e_auction_deposits` (`auction_id`, `aid`, `bid`) VALUES ("+.@auction_id+", "+.@aid+", "+.@bid+") ON DUPLICATE KEY UPDATE `bid` = "+.@bid);
+            query_sql("INSERT INTO `e_auction_bid_log` (`aid`, `cid`, `bid`, `time`, `auction_id`) VALUES ("+.@aid+", "+.@cid+", "+.@bid+", NOW(), "+.@auction_id+") ON DUPLICATE KEY UPDATE `bid` = "+.@bid+", `time` = NOW()");
+            if (.@old_aid && .@old_aid != .@aid) {
+                dispbottom "Tu puja de "+F_InsertComma(.@old_bid)+" Zeny fue superada por "+strcharinfo(0)+".", 0xFF0000, .@old_aid;
+            }
+            channel_chat "#auction", "<AUCTION EVENT> "+strcharinfo(0)+" pujó "+F_InsertComma(.@bid)+" Zeny por "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@nameid, .@refine, .@card1, .@card2, .@card3, .@card4)+".", 0xFFFF00;
+            dispbottom "Puja registrada por "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@nameid, .@refine, .@card1, .@card2, .@card3, .@card4)+".", 0x00FF00;
+        } else {
+            if (Zeny < .@bid_max) {
+                dispbottom "No tienes suficiente Zeny para comprar a "+F_InsertComma(.@bid_max)+" Zeny.", 0xFF0000;
+                end;
+            }
+            if (!checkweight(.@nameid, .@amount)) {
+                dispbottom "No tienes espacio/peso.", 0xFF0000;
+                end;
+            }
+            Zeny -= .@bid_max;
+            query_sql("UPDATE `login` SET `zeny` = `zeny` + "+.@bid_max+" WHERE `account_id` = "+.@seller_aid);
+            getitem2 .@nameid, .@amount, 1, .@refine, 0, .@card1, .@card2, .@card3, .@card4, .@aid;
+            query_sql("UPDATE `e_auction_list_log` SET `aid` = "+.@aid+", `cid` = "+.@cid+", `bid` = "+.@bid_max+", `claim` = NOW() WHERE `id` = (SELECT `id` FROM `e_auction_bid_list` WHERE `id` = "+.@auction_id+")");
+            query_sql("DELETE FROM `e_auction_bid_list` WHERE `id` = "+.@auction_id);
+            query_sql("DELETE FROM `e_auction_bid_log` WHERE `auction_id` = "+.@auction_id);
+            query_sql("DELETE FROM `e_auction_deposits` WHERE `auction_id` = "+.@auction_id);
+            query_sql("SELECT `name` FROM `char` WHERE `char_id` = "+.@cid, .@name$);
+            dispbottom "¡Compraste "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@nameid, .@refine, .@card1, .@card2, .@card3, .@card4)+" por "+F_InsertComma(.@bid_max)+" Zeny!", 0x00FF00;
+            dispbottom "Recibiste "+F_InsertComma(.@bid_max)+" Zeny por la venta.", 0x00FF00, .@seller_aid;
+            channel_chat "#auction", "<AUCTION EVENT> "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@nameid, .@refine, .@card1, .@card2, .@card3, .@card4)+" vendido a "+.@name$+" por "+F_InsertComma(.@bid_max)+" Zeny.", 0xFFFF00;
+        }
+        end;
+
+    OnTalk:
+        .@aid = getcharid(3);
+        .@cid = getcharid(0);
+        if (!.@aid || !.@cid) {
+            mes "[Auction Manager]";
+            mes "Error: No se detectó un personaje válido.";
+            close;
+        }
+        mes "[Auction Manager]";
+        mes "Bienvenido al sistema de subastas.";
+        switch (select(
+            "Proponer Ítem",
+            "Reclamar Ítem",
+            "Ver Subastas Activas",
+            "Historial",
+            "Información"
+        )) {
+            case 1: // Proponer Ítem
+                mes "Proponer un ítem cuesta 10,000 Zeny.";
+                mes "Solo se pueden subastar ítems identificados y no vinculados.";
+                if (Zeny < 10000) { mes "No tienes suficiente Zeny."; close; }
+                getinventorylist;
+                if (!@inventorylist_count) { mes "Tu inventario está vacío."; close; }
+                for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+                    if (@inventorylist_identify[.@i] && !@inventorylist_bound[.@i] && !@inventorylist_equipped[.@i]) {
+                        .@menu$ += getitemname(@inventorylist_id[.@i]) + " ["+@inventorylist_amount[.@i]+"]:";
+                    } else {
+                        .@menu$ += ":";
+                    }
+                }
+                .@selected = select(.@menu$) - 1;
+                // Validar selección válida
+                if (!@inventorylist_identify[.@selected] || @inventorylist_bound[.@selected] || @inventorylist_equipped[.@selected]) {
+                    mes "El ítem seleccionado no está identificado, está vinculado o equipado.";
+                    debugmes "Propuesta rechazada: Item ID="+@inventorylist_id[.@selected]+" identificado="+@inventorylist_identify[.@selected]+", vinculado="+@inventorylist_bound[.@selected]+", equipado="+@inventorylist_equipped[.@selected];
+                    close;
+                }
+                mes "Cantidad a subastar:";
+                input .@amount, 1, @inventorylist_amount[.@selected];
+                mes "Puja mínima (Zeny):";
+                input .@bid_min, 1, MAX_ZENY;
+                mes "Puja máxima (Zeny):";
+                input .@bid_max, .@bid_min, MAX_ZENY;
+                mes "Duración de la subasta:";
+                .@duration = select("1 Día:2 Días:3 Días:7 Días");
+                .@minute = (.@duration == 1 ? 1440 : .@duration == 2 ? 2880 : .@duration == 3 ? 4320 : 10080);
+                if (getitemname(@inventorylist_id[.@selected]) == "null" || .@amount <= 0 || .@bid_min <= 0 || .@bid_max <= .@bid_min) {
+                    mes "Datos inválidos.";
+                    close;
+                }
+                // Verificar que el ítem existe y coincide
+                .@item_id = @inventorylist_id[.@selected];
+                .@refine = @inventorylist_refine[.@selected];
+                .@card1 = @inventorylist_card1[.@selected];
+                .@card2 = @inventorylist_card2[.@selected];
+                .@card3 = @inventorylist_card3[.@selected];
+                .@card4 = @inventorylist_card4[.@selected];
+                .@count = countitem2(.@item_id, 1, .@refine, 0, .@card1, .@card2, .@card3, .@card4);
+                if (.@count < .@amount) {
+                    mes "No tienes "+.@amount+"x "+itemlink(.@item_id, .@refine, .@card1, .@card2, .@card3, .@card4)+" con las características especificadas.";
+                    debugmes "Failed to delete item: AID="+.@aid+", Item ID="+.@item_id+", Amount="+.@amount+", Refine="+.@refine+", Cards="+.@card1+","+.@card2+","+.@card3+","+.@card4+", Available="+.@count;
+                    for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+                        debugmes "Inventario["+.@i+"]: ID="+@inventorylist_id[.@i]+", Amount="+@inventorylist_amount[.@i]+", Refine="+@inventorylist_refine[.@i]+", Identificado="+@inventorylist_identify[.@i]+", Vinculado="+@inventorylist_bound[.@i]+", Equipado="+@inventorylist_equipped[.@i];
+                    }
+                    close;
+                }
+                Zeny -= 10000;
+                delitem2 .@item_id, .@amount, 1, .@refine, 0, .@card1, .@card2, .@card3, .@card4;
+                // Registrar y activar subasta
+                .@timestamp = gettimetick(2);
+                query_sql("INSERT INTO `e_auction_bid_list` (`aid`, `nameid`, `refine`, `amount`, `bid_min`, `bid_max`, `card1`, `card2`, `card3`, `card4`, `minute`, `date`, `status`) VALUES ("+.@aid+", "+.@item_id+", "+.@refine+", "+.@amount+", "+.@bid_min+", "+.@bid_max+", "+.@card1+", "+.@card2+", "+.@card3+", "+.@card4+", "+.@minute+", NOW(), 2)");
+                query_sql("INSERT INTO `e_auction_list_log` (`id`, `nameid`, `refine`, `amount`, `card1`, `card2`, `card3`, `card4`, `date`) VALUES ("+.@timestamp+", "+.@item_id+", "+.@refine+", "+.@amount+", "+.@card1+", "+.@card2+", "+.@card3+", "+.@card4+", NOW())");
+                channel_chat "#auction", "<AUCTION EVENT> Subasta iniciada para "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@item_id, .@refine, .@card1, .@card2, .@card3, .@card4)+".", 0xFFFF00);
+                mes "Subasta iniciada para "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@item_id, .@refine, .@card1, .@card2, .@card3, .@card4)+".";
+                close;
+            case 2: // Reclamar Ítem
+                query_sql("SELECT `id`, `nameid`, `refine`, `amount`, `bid`, `date`, `card1`, `card2`, `card3`, `card4` FROM `e_auction_list_log` WHERE `aid` = "+.@aid+" AND `claim` = '0000-00-00 00:00:00' LIMIT 50", .@id, .@nameid, .@refine, .@amount, .@bid, .@date$, .@card1, .@card2, .@card3, .@card4);
+                for (.@i = 0; .@i < getarraysize(.@id); .@i++)
+                    .@menu$ += replacestr(func_getitemname(.@refine[.@i], .@nameid[.@i], .@amount[.@i], .@card1[.@i], .@card2[.@i], .@card3[.@i], .@card4[.@i]), ":", " ") + ":";
+                if (!getarraysize(.@id)) { mes "No tienes ítems para reclamar."; close; }
+                .@i = select(.@menu$) - 1;
+                mes "Puja: "+F_InsertComma(.@bid[.@i])+" Zeny para "+(.@amount[.@i] > 1 ? .@amount[.@i]+"x " : "")+itemlink(.@nameid[.@i], .@refine[.@i], .@card1[.@i], .@card2[.@i], .@card3[.@i], .@card4[.@i])+".";
+                if (Zeny < .@bid[.@i]) { mes "No tienes suficiente Zeny."; close; }
+                if (!checkweight(.@nameid[.@i], .@amount[.@i])) { mes "No tienes espacio/peso."; close; }
+                if (select("Pagar y Reclamar", "Cancelar") == 1) {
+                    Zeny -= .@bid[.@i];
+                    query_sql("UPDATE `e_auction_list_log` SET `claim` = NOW() WHERE `id` = "+.@id[.@i]);
+                    getitem2 .@nameid[.@i], .@amount[.@i], 1, .@refine[.@i], 0, .@card1[.@i], .@card2[.@i], .@card3[.@i], .@card4[.@i];
+                    mes "Ítem obtenido: "+(.@amount[.@i] > 1 ? .@amount[.@i]+"x " : "")+itemlink(.@nameid[.@i], .@refine[.@i], .@card1[.@i], .@card2[.@i], .@card3[.@i], .@card4[.@i])+".";
+                }
+                close;
+            case 3: // Ver Subastas Activas
+                mes "Subastas activas:";
+                query_sql("SELECT `id`, `nameid`, `refine`, `amount`, `bid_min`, `bid_max`, `card1`, `card2`, `card3`, `card4`, UNIX_TIMESTAMP(`date`) FROM `e_auction_bid_list` WHERE `status` = 2 LIMIT 50", .@id, .@nameid, .@refine, .@amount, .@bid_min, .@bid_max, .@card1, .@card2, .@card3, .@card4, .@start_time);
+                if (!getarraysize(.@id)) {
+                    mes "No hay subastas activas.";
+                    close;
+                }
+                .@msg$ = "Lista de Subastas Activas:\n";
+                for (.@i = 0; .@i < getarraysize(.@id); .@i++) {
+                    .@msg$ += "- ID: "+.@id[.@i]+" - "+(.@amount[.@i] > 1 ? .@amount[.@i]+"x " : "")+itemlink(.@nameid[.@i], .@refine[.@i], .@card1[.@i], .@card2[.@i], .@card3[.@i], .@card4[.@i])+" | Puja: "+F_InsertComma(.@bid_min[.@i])+" - "+F_InsertComma(.@bid_max[.@i])+" Zeny\n";
+                }
+                dispbottom .@msg$, 0x00FF00;
+                close;
+            case 4: // Historial
+                mes "Historial de Subastas:";
+                query_sql("SELECT `nameid`, `refine`, `amount`, `bid`, `name`, `card1`, `card2`, `card3`, `card4` FROM `e_auction_list_log` LEFT JOIN `char` ON `char_id` = `cid` WHERE `claim` != '0000-00-00 00:00:00' ORDER BY `date` DESC LIMIT 10", .@nameid, .@refine, .@amount, .@bid, .@name$, .@card1, .@card2, .@card3, .@card4);
+                for (.@i = 0; .@i < getarraysize(.@nameid); .@i++)
+                    mes "- Ítem: "+(.@amount[.@i] > 1 ? .@amount[.@i]+"x " : "")+itemlink(.@nameid[.@i], .@refine[.@i], .@card1[.@i], .@card2[.@i], .@card3[.@i], .@card4[.@i])+" | Ganador: "+(.@name$[.@i] ? .@name$[.@i] : "Ninguno")+" | Puja: "+F_InsertComma(.@bid[.@i])+" Zeny";
+                close;
+            case 5: // Información
+                mes "Subasta: Propones un ítem por 10,000 Zeny y la subasta comienza automáticamente. Usa @auctionbid <ID> [Zeny] para pujar o comprar al precio máximo.";
+                mes "Solo se permiten ítems identificados y no vinculados.";
+                mes "Únete al canal #auction con '@join #auction' para recibir notificaciones.";
+                close;
+        }
+        end;
+
+    OnAuctionEnd:
+        .@auction_id = getarg(0, 0);
+        if (!.@auction_id) end;
+        query_sql("SELECT `aid`, `nameid`, `refine`, `amount`, `card1`, `card2`, `card3`, `card4` FROM `e_auction_bid_list` WHERE `id` = "+.@auction_id, .@seller_aid, .@nameid, .@refine, .@amount, .@card1, .@card2, .@card3, .@card4);
+        query_sql("SELECT `aid`, `cid`, `bid` FROM `e_auction_bid_log` WHERE `auction_id` = "+.@auction_id+" ORDER BY `bid` DESC LIMIT 1", .@aid, .@cid, .@bid);
+        query_sql("SELECT `aid`, `bid` FROM `e_auction_deposits` WHERE `auction_id` = "+.@auction_id+" AND `aid` != "+.@aid, .@loser_aid, .@loser_bid);
+        for (.@i = 0; .@i < getarraysize(.@loser_aid); .@i++) {
+            query_sql("UPDATE `login` SET `zeny` = `zeny` + "+.@loser_bid[.@i]+" WHERE `account_id` = "+.@loser_aid[.@i]);
+            dispbottom "Tu puja de "+F_InsertComma(.@loser_bid[.@i])+" Zeny fue devuelta.", 0x00FF00, .@loser_aid[.@i];
+        }
+        if (.@aid && .@cid) {
+            query_sql("UPDATE `e_auction_list_log` SET `aid` = "+.@aid+", `cid` = "+.@cid+", `bid` = "+.@bid+" WHERE `id` = "+.@auction_id);
+            query_sql("SELECT `name` FROM `char` WHERE `char_id` = "+.@cid, .@name$);
+            query_sql("UPDATE `login` SET `zeny` = `zeny` + "+.@bid+" WHERE `account_id` = "+.@seller_aid);
+            dispbottom "Recibiste "+F_InsertComma(.@bid)+" Zeny por la subasta.", 0x00FF00, .@seller_aid;
+            channel_chat "#auction", "<AUCTION EVENT> "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@nameid, .@refine, .@card1, .@card2, .@card3, .@card4)+" ganado por "+.@name$+" con "+F_InsertComma(.@bid)+" Zeny.", 0xFFFF00);
+            dispbottom "¡Ganaste la subasta de "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@nameid, .@refine, .@card1, .@card2, .@card3, .@card4)+"!", 0x00FF00, .@cid);
+        } else {
+            query_sql("UPDATE `e_auction_bid_list` SET `status` = 1 WHERE `id` = "+.@auction_id); // Devolver ítem a la lista si no hay pujas
+            channel_chat "#auction", "<AUCTION EVENT> No hubo pujas para "+(.@amount > 1 ? .@amount+"x " : "")+itemlink(.@nameid, .@refine, .@card1, .@card2, .@card3, .@card4)+".", 0xFFFF00);
+        }
+        query_sql("DELETE FROM `e_auction_bid_list` WHERE `id` = "+.@auction_id);
+        query_sql("DELETE FROM `e_auction_bid_log` WHERE `auction_id` = "+.@auction_id);
+        query_sql("DELETE FROM `e_auction_deposits` WHERE `auction_id` = "+.@auction_id);
+        end;
+
+    OnMinute00:
+        query_sql("SELECT `id`, `minute`, UNIX_TIMESTAMP(`date`) FROM `e_auction_bid_list` WHERE `status` = 2", .@id, .@minute, .@start_time);
+        for (.@i = 0; .@i < getarraysize(.@id); .@i++) {
+            if ((.@minute[.@i] * 60) - (gettimetick(2) - .@start_time[.@i]) <= 0) {
+                donpcevent .npc_name$+"::OnAuctionEnd::"+.@id[.@i];
+            }
+        }
+        end;
+}

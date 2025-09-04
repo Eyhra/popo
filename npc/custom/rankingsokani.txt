@@ -1,0 +1,412 @@
+-	script	PVPKILL	-1,{
+
+OnPCKillEvent:
+	set $@kilaid,getcharid(3);
+	attachrid killedrid;
+	set $@PlayerKilled$,strcharinfo(0);
+	getmapxy $@mapnamekill$,$@mapxkill,$@mapykill,0;
+	announce "[Kill System]: ¡"+$@PlayerKilled$+" ha sido asesinado por "+rid2name($@kilaid)+"!",bc_map,0xFF0000;
+	//announce rid2name($@kilaid)+" mató a "+$@PlayerKilled$,bc_all;
+	if (strcharinfo(3) == "guild_vs2" || strcharinfo(3) == "guild_vs3" || strcharinfo(3) == "pvp_n_1-3" || strcharinfo(3) == "pvp_n_1-5") { //PVP
+		query_sql "UPDATE `char` SET `pvpkills` = `pvpkills` + 1 WHERE `name` = '"+rid2name($@kilaid)+"'";
+		query_sql "UPDATE `char` SET `pvpdeaths` = `pvpdeaths` + 1 WHERE `name` = '"+$@PlayerKilled$+"'";
+	} else if (strcharinfo(3) == "guild_vs4") { //GVG
+		query_sql "UPDATE `char` SET `gvgkills` = `gvgkills` + 1 WHERE `name` = '"+rid2name($@kilaid)+"'";
+		query_sql "UPDATE `char` SET `gvgdeaths` = `gvgdeaths` + 1 WHERE `name` = '"+$@PlayerKilled$+"'";
+	} else if (strcharinfo(3) == "prtg_cas01" || strcharinfo(3) == "prtg_cas02" || strcharinfo(3) == "prtg_cas03" || strcharinfo(3) == "prtg_cas04" || strcharinfo(3) == "prtg_cas05" || 
+	strcharinfo(3) == "payg_cas01" || strcharinfo(3) == "payg_cas02" || strcharinfo(3) == "payg_cas03" || strcharinfo(3) == "payg_cas04" || strcharinfo(3) == "payg_cas05" || 
+	strcharinfo(3) == "aldeg_cas01" || strcharinfo(3) == "aldeg_cas02" || strcharinfo(3) == "aldeg_cas03" || strcharinfo(3) == "aldeg_cas04" || strcharinfo(3) == "aldeg_cas05" || 
+	strcharinfo(3) == "gefg_cas01" || strcharinfo(3) == "gefg_cas02" || strcharinfo(3) == "gefg_cas03" || strcharinfo(3) == "gefg_cas04" || strcharinfo(3) == "gefg_cas05" || 
+	strcharinfo(3) == "arug_cas01" || strcharinfo(3) == "arug_cas02" || strcharinfo(3) == "arug_cas03" || strcharinfo(3) == "arug_cas04" || strcharinfo(3) == "arug_cas05" || 
+	strcharinfo(3) == "schg_cas01" || strcharinfo(3) == "schg_cas02" || strcharinfo(3) == "schg_cas03" || strcharinfo(3) == "schg_cas04" || strcharinfo(3) == "schg_cas05") { //WOE
+		query_sql "UPDATE `char` SET `woekills` = `woekills` + 1 WHERE `name` = '"+rid2name($@kilaid)+"'";
+		query_sql "UPDATE `char` SET `woedeaths` = `woedeaths` + 1 WHERE `name` = '"+$@PlayerKilled$+"'";
+	} else if (strcharinfo(3) == "arug_cas06" || strcharinfo(3) == "arug_cas07" || strcharinfo(3) == "arug_cas08" || 
+	strcharinfo(3) == "schg_cas06" || strcharinfo(3) == "schg_cas07" || strcharinfo(3) == "schg_cas08" || 
+	strcharinfo(3) == "bat_a01" || strcharinfo(3) == "bat_a02" || strcharinfo(3) == "bat_a03" || strcharinfo(3) == "bat_a04" || strcharinfo(3) == "region_8" || 
+	strcharinfo(3) == "bat_b01" || strcharinfo(3) == "bat_b02" || strcharinfo(3) == "bat_b03" || strcharinfo(3) == "bat_b04" || 
+	strcharinfo(3) == "bat_c01" || strcharinfo(3) == "bat_c02" || strcharinfo(3) == "bat_c03" || strcharinfo(3) == "bat_c04") { //BG
+		query_sql "UPDATE `char` SET `bgkills` = `bgkills` + 1 WHERE `name` = '"+rid2name($@kilaid)+"'";
+		query_sql "UPDATE `char` SET `bgdeaths` = `bgdeaths` + 1 WHERE `name` = '"+$@PlayerKilled$+"'";
+	} else { //Duels / Normal
+		query_sql "UPDATE `char` SET `duelkills` = `duelkills` + 1 WHERE `name` = '"+rid2name($@kilaid)+"'";
+		query_sql "UPDATE `char` SET `dueldeaths` = `dueldeaths` + 1 WHERE `name` = '"+$@PlayerKilled$+"'";
+	}
+	end;
+	
+OnPCDieEvent:
+	attachrid killerrid;
+	set $pet,rand(28);
+	if($pet == 0) {	soundeffectall "doomspvp1.wav",0,strcharinfo(3);	cutin "sk_spam",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 1) {	soundeffectall "doomspvp2.wav",0,strcharinfo(3);	cutin "sk_accuracy",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 2) {	soundeffectall "doomspvp3.wav",0,strcharinfo(3);	cutin "sk_domination",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 3) {	soundeffectall "doomspvp4.wav",0,strcharinfo(3);	cutin "sk_excellent",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 4) {	soundeffectall "doomspvp5.wav",0,strcharinfo(3);	cutin "sk_fistin",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 5) {	soundeffectall "doomspvp6.wav",0,strcharinfo(3);	cutin "sk_impressive",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 6) {	soundeffectall "doomspvp7.wav",0,strcharinfo(3);	cutin "sk_incredible",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 7) {	soundeffectall "doomspvp8.wav",0,strcharinfo(3);	cutin "sk_llama",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 8) {	soundeffectall "doomspvp9.wav",0,strcharinfo(3);	cutin "sk_youdamnbelit",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 9) {	soundeffectall "doomspvp10.wav",0,strcharinfo(3);	cutin "sk_mostimpressive",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 10) {	soundeffectall "doomspvp11.wav",0,strcharinfo(3);	cutin "sk_perfect",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 11) {	soundeffectall "doomspvp12.wav",0,strcharinfo(3);	cutin "sk_precission",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 12) {	soundeffectall "doomspvp13.wav",0,strcharinfo(3);	cutin "sk_rage",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 13) {	soundeffectall "doomspvp14.wav",0,strcharinfo(3);	cutin "sk_spread",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 14) {	soundeffectall "doomspvp15.wav",0,strcharinfo(3);	cutin "sk_totaldomination",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 15) {	soundeffectall "doomspvp16.wav",0,strcharinfo(3);	cutin "sk_terminator",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 16) {	soundeffectall "doomspvp17.wav",0,strcharinfo(3);	cutin "sk_termination",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 17) {	soundeffectall "doomspvp18.wav",0,strcharinfo(3);	cutin "sk_victory",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 18) {	soundeffectall "doomspvp19.wav",0,strcharinfo(3);	cutin "sk_youwin",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 19) {	soundeffectall "doomspvp20.wav",0,strcharinfo(3);	cutin "sk_drain",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 20) {	soundeffectall "doomspvp21.wav",0,strcharinfo(3);	cutin "sk_haste",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 21) {	soundeffectall "doomspvp22.wav",0,strcharinfo(3);	cutin "sk_preptofight",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 22) {	soundeffectall "doomspvp23.wav",0,strcharinfo(3);	cutin "sk_prosperity",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 23) {	soundeffectall "doomspvp24.wav",0,strcharinfo(3);	cutin "sk_resistance",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 24) {	soundeffectall "doomspvp25.wav",0,strcharinfo(3);	cutin "sk_strain",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 25) {	soundeffectall "doomspvp26.wav",0,strcharinfo(3);	cutin "sk_tag",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 26) {	soundeffectall "doomspvp27.wav",0,strcharinfo(3);	cutin "sk_timefreeze",1;	sleep2 1000;	cutin "",255;	}
+	if($pet == 27) {	
+		cutin "sk_toasty35",2;	sleep2 3;
+		cutin "sk_toasty34",2;	sleep2 3;
+		cutin "sk_toasty33",2;	sleep2 3;
+		cutin "sk_toasty32",2;	sleep2 3;
+		cutin "sk_toasty31",2;	sleep2 3;
+		cutin "sk_toasty30",2;	sleep2 3;
+		cutin "sk_toasty29",2;	sleep2 3;
+		cutin "sk_toasty28",2;	sleep2 3;
+		cutin "sk_toasty27",2;	sleep2 3;
+		cutin "sk_toasty26",2;	sleep2 3;
+		cutin "sk_toasty25",2;	sleep2 3;
+		cutin "sk_toasty24",2;	sleep2 3;
+		cutin "sk_toasty23",2;	sleep2 3;
+		cutin "sk_toasty22",2;	sleep2 3;
+		cutin "sk_toasty21",2;	sleep2 3;
+		cutin "sk_toasty20",2;	sleep2 3;
+		cutin "sk_toasty19",2;	sleep2 3;
+		cutin "sk_toasty18",2;	sleep2 3;
+		cutin "sk_toasty17",2;	sleep2 3;
+		cutin "sk_toasty16",2;	sleep2 3;
+		cutin "sk_toasty15",2;	sleep2 3;
+		cutin "sk_toasty14",2;	sleep2 3;
+		cutin "sk_toasty13",2;	sleep2 3;
+		cutin "sk_toasty12",2;	sleep2 3;
+		cutin "sk_toasty11",2;	sleep2 3;
+		cutin "sk_toasty10",2;	sleep2 3;
+		cutin "sk_toasty9",2;	sleep2 3;
+		cutin "sk_toasty8",2;	sleep2 3;
+		cutin "sk_toasty7",2;	sleep2 3;
+		cutin "sk_toasty6",2;	sleep2 3;
+		cutin "sk_toasty5",2;	sleep2 3;
+		cutin "sk_toasty4",2;	sleep2 3;
+		cutin "sk_toasty3",2;	sleep2 3;
+		cutin "sk_toasty2",2;	sleep2 3;
+		soundeffectall "doomspvp29.wav",0,strcharinfo(3);
+		cutin "sk_toasty",2;	sleep2 1000;	
+		cutin "sk_toasty2",2;	sleep2 3;
+		cutin "sk_toasty3",2;	sleep2 3;
+		cutin "sk_toasty4",2;	sleep2 3;
+		cutin "sk_toasty5",2;	sleep2 3;
+		cutin "sk_toasty6",2;	sleep2 3;
+		cutin "sk_toasty7",2;	sleep2 3;
+		cutin "sk_toasty8",2;	sleep2 3;
+		cutin "sk_toasty9",2;	sleep2 3;
+		cutin "sk_toasty10",2;	sleep2 3;
+		cutin "sk_toasty11",2;	sleep2 3;
+		cutin "sk_toasty12",2;	sleep2 3;
+		cutin "sk_toasty13",2;	sleep2 3;
+		cutin "sk_toasty14",2;	sleep2 3;
+		cutin "sk_toasty15",2;	sleep2 3;
+		cutin "sk_toasty16",2;	sleep2 3;
+		cutin "sk_toasty17",2;	sleep2 3;
+		cutin "sk_toasty18",2;	sleep2 3;
+		cutin "sk_toasty19",2;	sleep2 3;
+		cutin "sk_toasty20",2;	sleep2 3;
+		cutin "sk_toasty21",2;	sleep2 3;
+		cutin "sk_toasty22",2;	sleep2 3;
+		cutin "sk_toasty23",2;	sleep2 3;
+		cutin "sk_toasty24",2;	sleep2 3;
+		cutin "sk_toasty25",2;	sleep2 3;
+		cutin "sk_toasty26",2;	sleep2 3;
+		cutin "sk_toasty27",2;	sleep2 3;
+		cutin "sk_toasty28",2;	sleep2 3;
+		cutin "sk_toasty29",2;	sleep2 3;
+		cutin "sk_toasty30",2;	sleep2 3;
+		cutin "sk_toasty31",2;	sleep2 3;
+		cutin "sk_toasty32",2;	sleep2 3;
+		cutin "sk_toasty33",2;	sleep2 3;
+		cutin "sk_toasty34",2;	sleep2 3;
+		cutin "sk_toasty35",2;	sleep2 3;
+		cutin "",255;	}
+	end;
+}
+
+sec_pri.gat,18,48,5	script	Rankings	108,{
+delwaitingroom;
+waitingroom "Rankings",0;
+soundeffect "effect\\ef_hit2.wav",0;
+	mes "^5555FF[Rankings OkaniRO]^000000";
+        mes "Buenas, bienvenido a OkaniRO, estoy dispuesto a ofrecer información de Rankings. ¿Qué deseas ver?";
+	menu "Ranking PVP de Víctimas",A_Rankpvp1,"Ranking PVP de Muertes",A_Rankpvp2,"Ranking GVG de Víctimas",A_Rankgvg1,"Ranking GVG de Muertes",A_Rankgvg2,"Ranking BG de Víctimas",A_Rankbg1,"Ranking BG de Muertes",A_Rankbg2,"Ranking WOE de Víctimas",A_Rankwoe1,"Ranking WOE de Muertes",A_Rankwoe2,"Ranking Duel de Víctimas",A_Rankduel1,"Ranking Duel de Muertes",A_Rankduel2,"Ranking MVP",A_Rankmvp,"Ranking Exp Player",A_Exp,"Ranking Guilds",A_Guild,"Ranking Zenys",A_Zeny,"Ranking Partidas BG",A_BG,"Ranking Emperium WOE",A_EMPWOE,"Ranking Taekwon",A_Taek,"Ranking PlayTime",A_Play,"Nada",MSalir;
+
+A_Rankpvp1:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 PVP Víctimas:";
+query_sql "SELECT `char`.`name`, `char`.`pvpkills` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`pvpkills` > 0 ORDER BY `char`.`pvpkills` DESC limit 100",.@nombres$[0],.@victimas[0]; // Aquí almacenamos las víctimas
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@victimas[.@c] +"^000000 Kills.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankpvp2:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 PVP Muertes:";
+query_sql "SELECT `char`.`name`, `char`.`pvpdeaths` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`pvpdeaths` > 0 ORDER BY `char`.`pvpdeaths` DESC limit 100",.@nombres$[0],.@muertes[0]; // Aquí almacenamos las muertes
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@muertes[.@c] +"^000000 Deaths.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankgvg1:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 GVG Víctimas:";
+query_sql "SELECT `char`.`name`, `char`.`gvgkills` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`gvgkills` > 0 ORDER BY `char`.`gvgkills` DESC limit 100",.@nombres$[0],.@victimas[0]; // Aquí almacenamos las víctimas
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@victimas[.@c] +"^000000 Kills.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankgvg2:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 GVG Muertes:";
+query_sql "SELECT `char`.`name`, `char`.`gvgdeaths` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`gvgdeaths` > 0 ORDER BY `char`.`gvgdeaths` DESC limit 100",.@nombres$[0],.@muertes[0]; // Aquí almacenamos las muertes
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@muertes[.@c] +"^000000 Deaths.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankbg1:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 BG Víctimas:";
+query_sql "SELECT `char`.`name`, `char`.`bgkills` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`bgkills` > 0 ORDER BY `char`.`bgkills` DESC limit 100",.@nombres$[0],.@victimas[0]; // Aquí almacenamos las víctimas
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@victimas[.@c] +"^000000 Kills.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankbg2:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 BG Muertes:";
+query_sql "SELECT `char`.`name`, `char`.`bgdeaths` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`bgdeaths` > 0 ORDER BY `char`.`bgdeaths` DESC limit 100",.@nombres$[0],.@muertes[0]; // Aquí almacenamos las muertes
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@muertes[.@c] +"^000000 Deaths.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankwoe1:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 WOE Víctimas:";
+query_sql "SELECT `char`.`name`, `char`.`woekills` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`woekills` > 0 ORDER BY `char`.`woekills` DESC limit 100",.@nombres$[0],.@victimas[0]; // Aquí almacenamos las víctimas
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@victimas[.@c] +"^000000 Kills.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankwoe2:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 WOE Muertes:";
+query_sql "SELECT `char`.`name`, `char`.`woedeaths` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`woedeaths` > 0 ORDER BY `char`.`woedeaths` DESC limit 100",.@nombres$[0],.@muertes[0]; // Aquí almacenamos las muertes
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@muertes[.@c] +"^000000 Deaths.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankduel1:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 DUEL Víctimas:";
+query_sql "SELECT `char`.`name`, `char`.`duelkills` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`duelkills` > 0 ORDER BY `char`.`duelkills` DESC limit 100",.@nombres$[0],.@victimas[0]; // Aquí almacenamos las víctimas
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@victimas[.@c] +"^000000 Kills.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankduel2:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 DUEL Muertes:";
+query_sql "SELECT `char`.`name`, `char`.`dueldeaths` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `login`.`group_id` = '0' and `char`.`dueldeaths` > 0 ORDER BY `char`.`dueldeaths` DESC limit 100",.@nombres$[0],.@muertes[0]; // Aquí almacenamos las muertes
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@muertes[.@c] +"^000000 Deaths.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Rankmvp:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 MVP:";
+query_sql "SELECT `char`.`name`, count(*) AS `mvpvalue` FROM `mvplog` Inner Join `char` ON `char`.`char_id` = `mvplog`.`kill_char_id` left Join `guild` ON `guild`.`guild_id` = `char`.`guild_id` Left Join `login` ON `login`.`account_id` =`char`.`account_id` WHERE `login`.`group_id` = '0' AND `login`.`state` <= '0' AND `mvp_date` > '2017-09-27 00:00:00' group by `mvplog`.`kill_char_id` order by `mvpvalue` desc LIMIT 100",.@nombres$[0],.@muertes[0]; // Aquí almacenamos las muertes
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +"^000000 con ^FF0000" +.@muertes[.@c] +"^000000 MVPs.";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Exp:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 Exp Players:";
+query_sql "select `char`.`name`, `char`.`base_level`, `char`.`job_level`, `char`.`base_exp`, `char`.`job_exp` from `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` WHERE `login`.`group_id` = '0' order by `char`.`base_level` DESC, `char`.`base_exp` DESC limit 100",.@nombres$[0],.@baselevel[0],.@joblevel[0],.@baseexp[0],.@jobexp[0];
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +":^000000 Base:^FF0000" +.@baselevel[.@c] +"^000000/Job:^FF0000" +.@joblevel[.@c] +"^000000";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Guild:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 Guilds:";
+query_sql "select `name`, `guild_lv`, `average_lv`, `exp` from `guild` WHERE `name` NOT LIKE '%kani%' AND `name` NOT LIKE '%taff%' order by `guild_lv` DESC, `average_lv` DESC, `exp` DESC limit 100",.@nombres$[0],.@guildlv[0],.@guildavlv[0],.@guildexp[0];
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +":^000000 Nivel ^FF0000" +.@guildlv[.@c] +"^000000";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Zeny:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 Zeny Players:";
+query_sql "select `char`.`name`, `char`.`zeny` from `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` WHERE `login`.`group_id` = '0' order by `char`.`zeny` DESC limit 100",.@nombres$[0],.@zenys[0];
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +":^000000 ^FF0000" +.@zenys[.@c] +"z^000000";
+	set .@i, .@i + 1;
+}
+close;
+
+A_BG:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 BG ganados (G) / perdidos (P):";
+query_sql "SELECT `char`.`name`, `bg1`.`value` as `BGWINS`, `bg2`.`value` as `BGLOSE` FROM `char` LEFT JOIN `login` ON `login`.`account_id` = `char`.`account_id` LEFT JOIN `char_reg_num` AS `bg1` ON `bg1`.`char_id` = `char`.`char_id` Inner Join `char_reg_num` AS `bg2` ON `bg1`.`char_id` = `bg2`.`char_id` WHERE `login`.`group_id` < '40' AND `login`.`state` != '5' AND (`bg1`.`key` = 'BGWINS' AND `bg2`.`key` = 'BGLOSE') group by `bg1`.`char_id` ORDER BY SUM(`bg1`.`value`) DESC LIMIT 100",.@nombres$[0],.@bgwins[0],.@bgloses[0];
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +":^000000 (G)^FF0000" +.@bgwins[.@c] +"z^000000/(G)^FF0000" +.@bgloses[.@c] +"^000000";
+	set .@i, .@i + 1;
+}
+close;
+
+A_EMPWOE:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 WOE Emperium Breaks:";
+query_sql "SELECT `char`.`name`, `char_reg_num`.`value` FROM `char` LEFT JOIN `login` ON `login`.`account_id` = `char`.`account_id` LEFT JOIN `char_reg_num` ON `char_reg_num`.`char_id` = `char`.`char_id` WHERE `login`.`group_id` < '40' AND `login`.`state` != '5' AND `char_reg_num`.`key` = 'EmpeRotos' group by `char_reg_num`.`char_id` ORDER BY SUM(`char_reg_num`.`value`) DESC LIMIT 100",.@nombres$[0],.@woeempes[0];
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +":^000000 ^FF0000" +.@woeempes[.@c] +"^000000 Emperiums";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Taek:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 Taekwon:";
+query_sql "SELECT `char`.`name`, `char`.`fame` FROM `char` LEFT JOIN `login` ON `login`.`account_id` = `char`.`account_id` WHERE `login`.`group_id` = '0' AND `login`.`state` = '0' AND `char`.`class` = '4046' AND `char`.`fame` > 0 ORDER BY `char`.`fame` DESC LIMIT 100",.@nombres$[0],.@tkpoints[0];
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +":^000000 Puntos: ^FF0000" +.@tkpoints[.@c] +"^000000";
+	set .@i, .@i + 1;
+}
+close;
+
+A_Play:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Top 100 WOE PlayTime players:";
+query_sql "SELECT `char`.`name`, `char`.`playtime` FROM `char` LEFT JOIN `login` ON `login`.`account_id` = `char`.`account_id` LEFT JOIN `guild` ON `guild`.`guild_id` = `char`.`guild_id` WHERE `login`.`group_id` = '0' AND `char`.`playtime` > 0 ORDER BY `char`.`playtime` DESC LIMIT 100",.@nombres$[0],.@playtime[0];
+set .@i, 1;
+for (set .@c, 0; .@c < getarraysize(.@nombres$); set .@c, .@c + 1) {
+	set .@time, .@playtime[.@c];
+	set .@days, (.@time / 86400);
+	set .@hour, (.@time / 3600);
+	set .@minute, (.@time / 60);
+	set .@seconds, .@time;	
+	set .@days, (.@days > 0 ? .@days : 0);
+	set .@hour, (.@hour > 0 ? .@hour : 0);
+	set .@minute, (.@minute > 0 ? .@minute : 0);
+	set .@second, (.@second > 0 ? .@second : 0);
+
+	mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombres$[.@c] +":^000000 ^FF0000" +.@days+ " days - " +.@hour+ ":"+.@minute+":"+.@second+"^000000";
+	set .@i, .@i + 1;
+}
+close;
+
+MSalir:
+next;
+soundeffect "effect\\ef_hit2.wav",0;
+mes "^5555FF[Rankings OkaniRO]^000000";
+mes "Suerte. ^^";
+close;
+
+OnInit:
+waitingroom "Rankings",0;
+end;
+}
+
+//lighthalzen.gat,151,105,5	duplicate(Rankings)	Rankings#1	403
+//hugel.gat,102,147,5	duplicate(Rankings)	Rankings#2	403
+//alberta.gat,200,150,6	duplicate(Rankings)	Rankings#3	403
+//alberta.gat,109,59,6	duplicate(Rankings)	Rankings#34	403
+//aldebaran.gat,147,128,5	duplicate(Rankings)	Rankings#4	403
+//amatsu.gat,193,91,5	duplicate(Rankings)	Rankings#5	403
+sec_pri.gat,26,44,4	duplicate(Rankings)	Rankings#6	108

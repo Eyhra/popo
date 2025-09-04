@@ -1,0 +1,41 @@
+// ________                   .__         .__      _____             __
+// \______ \  _____     ____  |__|  ____  |  |    /  _  \  _______ _/  |_
+//  |    |  \ \__  \   /    \ |  |_/ __ \ |  |   /  /_\  \ \_  __ \\   __\
+//  |    `   \ / __ \_|   |  \|  |\  ___/ |  |__/    |    \ |  | \/ |  |
+// /_______  /(____  /|___|  /|__| \___  >|____/\____|__  / |__|    |__|
+//         \/      \/      \/          \/               \/
+//                             www.danielart.net
+//==========================================================================
+seal,94,91,5	shop	Pet Shop#pet	81,643:-1,10013:-1,10014:-1,504:-1,716:-1,508:500,511:500,507:500,537:1000,534:500,531:500,1002:1000,532:500,6113:5000,6115:5000,929:1500,518:1000,711:500,911:-1,6099:-1,6106:-1,6109:-1,6097:-1,6096:-1,7821:-1,6115:-1,6112:-1,6111:-1,6098:-1,6108:-1,6100:-1,6104:-1,6113:-1,6110:-1,6095:-1,6114:-1
+seal_in,39,13,5	shop	Food Shop#1	548,12202:5000000,12203:5000000,12204:5000000,12205:5000000,12206:5000000,12207:5000000
+// morocc,152,96,4	duplicate(Pet Shop#pet)	Pet Shop#pet01	558
+// geffen,111,67,4	duplicate(Pet Shop#pet)	Pet Shop#pet02	558
+// payon,180,107,4	duplicate(Pet Shop#pet)	Pet Shop#pet03	558
+// alberta,39,240,4	duplicate(Pet Shop#pet)	Pet Shop#pet04	558
+// izlude,134,98,4	duplicate(Pet Shop#pet)	Pet Shop#pet05	558
+// aldebaran,146,119,4	duplicate(Pet Shop#pet)	Pet Shop#pet06	558
+// xmas,143,136,4	duplicate(Pet Shop#pet)	Pet Shop#pet07	558
+// comodo,197,158,4	duplicate(Pet Shop#pet)	Pet Shop#pet08	558
+// yuno,139,189,4	duplicate(Pet Shop#pet)	Pet Shop#pet09	558
+// amatsu,102,162,4	duplicate(Pet Shop#pet)	Pet Shop#pet10	558
+// gonryun,164,122,4	duplicate(Pet Shop#pet)	Pet Shop#pet11	558
+// umbala,96,166,4	duplicate(Pet Shop#pet)	Pet Shop#pet12	558
+// niflheim,203,190,4	duplicate(Pet Shop#pet)	Pet Shop#pet13	558
+// louyang,228,103,4	duplicate(Pet Shop#pet)	Pet Shop#pet14	558
+// einbech,179,129,5	duplicate(Pet Shop#pet)	Pet Shop#pet14b	558
+// jawaii,246,131,4	duplicate(Pet Shop#pet)	Pet Shop#pet14c	558
+// ayothaya,223,179,4	duplicate(Pet Shop#pet)	Pet Shop#pet15	558
+// einbroch,71,206,4	duplicate(Pet Shop#pet)	Pet Shop#pet16	558
+// lighthalzen,162,103,4	duplicate(Pet Shop#pet)	Pet Shop#pet17	558
+// hugel,102,154,4	duplicate(Pet Shop#pet)	Pet Shop#pet18	558
+// rachel,114,144,4	duplicate(Pet Shop#pet)	Pet Shop#pet19	558
+// veins,205,134,4	duplicate(Pet Shop#pet)	Pet Shop#pet20	558
+// manuk,278,152,4	duplicate(Pet Shop#pet)	Pet Shop#pet21	558
+// splendide,207,145,4	duplicate(Pet Shop#pet)	Pet Shop#pet22	558
+// verus04,132,253,4	duplicate(Pet Shop#pet)	Pet Shop#pet23	558
+// dicastes01,201,190,4	duplicate(Pet Shop#pet)	Pet Shop#pet24	558
+// mid_camp,210,242,4	duplicate(Pet Shop#pet)	Pet Shop#pet25	558
+// moscovia,230,196,4	duplicate(Pet Shop#pet)	Pet Shop#pet26	558
+// brasilis,202,226,4	duplicate(Pet Shop#pet)	Pet Shop#pet27	558
+// seal,91,90,4	duplicate(Pet Shop#pet)	Pet Shop#pet28	558
+// seal_in01,91,14,4	duplicate(Pet Shop#pet)	Pet Shop#pet29	558

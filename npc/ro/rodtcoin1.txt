@@ -1,0 +1,31 @@
+-	shop	custom_seller3	-1,501:2000000
+1@tnm3,147,74,5	script	Brenda [ROTD Coins]#1	691,{
+	mes "[ ^308304Brenda ^000000 ]";
+	mes "Solo se acepta " + getitemname(.CoinID) + " como medio de pago.";
+	callshop "custom_seller3",1;
+	npcshopattach "custom_seller3";
+	end;
+	OnBuyItem:
+	for(set .@i,0; .@i<getarraysize(.customs); set .@i,.@i+1) {
+		for(set .@d,0; .@d<getarraysize(@bought_nameid); set .@d,.@d+1) {
+			if(@bought_nameid[.@d]==.customs[.@i]) {
+				if(checkweight(@bought_nameid[.@d],@bought_quantity[.@d])) {
+					if(countitem(.CoinID) >= .Price[.@i]*@bought_quantity[.@d]) {
+						delitem .CoinID,.Price[.@i]*@bought_quantity[.@d];
+						getitem @bought_nameid[.@d],@bought_quantity[.@d];
+					} else dispbottom "No tienes suficientes "+getitemname(.CoinID)+" para comprar este producto.";
+				} else dispbottom "Purchasing these items will put you over the weight limit!";
+			}
+		}
+	}
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	close;
+OnInit:
+	setarray .customs[0],19506,19509,19510,19511,19512,19513,19516,19521,19530,19534,19537,19539,19540,19543,19557,19558,19559,19560,19561,19565,19567,19568,19570,19571,19572,19574,19575,19576,19579,19582,19584,19586,19588,19589,19590,19595,19596,19598,19599,19600;
+	set .CoinID,19500; // Enter the ID of the coin here.
+	setarray .Price[0],350,500,450,400,400,400,500,700,550,600,600,600,700,700,650,650,600,600,600,650,650,750,750,600,750,750,650,700,750,750,600,650,700,700,700,600,700,750,750,750;// Price for each custom is set to 20 coins
+	npcshopitem "custom_seller3",0,0; // Don't touch any coding beyond here
+	for(set .i,0; .customs[.i]; set .i,.i+1) npcshopadditem "custom_seller3",.customs[.i],.Price[.i];
+	end;
+}

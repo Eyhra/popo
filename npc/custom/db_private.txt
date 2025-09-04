@@ -1,0 +1,395 @@
+//	....... if your server has { Overwriting user function [int__] } don't blame me ..........
+function	script	int__	{
+	set .@num, atoi(getarg(0)+"");
+	if ( .@num == 0 || .@num >= 2147483647 ) return getarg(0);
+	set .@l, getstrlen(.@num+"");
+	for ( set .@i,0; .@i < .@l; set .@i, .@i + 1 ) {
+		set .@num$, .@num % pow(10,.@i+1) / pow(10,.@i) + .@num$;
+		if ( (.@i+1) % 3 == 0 && .@i+1 != .@l ) set .@num$, ","+ .@num$;
+	}
+	return .@num$;
+}
+
+//===== eAthena Script ======================================
+//= Private MVP/Branch Room
+//===== Compatible With: =====================================
+//= eAthena 11650 Trunk above or 11863 Stable above
+//===== Description: ========================================= 
+//= Player can rent MVP room for the player him/herself, for party or for guilds
+//===== Topic =================================================
+//= http://www.eathena.ws/board/index.php?showtopic=187654
+//========================================================
+
+-	script	Asistente	-1,{
+	goto L_Start;
+
+OnInit:
+	getmapxy .@map$, .@x, .@y, 1;
+	if ( .@map$ == "" ) {
+
+//	Config ---------------------------------------------------------------------------------------
+
+	// Tiempo de arriendo de las salas. Cuando el tiempo finaliza, los jugadores son expulsados de la sala.
+	set .timeout, 240;
+	// Tiempo de espera para que haya algun usuario en la sala, si en este tiempo no ingresa nadie la sala queda libre.
+	set .nobodygiveup, 5;
+
+	// Costo para entrar a la sala.
+	set .rentcost, 100000; // otherwise, zeny cost to rent a room
+
+	// limit each room can only summon 1 monster at a time. (only the Summoning option)
+	// Turn it off (0) means the player can summon a lot of monsters as long as the player has enough zeny/item. High rate server players love the room with a lot MVPs
+	// Turn it on (1) means the player have to kill existing monster before can summon a new one. Low rate server player prefer to take out MVP 1 by 1
+	//set .floodcontrol, 0;
+
+	// if .floodcontrol is turn off, your players might experience lag if they summoned too many MVPs
+	// so what is the maximum input to limit your players summon too many ?
+	//set .inputlimit, 30;
+
+	// If the room has left over monsters while nobody in the room and the room not give up yet, shall we kill monsters in empty room ?
+	set .killmonster2, 1; // Default is yes
+
+	//Opciones del menu del NPC.
+        set .@menu[0], 1; // Turn Heal option On/Off
+
+	//Respawn una vez fuera de la sala privada. Obviamente utilizando al NPC que está dentro.
+	set .respawnmap$, "prontera"; // Note : "SavePoint" does NOT work
+	set .respawnx, 157;
+	set .respawny, 182;
+
+	// The minimum GM level can kick a room in use
+	set .gmlvlkick, 80;
+
+
+//	Config Ends ------------------------------------------------------------------------
+
+		if ( .timeout == 0 ) set .timeout, 60;
+		if ( .nobodygiveup == 0 ) set .nobodygiveup, 5;
+		if ( .inputlimit < 1 ) set .inputlimit, 1;
+
+		set .@i, 1;
+		while ( .@i <= 9 ) {
+//			if ( .@menu[.@i] && getd(".group"+ .@i +"itemamount") ) {
+//			if ( .@menu[.@i] && getd(".group"+ .@i +"itemid") && getd(".group"+ .@i +"itemamount") ) {
+//				if ( getitemname( getd(".group"+ .@i +"itemid") ) == "null" ) {
+//					debugmes "^0033FFAsistente de Sala^000000  : Group no. "+ .@i +" is using invalid item id.";
+//				}
+//			}
+			set .@i, .@i +1 ;
+		}
+		set .menu$, ( (.@menu[0])?"Recuperarme":"" )+":Usar Storage:Salir de la Sala:Liberar la Sala";
+	}
+	else {
+		sleep 1;
+		mapannounce .@map$, "El admin ha relogeado el servidor, porfavor registrese en la sala nuevamente.", 1;
+		mapwarp .@map$, .respawnmap$, .respawnx, .respawny;
+	}
+	end;
+	
+OnMobDead:
+	end;
+
+L_Start: // I hate gotos ... but ...
+	set .@dif, strnpcinfo(2);
+	if ( .remind[.@dif] == 0 ) {
+		set .remind[.@dif], 1;
+		initnpctimer;
+	}
+	mes "[^0033FFAsistente^000000]";
+	mes "Hola, Que puedo hacer por ti ?";
+	next;
+	switch(select("^3355FFHeal ^000000:^3355FFStorage^000000:Exit Room:Exit room 2")) {
+		case 1:
+			mes "[^0033FFAsistente^000000]";
+			if ( mobcount( "this", strnpcinfo(3)+"::OnMobDead" ) ) {
+				mes "I cannot offer heal service when there are monsters around.";
+				close;
+			}
+			sc_end sc_stone;
+			sc_end sc_slowdown;
+			sc_end sc_freeze;
+			sc_end sc_sleep;
+			sc_end sc_curse;
+			sc_end sc_silence;
+			sc_end sc_confusion;
+			sc_end sc_blind;
+			sc_end sc_bleeding;
+			sc_end sc_decreaseagi;
+			sc_end sc_poison;
+			sc_end sc_hallucination;
+			sc_end sc_stripweapon;
+			sc_end sc_striparmor;
+			sc_end sc_striphelm;
+			sc_end sc_stripshield;
+			sc_end sc_changeundead;
+			sc_end sc_orcish;
+			sc_end sc_berserk;
+			sc_end sc_ske;
+			sc_end sc_swoo;
+			sc_end sc_ska;
+			percentheal 100,100;
+			specialeffect2 7;
+			mes "Te has recuperado completamente.";
+			close;
+		case 2:
+			if (Zeny < 20) {
+				mes "[^0033FFAsistente^000000]";
+				mes "Lo lamento pero según Kafra Corp necesitas 20z para acceder al Storage.";
+				close;
+			}
+			set Zeny, Zeny-20;
+			set RESRVPTS, RESRVPTS + (20/5);
+			mes "[^0033FFAsistente^000000]";
+			mes "Bien, ya pedí permiso a Kafra Corp para autorizarte a usar storage y lo concedieron.";
+			callfunc("F_CheckKafCode");    //check your storage password, if set
+			close2;
+			openstorage;
+			end;
+		case 3:
+			mes "[^0033FFAsistente^000000]";
+			mes "Está seguro que desea salir de la Sala ?";
+			mes "Si la sala permanece vacia por mas de "+ .nobodygiveup +" minutos, perderás la posecion de la sala.";
+			if ( select( "Si:No") == 2 ) close;
+			warp .respawnmap$, .respawnx, .respawny;
+			end;
+		case 4:
+			mes "[^0033FFAsistente^000000]";
+			getmapxy .@map$, .@x, .@y, 0;
+			if ( getmapusers(.@map$) > 1 ) {
+				mes "There are still some players in this room. Make sure you are the last member in this room to use this option.";
+				close;
+			}
+			mes "Está seguro que deseas liberar la Sala ?";
+			if ( .rentcost )
+				mes "Tendrás que pagar nuevamente si deseas entrar otra vez.";
+			next;
+			if ( select( "Si:No" ) == 2 ) close;
+			warp .respawnmap$, .respawnx, .respawny;
+			set .remaintime[.@dif], -1;
+			end;
+	}
+	close;
+
+OnEnterMap:
+	set .@dif, strnpcinfo(2);
+	set .remind[.@dif], 0;
+	for ( set .@i, 1; .@i <= 9; set .@i, .@i +1 )
+		deletearray getd(".group"+ .@i +"limit"+ .@dif), getd(".group"+ .@i +"idsize");
+	set .nobodycounter[.@dif], 0;
+	getmapxy .@map$, .@x, .@y ,1;
+	set .starttime[.@dif], gettimetick(2);
+	do {
+		set .remaintime[.@dif], .timeout * 60 + .starttime[.@dif] - gettimetick(2);
+		set .@hour[.@dif], .remainTime[.@dif] / 3600 ;
+		set .@min[.@dif], .remainTime[.@dif] % 3600 / 60 ;
+		set .@sec[.@dif], .remainTime[.@dif] % 3600 % 60 ;
+		delwaitingroom strnpcinfo(0);
+		waitingroom "Tiempo Restante = "+( ( .@hour[.@dif] )?( .@hour[.@dif] +":"):"" )+( ( .@min[.@dif] < 10 )?"0"+ .@min[.@dif]: .@min[.@dif] )+":"+( ( .@sec[.@dif] < 10 )?"0"+ .@sec[.@dif]: .@sec[.@dif] ), 0;
+		if ( getmapusers(.@map$) )
+			set .nobodycounter[.@dif], 0;
+		else {
+			set .nobodycounter[.@dif], .nobodycounter[.@dif] +1 ;
+			if ( .nobodycounter[.@dif] > .nobodygiveup * 60 ) break;
+		}
+		sleep 995;
+	} while ( .remaintime[.@dif] > 1 );
+	set .remaintime[.@dif], 0;
+	delwaitingroom "Asistente#"+ .@dif;
+	mapwarp .@map$, .respawnmap$, .respawnx, .respawny;
+	end;
+
+}
+
+sec_pri,24,42,7	script	Salas Privadas::dbprivate	100,{
+delwaitingroom;
+waitingroom "Branchs/Cultivos",0;
+	mes "[^0033FFAsistente de Sala^000000]";
+	mes "Por favor, seleccione la Sala que desea arrendar:";
+	mes " ";
+    mes "Tiempo límite de la Sala: ^FF0000"+ getvariableofnpc(.timeout, "Asistente") +"^000000 minutos.";
+    mes "Valor de solicitud: ^FF0000"+ callfunc("int__", getvariableofnpc(.rentcost, "Asistente") ) +"^000000 zeny.";
+	mes "Tiempo de ausencia para liberar sala: ^FF00005^000000 minutos.";
+	next;
+        if ( getvariableofnpc(.rentcost, "Asistente") )
+        for ( set .@i, 1; .@i <= 8; set .@i, .@i +1 ) {
+		if ( getvariableofnpc(.remaintime[.@i],"Asistente") ) {
+			switch ( .type[.@i] ) {
+				case 1: set .@color$, "^EE8800"; break;
+				case 2: set .@color$, "^70CC11"; break;
+				case 3: set .@color$, "^0000FF"; break;
+				default: set .@color$, "^000000";
+			}
+			mes "Sala Privada "+ .@i +" = "+ .@color$ + .whoinuse$[.@i] +"^000000";
+		}
+	}
+	set .@room, select("Sala Privada 1 ["+ getmapusers("06guild_01") +"]",
+		"Sala Privada 2 ["+ getmapusers("06guild_02") +"]",
+		"Sala Privada 3 ["+ getmapusers("06guild_03") +"]",
+		"Sala Privada 4 ["+ getmapusers("06guild_04") +"]",
+		"Sala Privada 5 ["+ getmapusers("06guild_05") +"]",
+		"Sala Privada 6 ["+ getmapusers("06guild_06") +"]",
+		"Sala Privada 7 ["+ getmapusers("06guild_07") +"]",
+		"Sala Privada 8 ["+ getmapusers("06guild_08") +"]");
+	if ( getvariableofnpc(.remaintime[.@room],"Asistente") ) {
+		if ( .inuseid[.@room] == getcharid(.type[.@room]) ) {
+			//if ( getvariableofnpc(.killmonster,"Asistente") && getmapusers("06guild_0"+ .@room) == 0 )
+				//killmonsterall "06guild_0"+ .@room;
+			warp "06guild_0"+ .@room, 0,0;
+			end;
+		} else {
+			mes "[^0033FFAsistente de Sala^000000]";
+			switch ( .type[.@room] ) {
+				case 1: set .@color$, "^EE8800Party "; break;
+				case 2: set .@color$, "^70CC11Guild "; break;
+				case 3: set .@color$, "^0000FFPlayer ";
+			}
+			mes "Esta sala está reservada para: ";
+			mes .@color$ + .whoinuse$[.@room] +"^000000 .";
+			if ( getgmlevel() < getvariableofnpc(.gmlvlkick,"Asistente") ) {
+				mes "Por favor, selecciona otra.";
+				close;
+			}
+			mes " ";
+			mes "Actualmente hay "+ getmapusers("06guild_0"+ .@room) +" jugadores";
+			mes "en esta sala.";
+			set .@remaintime, getvariableofnpc(.remaintime[.@room],"Asistente");
+			mes "Y le quedan "+( .@remaintime /60 )+" minutos con "+( .@remaintime %60 )+" segundos mas de arriendo.";
+			set .@nobodycounter, getvariableofnpc(.nobodycounter[.@room],"Asistente");
+			if ( .@nobodycounter )
+				mes "Y ha estado desocupada durante "+( .@nobodycounter /60 )+" minutos y "+( .@nobodycounter %60 )+" segundos.";
+			mes "Desocupar la Sala ?";
+			next;
+			if ( select ( "No:Si" ) == 1 ) close;
+			set getvariableofnpc(.remaintime[.@room],"Asistente"), -1;
+			mes "[^0033FFAsistente de Sala^000000]";
+			mes "La Sala "+ .@room +" ahora está desocupada.";
+			close;
+		}
+	}
+	mes "[^0033FFAsistente de Sala^000000]";
+	if ( getvariableofnpc(.rentcost, "Asistente") ) {
+		if ( zeny < getvariableofnpc(.rentcost, "Asistente") ) {
+			mes "No tienes el dinero suficiente para rentar la sala.";
+			close;
+		}
+	}
+	mes "Para quien deseas reservar esta sala ...";
+	next;
+	set .@type, select("Para los miembros de mi party", "Para los miembros de mi guild", "Para uso personal" );
+	if ( getcharid(.@type) == 0 ) {
+		mes "[^0033FFAsistente de Sala^000000]";
+		mes "Usted no pertenece a ninguna "+( (.@type == 1)?"Party":"Guild" )+".";
+		close;
+	}
+	else if ( getvariableofnpc(.remaintime[.@room],"Asistente") ) {
+		mes "[^0033FFAsistente de Sala^000000]";
+		mes "Lo siento, alguien ha registrado esta sala mas rapido que usted.";
+		close;
+	}
+	for ( set .@i, 1; .@i <= 8; set .@i, .@i +1 ) {
+		if ( getvariableofnpc(.remaintime[.@i],"Asistente") && .@type == .type[.@i] && getcharid(.@type) == .inuseid[.@i] ) {
+			mes "[^0033FFAsistente de Sala^000000]";
+			mes "Ya tienes rentada la Sala "+ .@i +" para aquello. Debes usar esa sala.";
+			close;
+		}
+	}
+	set .type[.@room], .@type;
+	set .inuseid[.@room], getcharid(.@type);
+	set .whoinuse$[.@room], strcharinfo( (.@type == 3)?0:.@type );
+        if ( getvariableofnpc(.rentcost, "Asistente") ) {
+		if ( zeny < getvariableofnpc(.rentcost, "Asistente") ) end;
+		set zeny, zeny - getvariableofnpc(.rentcost, "Asistente");
+	}
+	mes "[^0033FFAsistente de Sala^000000]";
+	mes "¿Deseas limpiar la sala en caso de que hayan Mobs/MVPs?";
+	set .@typemobs, select("No", "Si");
+	if(.@typemobs == 2) killmonsterall "06guild_0"+ .@room;
+	warp "06guild_0"+ .@room, 49,44;
+	donpcevent "Asistente#"+ .@room +"::OnEnterMap";
+	end;
+
+OnInit:
+waitingroom "Branchs/Cultivos",0;
+end;
+}
+
+//alberta.gat,109,67,5	duplicate(dbprivate)	Salas Privadas#2-1	100
+//aldebaran.gat,147,108,4	duplicate(dbprivate)	Salas Privadas#3-1	100
+//amatsu.gat,123,149,4	duplicate(dbprivate)	Salas Privadas#5-1	100
+//ayothaya.gat,201,190,5	duplicate(dbprivate)	Salas Privadas#6-1	100
+//brasilis.gat,203,212,4	duplicate(dbprivate)	Salas Privadas#7-1	100
+//comodo.gat,182,155,5	duplicate(dbprivate)	Salas Privadas#8-1	100
+//einbech.gat,189,123,5	duplicate(dbprivate)	Salas Privadas#9-1	100
+//einbroch.gat,76,203,4	duplicate(dbprivate)	Salas Privadas#10-1	100
+//geffen.gat,115,68,5	duplicate(dbprivate)	Salas Privadas#11-1	100
+//gonryun.gat,147,114,4	duplicate(dbprivate)	Salas Privadas#12-1	100
+//hugel.gat,83,149,5	duplicate(dbprivate)	Salas Privadas#13-1	100
+//izlude.gat,118,125,5	duplicate(dbprivate)	Salas Privadas#14-1	100
+//jawaii.gat,239,136,4	duplicate(dbprivate)	Salas Privadas#15-1	100
+//lighthalzen.gat,152,100,5	duplicate(dbprivate)	Salas Privadas#16-1	100
+//louyang.gat,204,105,5	duplicate(dbprivate)	Salas Privadas#17-1	100
+//xmas.gat,141,126,5	duplicate(dbprivate)	Salas Privadas#18-1	100
+//morocc.gat,151,82,5	duplicate(dbprivate)	Salas Privadas#22-1	100
+//moscovia.gat,208,191,5	duplicate(dbprivate)	Salas Privadas#23-1	100
+//payon.gat,154,96,5	duplicate(dbprivate)	Salas Privadas#25-1	100
+//rachel.gat,123,119,4	duplicate(dbprivate)	Salas Privadas#26-1	100
+//splendide.gat,181,141,5	duplicate(dbprivate)	Salas Privadas#27-1	100
+//umbala.gat,85,151,5	duplicate(dbprivate)	Salas Privadas#28-1	100
+//veins,206,134,5	duplicate(dbprivate)	Salas Privadas#29-1	100
+//yuno.gat,175,187,4	duplicate(dbprivate)	Salas Privadas#30-1	100
+//dicastes01.gat,205,178,4	duplicate(dbprivate)	Salas Privadas#61-1	100
+//dewata.gat,192,171,6	duplicate(dbprivate)	Salas Privadas#64-1	100
+//malaya.gat,205,210,5	duplicate(dbprivate)	Salas Privadas#81-1	100
+//manuk.gat,295,241,4	duplicate(dbprivate)	Salas Privadas#82-1	100
+//cmd_fild07.gat,276,126,4	duplicate(dbprivate)	Salas Privadas#84-1	100
+
+
+06guild_01,49,49,4	duplicate(Asistente)	Asistente#1	116
+06guild_02,49,49,4	duplicate(Asistente)	Asistente#2	116
+06guild_03,49,49,4	duplicate(Asistente)	Asistente#3	116
+06guild_04,49,49,4	duplicate(Asistente)	Asistente#4	116
+06guild_05,49,49,4	duplicate(Asistente)	Asistente#5	116
+06guild_06,49,49,4	duplicate(Asistente)	Asistente#6	116
+06guild_07,49,49,4	duplicate(Asistente)	Asistente#7	116
+06guild_08,49,49,4	duplicate(Asistente)	Asistente#8	116
+
+06guild_01	mapflag	nopenalty
+06guild_02	mapflag	nopenalty
+06guild_03	mapflag	nopenalty
+06guild_04	mapflag	nopenalty
+06guild_05	mapflag	nopenalty
+06guild_06	mapflag	nopenalty
+06guild_07	mapflag	nopenalty
+06guild_08	mapflag	nopenalty
+06guild_01	mapflag	nowarpto
+06guild_02	mapflag	nowarpto
+06guild_03	mapflag	nowarpto
+06guild_04	mapflag	nowarpto
+06guild_05	mapflag	nowarpto
+06guild_06	mapflag	nowarpto
+06guild_07	mapflag	nowarpto
+06guild_08	mapflag	nowarpto
+06guild_01	mapflag	nomemo
+06guild_02	mapflag	nomemo
+06guild_03	mapflag	nomemo
+06guild_04	mapflag	nomemo
+06guild_05	mapflag	nomemo
+06guild_06	mapflag	nomemo
+06guild_07	mapflag	nomemo
+06guild_08	mapflag	nomemo
+06guild_01	mapflag	monster_noteleport
+06guild_02	mapflag	monster_noteleport
+06guild_03	mapflag	monster_noteleport
+06guild_04	mapflag	monster_noteleport
+06guild_05	mapflag	monster_noteleport
+06guild_06	mapflag	monster_noteleport
+06guild_07	mapflag	monster_noteleport
+06guild_08	mapflag	monster_noteleport
+06guild_01	mapflag	nosave	SavePoint
+06guild_02	mapflag	nosave	SavePoint
+06guild_03	mapflag	nosave	SavePoint
+06guild_04	mapflag	nosave	SavePoint
+06guild_05	mapflag	nosave	SavePoint
+06guild_06	mapflag	nosave	SavePoint
+06guild_07	mapflag	nosave	SavePoint
+06guild_08	mapflag	nosave	SavePoint

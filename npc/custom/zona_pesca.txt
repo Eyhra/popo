@@ -1,0 +1,752 @@
+
+// --------------- Panel Informativo  ---------------
+// =========================================================
+
+prt_fild05.gat,43,179,5	script	Panel Informativo::ppesca01	837,{
+	npctalk "Bienvenido al Área de pesca de los campos de Prontera.";
+end;}
+
+gef_fild01.gat,202,235,5	script	Panel Informativo::ppesca02	837,{
+	npctalk "Bienvenido al Área de pesca de los campos de Geffen.";
+end;}
+
+moc_fild10.gat,198,125,5	script	Panel Informativo::ppesca03	837,{
+	npctalk "Bienvenido al Área de pesca del desierto de Morocc.";
+end;}
+
+pay_fild05.gat,87,157,5	script	Panel Informativo::ppesca04	837,{
+	npctalk "Bienvenido al Área de pesca del bosque de Payon.";
+end;}
+
+
+// --------------- Principio pesca  ---------------
+// =========================================================
+
+prt_fild05.gat,48,179,5	script	Zona de Pesca	111,{
+	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Parece ser que he encontrado una zona donde poder pescar...";
+	next;
+if(countitem(45001)<1)goto nocana;
+if(countitem(45002)<1)goto nogusano;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Que deberia hacer?";
+	next;
+menu "Pescaré un poco",pescar,"Mejor no",cancelar;
+
+
+// --------------- Efectos de Pesca  ---------------
+// =========================================================
+
+pescar:	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Bien, pescare un poco ya que parece que tengo todo lo necesario.";
+	next;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Ahi voy!!";
+	next;
+	specialeffect2 501;
+	sleep2 1000;
+	specialeffect2 457;
+	specialeffect2 265;
+	delitem 45002,1;
+	atcommand "@me lanza el cebo con todas sus fuerzas.";
+	sleep2 4000;
+	set @cebo,rand(1,10);
+	if (@cebo == 1) goto pesca;
+	if (@cebo == 2) goto pesca;
+	if (@cebo >= 3) goto fallo;
+	close;
+
+
+
+pesca:
+	sleep2 4000;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Algo ha mordido el anzuelo!!";
+	next;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Que deberia hacer?";
+	next;
+menu "Estirar la caña",estirar,"Dejarlo marchar",dejarlo;
+
+
+estirar:
+	specialeffect2 463;
+	specialeffect2 457;
+	atcommand "@me estira su caña con fuerza.";
+	sleep2 2000;
+	set @pesca,rand(1,12);
+	if (@pesca == 1) goto pescado;
+	if (@pesca == 2) goto pescado;
+	if (@pesca == 3) goto pescado;
+	if (@pesca == 4) goto pescado;
+	if (@pesca == 5) goto estiramiento;
+	if (@pesca == 6) goto estiramiento;
+	if (@pesca == 7) goto estiramiento;
+	if (@pesca == 8) goto estiramiento;
+	if (@pesca == 9) goto estiramiento;
+	if (@pesca == 10) goto estiramiento;
+	if (@pesca == 11) goto estiramiento;
+	if (@pesca == 12) goto rotura;
+	close;
+
+
+// --------------- Selección de Premio  ---------------
+// =========================================================
+
+pescado:
+	atcommand "@me de un gran tirón consigue sacar algo de debajo del agua.";
+	specialeffect2 610;
+	set @pez,rand(1,200);
+	if (@pez <= 60) goto pez;
+	if (@pez <= 120) goto gamba;
+	if (@pez <= 160) goto almeja;
+	if (@pez <= 190) goto atun;
+	if (@pez <= 196) goto rotten;
+	//if (@pez <= 198) goto mapa;
+	if (@pez <= 200) goto gorro;
+	close;
+
+
+// --------------- Pez  ---------------
+// =========================================================
+
+pez:
+	set @pezuni,rand(1,14);
+	if (@pezuni == 1) goto pez1;
+	if (@pezuni == 2) goto pez2;
+	if (@pezuni == 3) goto pez3;
+	if (@pezuni == 4) goto pez4;
+	if (@pezuni == 5) goto pez5;
+	if (@pezuni == 6) goto pez5;
+	if (@pezuni == 7) goto pez5;
+	if (@pezuni == 8) goto pez5;
+	if (@pezuni == 9) goto pez5;
+	if (@pezuni == 10) goto pez5;
+	if (@pezuni == 11) goto pez5;
+	if (@pezuni == 12) goto pez5;
+	if (@pezuni == 13) goto pez5;
+	if (@pezuni == 14) goto pez5;
+close;
+
+
+pez1:
+	getitem 579,2;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+pez2:
+	getitem 579,3;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+pez3:
+	getitem 579,4;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez4:
+	getitem 579,5;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez5:
+	getitem 579,6;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez6:
+	getitem 579,7;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez7:
+	getitem 579,8;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez8:
+	getitem 579,9;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez9:
+	getitem 579,10;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez10:
+	getitem 579,11;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez11:
+	getitem 579,12;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez12:
+	getitem 579,13;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez13:
+	getitem 579,14;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+
+
+pez14:
+	getitem 579,15;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Por fin lo consegui sacar, tiene pinta de estar delicioso!";
+	next;
+close;
+
+// --------------- Gamba  ---------------
+// =========================================================
+
+gamba:
+	set @gamuni,rand(1,14);
+	if (@gamuni == 1) goto gam1;
+	if (@gamuni == 2) goto gam2;
+	if (@gamuni == 3) goto gam3;
+	if (@gamuni == 4) goto gam4;
+	if (@gamuni == 5) goto gam5;
+	if (@gamuni == 6) goto gam6;
+	if (@gamuni == 7) goto gam7;
+	if (@gamuni == 8) goto gam8;
+	if (@gamuni == 9) goto gam9;
+	if (@gamuni == 10) goto gam10;
+	if (@gamuni == 11) goto gam11;
+	if (@gamuni == 12) goto gam12;
+	if (@gamuni == 13) goto gam13;
+	if (@gamuni == 14) goto gam14;
+close;
+
+
+gam1:
+	getitem 567,2;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam2:
+	getitem 567,3;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam3:
+	getitem 567,4;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam4:
+	getitem 567,5;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam5:
+	getitem 567,6;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam6:
+	getitem 567,7;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam7:
+	getitem 567,8;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam8:
+	getitem 567,9;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam9:
+	getitem 567,10;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam10:
+	getitem 567,11;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam11:
+	getitem 567,12;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam12:
+	getitem 567,13;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam13:
+	getitem 567,14;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+
+
+gam14:
+	getitem 567,15;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Tanto trabajo para esto?";
+	next;
+close;
+
+// --------------- Almeja  ---------------
+// =========================================================
+
+almeja:
+	set @almuni,rand(1,14);
+	if (@almuni == 1) goto alm1;
+	if (@almuni == 2) goto alm2;
+	if (@almuni == 3) goto alm3;
+	if (@almuni == 4) goto alm4;
+	if (@almuni == 5) goto alm5;
+	if (@almuni == 6) goto alm6;
+	if (@almuni == 7) goto alm7;
+	if (@almuni == 8) goto alm8;
+	if (@almuni == 9) goto alm9;
+	if (@almuni == 10) goto alm10;
+	if (@almuni == 11) goto alm11;
+	if (@almuni == 12) goto alm12;
+	if (@almuni == 13) goto alm13;
+	if (@almuni == 14) goto alm14;
+close;
+
+
+
+alm1:
+	getitem 966,2;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm2:
+	getitem 966,3;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+
+alm3:
+	getitem 966,4;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm4:
+	getitem 966,5;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm5:
+	getitem 966,6;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm6:
+	getitem 966,7;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm7:
+	getitem 966,8;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm8:
+	getitem 966,9;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+alm9:
+	getitem 966,10;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm10:
+	getitem 966,11;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm11:
+	getitem 966,12;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm12:
+	getitem 966,13;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm13:
+	getitem 966,14;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+
+
+alm14:
+	getitem 966,15;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Uh? Era una almeja, quizas me paguen bien por su carne.";
+	next;
+close;
+
+// --------------- Atún  ---------------
+// =========================================================
+
+atun:
+	set @atuni,rand(1,2);
+	if (@atuni == 1) goto atu1;
+	if (@atuni == 2) goto atu2;
+	if (@atuni == 3) goto atu3;
+	if (@atuni == 4) goto atu4;
+	if (@atuni == 5) goto atu5;
+	if (@atuni == 6) goto atu6;
+	if (@atuni == 7) goto atu7;
+	if (@atuni == 8) goto atu8;
+	if (@atuni == 9) goto atu9;
+	if (@atuni == 10) goto atu10;
+	if (@atuni == 11) goto atu11;
+	if (@atuni == 12) goto atu12;
+	if (@atuni == 13) goto atu13;
+	if (@atuni == 14) goto atu14;
+close;
+
+
+
+atu1:
+	getitem 45003,2;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu2:
+	getitem 45003,3;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu3:
+	getitem 45003,4;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu4:
+	getitem 45003,5;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu5:
+	getitem 45003,6;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu6:
+	getitem 45003,7;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu7:
+	getitem 45003,8;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu8:
+	getitem 45003,9;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu9:
+	getitem 45003,10;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu10:
+	getitem 45003,11;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+
+atu11:
+	getitem 45003,12;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+
+atu12:
+	getitem 45003,13;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu13:
+	getitem 45003,14;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+atu14:
+	getitem 45003,15;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¡¡¡Que atún más grande!!!.";
+	mes "Seguro que me pagan bien por esto";
+	next;
+close;
+
+
+
+
+
+
+// --------------- Rotten  ---------------
+// =========================================================
+
+
+rotten:
+	getitem 624,1;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Vaya...Solo era un pez podrido...";
+	next;
+close;
+
+
+// --------------- Mapa del Tesoro  ---------------
+// =========================================================
+
+
+mapa:
+	getitem 30500	,1;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "He pescado una botella, parece que hay una especie de mapa dentro...";
+	next;
+close;
+
+
+// --------------- Gorro  ---------------
+// =========================================================
+
+
+gorro:
+	getitem 5380,1;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "He pescado una especie de muñeco con forma de pez, podria ser útil";
+	next;
+close;
+
+
+// --------------- Estiramiento  ---------------
+// =========================================================
+
+estiramiento:	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "El pez se resiste y intenta escapar!";
+	next;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "¿Que deberia hacer?";
+	next;
+menu "Estirar la caña",estirar,"Dejarlo marchar",dejarlo;
+close;
+
+//===============================
+//  SISTEMA DE PESCA - ZONAS DE PESCA
+//===============================
+
+
+// --------------- Rotura  ---------------
+// =========================================================
+
+rotura:
+	specialeffect2 611;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Oh,no!";
+	mes "He estirado demasiado fuerte y he roto el hilo!";
+close;
+
+
+dejarlo:	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Mejor lo dejo, nunca se sabe lo que podria llegar a pescar en estas aguas...";
+	close;
+
+fallo:
+	sleep2 4000;	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Parece que no pican...";
+	next;
+menu "Seguir pescando",seguir,"Olvidalo",cancelar;
+
+
+
+seguir:
+	set @cebo, rand(1,10);
+	if (@cebo == 1) goto pesca;
+	if (@cebo == 2) goto pesca;
+	if (@cebo >= 2) goto fallo;
+close;
+
+// --------------- Falta de Objetos  ---------------
+// =========================================================
+
+nocana:	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Si tubiera una caña y algún cebo podría usarlo aqui.";
+close;
+
+nogusano:	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Tengo la caña para poder pescar, pero sin cebo no conseguiria atraer ningún pez.";
+close;
+
+cancelar:
+	mes "[^CC0000 " +strcharinfo(0) + " ^000000]";
+	mes "Mejor sigo mi camino.";
+close;
+}
+
+gef_fild01.gat,206,243,1	duplicate(Zona de Pesca)	Zona de Pesca#02	111
+moc_fild10.gat,203,125,1	duplicate(Zona de Pesca)	Zona de Pesca#03	111
+pay_fild05.gat,84,154,1	duplicate(Zona de Pesca)	Zona de Pesca#04	111

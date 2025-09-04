@@ -1,0 +1,316 @@
+function	script	F_SpecialHatBox	{
+	setarray .BoxItems[0],2284,5174,5076,5057,5065,5052,5034,2214,5024,5028,5026,5075,5048,5036,5080,5081,5082,5038,2273,5058,2283,5047,5018,5061,5063,5021,5041,5025,5070,5071,5069,5084,5027,5045,5173,5073,5117,2299,5023,5060,5012,2293,5033,5039,5083,5108,2209,2280,5078,5064,5067,5029,2272,5062,5049,5032,5059,5077,5115,5050,5079,2284,5174,5076,5057,5065,5052,5034,2214,5024,5028,5026,5075,5048,5036,5080,5081,5082,5038,2273,5058,2283,5047,5018,5061,5063,5021,5041,5025,5070,5071,5069,5084,5027,5045,5173,5073,5117,2299,5023,5060,5012,2293,5033,5039,5083,5108,2209,2280,5078,5064,5067,5029,2272,5062,5049,5032,5059,5077,5115,5050,5079,5171;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CustomHatBox	{
+	setarray .BoxItems[0],25061,25287,25288,25285,25282,25284,25137,25138,25140,25142,25199,25290,25063,25147,25164,25289,25283,25098,25099,25064,25065,25245,25081,25192,25116,25171,25295,25281,25159,25067,25256,25257,25258,25259,25260,25133,25134,25135;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CustomWelcome	{
+	setarray .BoxItems[0],25171,25172,25173,25174,25175,25176,25177,25178,25179;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+function	script	F_DonationUBox	{
+	setarray .BoxItems[0],12263,14592,12210,7776,7621,12209,12211,12212,12214,12913,12914,13912,13913,13810,13534,17229,32022,32011;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+function	script	F_RJobRelicBox	{
+	setarray .BoxItems[0],28282,28283,28284,28285,28286,28287,28288,28289,28290,28291,28292,28293,28294,28295,28296,28297,28298;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+function	script	F_HNormalBox	{
+	setarray .BoxItems[0],28189,28219,28239,28241,28254,28255,28274;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+function	script	F_HPremiumBox	{
+	setarray .BoxItems[0],28189,28219,28220,28239,28240,28241,28246,28225,28254,28255,28256,28274,28279;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CustomWing	{
+	setarray .BoxItems[0],20764,20746,20727,20761,20500,20762,20516,20509,20504;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CustomWing2	{
+	setarray .BoxItems[0],40043,40044,40045,40046,40047,40048,40049;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CustomAura	{
+	setarray .BoxItems[0],40024,40025,40026,40027,40028,40029,40030,40031,40032,40033,40034,40035,40036,40037,40038,40039,40040,40041,40042;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CustomValk	{
+	setarray .BoxItems[0],28000,28001,28002,28003,28004,28005,28006,28007,28008,28009,28010,28011,28012,28013,28014,28015,28016,28017,28018,28019,28020,28021,28022,28023,28024;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CustomMascot	{
+	setarray .BoxItems[0],19291,31614,31686,31437,31512,31456,31452,31299;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CustomWoEbox	{
+	setarray .BoxItems[0],40062,40063,40064,40065,40066,40067,40068,40069,40070;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CFallenbox	{
+	setarray .BoxItems[0],40071,40072,40073,40074,40075,40076,40077,40078,40079,40080,40081,40082;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_ColorAuraBox	{
+	setarray .BoxItems[0],40083,40084,40085,40086,40087,40088,40089,40090,40091,40092,40093,40094,40095,40096,40097;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_NBAbox	{
+	setarray .BoxItems[0],40098,40099,40100,40101,40102,40103,40104,40105,40106,40107,40108,40109,40110,40111,40112,40113,40114,40115,40116,40117,40118,40119,40120,40121,40122,40123,40124,40125,40126,40127;
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	return;
+}
+
+function	script	F_CostumeRareBox	{
+	setarray .b,19504,
+							19505,
+							19506,
+							19507,
+							19510,
+							19511,
+							19512,
+							19513,
+							19514,
+							19515,
+							19516,
+							19517,
+							19518,
+							19519,
+							19520,
+							19521,
+							19522,
+							19523,
+							19524,
+							19525,
+							19526,
+							19527,
+							19528,
+							19529,
+							19530,
+							19531,
+							19532,
+							19533,
+							19534,
+							19535,
+							19536,
+							19537,
+							19538,
+							19539,
+							19540,
+							19541,
+							19542,
+							19543,
+							19544,
+							19545,
+							19546,
+							19547,
+							19548,
+							19549,
+							19550,
+							19551,
+							19552,
+							19553,
+							19554,
+							19555,
+							19556,
+							19557,
+							19558,
+							19559,
+							19560,
+							19561,
+							19562,
+							19563,
+							19564,
+							19565,
+							19566,
+							19567,
+							19568,
+							19569,
+							19570,
+							19571,
+							19572,
+							19573,
+							19574,
+							19575,
+							19576,
+							19577,
+							19578,
+							19579,
+							19580,
+							19581,
+							19582,
+							19583,
+							19584,
+							19585,
+							19586,
+							19587,
+							19588,
+							19589,
+							19590,
+							19591,
+							19592,
+							19593,
+							19594,
+							19595,
+							19596,
+							19597,
+							19598,
+							19599,
+							19600,
+							19601,
+							19602,
+							19603,
+							19604,
+							19605,
+							19606,
+							19607,
+							19608,
+							19609,
+							19610,
+							19611,
+							19612,
+							19614,
+							19615,
+							19616,
+							19617,
+							19618,
+							19619,
+							19620,
+							19649,
+							19656,
+							19664,
+							19667,
+							19676,
+							19696,
+							19750,
+							19755,
+							19772,
+							19913,
+							19797,
+							19749,
+							19848,
+							19939,
+							19982,
+							19984,
+							19723,
+							19851,
+							19759,
+							19839,
+							19657,
+							19757,
+							19706,
+							19701,
+							19665,
+							19842,
+							19962,
+							19784,
+							19655,
+							19733,
+							19922,
+							19835,
+							19710,
+							19755,
+							19826,
+							19781;
+
+setarray .b2,	19992,
+							20297,
+							20392,
+							20455,
+							20396,
+							20263,
+							20167,
+							20273,
+							20372,
+							20381,
+							20460,
+							20160,
+							20184,
+							20052,
+							20226,
+							20182,
+							20188,
+							20178,
+							20203,
+							20151,
+							20303,
+							20296,
+							20138,
+							20254,
+							20237,
+							20294,
+							20320,
+							20023,
+							20224,
+							20216,
+							20330,
+							20057,
+							20024,
+							20066,
+							20050,
+							20148,
+							20181,
+							20141,
+							20244,
+							20211,
+							20022,
+							20043,
+							20279,
+							20264,
+							20497,
+							20054,
+							25180,
+							25189,
+							25260;
+  .r = rand(1,2);
+	if(.r == 1)
+		getitem .b[rand(0,getarraysize(.b))],1;
+	else
+		getitem .b2[rand(0,getarraysize(.b2))],1;
+	return;
+}

@@ -1,0 +1,134 @@
+// *****************************************************
+//                 Item Security System
+// *****************************************************
+
+-	script	SecuritySystem	-1,{
+	end;
+
+OnSettings:
+	while( 1 )
+	{
+		mes "[^FFA500sistema de seguridad^000000]";
+		mes "Estado actual";
+
+		mes "- Codigo de Seguridad:";
+		if( #SECURITYCODE )
+		{
+			mes "^FFFFFF__________^2E8B57Permitir^000000.";
+
+			mes "- transferencias de artículos:";
+			if( getsecurity() )
+			{
+				mes "^FFFFFF__________^2E8B57Bloqueado^000000.";
+				set .@Menu2$, "Permitir transferencias de artículos";
+			}
+			else
+			{
+				mes "^FFFFFF__________^FF0000Se permite^000000.";
+				set .@Menu2$, "Bloquear las transferencias de artículos";
+			}
+
+			next;
+			set .@Option, select("Cambiar contraseña",.@Menu2$,"Retirar Contraseña","Salir");
+		}
+		else
+		{
+			mes "^FFFFFF__________^FF0000Inhabilitar^000000.";
+			next;
+			set .@Option, select("Establecer contraseña","Salir") + 4;
+		}
+		
+		switch( .@Option )
+		{
+			case 1: // Cambiar Clave
+				mes "[^FFA500sistema de seguridad^000000]";
+				mes "La contraseña es un número de 4 digitos, entre 1000 y 9999.";
+				mes "Ingrese su contraseña actual...";
+				next;
+
+				input .@Pass;
+				if( .@Pass != #SECURITYCODE )
+				{
+					mes "[^FFA500Security System^000000]";
+					mes "Contraseña de incorrecta!!.";
+					close;
+				}
+			
+			case 5:
+				mes "[^FFA500sistema de seguridad^000000]";
+				mes "Ingrese su nueva contraseña...";
+				mes "La contraseña es un numero de 4 digitos, entre 1000 y 9999.";
+				next;
+				
+				input .@Pass;
+				if( .@Pass < 1000 || .@Pass > 9999 )
+				{
+					mes "[^FFA500sistema de seguridad^000000]";
+					mes "Valor incorrecto!!.";
+					close;
+				}
+				
+				mes "[^FFA500sistema de seguridad^000000]";
+				mes "Confirme su nueva contraseña.";
+				next;
+
+				input .@CPass;
+				if( .@CPass != .@Pass )
+				{
+					mes "[^FFA500sistema de seguridad^000000]";
+					mes "Las contraseñas son distintas.";
+					mes "Operacion cancelada.";
+					close;
+				}
+				
+				set #SECURITYCODE, .@Pass;
+				break;
+			case 2: // Permitir Salidas - Bloquear Salidas
+				if( getsecurity() )
+				{
+					mes "[^FFA500sistema de seguridad^000000]";
+					mes "Por favor, introduzca su contraseña para permitir la transferencia del Items.";
+					next;
+					
+					input .@Pass;
+					if( #SECURITYCODE != .@Pass )
+					{
+						mes "[^FFA500sistema de seguridad^000000]";
+						mes "Contraseña de incorrecta!!.";
+						close;
+					}
+					
+					setsecurity 0;
+				}
+				else if( #SECURITYCODE > 0 )
+					setsecurity 1;
+				else
+					setsecurity 0;
+				break;
+			case 3: // Quitar Clave
+				mes "[^FFA500sistema de seguridad^000000]";
+				mes "Ingrese su contraseña actual.";
+				next;
+				
+				input .@Pass;
+				if( #SECURITYCODE != .@Pass )
+				{
+					mes "[^FFA500sistema de seguridad^000000]";
+					mes "Contraseña de incorrecta!!.";
+					close;
+				}
+				
+				set #SECURITYCODE, 0;
+				setsecurity 0;
+				break;
+			case 4:
+			case 6:
+				mes "[^FFA500sistema de seguridad^000000]";
+				mes "Utilice @security si es necesario configurar de nuevo sus servicios.";
+				mes "Buen dia...";
+				close;
+		}
+	}
+	
+	end;
+}

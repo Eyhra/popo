@@ -1,0 +1,5981 @@
+//===== eAthena Script ======================================= 
+//= Last Warp Super Warper NPC
+//===== By: ================================================== 
+//= Kookith Editado por Nitolas
+//= Terminado por Sirfrik
+//===== Description: ========================================= 
+//= Traducido por Nitolas, el Npc tiene la opcion de
+//= mandarte a tu ultimo warp.
+//= actualizado 14.3 Por Sirfrik
+//============================================================
+
+prontera,160,187,4	script	Warper::Warper	640,{
+cutin "gc_mayssel01",2;
+mes "[ ^403d67Warper^000000 ]";
+mes "¡Buen dia ^FF0000 " + strcharinfo(0) + "^000000!.";
+mes "Mi nombre es Warper, y soy el servicio de teletransportación de ^FF0000Seal-RO^000000";
+mes "¿A dónde quieres viajar?";
+next;
+menu	"^5533ff [>] ^000000 Último Warp",lastmap,"^5533ff [>] ^000000 Ciudades",town,"^5533ff [>] ^000000 Dungeons",dungeon,"^5533ff [>] ^000000 Fields",field,"^5533ff [>] ^000000 Gremio de Aventureros",agremio,"^5533ff [>] ^000000 Areas Especiales",special;
+
+town:
+menu 	"^5533ff [>] ^000000 Seal City, (Capital de Seal RO)",wseal,
+	"^5533ff [>] ^000000 Alberta",walberta,
+	"^5533ff [>] ^000000 Aldebaran",waldebaran,
+	"^5533ff [>] ^000000 Amatsu",wamatsu,
+	"^5533ff [>] ^000000 Ayothaya",wayot, 
+    "^5533ff [>] ^000000 Brasilis",wbrasilis,
+	"^5533ff [>] ^000000 Comodo",wcomodo,
+    "^5533ff [>] ^000000 El Discates",wdica,   
+	"^5533ff [>] ^000000 Einbech",weinbech,
+	"^5533ff [>] ^000000 Einbroch",weinbroch,
+	"^5533ff [>] ^000000 Geffen",wgeffen,
+	"^5533ff [>] ^000000 Gonryun",wgonryun,
+	"^5533ff [>] ^000000 Hugel",whugel,
+	"^5533ff [>] ^000000 Izlude",wizlude,
+	"^5533ff [>] ^000000 Jawaii",wjawaii,
+	"^5533ff [>] ^000000 Lighthalzen",wlighthalzen,
+	"^5533ff [>] ^000000 Louyang",wlouyang,
+	"^5533ff [>] ^000000 Lutie",wxmas,	
+	"^5533ff [>] ^000000 Morroc",wmorroc, 
+    "^5533ff [>] ^000000 Moscovia",wmoscovia, 
+    "^5533ff [>] ^000000 Manuk",wmanuk,
+	"^5533ff [>] ^000000 Nameless Island",wnameless,
+	"^5533ff [>] ^000000 Niflheim",wniflheim,
+	"^5533ff [>] ^000000 Payon",wpayon,
+	"^5533ff [>] ^000000 Prontera",wprontera,
+	"^5533ff [>] ^000000 Rachel",wafeltz,
+    "^5533ff [>] ^000000 Splendide",wsplendide,
+	"^5533ff [>] ^000000 Thor Camp",wthorcamp,
+	"^5533ff [>] ^000000 Umbala",wumbala, 
+    "^5533ff [>] ^000000 Yuno",wyuno,
+	"^5533ff [>] ^000000 Veins",wveins;
+	
+
+field:
+menu 	"^5533ff [>] ^000000 Amatsu Fields",damafild1,
+	"^5533ff [>] ^000000 Ayothaya Fields",wayofild,
+	"^5533ff [>] ^000000 Brasilis Fields",dbrafild1,
+	"^5533ff [>] ^000000 Comodo Fields",wcmdfild,
+	"^5533ff [>] ^000000 Einbroch Fields",weinfild,
+	"^5533ff [>] ^000000 Geffen Fields",wgeffild,
+	"^5533ff [>] ^000000 Gonryun Fields",dgonfild1,
+	"^5533ff [>] ^000000 Hugel Fields",whufild,
+	"^5533ff [>] ^000000 Lighthalzen Fields",wlhzfild,
+	"^5533ff [>] ^000000 Louyang Field",dloufild1,
+	"^5533ff [>] ^000000 Lutie Field",dxmasfild1,
+	"^5533ff [>] ^000000 Manuk Fields",wmanukdun,
+	"^5533ff [>] ^000000 Mjolnir Fields",wmjolnir,
+	"^5533ff [>] ^000000 Moscovia Fields",wmmosk,
+	"^5533ff [>] ^000000 Niflheim Fields",wniffild,
+	"^5533ff [>] ^000000 Payon Forests",wpayfor,
+	"^5533ff [>] ^000000 Prontera Fields",wprtfild,
+	"^5533ff [>] ^000000 Rachel Fields",warunfild,
+	"^5533ff [>] ^000000 Sograt Deserts",wmocfild,
+	"^5533ff [>] ^000000 Splendide Fields",wsplendidedun,
+	"^5533ff [>] ^000000 Umbala Fields",wumfild,
+	"^5533ff [>] ^000000 Veins Fields",wveinsfild,
+	"^5533ff [>] ^000000 Yuno Fields",wyunofild;
+
+dungeon:
+menu 	"^5533ff [>] ^000000 Abbey, Cursed Monastery",wabbey,
+	"^5533ff [>] ^000000 Abyss Lakes",wabyss,
+	"^5533ff [>] ^000000 Amatsu Dungeon",ama,
+	"^5533ff [>] ^000000 Anthell",ant,
+	"^5533ff [>] ^000000 Ayothaya Dungeons",wayodun,
+    "^5533ff [>] ^000000 Brasilis Dungeon",bradun,
+	"^5533ff [>] ^000000 Beach Dungeon",beach,
+	"^5533ff [>] ^000000 Byalan Dungeon",byalan,  
+	"^5533ff [>] ^000000 Clock Tower",clock,
+	"^5533ff [>] ^000000 Coal Mines",coal,
+	"^5533ff [>] ^000000 Culverts",culvert,
+    "^5533ff [>] ^000000 Discaste",dicc, 
+	"^5533ff [>] ^000000 Einbech Dungeons",weindun,
+	"^5533ff [>] ^000000 Gefenia",gefenia,
+	"^5533ff [>] ^000000 Geffen Dungeon",geffen,
+	"^5533ff [>] ^000000 Glast Heim",glast,
+	"^5533ff [>] ^000000 Gonryun Dungeon",gon,
+	"^5533ff [>] ^000000 Hidden Dungeon",hidden,
+	"^5533ff [>] ^000000 Ice Dungeon",iced,
+	"^5533ff [>] ^000000 Juperos Dungeons",wjuper,
+	"^5533ff [>] ^000000 Kiel Dungeons",wkieldun,
+	"^5533ff [>] ^000000 Bio Laboratory",wlhzdun,
+	"^5533ff [>] ^000000 Louyang Dungeons",wloudun,
+	"^5533ff [>] ^000000 Magma Dungeon",magma,
+	"^5533ff [>] ^000000 Moscovia Dungeon",wmosk,
+	"^5533ff [>] ^000000 Orc Dungeon",orc,
+	"^5533ff [>] ^000000 Odin Temple",odint,
+	"^5533ff [>] ^000000 Payon Dungeon",payon,
+	"^5533ff [>] ^000000 Pyramids",pyramids,
+	"^5533ff [>] ^000000 Rachel Sanctuary",rachels,
+	"^5533ff [>] ^000000 Sphinx",sphinx,
+	"^5533ff [>] ^000000 Sunken Ship",sunken,
+	"^5533ff [>] ^000000 Thanatos Tower",wthat,
+	"^5533ff [>] ^000000 Thor Volcano",wthor,
+	"^5533ff [>] ^000000 Toy Factory",toy,
+	"^5533ff [>] ^000000 Turtle Dungeon",turtle,
+	"^5533ff [>] ^000000 Nidhogg's Dungeons",wnyddun,
+	"^5533ff [>] ^000000 Satan Morroc",wmidcampdun,
+	"^5533ff [>] ^000000 Umbala Dungeons",wumdun;   
+
+special:
+menu 	"^5533ff [>] ^000000 Zona Merchant",gomerc,
+	"^5533ff [>] ^000000 Plant Cultivation",plantc,
+    "^5533ff [>] ^000000 Battleground Room",bgroom;  	
+
+gdungeon:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el nivel y serás teletransportado allí.";
+next;
+menu 	"Prontera Guild Dungeon",dgldun1,
+	"Yuno Guild Dungeon",dgldun2;
+
+	lastmap:
+	if(lastmap$=="") { mes "No has ido a ningún lado todavía."; close; }
+	warp lastmap$,lastx,lasty;
+	cutin "", 255;
+	end;
+
+	pvp:
+	specialeffect2 222;
+	sleep2 500;
+	specialeffect2 222;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 222;
+	sleep2 200;
+	specialeffect2 222;
+	warp "pvp_y_2-2",0,0; 
+	end; 
+
+	mercado:
+	mes "[ ^10B2D2Warper^000000 ]";
+	mes "¿Quieres ir al Mercado?";
+	next;
+	menu	"^10B2D2 - ^000000 Si",gomerc;
+gomerc:
+specialeffect2 222;
+	sleep2 500;
+	specialeffect2 222;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 222;
+	sleep2 200;
+	specialeffect2 222;
+warp "vend_zone",99,99;
+cutin "", 255;
+end;
+
+agremio:
+specialeffect2 222;
+	sleep2 500;
+	specialeffect2 222;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 222;
+	sleep2 200;
+	specialeffect2 222;
+warp "seal_in01",99,12;
+cutin "", 255;
+end;
+
+bgroom:
+specialeffect2 222;
+	sleep2 500;
+	specialeffect2 222;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 222;
+	sleep2 200;
+	specialeffect2 222;
+warp "bat_room",153,149;
+cutin "", 255;
+end;
+
+plantc:
+specialeffect2 222;
+	sleep2 500;
+	specialeffect2 222;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 222;
+	sleep2 200;
+	specialeffect2 222;
+warp "pvp_n_3-3",99,96;
+cutin "", 255;
+end;
+
+	
+//-------------------------------
+//          Fields
+//-------------------------------
+
+warunfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Rachel Field 1",drunfild1,
+    "^5533ff [>] ^000000 Rachel Field 2 [ ^FF3300MVP^000000 ]",drunfild2,
+    "^5533ff [>] ^000000 Rachel Field 3 [ ^FF3300MVP^000000 ]",drunfild3,
+    "^5533ff [>] ^000000 Rachel Field 4 [ ^FF3300MVP^000000 ]",drunfild4,
+	"^5533ff [>] ^000000 Rachel Field 5",drunfild5,
+	"^5533ff [>] ^000000 Rachel Field 6",drunfild6,
+	"^5533ff [>] ^000000 Rachel Field 7",drunfild7,
+	"^5533ff [>] ^000000 Rachel Field 8",drunfild8,
+	"^5533ff [>] ^000000 Rachel Field 9",drunfild9,
+	"^5533ff [>] ^000000 Rachel Field 10",drunfild10,
+	"^5533ff [>] ^000000 Rachel Field 11",drunfild11,
+	"^5533ff [>] ^000000 Rachel Field 12",drunfild12,
+	"^5533ff [>] ^000000 Rachel Field 13",drunfild13;
+
+wgeffild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Geffen Field 0",dgeffild00,
+	"^5533ff [>] ^000000 Geffen Field 1",dgeffild01,
+	"^5533ff [>] ^000000 Geffen Field 2 [ ^FF3300MVP^000000 ]",dgeffild02,
+	"^5533ff [>] ^000000 Geffen Field 3",dgeffild03,
+	"^5533ff [>] ^000000 Geffen Field 4",dgeffild04,
+	"^5533ff [>] ^000000 Geffen Field 5",dgeffild05,
+	"^5533ff [>] ^000000 Geffen Field 6",dgeffild06,
+	"^5533ff [>] ^000000 Geffen Field 7",dgeffild07,
+	"^5533ff [>] ^000000 Geffen Field 8",dgeffild08,
+	"^5533ff [>] ^000000 Geffen Field 9",dgeffild09,
+	"^5533ff [>] ^000000 Geffen Field 10 [ ^FF3300MVP^000000 ]",dgeffild10,
+	"^5533ff [>] ^000000 Geffen Field 11",dgeffild11,
+	"^5533ff [>] ^000000 Geffen Field 12",dgeffild12,
+	"^5533ff [>] ^000000 Geffen Field 13",dgeffild13,
+	"^5533ff [>] ^000000 Geffen Field 14 [ ^FF3300MVP^000000 ]",dgeffild14;
+
+wmjolnir:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Mjolnir Field 1",dmjolnir1,
+	"^5533ff [>] ^000000 Mjolnir Field 2",dmjolnir2,
+	"^5533ff [>] ^000000 Mjolnir Field 3",dmjolnir3,
+	"^5533ff [>] ^000000 Mjolnir Field 5",dmjolnir5,
+	"^5533ff [>] ^000000 Mjolnir Field 6",dmjolnir6,
+	"^5533ff [>] ^000000 Mjolnir Field 7",dmjolnir7,
+	"^5533ff [>] ^000000 Mjolnir Field 8",dmjolnir8,
+	"^5533ff [>] ^000000 Mjolnir Field 9",dmjolnir9,
+	"^5533ff [>] ^000000 Mjolnir Field 10",dmjolnir10,
+	"^5533ff [>] ^000000 Mjolnir Field 11",dmjolnir11,
+	"^5533ff [>] ^000000 Mjolnir Field 12",dmjolnir12;
+	
+wmmosk:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Moscovia Field 1",dmosc1,
+	"^5533ff [>] ^000000 Moscovia Field 2",dmosc2;	
+
+wmocfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Sograt Desert 1",dmocfild1,
+	"^5533ff [>] ^000000 Sograt Desert 2",dmocfild2,
+	"^5533ff [>] ^000000 Sograt Desert 3",dmocfild3,
+	"^5533ff [>] ^000000 Sograt Desert 4",dmocfild4,
+	"^5533ff [>] ^000000 Sograt Desert 5",dmocfild5,
+	"^5533ff [>] ^000000 Sograt Desert 6",dmocfild6,
+	"^5533ff [>] ^000000 Sograt Desert 7",dmocfild7,
+	"^5533ff [>] ^000000 Sograt Desert 8",dmocfild8,
+	"^5533ff [>] ^000000 Sograt Desert 9",dmocfild9,
+	"^5533ff [>] ^000000 Sograt Desert 10",dmocfild10,
+	"^5533ff [>] ^000000 Sograt Desert 11",dmocfild11,
+	"^5533ff [>] ^000000 Sograt Desert 12",dmocfild12,
+	"^5533ff [>] ^000000 Sograt Desert 13",dmocfild13,
+	"^5533ff [>] ^000000 Sograt Desert 14",dmocfild14,
+	"^5533ff [>] ^000000 Sograt Desert 15",dmocfild15,
+	"^5533ff [>] ^000000 Sograt Desert 16",dmocfild16,
+	"^5533ff [>] ^000000 Sograt Desert 17 [ ^FF3300MVP^000000 ]",dmocfild17,
+	"^5533ff [>] ^000000 Sograt Desert 18",dmocfild18,
+	"^5533ff [>] ^000000 Sograt Desert 19",dmocfild19;
+
+wpayfor:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Payon Forest 1",dpayfild1,
+	"^5533ff [>] ^000000 Payon Forest 2",dpayfild2,
+	"^5533ff [>] ^000000 Payon Forest 3",dpayfild3,
+	"^5533ff [>] ^000000 Payon Forest 4",dpayfild4,
+	"^5533ff [>] ^000000 Payon Forest 5",dpayfild5,
+	"^5533ff [>] ^000000 Payon Forest 6",dpayfild6,
+	"^5533ff [>] ^000000 Payon Forest 7",dpayfild7,
+	"^5533ff [>] ^000000 Payon Forest 8",dpayfild8,
+	"^5533ff [>] ^000000 Payon Forest 9",dpayfild9,
+	"^5533ff [>] ^000000 Payon Forest 10",dpayfild10,
+	"^5533ff [>] ^000000 Payon Forest 11 [ ^FF3300MVP^000000 ]",dpayfild11;
+
+wprtfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Prontera Field 1",dprtfild1,
+	"^5533ff [>] ^000000 Prontera Field 2",dprtfild2,
+	"^5533ff [>] ^000000 Prontera Field 3",dprtfild3,
+	"^5533ff [>] ^000000 Prontera Field 4",dprtfild4,
+	"^5533ff [>] ^000000 Prontera Field 5",dprtfild5,
+	"^5533ff [>] ^000000 Prontera Field 6",dprtfild6,
+	"^5533ff [>] ^000000 Prontera Field 7",dprtfild7,
+	"^5533ff [>] ^000000 Prontera Field 8",dprtfild8,
+	"^5533ff [>] ^000000 Prontera Field 9",dprtfild9,
+	"^5533ff [>] ^000000 Prontera Field 10",dprtfild10,
+	"^5533ff [>] ^000000 Prontera Field 11",dprtfild11;
+
+wxmasfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Lutie Field 1",dxmasfild1,
+   "^5533ff [>] ^000000 Lutie Field 2",dxmasfild2;   
+
+wcmdfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Comodo Field 1",dcmdfild1,
+	"^5533ff [>] ^000000 Comodo Field 2",dcmdfild2,
+	"^5533ff [>] ^000000 Comodo Field 3",dcmdfild3,
+	"^5533ff [>] ^000000 Comodo Field 4",dcmdfild4,
+	"^5533ff [>] ^000000 Comodo Field 5",dcmdfild5,
+	"^5533ff [>] ^000000 Comodo Field 6",dcmdfild6,
+	"^5533ff [>] ^000000 Comodo Field 7",dcmdfild7,
+	"^5533ff [>] ^000000 Comodo Field 8",dcmdfild8,
+	"^5533ff [>] ^000000 Comodo Field 9",dcmdfild9;
+
+wyunofild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Yuno Field 1",dyunofild1,
+	"^5533ff [>] ^000000 Yuno Field 2",dyunofild2,
+	"^5533ff [>] ^000000 Yuno Field 3",dyunofild3,
+	"^5533ff [>] ^000000 Yuno Field 4",dyunofild4,
+	"^5533ff [>] ^000000 Yuno Field 5",dyunofild5,
+	"^5533ff [>] ^000000 Yuno Field 6",dyunofild6,
+	"^5533ff [>] ^000000 Yuno Field 7",dyunofild7,
+	"^5533ff [>] ^000000 Yuno Field 8",dyunofild8,
+	"^5533ff [>] ^000000 Yuno Field 9",dyunofild9,
+	"^5533ff [>] ^000000 Yuno Field 10",dyunofild10,
+	"^5533ff [>] ^000000 Yuno Field 11",dyunofild11,
+	"^5533ff [>] ^000000 Yuno Field 12",dyunofild12;
+
+wamafild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Amatsu Field 1",damafild1;
+
+wgonfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Gonryun Field 1",dgonfild1;
+
+wumfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Umbala Field 1",dumfild1,
+	"^5533ff [>] ^000000 Umbala Field 2",dumfild2,
+	"^5533ff [>] ^000000 Umbala Field 3",dumfild3,
+	"^5533ff [>] ^000000 Umbala Field 4",dumfild4;
+
+wniffild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Niflheim Field 1",dniffild1,
+	"^5533ff [>] ^000000 Niflheim Field 2",dniffild2;
+
+wodint:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Odin Temple 1",wodtemp1,
+	"^5533ff [>] ^000000 Odin Temple 2",wodtemp2;
+
+wloufild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Louyang Field 1",dloufild1;
+
+wayofild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Ayothaya Field 1",dayofild1,
+	"^5533ff [>] ^000000 Ayothaya Field 2",dayofild2;
+
+weinfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Einbroch Field 1",deinfild1,
+	"^5533ff [>] ^000000 Einbroch Field 2",deinfild2,
+	"^5533ff [>] ^000000 Einbroch Field 3",deinfild3,
+	"^5533ff [>] ^000000 Einbroch Field 4",deinfild4,
+	"^5533ff [>] ^000000 Einbroch Field 5",deinfild5,
+	"^5533ff [>] ^000000 Einbroch Field 6",deinfild6,
+	"^5533ff [>] ^000000 Einbroch Field 7",deinfild7,
+	"^5533ff [>] ^000000 Einbroch Field 8",deinfild8,
+	"^5533ff [>] ^000000 Einbroch Field 9",deinfild9,
+	"^5533ff [>] ^000000 Einbroch Field 10",deinfild10;
+
+wlhzfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Lighthalzen Field 1",dlhzfild1,
+	"^5533ff [>] ^000000 Lighthalzen Field 2",dlhzfild2,
+	"^5533ff [>] ^000000 Lighthalzen Field 3",dlhzfild3;
+
+whufild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Hugel Field 1",dhufild1,
+	"^5533ff [>] ^000000 Hugel Field 2",dhufild2,
+	"^5533ff [>] ^000000 Hugel Field 3",dhufild3,
+	"^5533ff [>] ^000000 Hugel Field 4",dhufild4,
+	"^5533ff [>] ^000000 Hugel Field 5",dhufild5,
+	"^5533ff [>] ^000000 Hugel Field 6",dhufild6,
+	"^5533ff [>] ^000000 Hugel Field 7",dhufild7;
+
+wveinsfild:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu	"^5533ff [>] ^000000Veins Field 1 [ ^FF3300MVP^000000 ]",dvfild1,
+    "^5533ff [>] ^000000Veins Field 2 [ ^FF3300MVP^000000 ]",dvfild2,
+    "^5533ff [>] ^000000Veins Field 3",dvfild3,
+	"^5533ff [>] ^000000 Veins Field 4",dvfild4,
+	"^5533ff [>] ^000000 Veins Field 5",dvfild5,
+	"^5533ff [>] ^000000 Veins Field 6",dvfild6,
+	"^5533ff [>] ^000000 Veins Field 7",dvfild7;
+
+wsplen:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Splendide Field 1",dsplenfild1,
+	"^5533ff [>] ^000000 Splendide Field 2",dsplenfild2,
+	"^5533ff [>] ^000000 Splendide Field 3",dsplenfild3;
+
+wman:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Manuk Field 1",dmanfild1,
+	"^5533ff [>] ^000000 Manuk Field 2",dmanfild2,
+	"^5533ff [>] ^000000 Manuk Field 3 [ ^FF3300MVP^000000 ]",dmanfild3;
+
+wbra:
+mes "[Warp NPC]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Brasilis Field 1",dbrafild1;
+
+//-------------------------------
+//          Dungeons
+//-------------------------------
+
+wnyddun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Nest Level 1",dnyddun1,
+	"^5533ff [>] ^000000 Nest Level 2 [ ^FF3300MVP^000000 ]",dnyddun2,
+	"^5533ff [>] ^000000 level 1",dnyddun3,
+	"^5533ff [>] ^000000 level 2",dnyddun4;
+
+wjuper:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",djuperos1,
+	"^5533ff [>] ^000000 Level 2",djuperos3,
+	"^5533ff [>] ^000000 Core [ ^FF3300MVP^000000 ]",djuperos2;
+
+wumdun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Carpenter's Shop in the Tree",dumdun1,
+	"^5533ff [>] ^000000 Passage to a Foreign World",dumdun2,
+	"^5533ff [>] ^000000 Hvergermil's Fountain",dyggdrasil1;
+
+wloudun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 The Royal Tomb",dloudun1,
+	"^5533ff [>] ^000000 Inside the Royal Tomb",dloudun2,
+	"^5533ff [>] ^000000 Suei Long Gon [ ^FF3300MVP^000000 ]",dloudun3;
+
+wayodun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Ancient Shrine Maze",dayodun1,
+	"^5533ff [>] ^000000 Inside Ancient Shrine [ ^FF3300MVP^000000 ]",dayodun2;
+
+weindun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",deindun1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",deindun2;
+
+wmanukdun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Manuk Field 1",dmanuk1,
+	"^5533ff [>] ^000000 Manuk Field 2",dmanuk2,
+	"^5533ff [>] ^000000 Manuk Field 3 [ ^FF3300MVP^000000 ]",dmanuk3;
+
+wsplendidedun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Splendide Field 1",dsplendide1,
+	"^5533ff [>] ^000000 Splendide Field 2",dsplendide2,
+	"^5533ff [>] ^000000 Splendide Field 3",dsplendide3;
+
+wmidcampdun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dmidcamp1,
+	"^5533ff [>] ^000000 Level 2",dmidcamp2,
+	"^5533ff [>] ^000000 Level 3",dmidcamp3;
+
+wlhzdun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dlhzdun1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",dlhzdun2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dlhzdun3;
+
+wabyss:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dabyss1,
+	"^5533ff [>] ^000000 Level 2",dabyss2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dabyss3;
+
+wthat:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+	next;
+menu 	"^5533ff [>] ^000000 Level 1",dthat1,
+	"^5533ff [>] ^000000 Level 2",dthat2,
+	"^5533ff [>] ^000000 Level 3",dthat3,
+	"^5533ff [>] ^000000 Level 4",dthat4,
+	"^5533ff [>] ^000000 Level 5",dthat5,
+	"^5533ff [>] ^000000 Level 6",dthat6,
+	"^5533ff [>] ^000000 Level 7",dthat7,
+	"^5533ff [>] ^000000 Level 8",dthat8,
+	"^5533ff [>] ^000000 Level 9",dthat9,
+	"^5533ff [>] ^000000 Level 10",dthat10,
+	"^5533ff [>] ^000000 Level 11",dthat11,
+	"^5533ff [>] ^000000 Level 12",dthat12; 
+wkieldun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dkieldun1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",dkieldun2;
+
+ant:
+	mes "[Warper]";
+	mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+	next;
+menu 	"^5533ff [>] ^000000 Level 1",danthell1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",danthell2;
+
+beach:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Karu, the West cave [ ^FF3300MVP^000000 ]",dbeach1,
+	"^5533ff [>] ^000000 Ruande the northern cave",dbeach2,
+	"^5533ff [>] ^000000 Mao, the East Cave",dbeach3,
+	"^5533ff [>] ^000000 Seals",dbeach4;
+
+byalan:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dbyalan1,
+	"^5533ff [>] ^000000 Level 2",dbyalan2,
+	"^5533ff [>] ^000000 Level 3",dbyalan3,
+	"^5533ff [>] ^000000 Level 4",dbyalan4,
+	"^5533ff [>] ^000000 Level 5",dbyalan5;
+clock:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dclock1,
+	"^5533ff [>] ^000000 Level 2",dclock2,
+	"^5533ff [>] ^000000 Level 3",dclock3,
+	"^5533ff [>] ^000000 Level 4",dclock4,
+	"^5533ff [>] ^000000 Basement 1",dalde1,
+	"^5533ff [>] ^000000 Basement 2",dalde2,
+	"^5533ff [>] ^000000 Basement 3",dalde3,
+	"^5533ff [>] ^000000 Basement 4",dalde4;
+
+coal:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dcoal1,
+	"^5533ff [>] ^000000 Level 2",dcoal2,
+	"^5533ff [>] ^000000 Level 3",dcoal3;
+
+culvert:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dculvert1,
+	"^5533ff [>] ^000000 Level 2",dculvert2,
+	"^5533ff [>] ^000000 Level 3",dculvert3,
+	"^5533ff [>] ^000000 Level 4 [ ^FF3300MVP^000000 ]",dculvert4;
+
+geffen:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dgeffen1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",dgeffen2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dgeffen3,
+	"^5533ff [>] ^000000 Level 4",dgeffen4;
+
+glast:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Entrance",dglastent,
+	"^5533ff [>] ^000000 Castle 1",dglastcast1,
+	"^5533ff [>] ^000000 Castle 2",dglastcast2,
+	"^5533ff [>] ^000000 Chivalry 1",dglastchiv1,
+	"^5533ff [>] ^000000 Chivalry 2",dglastchiv2,
+	"^5533ff [>] ^000000 Churchyard [ ^FF3300MVP^000000 ]",dglastyard,
+	"^5533ff [>] ^000000 Culvert 1",dglastcul1,
+	"^5533ff [>] ^000000 Culvert 2",dglastcul1,
+	"^5533ff [>] ^000000 Culvert 3",dglastcul3,
+	"^5533ff [>] ^000000 Culvert 4",dglastcul4,
+	"^5533ff [>] ^000000 St.Abbey",dglastchur,
+	"^5533ff [>] ^000000 Staircase Dungeon",dglaststep,
+	"^5533ff [>] ^000000 Underground Cave 1",dglastcave1,
+	"^5533ff [>] ^000000 Underground Cave 2",dglastcave2,
+	"^5533ff [>] ^000000 Underground Prison 1",dglastpris1,
+	"^5533ff [>] ^000000 Underground Prison 2",dglastpris2;
+
+hidden:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dhidden1,
+	"^5533ff [>] ^000000 Level 2",dhidden2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dhidden3;
+
+iced:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",diced1,
+	"^5533ff [>] ^000000 Level 2",diced2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",diced3,
+	"^5533ff [>] ^000000 Level 4",diced4;
+
+magma:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dmagma1,
+	"^5533ff [>] ^000000 Level 2",dmagma2;
+
+wmosk:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dmosk1,
+	"^5533ff [>] ^000000 Level 2",dmosk2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dmosk3;
+
+orc:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dorc1,
+	"^5533ff [>] ^000000 Level 2",dorc2;
+
+odint:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado al centro de ese mapa.";
+next;
+menu 	"^5533ff [>] ^000000 Odin Temple 1",wodtemp1,
+	"^5533ff [>] ^000000 Odin Temple 2",wodtemp2,
+	"^5533ff [>] ^000000 Odin Temple 3 [ ^FF3300MVP^000000 ]",wodtemp3;
+
+
+payon:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dpayon1,
+	"^5533ff [>] ^000000 Level 2",dpayon2,
+	"^5533ff [>] ^000000 Level 3",dpayon3,
+	"^5533ff [>] ^000000 Level 4",dpayon4,
+	"^5533ff [>] ^000000 Level 5 [ ^FF3300MVP^000000 ]",dpayon5;
+
+pyramids:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dpyramids1,
+	"^5533ff [>] ^000000 Level 2",dpyramids2,
+	"^5533ff [>] ^000000 Level 3",dpyramids3,
+	"^5533ff [>] ^000000 Level 4",dpyramids4,
+	"^5533ff [>] ^000000 Basement 1",dpyramidsb1,
+	"^5533ff [>] ^000000 Basement 2 [ ^FF3300MVP^000000 ]",dpyramidsb2;
+
+sphinx:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dsphinx1,
+	"^5533ff [>] ^000000 Level 2",dsphinx2,
+	"^5533ff [>] ^000000 Level 3",dsphinx3,
+	"^5533ff [>] ^000000 Level 4",dsphinx4,
+	"^5533ff [>] ^000000 Level 5 [ ^FF3300MVP^000000 ]",dsphinx5;
+
+sunken:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dsunken1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",dsunken2;
+
+toy:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dtoy1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",dtoy2;
+
+turtle:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Entrance",dturtleent,
+	"^5533ff [>] ^000000 Level 1",dturtle1,
+	"^5533ff [>] ^000000 Level 2",dturtle2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dturtle3;
+
+ama:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dama1,
+	"^5533ff [>] ^000000 Level 2",dama2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dama3;
+
+gon:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dgon1,
+	"^5533ff [>] ^000000 Level 2",dgon2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dgon3;
+
+gefenia:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dgefenia1,
+	"^5533ff [>] ^000000 Level 2",dgefenia2,
+	"^5533ff [>] ^000000 Level 3",dgefenia3,
+	"^5533ff [>] ^000000 Level 4",dgefenia4;
+
+wthor:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dthor1,
+	"^5533ff [>] ^000000 Level 2",dthor2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dthor3;
+
+rachels:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",drachel1,
+	"^5533ff [>] ^000000 Level 2",drachel2,
+	"^5533ff [>] ^000000 Level 3",drachel3,
+	"^5533ff [>] ^000000 Level 4",drachel4,		
+	"^5533ff [>] ^000000 Level 5 [ ^FF3300MVP^000000 ]",drachel5;
+
+wabbey:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dabbey1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",dabbey2,
+	"^5533ff [>] ^000000 Level 3 [ ^FF3300MVP^000000 ]",dabbey3;
+
+arun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",darun1;
+
+schg:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",adun1;
+
+dewa:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dewaf1,
+	"^5533ff [>] ^000000 Level 2",dewad2,
+	"^5533ff [>] ^000000 Level 3",dewad3;
+
+dicc:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",dicdun1,
+	"^5533ff [>] ^000000 Level 2",dicdun2,
+	"^5533ff [>] ^000000 Fild 2",dicdun3;
+
+gldd:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",gldd1,
+	"^5533ff [>] ^000000 Level 2",gldd2,
+	"^5533ff [>] ^000000 Level 3",gldd3,
+	"^5533ff [>] ^000000 Level 4",gldd4;
+
+
+mald:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",mald1;
+
+bradun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"^5533ff [>] ^000000 Level 1",bradun1,
+	"^5533ff [>] ^000000 Level 2 [ ^FF3300MVP^000000 ]",bradun2;
+
+casdun:
+mes "[ ^10B2D2Warper^000000 ]";
+mes "Selecciona el Nivel. Seras teletransportado alli mismo.";
+next;
+menu 	"Level 1",casdun1,
+	"Level 2",casdun2;
+//-------------------------------
+//          Town Warps
+//-------------------------------
+wseal: 
+set lastmap$,"seal"; 
+set lastx,83; 
+set lasty,85;
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "seal.gat",83,85; 
+end;
+
+wcammorroc: 
+set lastmap$,"cammorroc"; 
+set lastx,99; 
+set lasty,115;
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cammorroc.gat",99,115; 
+end;
+wmanuk: 
+set lastmap$,"manuk"; 
+set lastx,267; 
+set lasty,196; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "manuk.gat",267,196; 
+end;
+wsplendide: 
+set lastmap$,"splendide"; 
+set lastx,200; 
+set lasty,150; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "splendide.gat",200,150; 
+end;
+wafeltz: 
+set lastmap$,"rachel"; 
+set lastx,113; 
+set lasty,137; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "rachel.gat",113,137; 
+end;
+walberta:
+set lastmap$,"alberta"; 
+set lastx,106; 
+set lasty,133; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "alberta.gat",106,133; 
+end;
+waldebaran:
+set lastmap$,"aldebaran"; 
+set lastx,140; 
+set lasty,121; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "aldebaran.gat",140,121; 
+end;
+wamatsu:
+set lastmap$,"amatsu"; 
+set lastx,224; 
+set lasty,229; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "amatsu.gat",224,229; 
+end;
+wayot:
+set lastmap$,"ayothaya"; 
+set lastx,208; 
+set lasty,193; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ayothaya.gat",208,193; 
+end;
+wcomodo:
+set lastmap$,"comodo"; 
+set lastx,189; 
+set lasty,147; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "comodo.gat",189,147; 
+end;
+weinbech:
+set lastmap$,"einbech"; 
+set lastx,190; 
+set lasty,79; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "einbech.gat",190,79; 
+end;
+weinbroch:
+set lastmap$,"einbroch"; 
+set lastx,178; 
+set lasty,167; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "einbroch.gat",178,167; 
+end;
+whugel:
+set lastmap$,"hugel"; 
+set lastx,96; 
+set lasty,145; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "hugel.gat",96,145; 
+end;
+wlighthalzen:
+set lastmap$,"lighthalzen"; 
+set lastx,158; 
+set lasty,92; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lighthalzen.gat",158,92; 
+end;
+wgonryun:
+set lastmap$,"gonryun"; 
+set lastx,159; 
+set lasty,119; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gonryun.gat",159,119; 
+end;
+wgeffen:
+set lastmap$,"geffen"; 
+set lastx,120; 
+set lasty,70; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "geffen.gat",120,70; 
+end;
+wizlude:
+set lastmap$,"izlude"; 
+set lastx,128; 
+set lasty,109; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "izlude.gat",128,109; 
+end;
+wxmas:
+set lastmap$,"xmas"; 
+set lastx,147; 
+set lasty,134; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "xmas.gat",147,134; 
+end;
+wjawaii:
+set lastmap$,"jawaii"; 
+set lastx,214; 
+set lasty,223; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "jawaii.gat",214,223; 
+end;
+wmorroc:
+set lastmap$,"morocc"; 
+set lastx,157; 
+set lasty,93; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "morocc.gat",157,93; 
+end;
+wnameless:
+set lastmap$,"nameless_n"; 
+set lastx,256; 
+set lasty,215; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "nameless_n.gat",256,215; 
+end;
+wniflheim:
+set lastmap$,"niflheim"; 
+set lastx,85; 
+set lasty,154; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "niflheim.gat",85,154; 
+end;
+wpayon:
+set lastmap$,"payon"; 
+set lastx,172; 
+set lasty,101; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "payon.gat",172,101; 
+end;
+wprontera:
+set lastmap$,"prontera"; 
+set lastx,155; 
+set lasty,183; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prontera.gat",155,183; 
+end;
+wyuno:
+set lastmap$,"yuno"; 
+set lastx,158; 
+set lasty,191; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno.gat",158,191; 
+end;
+wumbala:
+set lastmap$,"umbala"; 
+set lastx,144; 
+set lasty,160; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "umbala.gat",144,160; 
+end;
+wlouyang:
+set lastmap$,"louyang"; 
+set lastx,217; 
+set lasty,105; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "louyang.gat",217,105; 
+end;
+wthorcamp:
+set lastmap$,"thor_camp"; 
+set lastx,201; 
+set lasty,213; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "thor_camp.gat",201,213; 
+end;
+wveins:
+set lastmap$,"veins"; 
+set lastx,216; 
+set lasty,123; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "veins.gat",216,123; 
+end;
+wmoscovia:
+set lastmap$,"moscovia"; 
+set lastx,223; 
+set lasty,191; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moscovia.gat",223,191; 
+end;
+
+wbrasilis:
+set lastmap$,"brasilis"; 
+set lastx,188; 
+set lasty,143; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "brasilis.gat",188,143; 
+end;
+
+wdica:
+set lastmap$,"dicastes01"; 
+set lastx,195; 
+set lasty,177; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "dicastes01.gat",195,177; 
+end; 
+
+dcash:
+set lastmap$,"lun_in01"; 
+set lastx,56; 
+set lasty,60; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lun_in01.gat",56,60; 
+end;
+
+pcshop:
+set lastmap$,"poring_w02"; 
+set lastx,95; 
+set lasty,196; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "poring_w02.gat",95,196; 
+end;
+
+wcaspen:
+set lastmap$,"caspen"; 
+set lastx,160; 
+set lasty,208; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "caspen.gat",160,208; 
+end;
+//-------------------------------
+//        Dungeon Warps
+//-------------------------------
+
+dnyddun1:
+set lastmap$,"1@nyd"; 
+set lastx,193; 
+set lasty,326; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "1@nyd.gat",193,326; 
+end;
+dnyddun2:
+set lastmap$,"2@nyd"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "2@nyd.gat",0,0; 
+end;
+dnyddun3:
+set lastmap$,"nyd_dun01"; 
+set lastx,57; 
+set lasty,222; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "nyd_dun01.gat",57,222; 
+end;
+dnyddun4:
+set lastmap$,"nyd_dun02"; 
+set lastx,59; 
+set lasty,266; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "nyd_dun02.gat",59,266; 
+end;
+dsplendide1:
+set lastmap$,"spl_fild01"; 
+set lastx,20; 
+set lasty,331; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "spl_fild01.gat",20,331; 
+end;
+dsplendide2:
+set lastmap$,"spl_fild02"; 
+set lastx,20; 
+set lasty,242; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "spl_fild02.gat",20,242; 
+end;
+dsplendide3:
+set lastmap$,"spl_fild03"; 
+set lastx,102; 
+set lasty,370; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "spl_fild03.gat",102,370; 
+end;
+dmidcamp1:
+set lastmap$,"moc_fild20"; 
+set lastx,207; 
+set lasty,340; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild20.gat",207,340; 
+end;
+dmidcamp2:
+set lastmap$,"moc_fild21"; 
+set lastx,30; 
+set lasty,195; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild21.gat",30,195; 
+end;
+dmidcamp3:
+set lastmap$,"moc_fild22"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild22.gat",0,0; 
+end;
+dmanuk1:
+set lastmap$,"man_fild01"; 
+set lastx,36; 
+set lasty,238; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "man_fild01.gat",36,238; 
+end;
+dmanuk2:
+set lastmap$,"man_fild02"; 
+set lastx,124; 
+set lasty,47; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "man_fild02.gat",124,47; 
+end;
+dmanuk3:
+set lastmap$,"man_fild03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "man_fild03.gat",0,0; 
+end;
+dkieldun1:
+set lastmap$,"kh_dun01"; 
+set lastx,28; 
+set lasty,226; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "kh_dun01.gat",28,226; 
+end;
+dkieldun2:
+set lastmap$,"kh_dun02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "kh_dun02.gat",0,0; 
+end;
+djuperos1:
+set lastmap$,"juperos_01"; 
+set lastx,53; 
+set lasty,247; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "juperos_01.gat",53,247; 
+end;
+djuperos3:
+set lastmap$,"juperos_02"; 
+set lastx,37; 
+set lasty,63; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "juperos_02.gat",37,63; 
+end;
+djuperos2:
+set lastmap$,"jupe_core"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "jupe_core.gat",0,0; 
+end;
+dumdun1:
+set lastmap$,"um_dun01"; 
+set lastx,42; 
+set lasty,31; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "um_dun01.gat",42,31; 
+end;
+dumdun2:
+set lastmap$,"um_dun02"; 
+set lastx,51; 
+set lasty,25; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "um_dun02.gat",51,25; 
+end;
+dloudun1:
+set lastmap$,"lou_dun01"; 
+set lastx,218; 
+set lasty,196; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lou_dun01.gat",218,196; 
+end;
+dloudun2:
+set lastmap$,"lou_dun02"; 
+set lastx,282; 
+set lasty,20; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lou_dun02.gat",282,20; 
+end;
+dloudun3:
+set lastmap$,"lou_dun03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lou_dun03.gat",0,0; 
+end;
+dayodun1:
+set lastmap$,"ayo_dun01"; 
+set lastx,275; 
+set lasty,19; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ayo_dun01.gat",275,19; 
+end;
+dayodun2:
+set lastmap$,"ayo_dun02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ayo_dun02.gat",0,0; 
+end;
+deindun1:
+set lastmap$,"ein_dun01"; 
+set lastx,22; 
+set lasty,14; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_dun01.gat",22,14; 
+end;
+deindun2:
+set lastmap$,"ein_dun02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_dun02.gat",0,0; 
+end;
+dlhzdun1:
+set lastmap$,"lhz_dun01"; 
+set lastx,150; 
+set lasty,228; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lhz_dun01.gat",150,228; 
+end;
+dlhzdun2:
+set lastmap$,"lhz_dun02"; 
+set lastx,150; 
+set lasty,18; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lhz_dun02.gat",150,18; 
+end;
+dlhzdun3:
+set lastmap$,"lhz_dun03"; 
+set lastx,139; 
+set lasty,133; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lhz_dun03.gat",139,133; 
+end;
+dabyss1:
+set lastmap$,"abyss_01"; 
+set lastx,263; 
+set lasty,270; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "abyss_01.gat",263,270; 
+end;
+dabyss2:
+set lastmap$,"abyss_02"; 
+set lastx,275; 
+set lasty,270; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "abyss_02.gat",275,270; 
+end;
+dabyss3:
+set lastmap$,"abyss_03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "abyss_03.gat",0,0; 
+end;
+dthat1:
+set lastmap$,"tha_t01"; 
+set lastx,150; 
+set lasty,39; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t01.gat",150,39; 
+end;
+dthat2:
+set lastmap$,"tha_t02"; 
+set lastx,150; 
+set lasty,136; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t02.gat",150,136; 
+end;
+dthat3:
+set lastmap$,"tha_t03"; 
+set lastx,220; 
+set lasty,158; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t03.gat",220,158; 
+end;
+dthat4:
+set lastmap$,"tha_t04"; 
+set lastx,59; 
+set lasty,143; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t04.gat",59,143; 
+end;
+dthat5:
+set lastmap$,"tha_t05"; 
+set lastx,62; 
+set lasty,11; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t05.gat",62,11; 
+end;
+dthat6:
+set lastmap$,"tha_t06"; 
+set lastx,89; 
+set lasty,221; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t06.gat",89,221; 
+end;
+dthat7:
+set lastmap$,"tha_t07"; 
+set lastx,35; 
+set lasty,166; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t07.gat",35,166; 
+end;
+dthat8:
+set lastmap$,"tha_t08"; 
+set lastx,93; 
+set lasty,148; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t08.gat",93,148; 
+end;
+dthat9:
+set lastmap$,"tha_t09"; 
+set lastx,29; 
+set lasty,107; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t09.gat",29,107; 
+end;
+dthat10:
+set lastmap$,"tha_t10"; 
+set lastx,159; 
+set lasty,138; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t10.gat",159,138; 
+end;
+dthat11:
+set lastmap$,"tha_t11"; 
+set lastx,19; 
+set lasty,20; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t11.gat",19,20; 
+end;
+dthat12:
+set lastmap$,"tha_t12"; 
+set lastx,130; 
+set lasty,52; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tha_t12.gat",130,52; 
+end;
+danthell1:
+set lastmap$,"anthell01"; 
+set lastx,35; 
+set lasty,262; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "anthell01.gat",35,262; 
+end;
+danthell2:
+set lastmap$,"anthell02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "anthell02.gat",0,0; 
+end;
+dbeach1:
+set lastmap$,"beach_dun"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "beach_dun.gat",0,0; 
+end;
+dbeach2:
+set lastmap$,"beach_dun2"; 
+set lastx,255; 
+set lasty,244; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "beach_dun2.gat",255,244; 
+end;
+dbeach3:
+set lastmap$,"beach_dun3"; 
+set lastx,22; 
+set lasty,262; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "beach_dun3.gat",22,262; 
+end;
+dbeach4:
+set lastmap$,"cmd_fild02"; 
+set lastx,252; 
+set lasty,170; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild02.gat",252,170; 
+end;
+dbyalan1:
+set lastmap$,"iz_dun00"; 
+set lastx,168; 
+set lasty,168; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "iz_dun00.gat",168,168; 
+end;
+dbyalan2:
+set lastmap$,"iz_dun01"; 
+set lastx,253; 
+set lasty,252; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "iz_dun01.gat",253,252; 
+end;
+dbyalan3:
+set lastmap$,"iz_dun02"; 
+set lastx,236; 
+set lasty,204; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "iz_dun02.gat",236,204; 
+end;
+dbyalan4:
+set lastmap$,"iz_dun03"; 
+set lastx,32; 
+set lasty,63; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "iz_dun03.gat",32,63; 
+end;
+dbyalan5:
+set lastmap$,"iz_dun04"; 
+set lastx,26; 
+set lasty,27; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "iz_dun04.gat",26,27; 
+end;
+dalde1:
+set lastmap$,"alde_dun01"; 
+set lastx,297; 
+set lasty,25; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "alde_dun01.gat",297,25; 
+end;
+dalde2:
+set lastmap$,"alde_dun02"; 
+set lastx,127; 
+set lasty,169; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "alde_dun02.gat",127,169; 
+end;
+dalde3:
+set lastmap$,"alde_dun03"; 
+set lastx,277; 
+set lasty,178; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "alde_dun03.gat",277,178; 
+end;
+dalde4:
+set lastmap$,"alde_dun04"; 
+set lastx,268; 
+set lasty,74; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "alde_dun04.gat",268,74; 
+end;
+dclock1:
+set lastmap$,"c_tower1"; 
+set lastx,199; 
+set lasty,159; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "c_tower1.gat",199,159; 
+end;
+dclock2:
+set lastmap$,"c_tower2"; 
+set lastx,148; 
+set lasty,283; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "c_tower2.gat",148,283; 
+end;
+dclock3:
+set lastmap$,"c_tower3"; 
+set lastx,65; 
+set lasty,147; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "c_tower3.gat",65,147; 
+end;
+dclock4:
+set lastmap$,"c_tower4"; 
+set lastx,56; 
+set lasty,155; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "c_tower4.gat",56,155; 
+end;
+dcoal1:
+set lastmap$,"mjo_dun01"; 
+set lastx,52; 
+set lasty,17; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjo_dun01.gat",52,17; 
+end;
+dcoal2:
+set lastmap$,"mjo_dun02"; 
+set lastx,381; 
+set lasty,343; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjo_dun02.gat",381,343; 
+end;
+dcoal3:
+set lastmap$,"mjo_dun03"; 
+set lastx,302; 
+set lasty,262; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjo_dun03.gat",302,262; 
+end;
+dculvert1:
+set lastmap$,"prt_sewb1"; 
+set lastx,131; 
+set lasty,247; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_sewb1.gat",131,247; 
+end;
+dculvert2:
+set lastmap$,"prt_sewb2"; 
+set lastx,19; 
+set lasty,19; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_sewb2.gat",19,19; 
+end;
+dculvert3:
+set lastmap$,"prt_sewb3"; 
+set lastx,180; 
+set lasty,169; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_sewb3.gat",180,169; 
+end;
+dculvert4:
+set lastmap$,"prt_sewb4"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_sewb4.gat",0,0; 
+end;
+dgeffen1:
+set lastmap$,"gef_dun00"; 
+set lastx,104; 
+set lasty,99; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_dun00.gat",104,99; 
+end;
+dgeffen2:
+set lastmap$,"gef_dun01"; 
+set lastx,115; 
+set lasty,236; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_dun01.gat",115,236; 
+end;
+dgeffen3:
+set lastmap$,"gef_dun02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_dun02.gat",0,0; 
+end;
+dgeffen4:
+set lastmap$,"gef_dun03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_dun03.gat",0,0; 
+end;
+dglastent:
+set lastmap$,"glast_01"; 
+set lastx,375; 
+set lasty,304; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "glast_01.gat",375,304; 
+end;
+dglastcast1:
+set lastmap$,"gl_cas01"; 
+set lastx,199; 
+set lasty,29; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_cas01.gat",199,29; 
+end;
+dglastcast2:
+set lastmap$,"gl_cas02"; 
+set lastx,104; 
+set lasty,25; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_cas02.gat",104,25; 
+end;
+dglastchiv1:
+set lastmap$,"gl_knt01"; 
+set lastx,150; 
+set lasty,15; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_knt01.gat",150,15; 
+end;
+dglastchiv2:
+set lastmap$,"gl_knt02"; 
+set lastx,157; 
+set lasty,287; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_knt02.gat",157,287; 
+end;
+dglastyard:
+set lastmap$,"gl_chyard"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_chyard.gat",0,0; 
+end;
+dglastcul1:
+set lastmap$,"gl_sew01"; 
+set lastx,258; 
+set lasty,255; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_sew01.gat",258,255; 
+end;
+dglastcul2:
+set lastmap$,"gl_sew02"; 
+set lastx,108; 
+set lasty,291; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_sew02.gat",108,291; 
+end;
+dglastcul3:
+set lastmap$,"gl_sew03"; 
+set lastx,171; 
+set lasty,283; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_sew03.gat",171,283; 
+end;
+dglastcul4:
+set lastmap$,"gl_sew04"; 
+set lastx,68; 
+set lasty,277; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_sew04.gat",68,277; 
+end;
+dglastchur:
+set lastmap$,"gl_church"; 
+set lastx,156; 
+set lasty,7; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_church.gat",156,7; 
+end;
+dglaststep:
+set lastmap$,"gl_step"; 
+set lastx,12; 
+set lasty,7; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_step.gat",12,7; 
+end;
+dglastcave1:
+set lastmap$,"gl_dun01"; 
+set lastx,133; 
+set lasty,271; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_dun01.gat",133,271; 
+end;
+dglastcave2:
+set lastmap$,"gl_dun02"; 
+set lastx,224; 
+set lasty,274; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_dun02.gat",224,274; 
+end;
+dglastpris1:
+set lastmap$,"gl_prison"; 
+set lastx,14; 
+set lasty,70; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_prison.gat",14,70; 
+end;
+dglastpris2:
+set lastmap$,"gl_prison1"; 
+set lastx,150; 
+set lasty,14; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gl_prison1.gat",150,14; 
+end;
+dhidden1:
+set lastmap$,"prt_maze01"; 
+set lastx,176; 
+set lasty,7; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_maze01.gat",176,7; 
+end;
+dhidden2:
+set lastmap$,"prt_maze02"; 
+set lastx,92; 
+set lasty,20; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_maze02.gat",92,20; 
+end;
+dhidden3:
+set lastmap$,"prt_maze03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_maze03.gat",0,0; 
+end;
+diced1:
+set lastmap$,"ice_dun01"; 
+set lastx,157; 
+set lasty,14; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ice_dun01.gat",157,14; 
+end;
+diced2:
+set lastmap$,"ice_dun02"; 
+set lastx,151; 
+set lasty,155; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ice_dun02.gat",151,155; 
+end;
+diced3:
+set lastmap$,"ice_dun03"; 
+set lastx,149; 
+set lasty,22; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ice_dun03.gat",149,22; 
+end;
+diced4:
+set lastmap$,"ice_dun04"; 
+set lastx,33; 
+set lasty,158; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ice_dun04.gat",33,158; 
+end;
+dmagma1:
+set lastmap$,"mag_dun01"; 
+set lastx,126; 
+set lasty,68; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mag_dun01.gat",126,68; 
+end;
+dmagma2:
+set lastmap$,"mag_dun02"; 
+set lastx,47; 
+set lasty,30; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mag_dun02.gat",47,30; 
+end;
+dmosk1:
+set lastmap$,"mosk_dun01"; 
+set lastx,189; 
+set lasty,46; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mosk_dun01.gat",189,46; 
+end;
+dmosk2:
+set lastmap$,"mosk_dun02"; 
+set lastx,163; 
+set lasty,33; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mosk_dun02.gat",163,33; 
+end;
+dmosk3:
+set lastmap$,"mosk_dun03"; 
+set lastx,33; 
+set lasty,136; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mosk_dun03.gat",33,136; 
+end;
+dorc1:
+set lastmap$,"orcsdun01"; 
+set lastx,32; 
+set lasty,170; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "orcsdun01.gat",32,170; 
+end;
+dorc2:
+set lastmap$,"orcsdun02"; 
+set lastx,21; 
+set lasty,185; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "orcsdun02.gat",21,185; 
+end;
+dpayon1:
+set lastmap$,"pay_dun00"; 
+set lastx,21; 
+set lasty,183; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_dun00.gat",21,183; 
+end;
+dpayon2:
+set lastmap$,"pay_dun01"; 
+set lastx,19; 
+set lasty,33; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_dun01.gat",19,33; 
+end;
+dpayon3:
+set lastmap$,"pay_dun02"; 
+set lastx,19; 
+set lasty,63; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_dun02.gat",19,63; 
+end;
+dpayon4:
+set lastmap$,"pay_dun03"; 
+set lastx,155; 
+set lasty,159; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_dun03.gat",155,159; 
+end;
+dpayon5:
+set lastmap$,"pay_dun04"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_dun04.gat",0,0; 
+end;
+dpyramids1:
+set lastmap$,"moc_pryd01"; 
+set lastx,192; 
+set lasty,9; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_pryd01.gat",192,9; 
+end;
+dpyramids2:
+set lastmap$,"moc_pryd02"; 
+set lastx,10; 
+set lasty,192; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_pryd02.gat",10,192; 
+end;
+dpyramids3:
+set lastmap$,"moc_pryd03"; 
+set lastx,100; 
+set lasty,92; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_pryd03.gat",100,92; 
+end;
+dpyramids4:
+set lastmap$,"moc_pryd04"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_pryd04.gat",0,0; 
+end;
+dpyramidsb1:
+set lastmap$,"moc_pryd05"; 
+set lastx,94; 
+set lasty,96; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_pryd05.gat",94,96; 
+end;
+dpyramidsb2:
+set lastmap$,"moc_pryd06"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_pryd06.gat",0,0; 
+end;
+dsphinx1:
+set lastmap$,"in_sphinx1"; 
+set lastx,288; 
+set lasty,9; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "in_sphinx1.gat",288,9; 
+end;
+dsphinx2:
+set lastmap$,"in_sphinx2"; 
+set lastx,149; 
+set lasty,81; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "in_sphinx2.gat",149,81; 
+end;
+dsphinx3:
+set lastmap$,"in_sphinx3"; 
+set lastx,210; 
+set lasty,54; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "in_sphinx3.gat",210,54; 
+end;
+dsphinx4:
+set lastmap$,"in_sphinx4"; 
+set lastx,10; 
+set lasty,222; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "in_sphinx4.gat",10,222; 
+end;
+dsphinx5:
+set lastmap$,"in_sphinx5"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "in_sphinx5.gat",0,0; 
+end;
+dsunken1:
+set lastmap$,"treasure01"; 
+set lastx,69; 
+set lasty,24; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "treasure01.gat",69,24; 
+end;
+dsunken2:
+set lastmap$,"treasure02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "treasure02.gat",0,0; 
+end;
+dtoy1:
+set lastmap$,"xmas_dun01"; 
+set lastx,205; 
+set lasty,15; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "xmas_dun01.gat",205,15; 
+end;
+dtoy2:
+set lastmap$,"xmas_dun02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "xmas_dun02.gat",0,0; 
+end;
+dturtleent:
+set lastmap$,"tur_dun01"; 
+set lastx,154; 
+set lasty,49; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tur_dun01.gat",154,49; 
+end;
+dturtle1:
+set lastmap$,"tur_dun02"; 
+set lastx,148; 
+set lasty,261; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tur_dun02.gat",148,261; 
+end;
+dturtle2:
+set lastmap$,"tur_dun03"; 
+set lastx,132; 
+set lasty,189; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tur_dun03.gat",132,189; 
+end;
+dturtle3:
+set lastmap$,"tur_dun04"; 
+set lastx,100; 
+set lasty,192; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "tur_dun04.gat",100,192; 
+end;
+dama1:
+set lastmap$,"ama_dun01"; 
+set lastx,228; 
+set lasty,11; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ama_dun01.gat",228,11; 
+end;
+dama2:
+set lastmap$,"ama_dun02"; 
+set lastx,34; 
+set lasty,41; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ama_dun02.gat",34,41; 
+end;
+dama3:
+set lastmap$,"ama_dun03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ama_dun03.gat",0,0; 
+end;
+dgon1:
+set lastmap$,"gon_dun01"; 
+set lastx,153; 
+set lasty,53; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gon_dun01.gat",153,53; 
+end;
+dgon2:
+set lastmap$,"gon_dun02"; 
+set lastx,28; 
+set lasty,113; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gon_dun02.gat",28,113; 
+end;
+dgon3:
+set lastmap$,"gon_dun03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gon_dun03.gat",0,0; 
+end;
+dgefenia1:
+set lastmap$,"gefenia01"; 
+set lastx,40; 
+set lasty,103; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gefenia01.gat",40,103; 
+end;
+dgefenia2:
+set lastmap$,"gefenia02"; 
+set lastx,203; 
+set lasty,34; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gefenia02.gat",203,34; 
+end;
+dgefenia3:
+set lastmap$,"gefenia03"; 
+set lastx,266; 
+set lasty,168; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gefenia03.gat",266,168; 
+end;
+dgefenia4:
+set lastmap$,"gefenia04"; 
+set lastx,130; 
+set lasty,272; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gefenia04.gat",130,272; 
+end;
+dgldun1:
+set lastmap$,"prt_gld"; 
+set lastx,159; 
+set lasty,98; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_gld",159,98; 
+end;
+dgldun2:
+set lastmap$,"sch_gld"; 
+set lastx,287; 
+set lasty,112; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "sch_gld",287,112; 
+end;
+dgldun3:
+set lastmap$,"gld_dun03"; 
+set lastx,50; 
+set lasty,44; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gld_dun03.gat",50,44; 
+end;
+dgldun4:
+set lastmap$,"gld_dun04"; 
+set lastx,116; 
+set lasty,45; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gld_dun04.gat",116,45; 
+end;
+casino:
+set lastmap$,"cmd_in02"; 
+set lastx,179; 
+set lasty,129; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_in02.gat",179,129; 
+end;
+dthor1:
+set lastmap$,"thor_v01"; 
+set lastx,21; 
+set lasty,228; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "thor_v01.gat",21,228; 
+end;
+dthor2:
+set lastmap$,"thor_v02"; 
+set lastx,75; 
+set lasty,205; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "thor_v02.gat",75,205; 
+end;
+dthor3:
+set lastmap$,"thor_v03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "thor_v03.gat",0,0;
+end;
+drachel1:
+set lastmap$,"ra_san01"; 
+set lastx,140; 
+set lasty,11; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_san01.gat",140,11; 
+end;
+drachel2:
+set lastmap$,"ra_san02"; 
+set lastx,32; 
+set lasty,21; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_san02.gat",32,21; 
+end;
+drachel3:
+set lastmap$,"ra_san03"; 
+set lastx,10; 
+set lasty,149; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_san03.gat",10,149; 
+end;
+drachel4:
+set lastmap$,"ra_san04"; 
+set lastx,204; 
+set lasty,218; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_san04.gat",204,218; 
+end;
+drachel5:
+set lastmap$,"ra_san05"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_san05.gat",0,0; 
+end;
+dabbey1:
+set lastmap$,"abbey01"; 
+set lastx,51; 
+set lasty,14; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "abbey01.gat",51,14; 
+end;
+dabbey2:
+set lastmap$,"abbey02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "abbey02.gat",0,0; 
+end;
+dabbey3:
+set lastmap$,"abbey03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "abbey03.gat",0,0; 
+end;
+
+darun1:
+set lastmap$,"arug_dun01"; 
+set lastx,199; 
+set lasty,10; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "arug_dun01.gat",199,10; 
+end;
+
+adun1:
+set lastmap$,"schg_dun01"; 
+set lastx,199; 
+set lasty,136; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "schg_dun01.gat",199,136; 
+end;
+
+dewaf1:
+set lastmap$,"dew_fild01"; 
+set lastx,375; 
+set lasty,212; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "dew_fild01.gat",375,212; 
+end;
+
+dewad2:
+set lastmap$,"dew_dun01"; 
+set lastx,175; 
+set lasty,79; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "dew_dun01.gat",175,79; 
+end;
+
+
+dewad3:
+set lastmap$,"dew_dun02"; 
+set lastx,307; 
+set lasty,30; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "dew_dun02.gat",307,30; 
+end;
+
+dicdun1:
+set lastmap$,"dic_dun01"; 
+set lastx,31; 
+set lasty,218; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "dic_dun01.gat",31,218; 
+end;
+
+dicdun2:
+set lastmap$,"dic_dun02"; 
+set lastx,37; 
+set lasty,182; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "dic_dun02.gat",37,182; 
+end;
+
+dicdun3:
+set lastmap$,"dic_fild02"; 
+set lastx,68; 
+set lasty,371; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "dic_fild02.gat",68,371; 
+end;
+
+gldd1:
+set lastmap$,"gld_dun01"; 
+set lastx,119; 
+set lasty,24; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gld_dun01.gat",119,24; 
+end;
+
+gldd2:
+set lastmap$,"gld_dun02"; 
+set lastx,27; 
+set lasty,159; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gld_dun02.gat",27,159; 
+end;
+
+gldd3:
+set lastmap$,"gld_dun03"; 
+set lastx,240; 
+set lasty,267; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gld_dun03.gat",240,267; 
+end;
+
+gldd4:
+set lastmap$,"gld_dun04"; 
+set lastx,107; 
+set lasty,28; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gld_dun04.gat",107,28; 
+end;
+
+mald1:
+set lastmap$,"mal_dun01"; 
+set lastx,33; 
+set lasty,234; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mal_dun01.gat",33,234; 
+end;
+
+bradun1:
+set lastmap$,"bra_dun01"; 
+set lastx,44; 
+set lasty,201; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "bra_dun01.gat",44,201; 
+end;
+
+bradun2:
+set lastmap$,"bra_dun02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "bra_dun02.gat",0,0; 
+end;
+
+wwolf:
+set lastmap$,"aev_fild"; 
+set lastx,140; 
+set lasty,230; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "aev_fild.gat",140,230; 
+end;
+
+ddom:
+set lastmap$,"league"; 
+set lastx,276; 
+set lasty,157; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "league",276,157; 
+end;
+
+casdun1:
+set lastmap$,"casp_dun01"; 
+set lastx,27; 
+set lasty,42; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "casp_dun01",27,42; 
+end;
+
+casdun2:
+set lastmap$,"casp_dun02"; 
+set lastx,132; 
+set lasty,116; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "casp_dun02",132,116; 
+end;
+
+//-------------------------------
+//         Field Warps
+//-------------------------------
+
+dbrafild1:
+set lastmap$,"bra_fild01"; 
+set lastx,81; 
+set lasty,75; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "bra_fild01.gat",81,75; 
+end;
+
+drunfild1:
+set lastmap$,"ra_fild01"; 
+set lastx,192; 
+set lasty,162; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild01.gat",192,162; 
+end;
+drunfild2:
+set lastmap$,"ra_fild02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild02.gat",0,0; 
+end;
+drunfild3:
+set lastmap$,"ra_fild03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild03.gat",0,0; 
+end;
+drunfild4:
+set lastmap$,"ra_fild04"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild04.gat",0,0; 
+end;
+drunfild5:
+set lastmap$,"ra_fild05"; 
+set lastx,225; 
+set lasty,202; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild05.gat",225,202; 
+end;
+drunfild6:
+set lastmap$,"ra_fild06"; 
+set lastx,202; 
+set lasty,214; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild06.gat",202,214; 
+end;
+drunfild7:
+set lastmap$,"ra_fild07"; 
+set lastx,263; 
+set lasty,196; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild07.gat",263,196; 
+end;
+drunfild8:
+set lastmap$,"ra_fild08"; 
+set lastx,217; 
+set lasty,201; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild08.gat",217,201; 
+end;
+drunfild9:
+set lastmap$,"ra_fild09"; 
+set lastx,87; 
+set lasty,121; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild09.gat",87,121; 
+end;
+drunfild10:
+set lastmap$,"ra_fild10"; 
+set lastx,277; 
+set lasty,181; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild10.gat",277,181; 
+end;
+drunfild11:
+set lastmap$,"ra_fild11"; 
+set lastx,221; 
+set lasty,185; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild11.gat",221,185; 
+end;
+drunfild12:
+set lastmap$,"ra_fild12"; 
+set lastx,175; 
+set lasty,200; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild12.gat",175,200; 
+end;
+drunfild13:
+set lastmap$,"ra_fild13"; 
+set lastx,174; 
+set lasty,197; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ra_fild13.gat",174,197; 
+end;
+dgeffild00:
+set lastmap$,"gef_fild00"; 
+set lastx,45; 
+set lasty,200; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild00.gat",45,200; 
+end;
+dgeffild01:
+set lastmap$,"gef_fild01"; 
+set lastx,213; 
+set lasty,204; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild01.gat",213,204; 
+end;
+dgeffild02:
+set lastmap$,"gef_fild02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild02.gat",0,0; 
+end;
+dgeffild03:
+set lastmap$,"gef_fild03"; 
+set lastx,257; 
+set lasty,192; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild03.gat",257,192; 
+end;
+dgeffild04:
+set lastmap$,"gef_fild04"; 
+set lastx,188; 
+set lasty,171; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild04.gat",188,171; 
+end;
+dgeffild05:
+set lastmap$,"gef_fild05"; 
+set lastx,166; 
+set lasty,263; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild05.gat",166,263; 
+end;
+dgeffild06:
+set lastmap$,"gef_fild06"; 
+set lastx,248; 
+set lasty,158; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild06.gat",248,158; 
+end;
+dgeffild07:
+set lastmap$,"gef_fild07"; 
+set lastx,195; 
+set lasty,191; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild07.gat",195,191; 
+end;
+dgeffild08:
+set lastmap$,"gef_fild08"; 
+set lastx,186; 
+set lasty,183; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild08.gat",186,183; 
+end;
+dgeffild09:
+set lastmap$,"gef_fild09"; 
+set lastx,221; 
+set lasty,117; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild09.gat",221,117; 
+end;
+dgeffild10:
+set lastmap$,"gef_fild10"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild10.gat",0,0; 
+end;
+dgeffild11:
+set lastmap$,"gef_fild11"; 
+set lastx,136; 
+set lasty,328; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild11.gat",136,328; 
+end;
+dgeffild12:
+set lastmap$,"gef_fild12"; 
+set lastx,240; 
+set lasty,181; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild12.gat",240,181; 
+end;
+dgeffild13:
+set lastmap$,"gef_fild13"; 
+set lastx,235; 
+set lasty,235; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild13.gat",235,235; 
+end;
+dgeffild14:
+set lastmap$,"gef_fild14"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gef_fild14.gat",0,0; 
+end;
+dmjolnir1:
+set lastmap$,"mjolnir_01"; 
+set lastx,204; 
+set lasty,120; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_01.gat",204,120; 
+end;
+dmjolnir2:
+set lastmap$,"mjolnir_02"; 
+set lastx,175; 
+set lasty,193; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_02.gat",175,193; 
+end;
+dmjolnir3:
+set lastmap$,"mjolnir_03"; 
+set lastx,208; 
+set lasty,213; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_03.gat",208,213; 
+end;
+dmjolnir4:
+set lastmap$,"mjolnir_04"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_04.gat",0,0; 
+end;
+dmjolnir5:
+set lastmap$,"mjolnir_05"; 
+set lastx,181; 
+set lasty,240; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_05.gat",181,240; 
+end;
+dmjolnir6:
+set lastmap$,"mjolnir_06"; 
+set lastx,195; 
+set lasty,270; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_06.gat",195,270; 
+end;
+dmjolnir7:
+set lastmap$,"mjolnir_07"; 
+set lastx,235; 
+set lasty,202; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_07.gat",235,202; 
+end;
+dmjolnir8:
+set lastmap$,"mjolnir_08"; 
+set lastx,188; 
+set lasty,215; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_08.gat",188,215; 
+end;
+dmjolnir9:
+set lastmap$,"mjolnir_09"; 
+set lastx,205; 
+set lasty,144; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_09.gat",205,144; 
+end;
+dmjolnir10:
+set lastmap$,"mjolnir_10"; 
+set lastx,245; 
+set lasty,223; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_10.gat",245,223; 
+end;
+dmjolnir11:
+set lastmap$,"mjolnir_11"; 
+set lastx,180; 
+set lasty,206; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_11.gat",180,206; 
+end;
+dmjolnir12:
+set lastmap$,"mjolnir_12"; 
+set lastx,196; 
+set lasty,208; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mjolnir_12.gat",196,208; 
+end;
+dmosc1:
+set lastmap$,"mosk_fild01"; 
+set lastx,99; 
+set lasty,105; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mosk_fild01.gat",99,105; 
+end;
+dmosc2:
+set lastmap$,"mosk_fild02"; 
+set lastx,204; 
+set lasty,59; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "mosk_fild02.gat",204,59; 
+end;
+dmocfild1:
+set lastmap$,"moc_fild01"; 
+set lastx,198; 
+set lasty,202; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild01.gat",198,202; 
+end;
+dmocfild2:
+set lastmap$,"moc_fild02"; 
+set lastx,177; 
+set lasty,206; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild02.gat",177,206; 
+end;
+dmocfild3:
+set lastmap$,"moc_fild03"; 
+set lastx,194; 
+set lasty,182; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild03.gat",194,182; 
+end;
+dmocfild4:
+set lastmap$,"moc_fild04"; 
+set lastx,184; 
+set lasty,217; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild04.gat",184,217; 
+end;
+dmocfild5:
+set lastmap$,"moc_fild05"; 
+set lastx,203; 
+set lasty,213; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild05.gat",203,213; 
+end;
+dmocfild6:
+set lastmap$,"moc_fild06"; 
+set lastx,213; 
+set lasty,208; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild06.gat",213,208; 
+end;
+dmocfild7:
+set lastmap$,"moc_fild07"; 
+set lastx,224; 
+set lasty,170; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild07.gat",224,170; 
+end;
+dmocfild8:
+set lastmap$,"moc_fild08"; 
+set lastx,229; 
+set lasty,177; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild08.gat",229,177; 
+end;
+dmocfild9:
+set lastmap$,"moc_fild09"; 
+set lastx,195; 
+set lasty,198; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild09.gat",195,198; 
+end;
+dmocfild10:
+set lastmap$,"moc_fild10"; 
+set lastx,209; 
+set lasty,168; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild10.gat",209,168; 
+end;
+dmocfild11:
+set lastmap$,"moc_fild11"; 
+set lastx,198; 
+set lasty,216; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild11.gat",198,216; 
+end;
+dmocfild12:
+set lastmap$,"moc_fild12"; 
+set lastx,156; 
+set lasty,187; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild12.gat",156,187; 
+end;
+dmocfild13:
+set lastmap$,"moc_fild13"; 
+set lastx,185; 
+set lasty,263; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild13.gat",185,263; 
+end;
+dmocfild14:
+set lastmap$,"moc_fild14"; 
+set lastx,209; 
+set lasty,219; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild14.gat",209,219; 
+end;
+dmocfild15:
+set lastmap$,"moc_fild15"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild15.gat",0,0; 
+end;
+dmocfild16:
+set lastmap$,"moc_fild16"; 
+set lastx,206; 
+set lasty,228; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild16.gat",206,228; 
+end;
+dmocfild17:
+set lastmap$,"moc_fild17"; 
+set lastx,208; 
+set lasty,238; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild17.gat",208,238; 
+end;
+dmocfild18:
+set lastmap$,"moc_fild18"; 
+set lastx,209; 
+set lasty,223; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild18.gat",209,223; 
+end;
+dmocfild19:
+set lastmap$,"moc_fild19"; 
+set lastx,85; 
+set lasty,97; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "moc_fild19.gat",85,97; 
+end;
+dpayfild1:
+set lastmap$,"pay_fild01"; 
+set lastx,158; 
+set lasty,206; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild01.gat",158,206; 
+end;
+dpayfild2:
+set lastmap$,"pay_fild02"; 
+set lastx,151; 
+set lasty,219; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild02.gat",151,219; 
+end;
+dpayfild3:
+set lastmap$,"pay_fild03"; 
+set lastx,205; 
+set lasty,148; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild03.gat",205,148; 
+end;
+dpayfild4:
+set lastmap$,"pay_fild04"; 
+set lastx,186; 
+set lasty,247; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild04.gat",186,247; 
+end;
+dpayfild5:
+set lastmap$,"pay_fild05"; 
+set lastx,134; 
+set lasty,204; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild05.gat",134,204; 
+end;
+dpayfild6:
+set lastmap$,"pay_fild06"; 
+set lastx,193; 
+set lasty,235; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild06.gat",193,235; 
+end;
+dpayfild7:
+set lastmap$,"pay_fild07"; 
+set lastx,200; 
+set lasty,177; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild07.gat",200,177; 
+end;
+dpayfild8:
+set lastmap$,"pay_fild08"; 
+set lastx,137; 
+set lasty,189; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild08.gat",137,189; 
+end;
+dpayfild9:
+set lastmap$,"pay_fild09"; 
+set lastx,201; 
+set lasty,224; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild09.gat",201,224; 
+end;
+dpayfild10:
+set lastmap$,"pay_fild10"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild10.gat",0,0; 
+end;
+dpayfild11:
+set lastmap$,"pay_fild11"; 
+set lastx,194; 
+set lasty,150; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "pay_fild11.gat",194,150; 
+end;
+dprtfild0:
+set lastmap$,"prt_fild00"; 
+set lastx,184; 
+set lasty,235; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild00.gat",184,235; 
+end;
+dprtfild1:
+set lastmap$,"prt_fild01"; 
+set lastx,190; 
+set lasty,206; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild01.gat",190,206; 
+end;
+dprtfild2:
+set lastmap$,"prt_fild02"; 
+set lastx,240; 
+set lasty,206; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild02.gat",240,206; 
+end;
+dprtfild3:
+set lastmap$,"prt_fild03"; 
+set lastx,190; 
+set lasty,143; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild03.gat",190,143; 
+end;
+dprtfild4:
+set lastmap$,"prt_fild04"; 
+set lastx,307; 
+set lasty,252; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild04.gat",307,252; 
+end;
+dprtfild5:
+set lastmap$,"prt_fild05"; 
+set lastx,239; 
+set lasty,213; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild05.gat",239,213; 
+end;
+dprtfild6:
+set lastmap$,"prt_fild06"; 
+set lastx,185; 
+set lasty,188; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild06.gat",185,188; 
+end;
+dprtfild7:
+set lastmap$,"prt_fild07"; 
+set lastx,193; 
+set lasty,194; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild07.gat",193,194; 
+end;
+dprtfild8:
+set lastmap$,"prt_fild08"; 
+set lastx,187; 
+set lasty,218; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild08.gat",187,218; 
+end;
+dprtfild9:
+set lastmap$,"prt_fild09"; 
+set lastx,210; 
+set lasty,183; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild09.gat",210,183; 
+end;
+dprtfild10:
+set lastmap$,"prt_fild10"; 
+set lastx,195; 
+set lasty,149; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild10.gat",195,149; 
+end;
+dprtfild11:
+set lastmap$,"prt_fild11"; 
+set lastx,198; 
+set lasty,164; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "prt_fild11.gat",198,164; 
+end;
+dxmasfild1:
+set lastmap$,"xmas_fild01"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "xmas_fild01.gat",0,0; 
+end;
+dcmdfild1:
+set lastmap$,"cmd_fild01"; 
+set lastx,180; 
+set lasty,178; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild01.gat",180,178; 
+end;
+dcmdfild2:
+set lastmap$,"cmd_fild02"; 
+set lastx,231; 
+set lasty,160; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild02.gat",231,160; 
+end;
+dcmdfild3:
+set lastmap$,"cmd_fild03"; 
+set lastx,191; 
+set lasty,172; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild03.gat",191,172; 
+end;
+dcmdfild4:
+set lastmap$,"cmd_fild04"; 
+set lastx,228; 
+set lasty,194; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild04.gat",228,194; 
+end;
+dcmdfild5:
+set lastmap$,"cmd_fild05"; 
+set lastx,224; 
+set lasty,203; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild05.gat",224,203; 
+end;
+dcmdfild6:
+set lastmap$,"cmd_fild06"; 
+set lastx,190; 
+set lasty,223; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild06.gat",190,223; 
+end;
+dcmdfild7:
+set lastmap$,"cmd_fild07"; 
+set lastx,234; 
+set lasty,177; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild07.gat",234,177; 
+end;
+dcmdfild8:
+set lastmap$,"cmd_fild08"; 
+set lastx,194; 
+set lasty,175; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild08.gat",194,175; 
+end;
+dcmdfild9:
+set lastmap$,"cmd_fild09"; 
+set lastx,172; 
+set lasty,172; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "cmd_fild09.gat",172,172; 
+end;
+dyunofild1:
+set lastmap$,"yuno_fild01"; 
+set lastx,189; 
+set lasty,224; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild01.gat",189,224; 
+end;
+dyunofild2:
+set lastmap$,"yuno_fild02"; 
+set lastx,192; 
+set lasty,207; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild02.gat",192,207; 
+end;
+dyunofild3:
+set lastmap$,"yuno_fild03"; 
+set lastx,221; 
+set lasty,157; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild03.gat",221,157; 
+end;
+dyunofild4:
+set lastmap$,"yuno_fild04"; 
+set lastx,226; 
+set lasty,199; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild04.gat",226,199; 
+end;
+dyunofild5:
+set lastmap$,"yuno_fild05"; 
+set lastx,223; 
+set lasty,177; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild05.gat",223,177; 
+end;
+dyunofild6:
+set lastmap$,"yuno_fild06"; 
+set lastx,187; 
+set lasty,232; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild06.gat",187,232; 
+end;
+dyunofild7:
+set lastmap$,"yuno_fild07"; 
+set lastx,231; 
+set lasty,174; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild07.gat",231,174; 
+end;
+dyunofild8:
+set lastmap$,"yuno_fild08"; 
+set lastx,196; 
+set lasty,203; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild08.gat",196,203; 
+end;
+dyunofild9:
+set lastmap$,"yuno_fild09"; 
+set lastx,183; 
+set lasty,214; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild09.gat",183,214; 
+end;
+dyunofild10:
+set lastmap$,"yuno_fild10"; 
+set lastx,200; 
+set lasty,124; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild10.gat",200,124; 
+end;
+dyunofild11:
+set lastmap$,"yuno_fild11"; 
+set lastx,195; 
+set lasty,226; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild11.gat",195,226; 
+end;
+dyunofild12:
+set lastmap$,"yuno_fild12"; 
+set lastx,210; 
+set lasty,304; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yuno_fild12.gat",210,304; 
+end;
+damafild1:
+set lastmap$,"ama_fild01"; 
+set lastx,190; 
+set lasty,197; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ama_fild01.gat",190,197; 
+end;
+dgonfild1:
+set lastmap$,"gon_fild01"; 
+set lastx,220; 
+set lasty,227; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "gon_fild01.gat",220,227; 
+end;
+dumfild1:
+set lastmap$,"um_fild01"; 
+set lastx,217; 
+set lasty,206; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "um_fild01.gat",217,206; 
+end;
+dumfild2:
+set lastmap$,"um_fild02"; 
+set lastx,223; 
+set lasty,221; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "um_fild02.gat",223,221; 
+end;
+dumfild3:
+set lastmap$,"um_fild03"; 
+set lastx,237; 
+set lasty,215; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "um_fild03.gat",237,215; 
+end;
+dumfild4:
+set lastmap$,"um_fild04"; 
+set lastx,202; 
+set lasty,197; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "um_fild04.gat",202,197; 
+end;
+dniffild1:
+set lastmap$,"nif_fild01"; 
+set lastx,215; 
+set lasty,229; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "nif_fild01.gat",215,229; 
+end;
+dniffild2:
+set lastmap$,"nif_fild02"; 
+set lastx,167; 
+set lasty,234; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "nif_fild02.gat",167,234; 
+end;
+dyggdrasil1:
+set lastmap$,"yggdrasil01"; 
+set lastx,204; 
+set lasty,78; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "yggdrasil01.gat",204,78; 
+end;
+dloufild1:
+set lastmap$,"lou_fild01"; 
+set lastx,229; 
+set lasty,187; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lou_fild01.gat",229,187; 
+end;
+dayofild1:
+set lastmap$,"ayo_fild01"; 
+set lastx,173; 
+set lasty,134; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ayo_fild01.gat",173,134; 
+end;
+dayofild2:
+set lastmap$,"ayo_fild02"; 
+set lastx,212; 
+set lasty,150; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ayo_fild02.gat",212,150; 
+end;
+deinfild1:
+set lastmap$,"ein_fild01"; 
+set lastx,142; 
+set lasty,225; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild01.gat",142,225; 
+end;
+deinfild2:
+set lastmap$,"ein_fild02"; 
+set lastx,182; 
+set lasty,141; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild02.gat",182,141; 
+end;
+deinfild3:
+set lastmap$,"ein_fild03"; 
+set lastx,187; 
+set lasty,228; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild03.gat",187,228; 
+end;
+deinfild4:
+set lastmap$,"ein_fild04"; 
+set lastx,185; 
+set lasty,173; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild04.gat",185,173; 
+end;
+deinfild5:
+set lastmap$,"ein_fild05"; 
+set lastx,216; 
+set lasty,173; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild05.gat",216,173; 
+end;
+deinfild6:
+set lastmap$,"ein_fild06"; 
+set lastx,195; 
+set lasty,148; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild06.gat",195,148; 
+end;
+deinfild7:
+set lastmap$,"ein_fild07"; 
+set lastx,272; 
+set lasty,220; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild07.gat",272,220; 
+end;
+deinfild8:
+set lastmap$,"ein_fild08"; 
+set lastx,173; 
+set lasty,214; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild08.gat",173,214; 
+end;
+deinfild9:
+set lastmap$,"ein_fild09"; 
+set lastx,207; 
+set lasty,174; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild09.gat",207,174; 
+end;
+deinfild10:
+set lastmap$,"ein_fild10"; 
+set lastx,196; 
+set lasty,200; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ein_fild10.gat",196,200; 
+end;
+dlhzfild1:
+set lastmap$,"lhz_fild01"; 
+set lastx,240; 
+set lasty,179; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lhz_fild01.gat",240,179; 
+end;
+dlhzfild2:
+set lastmap$,"lhz_fild02"; 
+set lastx,185; 
+set lasty,235; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lhz_fild02.gat",185,235; 
+end;
+dlhzfild3:
+set lastmap$,"lhz_fild03"; 
+set lastx,240; 
+set lasty,226; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "lhz_fild03.gat",240,226; 
+end;
+dhufild1:
+set lastmap$,"hu_fild01"; 
+set lastx,268; 
+set lasty,101; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "hu_fild01.gat",268,101; 
+end;
+dhufild2:
+set lastmap$,"hu_fild02"; 
+set lastx,222; 
+set lasty,193; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "hu_fild02.gat",222,193; 
+end;
+dhufild3:
+set lastmap$,"hu_fild03"; 
+set lastx,232; 
+set lasty,185; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "hu_fild03.gat",232,185; 
+end;
+dhufild4:
+set lastmap$,"hu_fild04"; 
+set lastx,252; 
+set lasty,189; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "hu_fild04.gat",252,189; 
+end;
+dhufild5:
+set lastmap$,"hu_fild05"; 
+set lastx,196; 
+set lasty,106; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "hu_fild05.gat",196,106; 
+end;
+dhufild6:
+set lastmap$,"hu_fild06"; 
+set lastx,216; 
+set lasty,220; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "hu_fild06.gat",216,220; 
+end;
+dhufild7:
+set lastmap$,"hu_fild07"; 
+set lastx,227; 
+set lasty,197; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "hu_fild07.gat",227,197; 
+end;
+wodtemp1:
+set lastmap$,"odin_tem01"; 
+set lastx,298; 
+set lasty,167; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "odin_tem01.gat",298,167; 
+end;
+wodtemp2:
+set lastmap$,"odin_tem02"; 
+set lastx,224; 
+set lasty,149; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "odin_tem02.gat",224,149; 
+end;
+wodtemp3:
+set lastmap$,"odin_tem03"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "odin_tem03.gat",0,0; 
+end;
+dvfild1:
+set lastmap$,"ve_fild01"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ve_fild01.gat",0,0; 
+end;
+dvfild2:
+set lastmap$,"ve_fild02"; 
+set lastx,0; 
+set lasty,0; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ve_fild02.gat",0,0; 
+end;
+dvfild3:
+set lastmap$,"ve_fild03"; 
+set lastx,222; 
+set lasty,45; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ve_fild03.gat",222,45; 
+end;
+dvfild4:
+set lastmap$,"ve_fild04"; 
+set lastx,51; 
+set lasty,250; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ve_fild04.gat",51,250; 
+end;
+dvfild5:
+set lastmap$,"ve_fild05"; 
+set lastx,202; 
+set lasty,324; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ve_fild05.gat",202,324; 
+end;
+dvfild6:
+set lastmap$,"ve_fild06"; 
+set lastx,150; 
+set lasty,223; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ve_fild06.gat",150,223; 
+end;
+dvfild7:
+set lastmap$,"ve_fild07"; 
+set lastx,149; 
+set lasty,307; 
+specialeffect2 71;
+	sleep2 500;
+	specialeffect2 402;
+	sleep2 500;
+	emotion 12;
+	specialeffect2 6;
+	sleep2 200;
+	specialeffect2 304;
+warp "ve_fild07.gat",149,307; 
+end;
+}
+
+
+//---------------------
+//Edit duplicates here!
+//---------------------
+// prontera,160,187,4	duplicate(Warper)	Warper#0	640
+alberta,29,240,5	duplicate(Warper)	Warper#1	640
+aldebaran,134,119,6	duplicate(Warper)	Warper#2	640
+amatsu,102,152,4	duplicate(Warper)	Warper#3	640
+ayothaya,212,174,4	duplicate(Warper)	Warper#4	640
+comodo,194,157,4	duplicate(Warper)	Warper#5	640
+geffen,124,70,4	duplicate(Warper)	Warper#6	640
+gonryun,153,116,3	duplicate(Warper)	Warper#7	640
+izlude,134,90,6	duplicate(Warper)	Warper#8	640
+yuno,144,189,6	duplicate(Warper)	Warper#9	640
+louyang,207,104,6	duplicate(Warper)	Warper#10	640
+xmas,153,132,4	duplicate(Warper)	Warper#11	640
+morocc,161,97,4	duplicate(Warper)	Warper#12	640
+payon,183,103,6	duplicate(Warper)	Warper#13	640
+umbala,82,161,4	duplicate(Warper)	Warper#14	640
+lighthalzen,168,90,4	duplicate(Warper)	Warper#15	640
+hugel,93,154,4	duplicate(Warper)	Warper#16	640
+rachel,119,146,4	duplicate(Warper)	Warper#17	640
+veins,214,125,4	duplicate(Warper)	Warper#18	640
+einbroch,233,205,4	duplicate(Warper)	Warper#19	640
+niflheim,188,191,4	duplicate(Warper)	Warper#20	640
+moscovia,227,199,4	duplicate(Warper)	Warper#21	640
+brasilis,199,222,4	duplicate(Warper)	Warper#22	640
+einbech,166,124,4	duplicate(Warper)	Warper#23	640
+seal,75,87,4	duplicate(Warper)	Warper#24	640
+mid_camp,224,236,4	duplicate(Warper)	Warper#25	640
+manuk,268,143,4	duplicate(Warper)	Warper#26	640
+splendide,204,153,4	duplicate(Warper)	Warper#27	640
+dicastes01,194,194,4	duplicate(Warper)	Warper#28	640
+seal_in01,91,29,4	duplicate(Warper)	Warper#29	640
+vend_zone,105,101,4	duplicate(Warper)	Warper#30	640

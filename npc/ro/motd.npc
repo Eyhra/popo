@@ -1,0 +1,108 @@
+-	script	MOTD	-1,{
+
+OnPCLoginEvent:
+
+	// Definición de variables por primer login.
+	if (PJ_FIRSTLOGIN == 0) {
+		PJ_FIRSTLOGIN = 1;
+		for (.@i = 1; .@i <= getarraysize(.v$); .@i++)
+			setd(.v$[.@i], 1); // FIX: setd(nombre, valor) + cubrir último índice
+	}
+	if (#CHAR_FIRSTLOGIN == 0) {
+		#CHAR_FIRSTLOGIN = 1;
+		atcommand "@langtype SPN";
+	}
+
+	// Mensaje de Inicio
+	if (login_inicio) {
+		if (!vip_status(1)) {
+			.vipname$ = "Normal";
+			if (getgroupid() > 10 && getgroupid() < 99)
+				.vipname$ = "Miembro del Staff";
+			if (getgroupid() == 99)
+				.vipname$ = "Administrador";
+		} else
+			.vipname$ = "Premium";
+
+		sleep2 1000;
+		dispbottom "» ------------------------------------------------------------------------------------- «",0xFFFF00;
+		dispbottom "- Bienvenido nuevamente a:",0xFFFFFF;
+		dispbottom "-",0xFFFF00;
+		dispbottom "-                                                S    E    A    L",0xFFFF00;
+		dispbottom "-                                              Ragnarok Online",0xFFFF00;
+		dispbottom "-                             Servidor Privado de Ragnarök Online",0xFFFF00;
+		dispbottom "-                                      Web: www.sealserver.cl",0xFFFFFF;
+		dispbottom "-                                      Pre-Renewal 30x/30x/20x",0xFF8000;
+		dispbottom "-                                                  ------------",0xFF8000;
+		dispbottom "- Esta conexión se estableció a las "+gettimestr("%H:%M",21)+"hrs el "+gettimestr("%d/%m/%Y",21)+".",0xFFFFFF;
+		dispbottom "- Tipo de Cuenta: "+.vipname$+"",0xFFFFFF;
+		dispbottom "» ------------------------------------------------------------------------------------- «",0xFFFF00;
+	}
+
+	// Pequeño Delay para que no se revuelvan los mensajes.
+	sleep2 300;
+
+	// Tips del día
+	if (login_tipsdia) {
+		dispbottom "-",0xFFFF00;
+		dispbottom "- Tip's del día:",0xFFFF00;
+		dispbottom "- " + .dailytip$[rand(1, getarraysize(.dailytip$))] + "",0xFFFF00;
+	}
+
+	// Te anuncia si hay alguna batalla gremial activa.
+	if (agitcheck() || agitcheck2() || agitcheck3()) {
+		if (agitcheck())  .@w$ = "War of Emperium: Fist Edition";
+		if (agitcheck2()) .@w$ = "War of Emperium: Second Edition";
+		if (agitcheck3()) .@w$ = "War of Emperium: Training Edition";
+		dispbottom "<[ Batalla gremial activa: "+.@w$+" ]>",0xFFFF00;
+	}
+
+	// Por último, mensaje de bienvenida ;)
+	message strcharinfo(0),"~ ¡Bienvenid"+(Sex ? "o":"a")+" "+strcharinfo(0)+"! ~";
+	sleep2 500;
+
+	// ------------------------- Peak Users -> Control Panel -------------------------
+	.onlineusers = getusers(1);
+	.date$ = gettimestr("%Y-%m-%d", 21);               // FIX: fecha con ceros (YYYY-MM-DD)
+	// Lee el mayor pico registrado (DESC para máximo)
+	query_sql("SELECT `users` FROM `"+.sqltable$+"` ORDER BY `users` DESC LIMIT 1", .@peak);
+
+	// Si no hay filas, inserta; si hay y el pico actual es mayor, actualiza.
+	if (getarraysize(.@peak) == 0) {
+		// Si usas la tabla con id fijo:
+		query_sql("INSERT INTO `"+.sqltable$+"` (`id`, `users`, `date`) VALUES (1, "+.onlineusers+", '"+.date$+"') ON DUPLICATE KEY UPDATE `users`=VALUES(`users`), `date`=VALUES(`date`)");
+	} else if (.onlineusers > .@peak[0]) {
+		// Actualiza la fila única (id=1). Si tu tabla no usa id, puedes dejar UPDATE sin WHERE si solo hay 1 fila.
+		query_sql("UPDATE `"+.sqltable$+"` SET `users` = "+.onlineusers+", `date` = '"+.date$+"' WHERE `id` = 1");
+	}
+	// -----------------------------------------------------------------------------
+
+	end;
+
+OnInit:
+	// Nombre de la tabla para el pico de usuarios (¡IMPORTANTE!)
+	.sqltable$ = "cp_peak_users";                       // FIX: define el nombre de la tabla
+
+	// setmapflag "prontera",mf_leaves;
+	// setmapflag "prontera",mf_sakura;
+
+	setarray .v$[1],
+		"login_premiod",
+		"login_mdia",
+		"login_inicio",
+		"login_bounty",
+		"login_tipsdia";
+
+	setarray .dailytip$[1],
+		"¡Si eres respetuoso y amable con los demás, lo serán contigo! ¡Juega en buena onda!",
+		"El foro es una real herramienta para hacer consultas y encontrar información valiosa.",
+		"¿Sabias que? Si juegas en equipo (Party) ganarás más experiencia y serán mas fáciles las aventuras.",
+		"¿Tienes sugerencias o Ideas? ¡Contactanos en nuestro foro o por Ticket de soporte!, te escucharemos.",
+		"El trabajo en equipo es la mejor estrategia para conseguir objetivos en común ¡Unete a una Party!",
+		"¿Ya te aventuraste con tu 'Party' en una Instancia? Allá afuera hay muchas aventuras!",
+		"Trabajamos por mantener una economía solida y estable, ¿Tienes sugerencias? Avisanos en el Discord.",
+		"¡Tus felicitaciones y agradecimientos son importantes para nosotros!, Comentanos en nuestro Discord.",
+		"¡Animate a invitar a tus Amigos! podrían ser un excelente equipo.";
+
+	end;
+}

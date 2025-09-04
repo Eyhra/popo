@@ -1,0 +1,74 @@
+prontera,165,161,4	script	Claus::Prueba8j8	718,{
+	mes "Ho Ho Ho!! A merry Christmas for everybody, a Happy New Year for all the world! ";
+	next;
+	switch(select("^3355FF Would you give me a christmas present?? ^000000:Deliver me ^3355FFGift^000000:Nothing")) {
+	case 1:
+		mes "[Claus]";
+		mes "Ho Ho! I will give you a present if you deliver me these items";
+		//next;
+		//mes "[Claus]";
+		//mes "Jijijij ~.";
+		next;
+		mes "[Claus]";
+		mes "The items are as follows.";
+		mes "^3355FF120 Piece of Cak^000000";
+		mes "^3355FF100 Candy^000000";
+		mes "^3355FF50 Manacles^000000";
+		mes "^3355FF100 Weel-backed Cooke^000000";
+ 		mes "^3355FF5 Christmas Musicbox^000000";
+		mes "^3355FF25 Pearl^000000";
+		mes "^3355FF25 Crystal Blue^000000";
+		mes "^3355FF30.000 Zenys^000000";
+		mes "Come back with them!";
+		next;
+		mes "[Claus]";
+		mes "In exchange of these items I will give you an exclusive Christmas present!";
+		mes "Let's go to the Toy Factory! ~";
+		//mes "¡wof wof!";
+		close;
+	case 2:
+		if (countitem(539) >= 120 && countitem(529) >= 100 && countitem(1098) >= 50 && countitem(538) >= 100 && countitem(2784) >= 5 && countitem(722) >= 25 && countitem(991) >= 25 && zeny >= 30000) {
+			mes "[Claus]";
+			mes "Let's see if all is in order.";
+			next;
+			delitem 539,120; //Piece of Cake
+			delitem 529,100; //Candy
+			delitem 1098,50; //Manacles
+			delitem 538,100; //Well-baked Cookie
+			delitem 2784,5; //Caja musica
+			delitem 722,25; //Pearl
+			delitem 991,25; //Crystal Blue
+			getitem 12478,1; //Santa Gift
+			//getexp 20000,20000; //Experiencia recibida
+			set zeny,Zeny-30000; //Los zenys
+			mes "[Claus]";
+			mes "Here you have!";
+			next;
+			mes "Come back again if you want more presents!";
+			mes "After 13 days I will go away... Ho Ho Ho!!";
+			close;
+		}
+		else {
+			mes "[Claus]";
+			mes "Please bring me these items!";
+			mes "Care to bring me all these materials?";
+			mes "^3355FF120 Piece of Cake^000000";
+			mes "^3355FF100 Candy^000000";
+			mes "^3355FF50 Manacles^000000";
+			mes "^3355FF100 Well-baked Cookie^000000";
+ 			mes "^3355FF5 Christmas Musicbox^000000";
+			mes "^3355FF25 Pearl^000000";
+			mes "^3355FF25 Crystal Blue^000000";
+			mes "^3355FF30.000 Zenys^000000";
+			mes "Come back when you get them.";
+			close;
+		}
+	case 3:
+		mes "[Claus]";
+		mes "Nothing?";
+		next;
+		mes "[Claus]";
+		mes "You were left with no gifts! Ho Ho Hoo!";
+		close;
+	}
+}

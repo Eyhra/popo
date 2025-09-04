@@ -1,0 +1,177 @@
+seal_in01,25,13,5	script	Seal Quest Shop	967,{
+function Add; function Chk; function Slot; function A_An;
+
+	mes "[ ^ee978aSeal Quest Shop^000000 ]";
+	mes "¿Buscas objetos exclusivos?";
+	if(sex) mes "Veniste al lugar correcto amigo, pero necesitare algunos objetos a cambio.", " ", "¿Que se te ofrece?";
+	else mes "Veniste al lugar correcto amiga, pero necesitare algunos objetos a cambio.", " ", "¿Que se te ofrece?";
+
+	if(.Shops$ != "") set .@i,1;
+	else {
+		set .@menu$,"";
+		for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1)
+			set .@menu$, .@menu$+.Shops$[.@i]+":";
+		set .@i, select(.@menu$); }
+	next;
+	mes "[ ^ee978aSeal Quest Shop^000000 ]";
+	mes "Por favor, selecciona solo un objeto a la vez.";
+	dispbottom "Selecciona solo un objeto a la vez.";
+	callshop "NEWqshop"+.@i,1;
+	npcshopattach "NEWqshop"+.@i;
+	end;
+
+function Add {
+	if (getitemname(getarg(1))=="null") {
+		debugmes "Quest reward #"+getarg(1)+" invalid (skipped)."; return; }
+	for(set .@n,5; .@n<127; set .@n,.@n+2) {
+		if (!getarg(.@n,0)) break;
+		if (getitemname(getarg(.@n))=="null") {
+			debugmes "Quest requirement #"+getarg(.@n)+" invalid (skipped)."; return; } }
+	for(set .@i,2; .@i<.@n; set .@i,.@i+1)
+		set getd(".q_"+getarg(1)+"["+(.@i-2)+"]"), getarg(.@i);
+	npcshopadditem "NEWqshop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+	sleep 1;
+	return; }
+function Chk {
+	if (getarg(0)<getarg(1)) { set @qe0,1; return "^FF0000"; }
+	else return "^279634"; }
+function Slot {
+	set .@s$,getitemname(getarg(0));
+	switch(.ShowSlot){
+		case 1: if (!getitemslots(getarg(0))) return .@s$;
+		case 2: if (getiteminfo(getarg(0),11)>0) return .@s$+" ["+getitemslots(getarg(0))+"]";
+		default: return .@s$; } }
+function A_An {
+	setarray .@A$[0],"a","e","i","o","u";
+	set .@B$, "_"+getarg(0);
+	for(set .@i,0; .@i<5; set .@i,.@i+1)
+		if (compare(.@B$,"_"+.@A$[.@i])) return "un "+getarg(0);
+	return "un "+getarg(0); }
+
+OnBuyItem:
+	set .@q[0],@bought_nameid;
+	copyarray .@q[1],getd(".q_"+@bought_nameid+"[0]"),getarraysize(getd(".q_"+@bought_nameid+"[0]"));
+	if (!.@q[1]) { message strcharinfo(0),"An error has occurred."; end; }
+	mes "[ ^ee978aSeal Quest Shop^000000 ]";
+	mes "Ítem:";
+	mes "   • ^00A5E7"+((.@q[1]>1)?.@q[1]+"x ":"")+Slot(.@q[0])+"^000000";
+	mes "Requerimentos:";
+	if (.@q[2]) mes "   • "+Chk(Zeny,.@q[2])+.@q[2]+" Zeny^000000";
+	if (.@q[3]) mes "   • "+Chk(getd(.Points$[0]),.@q[3])+.@q[3]+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+.@q[3]+")^000000";
+	if (.@q[4]) for(set .@i,4; .@i<getarraysize(.@q); set .@i,.@i+2)
+		//mes "   â€¢ "+Chk(countitem(.@q[.@i]),.@q[.@i+1])+((.DisplayID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+.@q[.@i+1]+")^000000";
+		mes "   • "+Chk(countitem(.@q[.@i]),.@q[.@i+1])+"("+countitem(.@q[.@i])+"/"+.@q[.@i+1]+")^000000 <ITEM>"+Slot(.@q[.@i])+"<INFO>"+.@q[.@i]+"</INFO></ITEM>";
+
+	next;
+	set @qe1, getiteminfo(.@q[0],5); set @qe2, getiteminfo(.@q[0],11);
+	addtimer 1000, strnpcinfo(1)+"::OnEnd";
+	while(1){
+		switch(select("Hacer ^00A5E7"+getitemname(.@q[0])+"^000000:"+((((@qe1&1024) || (@qe1&2048) || (@qe1&4096)) && @qe2>0 && !@qe6)?"Probarselo...":"")+":^777777Cancelar^000000")) {
+			case 1:
+				if (@qe0) { 
+					mes "[ ^ee978aSeal Quest Shop^000000 ]";
+					mes "Te hacen falta objetos, por favor revisa tu inventario.";
+					close; }
+				if (!checkweight(.@q[0],.@q[1])) {
+					mes "[ ^ee978aSeal Quest Shop^000000 ]";
+					mes "^FF0000Necesitas "+(((.@q[1]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" capacidad de peso adicional para poder hacer este objeto.^000000";
+					close; }
+				if (.@q[2]) set Zeny, Zeny-.@q[2];
+				if (.@q[3]) setd .Points$[0], getd(.Points$[0])-.@q[3];
+				if (.@q[4]) for(set .@i,4; .@i<getarraysize(.@q); set .@i,.@i+2)
+					delitem .@q[.@i],.@q[.@i+1];
+				getitem .@q[0],.@q[1];
+				if (.Announce) announce "¡"+strcharinfo(0)+" ha creado "+A_An(getitemname(.@q[0]))+"!",0;
+				specialeffect2 699;
+				close;
+			case 2:
+				set @qe3, getlook(3); set @qe4, getlook(4); set @qe5, getlook(5);
+				if (@qe1&1024) atcommand "@changelook 3 "+@qe2;
+				if (@qe1&2048) atcommand "@changelook 1 "+@qe2;
+				if (@qe1&4096) atcommand "@changelook 2 "+@qe2;
+				set @qe6,1;
+				break;
+			case 3:
+				mes "[ ^ee978aSeal Quest Shop^000000 ]";
+				mes "¡Suerte! Nos vemos.";
+				close; } }
+OnEnd:
+	if (@qe6) { atcommand "@changelook 3 "+@qe3; atcommand "@changelook 1 "+@qe4; atcommand "@changelook 2 "+@qe5; }
+	for(set .@i,0; .@i<7; set .@i,.@i+1) setd "@qe"+.@i,0;
+	end;
+OnInit:
+// --------------------- Config ---------------------
+// Custom points, if needed: "<variable>","<name to display>"
+	setarray .Points$[0],"#CASHPOINTS","Cash Points";
+
+	set .Announce,1;	// Announce quest completion? (1: yes / 0: no)
+	set .ShowSlot,1;	// Show item Slots? (2: all equipment / 1: if Slots > 0 / 0: never)
+	set .DisplayID,1;	// Show item IDs? (1: yes / 0: no)
+	set .ShowZeny,0;	// Show Zeny cost, if any? (1: yes / 0: no)
+
+// Shop categories, if needed: "<Shop 1>","<Shop 2>"{,...};
+// Duplicate dummy data for any Additional shops (bottom of script).
+// If no categories, use the second line instead (remove //).
+
+	//setarray .Shops$[1],"Upper NEWqshop","Middle NEWqshop","Lower NEWqshop";
+	set .Shops$,"n/a";
+
+// Add(<shop number>,<reward ID>,<reward amount>,<Zeny cost>,<point cost>,
+//     <required item ID>,<required item amount>{,...});
+// Shop number corresponds with order above (default is 1).
+// Note: Do NOT use a reward item more than once!
+
+	
+    Add(1,5293,1,8000000,0,1974,10,553,500,548,500,7149,1000);     // Ramen Hat 
+	Add(1,5765,1,4000000,0,5093,1,983,1,1099,300);		// Black Tail Ribbon
+	Add(1,5137,1,15000000,0,5141,9,7047,500,978,3,7063,500);	// Alice Doll
+	Add(1,25278,1,15000000,0,5141,9,7047,500,978,3,7063,500);	// Aliza Doll
+	Add(1,5463,1,8000000,0,1013,1500,5361,1,5039,1,622,20);	// Rainbow Scarf
+	Add(1,5305,1,3000000,0,7110,500,1147,10,2287,3,983,5);	// Pirate Dagger
+	Add(1,5361,1,3000000,0,7216,500,10019,10,2265,3,975,5);	// Gangster Scarf
+	Add(1,25133,1,8000000,0,2255,1,7563,1000,7511,1000,7023,3,983,5);  // Incubus Doll
+	Add(1,25134,1,8000000,0,2255,1,7563,1000,7511,1000,7023,3,983,5);	// Succubus Doll
+	Add(1,5340,1,6000000,0,5170,1,7210,200,944,200,930,350);	// Defolty Doll Hat
+	Add(1,5341,1,6000000,0,5170,1,7210,200,944,200,930,350);	// Glaris Doll Hat
+	Add(1,5342,1,6000000,0,5170,1,7210,200,944,200,930,350);	// Sorin Doll Hat
+	Add(1,5343,1,6000000,0,5170,1,7210,200,944,200,930,350);	// Telling Doll Hat
+	Add(1,5344,1,6000000,0,5170,1,7210,200,944,200,930,350);	// Bennit Doll Hat
+	Add(1,5345,1,6000000,0,5170,1,7210,200,944,200,930,350);	// W Doll Hat	
+	Add(1,25181,1,6000000,0,5170,1,7210,200,944,200,930,350);	// Schwarzwald Doll Hat
+	Add(1,25182,1,6000000,0,5170,1,7210,200,944,200,930,350);	// Aly Doll Hat
+	Add(1,25183,1,6000000,0,5170,1,7210,200,944,200,930,350);	// Zonda Doll Hat
+	Add(1,5388,1,8000000,0,7565,500,7154,500,930,350,4117,1,4062,1);	// Snake Hat
+	Add(1,5411,1,8000000,0,7565,500,7154,500,930,350,4117,1,4062,1);	// White Snake Hat
+	Add(1,25062,1,5000000,0,7511,1000,5025,1,7063,150);	// Skeggiold Hat
+	Add(1,5527,1,4000000,0,705,1000,622,5,7063,50,949,100);	// Lunatic Hat
+	Add(1,28034,1,6000000,0,1017,1000,4268,1,7063,150,1020,150);	// Drooping Smitchd
+	Add(1,5359,1,10000000,0,7563,1200,2285,3,5123,1,2284,1,7063,150,7106,500);	// Ship Captain
+	Add(1,28027,1,10000000,0,7563,1200,2285,3,5123,1,2284,1,7063,150,7106,500);	// Dog Officer
+	// Add(1,28025,1,8000000,0,2285,3,1022,50,978,1,7063,200);	// Black Fox Ears Ribbon
+	// Add(1,28029,1,8000000,0,2285,3,1022,50,978,1,7063,200);	// Fox Ears
+	// Add(1,5377,1,4000000,0,2268,3,2320,1,2267,3,999,50,1019,200);	// Gentleman's Pipe
+	Add(1,28033,1,8000000,0,1974,10,553,500,548,500,7149,1000);     // Drooping Oscar 
+	Add(1,28032,1,2000000,0,2201,1,730,5,949,500,4011,1);	// Wonderful Beast Ear
+	Add(1,28036,1,4000000,0,2268,3,4001,1,2267,3,999,50,1019,200);	// Poring's Pipe
+	Add(1,5536,1,4000000,0,7111,500,7112,500,1019,200,999,50,4022,1);	// Spare Card
+	Add(1,5574,1,4000000,0,949,1000,983,5,738,1,1019,200,4034,1);	// Pencil In Mouth
+	Add(1,5594,1,4000000,0,531,1000,538,200,983,5,1019,200,4079,1);	// Donut In Mouth
+	Add(1,5596,1,4000000,0,705,1000,706,3,7198,200,1019,200,4006,1);	// 4 Leaf Clover
+	Add(1,5597,1,4000000,0,578,1000,619,5,975,5,1019,200,4023,1);	// Bubblegum In Mouth
+	Add(1,25264,1,4000000,0,534,1000,622,5,980,5,1019,200,4027,1);	// Carrot In Mouth
+	
+
+// --------------------------------------------------
+	for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1)
+		npcshopdelitem "NEWqshop"+.@i,909;
+	end;
+}
+
+// -------- Dummy data (duplicate as needed) --------
+-	shop	NEWqshop1	-1,909:-1
+-	shop	NEWqshop2	-1,909:-1
+-	shop	NEWqshop3	-1,909:-1
+-	shop	NEWqshop4	-1,909:-1
+//niflheim,189,192,4	duplicate(Votacion)	Votacion#niflheim1	920
+
+

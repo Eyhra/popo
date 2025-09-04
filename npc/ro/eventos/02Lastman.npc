@@ -1,0 +1,131 @@
+//      ______  __    __                                 
+//     /\  _  \/\ \__/\ \                                
+//     \ \ \_\ \ \ ,_\ \ \___      __    ___      __     
+// _____\ \  __ \ \ \/\ \  _ `\  /'__`\/' _ `\  /'__`\   
+///\  __\\ \ \/\ \ \ \_\ \ \ \ \/\  __//\ \/\ \/\ \_\.\_ 
+//\ \_\_/ \ \_\ \_\ \__\\ \_\ \_\ \____\ \_\ \_\ \__/.\_\
+// \/_/    \/_/\/_/\/__/ \/_/\/_/\/____/\/_/\/_/\/__/\/_/
+//
+//========================================================
+// ---                Last-Man Standing                ---
+//========================================================
+// ---                   by DanielArt                  ---
+//========================================================
+cell_game,70,40,4	script	#LASTMAN	111,10,10,{
+OnTouch:
+OnPCKillEvent:
+	.@m = getmapusers("cell_game");
+	sleep2 100;
+	if(strcharinfo(3) == "cell_game" && .@m < 2 && $LASTMAN == 1) {
+		announce "¡"+strcharinfo(0)+" ha ganado el evento de PvP Standing!",bc_all,0xFFFFAA;
+		F_Event 1,rand(1,6);
+		$LASTMAN = 0;
+		sleep2 5000;
+		warp "britoniah",69,52;
+		end;
+	}
+	end;
+OnPCDieEvent:
+OnPCLoginEvent:
+	if(strcharinfo(3) == "cell_game")
+		warp "britoniah",69,52;
+	end;
+OnLastMan:
+	$LASTMAN = 0;
+	removemapflag "cell_game",mf_pvp;
+	removemapflag "cell_game",mf_pvp_noparty;
+	removemapflag "cell_game",mf_pvp_noguild;
+	donpcevent "last_e::OnEnable";
+	announce "¡El Evento de PvP Standing comenzará en 2 minutos!",bc_all,0xFFFFAA;
+	sleep2 5000;
+	announce "¡Combate con todo el mundo por ser el último sobreviviente y gana un fabuloso premio!",bc_all,0xFFFFAA;
+	sleep2 5000;
+	announce "Ve al Puerto de britoniah derecha arriba para poder participar.",bc_all,0xFFFFAA;
+	sleep2 60000;
+	announce "¡El Evento de PvP Standing comenzará en 1 minuto!",bc_all,0xFFFFAA;
+	sleep2 50000;
+	announce "¡El Evento de PvP Standing comenzará en 10 segundos!",bc_all,0xFFFFAA;
+	sleep2 11000;
+	donpcevent "last_e::OnDisable";
+	announce "¡El Evento de PvP Standing ha comenzado!",bc_all,0xFFFFAA;
+	end;
+}
+port,133,342,4	script	Evento PvP Standing::last_e	623,{
+	mes "[ ^008800Last-Man Standing^000000 ]";
+	mes "¿Listo para el combate?";
+	next;
+	switch(select("Información:^008800Participar^000000 [ "+getmapusers("lastman")+" ]:^777777Salir^000000")) {
+		case 1:
+			mes "[ ^008800Last-Man Standing^000000 ]";
+			mes "Entrarás a un mapa junto con el resto de los usuarios participantes.";
+			next;
+			mes "[ ^008800Last-Man Standing^000000 ]";
+			mes "Dentro, tendrás que buscar la manera de sobrevivir al resto de los usuarios.";
+			close;
+		case 2:
+			warp "cell_game",150,141;
+			close;
+		case 3:
+			mes "[ ^008800Last-Man Standing^000000 ]";
+			mes "Vuelve cuando quieras participar.";
+			close;
+	}
+OnEnable:
+	enablenpc "last_e";
+	movenpc "last_e",156,179;
+	waitingroom "Last-Man Stand",0;
+	end;
+OnDisable:
+	movenpc "last_e",190,177;
+	disablenpc "last_e";
+	delwaitingroom;
+	mapannounce "cell_game","¡Prepárate, que el evento está a punto de empezar!",bc_map,0xFFFFAA;
+	sleep2 5000;
+	mapannounce "cell_game","¡CUENTA REGRESIVA!.",bc_map,0xFFFFAA;
+	soundeffectall "s4\\new_round_in.wav",0,"cell_game",0,0,300,300;
+	sleep2 1000;
+	mapannounce "cell_game","¡5!.",bc_map,0xFFFFAA;
+	soundeffectall "s4\\5.wav",0,"cell_game",0,0,300,300;
+	sleep2 1000;
+	mapannounce "cell_game","¡4!.",bc_map,0xFFFFAA;
+	soundeffectall "s4\\4.wav",0,"cell_game",0,0,300,300;
+	sleep2 1000;
+	mapannounce "cell_game","¡3!.",bc_map,0xFFFFAA;
+	soundeffectall "s4\\3.wav",0,"cell_game",0,0,300,300;
+	sleep2 1000;
+	mapannounce "cell_game","¡2!.",bc_map,0xFFFFAA;
+	soundeffectall "s4\\2.wav",0,"cell_game",0,0,300,300;
+	sleep2 1000;
+	mapannounce "cell_game","¡1!.",bc_map,0xFFFFAA;
+	soundeffectall "s4\\1.wav",0,"cell_game",0,0,300,300;
+	sleep2 1000;
+	if(getmapusers("cell_game") == 1 || getmapusers("cell_game") == 0) {
+		mapannounce "cell_game","No hay suficientes usuarios en el mapa.",bc_map,0xFFFFAA;
+		sleep2 5000;
+		mapwarp "cell_game","prontera",150,180;
+		end;
+	}
+	$LASTMAN = 1;
+	mapannounce "cell_game","¡PELEEN!.",bc_map,0xFFFFAA;
+	soundeffectall "s4\\ready2.wav",0,"cell_game",0,0,300,300;
+	setmapflag "cell_game",mf_pvp;
+	setmapflag "cell_game",mf_pvp_noparty;
+	setmapflag "cell_game",mf_pvp_noguild;
+	end;
+OnInit:
+	disablenpc "last_e";
+	delwaitingroom;
+	end;
+}
+cell_game	mapflag	nopenalty
+cell_game	mapflag	nozenypenalty
+cell_game	mapflag	nobranch
+cell_game	mapflag	notrade
+cell_game	mapflag	clouds
+cell_game	mapflag	nomemo
+cell_game	mapflag	noteleport
+cell_game	mapflag	nowarp
+cell_game	mapflag	noreturn
+cell_game	mapflag	restricted	3
+cell_game	mapflag	nosave	SavePoint
+cell_game	mapflag	nowarpto

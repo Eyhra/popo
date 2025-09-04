@@ -1,0 +1,48 @@
+//= ==== eAthena/rAthena/bAthena/3CeAM/Hercules/Aegis Script ========== =\\
+//= NPC Informador de Noticias                                           \\
+//= ==== By: ========================================================== =\\
+//= Aglao/Esthar (aglaophotisro@gmail.com) - Miguel Angel Crespo Paz     \\
+//= Copyright © 2016 - Aglaosoft C.A. - Todos los derechos reservados.   \\
+//= ==== Current Version: ============================================= =\\
+//= Version: 1.0                                                         \\
+//= ==== Compatible With: ============================================= =\\
+//= eAthena/rAthena/bAthena/3CeAM/Hercules/Aegis SVN SQL y TXT           \\
+//= ==== Description: ================================================= =\\
+//= NPC para informar Noticias por un GM.                                \\
+//= =================================================================== =\\
+
+prontera.gat,166,167,4	script	Information#05::not	111,{
+	delwaitingroom;
+	//goto L_chat;	
+	//------------------Aquí va tu contenido----------------------
+	
+	mes"[^0000FFInformation^000000]";
+
+	
+	mes"In this office you will find all essential NPCs in MahoneyRO.";
+		
+	
+	
+	//--------------------Fin del contenido-----------------------	
+	end;	
+	
+	
+	
+OnInit:
+	goto L_chat;
+	end;
+
+L_chat:
+setarray .message$,
+	"Main Office",
+	"";
+set .message_size,getarraysize( .message$ );
+while( .message_size ){
+	delwaitingroom; 
+	waitingroom ""+.message$[ rand( .message_size ) ],0;
+	sleep 1000;
+}
+end;
+
+}
+

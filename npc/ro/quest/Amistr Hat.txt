@@ -1,0 +1,39 @@
+paramk,145,105,4	script	Amistr Hat	669,{
+	mes "[^000000Amistr Hat^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Amistr Hat, te interesa?";
+	next;
+	menu "Qué necesito?",L_required,"Claro que sí, aquí están tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Amistr Hat^000000]";
+		mes "^FF0000100^000000 Yellow Bijou"; //7448
+		mes "^FF000010^000000 White Dyestuff"; //982
+		mes "^0000FF5000000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(7448) < 100) goto L_manque;
+		if(countitem(982) < 10) goto L_manque;
+		if(Zeny < 5000000) goto L_manque;
+		mes "[^000000Amistr Hat^000000]";
+		mes "Aquí está tu Amistr Hat";
+		delitem 7448,100;
+		delitem 982,10;
+		set Zeny, Zeny - 5000000;
+		getitem 5766,1;
+		close;
+
+	L_manque:
+		mes "[^000000Amistr Hat^000000]";
+		mes "Te faltan: ";
+		if(countitem(7448) < 100) mes "^FF0000"+(100 - countitem(7448)) +"^000000 Yellow Bijou";
+		if(countitem(982) < 10) mes "^FF0000"+(10 - countitem(982)) +"^000000 White Dyestuff";
+		if(Zeny < 5000000) mes "^0000FF"+(5000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Amistr Hat^000000]";
+		mes "Buen día";
+		close;
+}

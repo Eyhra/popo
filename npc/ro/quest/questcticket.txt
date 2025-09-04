@@ -1,0 +1,79 @@
+// -------------------------------------------------------------------------------
+// 	Script Name : Headgear to Costume converter >> Costume to Headgear converter
+// -------------------------------------------------------------------------------
+// Description :
+// - Allows a user to convert the equipped headgear (on Top, Mid or Low) into a
+//   costume item. It will remove any card and refine of the Item.
+// - Allows a user to restore the equipped costume headgear (on Top, Mid or Low)
+//     into its original form. It will not return any card or refine of the item.
+// -------------------------------------------------------------------------------
+-	script	Costume Ticket Grail	-1,{
+	mes "[Grail]";
+	mes "¡Hola!";
+	mes "Aquí puedes crear el ticket para hacer la quest para transformar tu hat.";
+	mes "Necesitarás unos items para poder crear el ticket.";
+	next;
+	mes "[Grail]";
+		mes "¡Aquí tienes la lista!.";
+		mes "^FF00005^000000 Counteragent"; //973
+		mes "^FF00005^000000 Mixture"; //974
+		mes "^FF000010^000000 Alcohol"; //970
+		mes "^FF000010^000000 Detrimindexta"; //971
+		mes "^FF000010^000000 Karvodailnirol"; //972
+		mes "^0000FF200.000^000000 zeny";
+		next;
+	switch(select("Crea Mi Ticket.:No Gracias.")) {
+	case 1:
+			next;
+			mes "[Grail]";
+			mes "Quieres crear el ticket?";
+			next;
+			if( select("Si, procede:No, me arrepenti.") == 2 )
+			{
+				mes "[Grail]";
+				mes "Necesitas algo de tiempo para pensar en ello, ¿eh ?";
+				mes "Bien, yo te entiendo.";
+				close;
+			}
+		if(countitem(973) < 5) goto L_manque;
+		if(countitem(974) < 5) goto L_manque;
+		if(countitem(970) < 10) goto L_manque;
+		if(countitem(971) < 10) goto L_manque;
+		if(countitem(972) < 10) goto L_manque;
+		if(Zeny < 200000) goto L_manque;
+		mes "[Grail]";
+		mes "Genial, aqui tienes tu hat.";
+		delitem 973,5;
+		delitem 974,5;
+		delitem 970,10;
+		delitem 971,10;
+		delitem 972,10;
+		set Zeny, Zeny - 200000;
+		getitem 32016,1;
+		mes "Listo, suerte con tu ticket.";
+		close;
+			
+		L_manque:
+		mes "[Grail]";
+		mes "Te faltan items.";
+		if(countitem(973) < 5) mes "^FF0000"+(5 - countitem(973)) +"^000000 Counteragent";
+		if(countitem(974) < 5) mes "^FF0000"+(5 - countitem(974)) +"^000000 Mixture";
+		if(countitem(970) < 10) mes "^FF0000"+(10 - countitem(970)) +"^000000 Alcohol";
+		if(countitem(971) < 10) mes "^FF0000"+(10 - countitem(971)) +"^000000 Detrimindexta";
+		if(countitem(972) < 10) mes "^FF0000"+(10 - countitem(971)) +"^000000 Karvodailnirol";
+		if(Zeny < 200000) mes "^0000FF"+(200000 - Zeny)+"^000000 Zeny";
+		close;
+	case 2:
+		mes "[Grail]";
+		mes "Muy bien. Regresa cuando requieras de mis servicios.";
+		close;
+	}
+	OnInit:
+        set .party,0;
+		initnpctimer;
+		end;
+}
+// --------------------------------------------------------------------------
+// Use duplicates to put your npc on different cities
+// --------------------------------------------------------------------------
+itemmall,192,74,3	duplicate(Costume Ticket Grail)	Costume Ticket Grail#1	666

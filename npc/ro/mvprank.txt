@@ -1,0 +1,350 @@
+-	shop	pvp_shop1	-1,512:-1
+-	shop	pvp_shop2	-1,512:-1
+//itemmall,1,1,3,7086	costumeshop	emblemas	111,21239:80,21238:100,21254:50,21255:200,21262:100,21267:80,21273:50,21278:100,21279:80,21241:80,21258:80,21265:100,21170:100,21171:100,21173:80,21177:50,21175:50,21172:50,21179:80,21180:80,21181:80,21182:80,21183:50,21184:50,21185:50,21223:50
+
+
+prt_vilg01,87,128,4	script	 Rankings	10146,{
+switch(select("Ver Top ^FF0000  MvP ^000000:Ver Top ^FF7121 25 ^000000 Killeds PvP:Ver Top ^FF0000 25 ^000000 Deaths PvP:Ver Top ^FF0000 10 ^000000 The best BG")) {
+case 1:
+	.@cid = getcharid(0);
+	.@gm_level = getgmlevel();
+
+	mes "^0055FF[ ::: TOP MVP Rank ::: ]^000000";
+	query_sql( "SELECT COUNT(`monster_id`) AS `total`,`char`.`name`,`kill_char_id` FROM `mvplog` LEFT JOIN `char` ON `char`.`char_id` = `mvplog`.`kill_char_id` WHERE `kill_char_id` NOT IN ( "+.gm_char$+" ) GROUP BY `kill_char_id` ORDER BY `total` DESC LIMIT "+.top_rank,.@total,.@name$,.@kill_char_id );
+	.@size = getarraysize( .@name$ );
+	if( !.@size ){
+		mes "Ningún record fue encontrado.";
+	}
+	else{
+		for( .@i = 0; .@i < .@size; .@i++ ){
+			mes ( .@i+1 )+". "+.@name$[.@i]+" ^FF0000["+.@total[.@i]+"]^000000";
+			.@player_menu$ = .@player_menu$ + ( .@i+1 )+". " + .@name$[.@i] + ":";
+			.@total_kill += .@total[.@i];
+		}
+	}
+	next;
+	switch( select( 
+		"Ver registro personal","Ver Top 10 Semanal",
+		"Filtrar by MVP ^FF0000["+F_InsertComma( .@total_kill )+"]^000000",
+		( .@gm_level < .gm_level )?"":"^FF0000[ GM ]^000000 Filtrar por jugador TOP^000000",
+		"Information"
+	)){
+		case 4:
+			if( .@total_kill == 0 ) break;
+			.@i = select( .@player_menu$ ) - 1;
+			.@cid = .@kill_char_id[.@i];
+			next;
+		case 1:
+			mes "^0055FF[ ::: "+( ( @menu == 1 )?"Personal":.@name$[.@i]+"'s" )+" Record ::: ]^000000";
+			query_sql( "SELECT COUNT(`monster_id`) AS `total`,`monster_id` FROM `mvplog` WHERE `kill_char_id` = "+.@cid+" GROUP BY `monster_id` ORDER BY `total` DESC,`mvp_date` DESC",.@personal_total,.@personal_mvp_id );
+			.@personal_size = getarraysize( .@personal_total );
+			if( !.@personal_size ){
+				mes "No has matado a ningún MVP hasta ahora.";
+			}
+			else{
+				.@total_kill = 0;
+				for( .@i = 0; .@i < .@personal_size; .@i++ ){
+					mes ( .@i+1 )+". "+getmonsterinfo( .@personal_mvp_id[.@i],MOB_NAME )+" ^FF0000["+.@personal_total[.@i]+"]^000000";
+					.@total_kill += .@personal_total[.@i];
+				}
+				message strcharinfo(0),"Total "+F_InsertComma( .@total_kill )+" MVP(s)";
+			}
+			break;
+
+		case 2:
+			mes "[^FF0000MvP TOP 10 ^0000FFRanking Semanal ^000000]";
+	 query_sql("SELECT `char`.`char_id` as IDJugador, `char`.`name` as Jugador, `char_reg_num`.`value` as Puntos FROM `char` INNER JOIN `char_reg_num` ON `char_reg_num`.`char_id` = `char`.`char_id` WHERE `char_reg_num`.`key` = 'MVPKILLRANK' ORDER BY `char_reg_num`.`value` DESC LIMIT 10",.@idplayermvp,.@playermvp$,.@puntos);
+
+	for ( set .@i, 0; .@i < getarraysize(.@idplayermvp); set .@i, .@i + 1 )
+		mes "[ ^FF0000" +(.@i + 1) + "^000000 ] "+ .@playermvp$[.@i]+" - " + .@puntos[.@i] + " Mvp's"; 
+	close;
+
+		case 3:
+			query_sql( "SELECT COUNT(`monster_id`) AS `total`,`monster_id` FROM `mvplog` WHERE `kill_char_id` NOT IN ( "+.gm_char$+" )  GROUP BY `monster_id` ORDER BY `total` DESC,`monster_id` ",.@mvp_total,.@mvp_id );
+			.@mvp_size = getarraysize( .@mvp_id );
+			if( !.@size ){
+				mes "^0055FF[ ::: Filtrar por MVP ::: ]^000000";
+				mes "Nadie mató a ningún MVP hasta ahora.";
+			}
+			else{
+				for( .@i = 0; .@i < .@mvp_size; .@i++ )
+					.@mvp_menu$ = .@mvp_menu$ + ( .@i+1 ) + ". " + getmonsterinfo( .@mvp_id[.@i],MOB_NAME ) + "^FF0000 ["+.@mvp_total[.@i]+"]^000000" + ":";
+				do{
+					.@i = select( .@mvp_menu$ ) - 1;
+					mes "^0055FF[ MVP - "+getmonsterinfo( .@mvp_id[.@i],MOB_NAME )+" ]^000000";
+					deletearray .@filter_name$;
+					query_sql( "SELECT COUNT(`monster_id`) AS `total`,`char`.`name` FROM `mvplog` LEFT JOIN `char` ON `char`.`char_id` = `mvplog`.`kill_char_id` WHERE `monster_id` = "+.@mvp_id[.@i]+" GROUP BY `kill_char_id` ORDER BY `total` DESC,`mvp_date` DESC LIMIT "+.top_rank,.@filter_total,.@filter_name$ );
+					.@filter_size = getarraysize( .@filter_name$ );
+					if( !.@size ){
+						mes "Ningún record fue encontrado.";
+					}
+					else{
+						for( .@i = 0; .@i < .@filter_size; .@i++ )
+							mes ( .@i+1 )+". "+.@filter_name$[.@i]+" ^FF0000["+.@filter_total[.@i]+"]^000000";
+					}
+					next;
+				}while( 1 );
+			}
+			break;
+		default: 
+			mes "^0055FF[ ::: Información ::: ]^000000";
+			mes "Estoy a cargo de anotar quién mató a un MVP en este servidor. Es mi deber mostrar a los jugadores la estadística de muertes de MVP en este servidor..";
+			next;
+			mes "^0055FF[ ::: Información ::: ]^000000";
+			mes "Esto es lo que grabo:";
+			mes "^777777  ~ Mejor Asesino de MVP's^000000";
+			mes "^777777  ~ La mayoría de los asesinos de MVP's^000000";
+			mes "^777777  ~ Registro de MVP personal^000000";
+			next;
+			mes "^0055FF[ ::: Información ::: ]^000000";
+			mes "Sin embargo, el equipo de GM tiene derecho a excluirlo de la lista de MVP si alguna vez abusa de la clasificación..";
+			mes " ";
+			mes "La clasificación no está destinada a ser permanente también, podría borrar la clasificación mensualmente. Todo depende de mi.";
+			mes "Gracias.";
+			break;
+	}
+	close;
+
+case 2:
+	if (getgmlevel() >= 99 ) 
+	{
+		
+		mes "[ ^AA3000Menú Administrador^000000 ]";
+		mes "   ";
+		if ( select ( " >^AA3000 Menu GM^000000 : >^AA3000 Menu User^000000  ") == 1 )
+		{
+			if ( select ( " >^AA3000 Reset Ranking^000000 : >^AA3000 Mejor No^000000  ") == 1 ) 
+			{
+				close2;
+				query_sql("DELETE FROM `char_reg_num` WHERE `key` = 'PlayersKilled'");
+				addrid(0);
+				PlayersKilled = 0;
+				detachrid;
+			}
+ 		close;
+		}
+	}
+	
+	mes "[^FF0000PlayersKilled ^0000FFRanking ^000000]";
+
+	query_sql "SELECT `char`.`name`, `char_reg_num`.`value` FROM `char_reg_num` LEFT JOIN `char` ON `char`.`char_id` = `char_reg_num`.`char_id` WHERE `char_reg_num`.`key` = 'PlayersKilled' AND `char_reg_num`.`value` > '0' ORDER BY `char_reg_num`.`value` + 0 DESC LIMIT 0, 25", .@name$, .@kill;
+
+	
+	for ( set .@i, 0; .@i < getarraysize(.@name$); set .@i, .@i + 1 )
+		mes "[ ^FF0000" +(.@i + 1) + "^000000 ] "+ .@name$[.@i]+" Ha Matado - " + .@kill[.@i] + ""; 
+	close;
+
+case 3:
+	if (getgmlevel() >= 99 ) 
+	{
+		
+		mes "[ ^AA3000Menú Administrador^000000 ]";
+		mes "   ";
+		if ( select ( " >^AA3000 Menu GM^000000 : >^AA3000 Menu User^000000  ") == 1 )
+		{
+			if ( select ( " >^AA3000 Reset Ranking^000000 : >^AA3000 Mejor No^000000  ") == 1 )
+			{
+				close2;
+				query_sql("DELETE FROM `char_reg_num` WHERE `key` = 'PlayersDied'");
+				addrid(0);
+				PlayersDied = 0;
+				detachrid;
+			}
+ 		close;
+		}
+	}
+	
+	mes "[^FF0000PlayersDied ^0000FFRanking ^000000]";
+
+	query_sql "SELECT `char`.`name`, `char_reg_num`.`value` FROM `char_reg_num` LEFT JOIN `char` ON `char`.`char_id` = `char_reg_num`.`char_id` WHERE `char_reg_num`.`key` = 'PlayersDie' AND `char_reg_num`.`value` > '0' ORDER BY `char_reg_num`.`value` + 0 DESC LIMIT 0, 25", .@name$, .@kill;
+
+	
+	
+	for ( set .@i, 0; .@i < getarraysize(.@name$); set .@i, .@i + 1 )
+		mes "[ ^FF0000" +(.@i + 1) + "^000000 ] "+ .@name$[.@i]+" Ha Muerto - " + .@kill[.@i] + ""; 
+	close;
+
+
+
+	case 4:
+	set .@namenpc$, "[^0000FFBattlegrounds Ranker^000000]";
+	if ( select ( " >^AA3000 Top 10 Ladder BG^000000 : >^AA3000 Top Game BG^000000  ") == 1 )
+	{
+	mes "[Top 10 Ladder BG]";
+	.@nb = query_sql("SELECT ch.name AS char_name, bg.score FROM `char` AS ch  JOIN char_bg AS bg ON bg.char_id = ch.char_id LEFT JOIN guild ON guild.guild_id = ch.guild_id LEFT JOIN login ON login.account_id = ch.account_id WHERE 1=1 AND login.state != 5 AND (login.unban_time IS NULL OR login.unban_time = 0) AND login.group_id IN (0) ORDER BY bg.score DESC, bg.points DESC, bg.win DESC, ch.base_level DESC, ch.base_exp DESC, ch.job_level DESC, ch.job_exp DESC, ch.char_id ASC LIMIT 10", .@name$, .@points);
+	for(.@i=0;.@i<.@nb;.@i++)
+		mes (.@i+1)+"." + .@name$[0] + " - " + .@points[0] + " pts";
+	close;
+ }
+
+	setarray .@menu$[0],"Top Game Win",
+						"Top Game Tie",
+						"Top Game Lost",
+						"Top Leader Game Win",
+						"Top Leader Game Tie",
+						"Top Leader Game Lost",
+						"TOP 10 Ladder BG";
+		
+	setarray .@tables$[0],	"win",
+							"tie",
+							"lost",
+							"leader_win",
+							"leader_tie",
+							"leader_lost";
+								
+		set .@maxsize, 10;		//Amount of player that will appear
+
+	mes .@namenpc$;
+	mes "Puedo darles los the Battlegrounds Raking información.";
+	mes "Elige lo que quieres saber.";
+	next;
+	
+	set .@selection, select( implode( .@menu$, ":" ) ) - 1;
+	
+	query_sql("SELECT `char`.`name`,`char_bg`.`win`,`char_bg`.`tie`,`char_bg`.`lost`, `char_bg`.`leader_win`,`char_bg`.`leader_tie`, `char_bg`.`leader_lost`,`char_bg`.`kill_count`, `char_bg`.`death_count`,`char_bg`.`score` FROM `char_bg` INNER JOIN `char` ON `char`.`char_id` = `char_bg`.`char_id` ORDER BY `char_bg`.`"+ .@tables$[.@selection] +"` DESC LIMIT "+.@maxsize, .@name$, .@win, .@tie, .@lost, .@lwin, .@ltie, .@llost, .@kill, .@dead, .@score);
+
+	mes .@namenpc$;	
+	mes "este es el mejor en el ranking:";
+	
+	set .@selection2, select( implode( .@name$, ":" ) ) - 1;
+	
+	next;
+	mes .@namenpc$;	
+	mes .@name$[.@selection2];
+	mes "Win: " + .@win[.@selection2];
+	mes "Lost: " + .@lost[.@selection2];
+	mes "Como líder: ";
+	mes "----------";
+	mes "Win: " + .@lwin[.@selection2];
+	mes "Lost:" + .@llost[.@selection2];
+	mes "----------";
+	mes "Kills:" + .@kill[.@selection2];
+	mes "Deaths: " + @dead[.@selection2];
+	
+	close;
+
+
+
+	case 5:
+	if( select("Ir directo a la Tienda:Probarme los Hats") == 2 )
+	{
+		cleararray @Hats[0],0,127;
+		setarray @Hats[0],21239,21238,21254,21255,21262,21267,21273,21278,21279,21241,21258,21265,21170,21171,21173,21177,21175,21172,21179,21180,21181,21182,21183,21184,21185,21223;
+		callfunc "DoTestHats";
+		end;
+	}
+			mes "[^FFA500Emblem Shop^000000]";
+			mes "¿Quieres canjear Tus ^0000FFEmblem of the Sun God^000000 ?";
+			mes "Cierre esta ventana para abrir la tienda.";
+			close2;
+			callshop "emblemas",0;
+			end;
+
+
+case 6:// Cangear items
+	function  i_Shop;
+	mes name$;
+	mes " ";
+	mes "Bienvenid" + (Sex?"o caballero ":"a querida dama ") + ",¿qué desea comprar?";
+	set .@Menu$ , "";
+	for ( set .@i , 1; .@i < getarraysize(.Menu$); set .@i , .@i + 1 ) 
+		set .@Menu$ , .@Menu$ + " ^10B2D2 > ^000000 " + .Menu$[.@i] + ":";
+	set .@Select , select(.@Menu$);
+
+	dispbottom "[RO PvP Points]: Recuerda, sólo se puede comprar 1 item a la vez.";
+	close2;
+		callshop "pvp_shop"+.@Select,1;
+		npcshopattach "pvp_shop"+.@Select;
+		set @opt , .@Select;
+	end;
+	
+
+function i_Shop {
+	if ( getitemname( getarg(0) ) == "null" ) { debugmes " Item " + getarg(0) + ", desconocido"; return; } 
+	for ( set .@i , 0; .@i < 4; set .@i , .@i + 1 )
+		set getd(".item_"+getarg(0)+getarg(3)+"["+.@i+"]"),getarg(.@i);
+	npcshopadditem "pvp_shop"+getarg(3),getarg(0),getarg(1);
+	sleep 1;
+	return; 
+}
+
+
+
+OnWhisperGlobal:
+	if ( getgmlevel() <= 60 ) end;
+ 		if (@whispervar0$ != "activar") end;
+OnInit:
+		.top_rank = 30;
+		.gm_level = 99;
+		.gm_char$ = "150000";
+		setarray .Menu$[1],"Consumibles And Scrolls","Hats";
+		//    item,cant,precio,tienda;
+		//.@purchase[1],id_item,[2]cantidad,[3]precio;
+
+
+
+	for( set .@i , 1; .@i <  3; set .@i , .@i + 1 )
+		npcshopdelitem "pvp_shop"+.@i,512;
+
+end;
+
+OnBuyItem:
+	mes name$;
+	mes " ";
+	if ( getarraysize( @bought_nameid ) > 1 ) {
+		mes "Sólo se puede comprar 1 item a la vez.";
+		close;
+	}
+
+	switch ( @opt ) {
+	case 1:
+		set		.@purchase[0],@bought_nameid;
+		copyarray	.@purchase[1],getd(".item_"+@bought_nameid+@opt+"[0]"),getarraysize(getd(".item_"+@bought_nameid+@opt+"[0]"));
+		if ( !.@purchase[1] ) { mes strcharinfo(0) + " Un error ocurrio."; close; }	
+
+		mes "Deseas comprar el item " + getitemname(.@purchase[1]) + " al precio de ^DF0101" + .@purchase[3] * @bought_quantity + " Puntos?^000000";
+		mes "Actualmente tienes : ^DF0101" + Puntos_DOTA + " Puntos DOTA^000000";
+		if ( select ( " - Sí : - Mejor no " ) == 2 ) close;
+		if ( Puntos_DOTA < .@purchase[3] * @bought_quantity ) {
+				next;
+				mes name$;
+				mes " ";
+				mes "No tienes la cantidad de puntos necesarios";
+				mes "Actualmente tienes : ^DF0101" + Puntos_DOTA + " Puntos DOTA^000000";
+			} else {
+				getitem @bought_nameid , .@purchase[2] * @bought_quantity;
+				set Puntos_DOTA , Puntos_DOTA - .@purchase[3] * @bought_quantity;
+				dispbottom "Saldo Actual : " + Puntos_DOTA + " Puntos DOTA";
+
+			}
+		close;
+
+	case 2:
+		set		.@purchase[0],@bought_nameid;
+		copyarray	.@purchase[1],getd(".item_"+@bought_nameid+@opt+"[0]"),getarraysize(getd(".item_"+@bought_nameid+@opt+"[0]"));
+		if ( !.@purchase[1] ) { mes strcharinfo(0) + " Un error ocurrio."; close; }	
+
+		mes "Deseas comprar el item " + getitemname(.@purchase[1]) + " al precio de ^DF0101" + .@purchase[3] * @bought_quantity + " Puntos?^000000";
+		mes "Actualmente tienes : ^DF0101" + Puntos_DOTA + " Puntos DOTA^000000";
+		if ( select ( " - Sí : - Mejor no " ) == 2 ) close;
+		if ( Puntos_DOTA < .@purchase[3] * @bought_quantity ) {
+				next;
+				mes name$;
+				mes " ";
+				mes "No tienes la cantidad de Puntos necesarios";
+				mes "Actualmente tienes : ^DF0101" + Puntos_DOTA + " Puntos DOTA^000000";
+			} else {
+				getitem @bought_nameid , .@purchase[2] * @bought_quantity;
+				set Puntos_DOTA , Puntos_DOTA - .@purchase[3] * @bought_quantity;
+				dispbottom "Saldo Actual : " + Puntos_DOTA + " Puntos DOTA";
+
+			}
+		close;
+		}
+	}
+
+}
+
+//========================================================
+// --------- Duplicastes RANKINGS----------
+//========================================================

@@ -1,0 +1,10 @@
+function	script	MvPBox5	{
+	setarray .BoxItems[0],19521,31087,31488,31095,31097,31098,31099,31100,31101,31102,31103;
+	
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	end;
+}
+
+
+// Lucky egg

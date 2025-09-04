@@ -1,0 +1,10 @@
+function	script	MvPBox1	{
+	setarray .BoxItems[0],31167,20031,19649,31509,31027,31472,19989;
+	
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	end;
+}
+
+
+// Critter Ear Pack

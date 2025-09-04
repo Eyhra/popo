@@ -1,0 +1,54 @@
+//By Lucifer
+//============================================================
+
+bat_room,163,146,3	script	Exchange Machine	564,{
+	set .@name$,"^fc9856Exchange Machine^000000";
+	setarray .@ITEMS[0],6376,1;
+
+	mes "^fc9856Exchange Machine^000000";
+	mes "Selecciona el numero de medallas que quieres cambiar";
+	input .@numero;
+	next;
+	
+	do {
+		set .@OPTION , select(" ^10B2D2 [ > ] ^000000 Cambiar Medallas : ^10B2D2");
+		next;
+		switch( .@OPTION ) {
+			case 2:
+			    mes "^fc9856Exchange Machine^000000";
+				mes "Necesitas : ";
+				for (set .@i , 0; .@i < getarraysize(.@ITEMS); set .@i , .@i + 2)
+					mes " ^135445 " + ( .@ITEMS[ .@i + 1 ] * .@numero ) + " : " + getitemname( .@ITEMS[ .@i ] ) + "^000000";
+				mes " ^135445 " + 200 * .@numero + " Cashpoints ^000000";	
+				break;
+			case 3: 
+			    mes "^fc9856Exchange Machine^000000";
+				mes "como gustes adios";
+				close;
+			case 1:
+			
+				for ( set .@j , 0; .@j < getarraysize(.@ITEMS); set .@j , .@j + 2 ) {
+					if ( countitem(.@ITEMS[.@j] ) < ( .@numero * .@ITEMS[.@j + 1 ] ) || .@numero <= 0) 
+					{
+
+						// title("Exchange Machine");
+						dispbottom strcharinfo(0)+" no traes Battleground Badge.";
+
+					}
+				}
+
+				for ( set .@i ,0; .@i < getarraysize(.@ITEMS); set .@i , .@i + 2 )
+					delitem .@ITEMS[.@i],( .@ITEMS[ .@i + 1 ] * .@numero );
+
+				getitem 7828,.@numero;
+				getitem 7829,.@numero;
+				getitem 7773,.@numero;
+				close;
+		}
+
+	} while ( .@OPTION != 1 );
+	OnInit:
+        waitingroom "BG Badges Exchange",0;
+end;
+	close;
+} 

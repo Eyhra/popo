@@ -1,0 +1,87 @@
+//===== rAthena Script =======================================
+//= Forje Quest Enricheds NPC
+//===== Description: =========================================
+//= Quest para crear Enriched Elunium/Oridecon. 
+//= Scripter y Programación [NRCRO]
+//= Ideas [OttmarM]
+//===== Additional Comments: =================================
+// Quest Enricheds Oridecon/Elunium Chance Quest
+// 50% chance to get the item
+//============================================================
+seal_in,22,34,4	script	Impervious Blacksmith	869,{
+	cutin "lhz_diguts01",2;
+mes "[^5533ffImpervious Blacksmith^000000]";
+mes "Hola yo soy un simple Forjador pero con una gran capacidad de Crear Enriched Oridecon o Enriched Elunium, pero tengo un ^FF000050% de chance para crearlo^000000!.";
+mes "¿Te Interesa utilizar mis servicios?";
+	goto Reg_Menu;
+
+Reg_Menu:
+	menu "^10B2D2 [ > ] ^000000 Si",O_yes,"^10B2D2 [ > ] ^000000 No",O_no;
+
+O_yes:
+clear;
+mes "[^5533ffImpervious Blacksmith^000000]";
+mes "Selecciona la piedra que deseas forjar y te dire los materiales que necesito.";
+menu 
+	"^10B2D2 [ > ] ^000000 Enriched Elunium",Make_Elunium,
+	"^10B2D2 [ > ] ^000000 Enriched Oridecon",Make_Oridecon,
+	"^10B2D2 [ > ] ^000000 Volver al menú",Reg_Menu;	
+
+Make_Elunium:
+	next;
+	mes "[^5533ffImpervious Blacksmith^000000]";
+	mes "500 Elunium";
+	mes "1,000,000 Zeny";
+	
+	menu "^10B2D2 [ > ] ^000000 Forjar",Me_Elu,"^10B2D2 [ > ] ^000000 Volver al menú",Reg_Menu;
+	
+Me_Elu:
+	if(countitem(985)<500 || Zeny < 1000000)
+	goto M_insufficient; 
+	delitem 985,500;
+	set zeny,zeny-1000000;
+	progressbar("blue",1);
+    specialeffect2 101;
+	if ( rand(100) < 50 )
+	getitem 7619,1;
+    cutin "",255;
+	close;
+	
+Make_Oridecon:
+	next;
+	mes "[^5533ffImpervious Blacksmith^000000]";
+	mes "500 Oridecon";
+	mes "1,000,000 Zeny";
+	
+	menu "^10B2D2 [ > ] ^000000 Forjar",Me_Ori,"^10B2D2 [ > ] ^000000 Volver al menú",Reg_Menu;
+	
+Me_Ori:
+	if(countitem(984)<500 || Zeny < 1000000)
+	goto M_insufficient; 
+	delitem 984,500;
+	set zeny,zeny-1000000;
+	progressbar("blue",1);
+    specialeffect2 101;
+	if ( rand(100) < 50 )
+	getitem 7620,1;
+	cutin "",255;
+	close;	
+//________not enough or not the correct items________
+	
+M_insufficient:
+	next;
+	mes "[^5533ffImpervious Blacksmith^000000]";
+	mes "¡Oye tu! ¿Acaso me quieres ver la cara?.";
+	mes "No tienes todo lo que te pedi.";
+	menu "^10B2D2 [ > ] ^000000 Volver al menú",Reg_Menu,"^10B2D2 [ > ] ^000000 Salir",O_no;
+	cutin "",255;
+	close;
+	
+O_no:
+next;
+mes "[^5533ffImpervious Blacksmith^000000]";
+mes "Aqui te estare esperando por si requieres de mis servicios de Forjador.";
+emotion ET_SCISSOR;
+	cutin "",255;
+	close;
+}		

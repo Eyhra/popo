@@ -1,0 +1,43 @@
+paramk,91,31,4	script	Flying Evil Wings	650,{
+	mes "[^000000Flying Evil Wings^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Flying Evil Wings, te interesa? Max SP 120 Adds a chance of casting Curse on the user while receiving Physical Damage.";
+	next;
+	menu "Qué necesito?",L_required,"Claro que sí, aquí están tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Flying Evil Wings^000000]";
+		mes "^FF0000300^000000 Yellow Bijou"; //7448
+		mes "^FF0000150^000000 Hand of God"; //1009
+		mes "^FF000015^000000 Incubus Horn"; //5072
+		mes "^0000FF10000000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(7448) < 300) goto L_manque;
+		if(countitem(1009) < 150) goto L_manque;
+		if(countitem(5072) < 15) goto L_manque;
+		if(Zeny < 10000000) goto L_manque;
+		mes "[^000000Flying Evil Wings^000000]";
+		mes "Aquí está tu Flying Evil Wings";
+		delitem 7448,300;
+		delitem 1009,150;
+		delitem 5072,15;
+		set Zeny, Zeny - 10000000;
+		getitem 5376,1;
+		close;
+
+	L_manque:
+		mes "[^000000Flying Evil Wings^000000]";
+		mes "Te faltan: ";
+		if(countitem(7448) < 300) mes "^FF0000"+(1000 - countitem(7511)) +"^000000 Yellow Bijou";
+		if(countitem(1009) < 150) mes "^FF0000"+(50 - countitem(7510)) +"^000000 Hand of god";
+		if(countitem(5072) < 15) mes "^FF0000"+(250 - countitem(7063)) +"^000000 Incubus horn";
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000OFlying Evil Wings^000000]";
+		mes "Buen día";
+		close;
+}

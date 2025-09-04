@@ -1,0 +1,22 @@
+-	script	max_castle_guild_members	-1,{
+
+OnInit:
+    //settings here 
+    setarray .maps$, "schg_cas01","schg_cas02"; // insert your woe castles here
+    .max_members_in_castle = 24;    // set the maximum number of guild members in a castle
+ 
+    //don't edit this
+ 
+    for(.@i = 0; .@i < getarraysize(.maps$); .@i++) {
+        if(!getmapflag(.maps$[.@i], mf_loadevent)) setmapflag .maps$[.@i], mf_loadevent;
+    }
+    end;
+ 
+OnPCLoadMapEvent:
+    if(inarray(.maps$, strcharinfo(3)) == -1) end;
+    if(getmapguildusers(strcharinfo(3), getcharid(2)) > .max_members_in_castle) {
+        dispbottom "solo puede haber "+.max_members_in_castle+" miembros del gremio dentro de un castillo durante la War Of Emperium.";
+        warp "SavePoint",0,0;
+    }
+    end;
+}

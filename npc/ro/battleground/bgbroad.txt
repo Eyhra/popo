@@ -1,0 +1,104 @@
+bat_room.gat,148,153,4	script	BG Anuncios	10120,{
+cutin "ep16_friedrich_stolz_heine",2;
+	set .@bgnamex$,"^0000FF[BG Anuncios]^000000";
+	set .@tiempo,30;
+	if ( gettimetick(2) - (.@tiempo) < #Last_BGA )
+	{
+		mes .@bgnamex$;
+		mes "Debes esperar 30 segundos para enviar el siguiente anuncio.";
+		mes "Por favor vuelve mas tarde.";
+		cutin "", 255;
+		close;
+	}
+	mes .@bgnamex$;
+	mes "Hola, puedo dar el anuncio de que quieres armar BG ¿Estas interesado?";
+	next;
+	menu "^5533ff [>] ^000000 Claro que si",six,"^5533ff [>] ^000000 No, Gracias",nox;
+		six:
+			mes .@bgnamex$;
+			mes "Ok, ¿que BG quieres armar?";
+			next;
+			menu "^5533ff [>] ^000000 ^FFA500Conquest^000000",conquest,"^5533ff [>] ^000000 ^DDA0DDRush^000000",rush,"^5533ff [>] ^000000 ^A0522DFlavius CTF^000000",fctf,"^5533ff [>] ^000000 ^808000Flavius TD^000000",ftd,"^5533ff [>] ^000000 ^9ACD32Flavius SC^000000",fsc,"^5533ff [>] ^000000 Me arrepenti",nox;
+			cutin "", 255;
+			end;
+			
+		conquest:
+			mes .@bgnamex$;
+			mes "Ok, entonces aca vamos.";
+			next;
+			mes .@bgnamex$;
+			mes "Listo no vemos.";
+			announce "El jugador "+strcharinfo(0)+" recluta gente para Conquest",0,0xFFA500;
+			set #Last_BGA , gettimetick (2) ;
+			close2;
+			cutin "", 255;
+			end;
+			
+		rush:
+			mes .@bgnamex$;
+			mes "Ok, entonces aca vamos.";
+			next;
+			mes .@bgnamex$;
+			mes "Listo no vemos.";
+			announce "El jugador "+strcharinfo(0)+" recluta gente para Rush",0,0xDDA0DD;
+			set #Last_BGA , gettimetick (2) ;
+			close2;
+			cutin "", 255;
+			end;
+			
+		fctf:
+			mes .@bgnamex$;
+			mes "Ok, entonces aca vamos.";
+			next;
+			mes .@bgnamex$;
+			mes "Listo no vemos.";
+			announce "El jugador "+strcharinfo(0)+" recluta gente para Flavius CTF",0,0xA0522D;
+			set #Last_BGA , gettimetick (2) ;
+			close2;
+			cutin "", 255;
+			end;
+			
+		ftd:
+			mes .@bgnamex$;
+			mes "Ok, entonces aca vamos.";
+			next;
+			mes .@bgnamex$;
+			mes "Listo no vemos.";
+			announce "El jugador "+strcharinfo(0)+" recluta gente para Flavius TD",0,0x808000;
+			set #Last_BGA , gettimetick (2) ;
+			close2;
+			cutin "", 255;
+			end;
+			
+		fsc:
+			mes .@bgnamex$;
+			mes "Ok, entonces aca vamos.";
+			next;
+			mes .@bgnamex$;
+			mes "Listo no vemos.";
+			announce "El jugador "+strcharinfo(0)+" recluta gente para Flavius SC",0,0x9ACD32;
+			set #Last_BGA , gettimetick (2) ;
+			close2;
+			cutin "", 255;
+			end;
+		
+		tti:
+			mes .@bgnamex$;
+			mes "Ok, entonces aca vamos.";
+			next;
+			mes .@bgnamex$;
+			mes "Listo no vemos.";
+			announce "El jugador "+strcharinfo(0)+" recluta gente para Tierra TI",0,0x696969;
+			set #Last_BGA , gettimetick (2) ;
+			close2;
+			cutin "", 255;
+			end;
+			
+		nox:
+			mes .@bgnamex$;
+			mes "Hasta la proxima sera";
+			close2;
+			cutin "", 255;
+			end;
+
+}

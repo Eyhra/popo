@@ -1,0 +1,388 @@
+//===== New Sunglasses c/s effect Color Script =======================================
+seal_in01,24,40,6	script	Lazy		10179,{
+cutin "16lei_01",2;
+	mes "[^FF7070Lazy^000000]"; 
+	mes "Hola "+strcharinfo(0)+" te traigo lo ultimo en gafas...";
+	mes "para eso voy a pedir tus antiguas orejas y ciertas cositas."; 
+	goto P_top;
+
+P_top:
+	menu "^5533ff [>] ^000000 Rayban Sunglasses [1]",H_Rayban,"^5533ff [>] ^000000 Blue Sunglasses [1]",H_Blue,"^5533ff [>] ^000000 Brown Sunglasses [1]",H_Brown,"^5533ff [>] ^000000 Cyan Sunglasses [1]",H_Cyan,"^5533ff [>] ^000000 Gold Sunglasses [1]",H_Gold,"^5533ff [>] ^000000 Green Sunglasses [1]",H_Green,"^5533ff [>] ^000000 Orange Sunglasses [1]",H_Orange,"^5533ff [>] ^000000 Pink Sunglasses [1] [1]",H_Pink,"^5533ff [>] ^000000 Purple Sunglasses [1]",H_Purple,"^5533ff [>] ^000000 Red Sunglasses [1]",H_Red,"^5533ff [>] ^000000 Silver Sunglasses [1]",H_Silver,"^5533ff [>] ^000000 White Sunglasses [1]",H_White,"^777777Salir^000000",H_leave;
+
+//_____________Item requirements_______________//
+
+//________model___________//
+//I_:
+//	next;
+//	mes "";
+//	menu "Make",M_,"Return to Menu",H_top;
+		
+H_Rayban:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Rayban,"^5533ff [>] ^000000 Ver Descripción",D_Rayban,"^5533ff [>] ^000000 Volver al menú",P_top;
+
+
+H_Blue:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Blue,"^5533ff [>] ^000000 Ver Descripción",D_Blue,"^5533ff [>] ^000000 Volver al menú",P_top;
+	
+H_Brown:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Brown,"^5533ff [>] ^000000 Ver Descripción",D_Brown,"^5533ff [>] ^000000 Volver al menú",P_top;
+	
+H_Cyan:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Cyan,"^5533ff [>] ^000000 Ver Descripción",D_Cyan,"^5533ff [>] ^000000 Volver al menú",P_top;
+	
+H_Gold:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Gold,"^5533ff [>] ^000000 Ver Descripción",D_Gold,"^5533ff [>] ^000000 Volver al menú",P_top;
+
+H_Green:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Green,"^5533ff [>] ^000000 Ver Descripción",D_Green,"^5533ff [>] ^000000 Volver al menú",P_top;
+
+H_Orange:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Orange,"^5533ff [>] ^000000 Ver Descripción",D_Orange,"^5533ff [>] ^000000 Volver al menú",P_top;
+
+H_Pink:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Pink,"^5533ff [>] ^000000 Ver Descripción",D_Pink,"^5533ff [>] ^000000 Volver al menú",P_top;
+
+H_Purple:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Purple,"^5533ff [>] ^000000 Ver Descripción",D_Purple,"^5533ff [>] ^000000 Volver al menú",P_top;
+
+H_Red:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Red,"^5533ff [>] ^000000 Ver Descripción",D_Red,"^5533ff [>] ^000000 Volver al menú",P_top;
+	
+H_Silver:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_Silver,"^5533ff [>] ^000000 Ver Descripción",D_Silver,"^5533ff [>] ^000000 Volver al menú",P_top;
+
+H_White:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "1 Wonderful Beast Ears";
+	mes "500 Seal Coin";
+	mes "25 MVP Coin";
+	mes "5,000,000 Zeny";
+	menu "^5533ff [>] ^000000 Crear Gafas",M_White,"^5533ff [>] ^000000 Ver Descripción",D_White,"^5533ff [>] ^000000 Volver al menú",P_top;	
+
+//_____________deletion and creation of items_______________//
+
+//____________model______________//
+//M_:
+//	if(countitem()< || countitem()< || Zeny < )
+//	goto M_insufficient; 
+//	delitem ,;
+//	delitem ,;
+//	set zeny,zeny-;
+//	getitem ,;
+//	close;
+
+M_Rayban:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 25092,1;
+	cutin "",255;
+	close;
+
+M_Blue:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40013,1;
+	cutin "",255;
+	close;
+
+M_Brown:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	getitem 40014,1;
+	set zeny,zeny-5000000;
+	cutin "",255;
+	close;
+
+M_Cyan:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40015,1;
+	cutin "",255;
+	close;
+
+M_Gold:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40016,1;
+	cutin "",255;
+	close;
+
+M_Green:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40017,1;
+	cutin "",255;
+	close;
+
+
+M_Orange:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40018,1;
+	cutin "",255;
+	close;
+
+M_Pink:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40019,1;
+	cutin "",255;
+	close;
+
+M_Purple:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40020,1;
+	cutin "",255;
+	close;
+
+M_Red:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40021,1;
+	cutin "",255;
+	close;
+	
+M_Silver:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40022,1;
+	cutin "",255;
+	close;	
+
+M_White:
+	if(countitem(28032)<1 || countitem(19500)<500 || countitem(19501)<25 || Zeny < 5000000)
+	goto M_noitem; 
+	delitem 28032,1;
+	delitem 19500,500;
+	delitem 19501,25;
+	set zeny,zeny-5000000;
+	getitem 40023,1;
+	cutin "",255;
+	close;	
+
+//________Descripciones xd________
+D_Rayban:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Rayban Sunglasses [1]<INFO>25092</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Blue:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Blue Sunglasses [1]<INFO>40013</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Brown:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Brown Sunglasses [1]<INFO>40014</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Cyan:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Cyan Sunglasses [1]<INFO>40015</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Gold:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Gold Sunglasses [1]<INFO>40016</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Green:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Green Sunglasses [1]<INFO>40017</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Orange:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Orange Sunglasses [1]<INFO>40018</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Pink:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Pink Sunglasses [1]<INFO>40019</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Purple:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Purple Sunglasses [1]<INFO>40020</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Red:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Red Sunglasses [1]<INFO>40021</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_Silver:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>Silver Sunglasses [1]<INFO>40022</INFO></ITEM>";
+cutin "",255;
+close;
+
+D_White:
+clear;
+mes "[^FF7070Lazy^000000]";
+mes "Ver Descripción de:";
+mes "<ITEM>White Sunglasses [1]<INFO>40023</INFO></ITEM>";
+cutin "",255;
+close;
+
+//________not enough or not the correct items________
+	
+M_noitem:
+	next;
+	mes "[^FF7070Lazy^000000]";
+	mes "No tienes los materiales necesarios.";
+	mes "Por favor vuelve cuando los tengas todos.";
+	menu "Volver al menú",P_top,"Salir",H_leave;
+	cutin "",255;
+	close;
+	
+H_leave: 
+    clear;
+    mes "[^FF7070Lazy^000000]";
+    mes "Vuelve cuando requieras de mis servicios.";
+    cutin "",255;
+	close;
+}

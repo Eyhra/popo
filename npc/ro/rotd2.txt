@@ -1,0 +1,204 @@
+seal,101,68,5	script	ROTD	10013,{
+set .@gmlevel,getgmlevel();
+
+do{
+	set .@menu,select("^10B2D2 [ > ] ^000000 ^000000Informacion^000000",
+				( .@gmlevel < .gm_level )?"":"^FF0000[GM]^000000 Set a New Monster's Race",
+				( .@gmlevel < .gm_level )?"":"^FF0000[GM]^000000 Set EXP Bonus",		
+				( .@gmlevel < .gm_level )?"":"^FF0000[GM]^000000 Set Item / Zeny Bonus",
+				"^10B2D2 [ > ] ^000000 Cerrar" );
+	set .@name$, " [ ^FF0000ROTD^000000 ]";
+	switch( .@menu ) {
+		Case 1:
+			mes .@name$;
+			mes "^FF0000ROTD^000000 se refiere a la ^0000FFRaza del día^000000";
+			mes "Esto quiere decir que cuando eliminas un monstruo de la raza especificada obtendrás un ^FF0000Bono de 5% a 15% más de Experiencia^000000.";
+			next;
+			mes "[ ^FF0000Especificaciones^000000 ]";
+			mes "^000000~ Raza actual: ^0000FF"+.rotd$[.today_rotd]+"^000000.";
+			if ( .rotd_exp_bonus ) mes "   - ^777777"+.rotd_exp_bonus+"% mas experiencia.^000000";
+			if ( .killcount < .milestone[.today_rotd] );
+				if ( ( .rotd_item_amount && .rotd_item_rate ) || .rotd_zeny || .rotd_exp_bonus ) {
+				mes " ";
+				if ( .rotd_item_amount && .rotd_item_rate && .rotd_item_id ) mes "   - ^777777"+.rotd_item_amount+" x "+getitemname( .rotd_item_id )+"^000000";
+				if ( .rotd_zeny ) mes "  ~ ^777777"+.rotd_zeny+" Zeny^000000";
+				mes " ";
+			}
+			break;
+		Case 2:
+			do{
+				mes "Select new race.";
+				set .today_rotd,select( .rotd_menu$ ) - 1;
+				if ( /*.today_rotd == 4 || .today_rotd == 5 || .today_rotd == 8 ||*/ .today_rotd == 10 || .today_rotd == 11 ){
+					mes "Race not available";
+					next;
+				}
+			}while( /*.today_rotd == 4 || .today_rotd == 5 || .today_rotd == 8 ||*/ .today_rotd == 10 || .today_rotd == 11);
+			if ( .today_rotd >= .rotd_size ){
+				do{
+					set .today_rotd,rand( .rotd_size );
+				}while( /*.today_rotd == 4 || .today_rotd == 5 || .today_rotd == 8 ||*/ .today_rotd == 10 || .today_rotd == 11);
+			}
+			mes "New Race : ^777777"+.rotd$[.today_rotd]+"^000000";
+			delwaitingroom;
+			waitingroom "[ROTD]:"+.rotd$[.today_rotd]+" ",0;
+			break;
+		Case 3:
+			mes "Set new exp bonus. (%)";
+			input .rotd_exp_bonus,0,100;
+			if ( .rotd_exp_bonus ) mes "ROTD EXP : "+.rotd_exp_bonus+" %";
+			break;
+		Case 4:
+			mes "Set Rotd bonus";
+			mes "Inset Zeny Bonus";
+			input .@zeny;
+			mes "Insert Item ID";
+			do{
+				input .@item,0,32767; 
+				if ( !.@item ) close;
+			}while( getitemname( .@item ) == "null" );
+			mes "Enter amount.";
+			input .@amount,0,30000;
+			mes "Enter Rate to gain.";
+			input .@rate,0,100;
+			if ( .@amount && .@rate ) {
+				next;
+				mes "Updated item bonus : ( "+.@rate+"% )";
+				mes "^777777"+.@amount+" x "+getitemname( .@item )+"^000000";
+				mes "^777777"+.@zeny+" Zeny^000000";
+				if ( select( "Confirm","Cancel" ) == 1 ) {
+					set .rotd_item_id,.@item;	
+					set .rotd_item_amount,.@amount;
+					set .rotd_item_rate,.@rate;
+					set .rotd_zeny,.@zeny;
+					mes "Updated.";
+				}
+			}
+		default: close;
+	}
+	next;
+}while( .@menu != 5 );
+close;
+
+OnPCLoginEvent:
+    dispbottom strcharinfo(0)+ "[ ROTD ] : La raza del día es: " + .rotd$[.today_rotd] + " con "+.rotd_exp_bonus+"% más de experiencia.",bc_all;
+end;
+
+OnInit:
+	// min gm level
+	set .gm_level,99;
+
+	// killcount
+	set .killcount, 0;
+
+	// bonus milestone
+	set .rotd_bonus_milestone, 0;
+
+	// monster race list
+	setarray .rotd$[0],
+		"Formless",
+		"Undead",
+		"Brute",
+		"Plant",
+		"Insect", // 4
+		"Fish", // 5
+		"Demon",
+		"Demi Human",
+		"Angel", // 8
+		"Dragon";
+		//"Boss"; // 10
+		//"Non-Boss"; // 11
+
+	// Milestones TIENE QUE SER EL MISMO NUMERO QUE ARRIBA.
+	setarray .milestone[0],
+		100000,100000,100000,100000,100000,100000,100000,100000,100000,100000;
+	
+	set .rotd_size,getarraysize( .rotd$ );
+	for( set .@i,0; .@i < .rotd_size; set .@i,.@i + 1 )
+		set .rotd_menu$,.rotd_menu$ + .rotd$[.@i] +":";
+	set .rotd_menu$,.rotd_menu$ + "^0055FFRandom Race^000000";
+
+	// min party member lv to gain exp
+	set .party_level_range,10;
+
+// daily reset
+
+OnClock0000:
+	do{
+		set .today_rotd,rand( .rotd_size );
+	}while( /*.today_rotd == 4 || .today_rotd == 5 || .today_rotd == 8 ||*/ .today_rotd == 10 || .today_rotd == 11);
+	//set .rotd_exp_bonus,rand( 1,100 );
+	set .rotd_exp_bonus,rand(25,45);
+	set .killcount,0;
+	announce "[ ROTD ] : La raza del día es: " + .rotd$[.today_rotd] + " con "+.rotd_exp_bonus+"% más de experiencia.",bc_all;
+	delwaitingroom;
+	waitingroom "[ROTD]:"+.rotd$[.today_rotd]+" ",0;
+	end;
+	
+OnNPCKillEvent:
+if ( getmonsterinfo(killedrid, MOB_RACE) == .today_rotd && getmonsterinfo(killedrid, MOB_BASEEXP) != 0 && getmonsterinfo(killedrid, MOB_JOBEXP) != 0  ) {
+	set .@partyid,getcharid(1);
+	set .@aid,getcharid(3);
+	.@sql$ = "SELECT `exp` FROM `party` WHERE `party_id` = "+.@partyid;
+	query_sql( .@sql$, .@share );
+	set .@mob_base_exp,(( getmonsterinfo( killedrid,MOB_BASEEXP )  * .rotd_exp_bonus ) / 100 );
+	set .@mob_job_exp,(( getmonsterinfo( killedrid,MOB_JOBEXP ) * .rotd_exp_bonus ) / 100 );
+	if ( .@partyid && .@share ) {
+		set .@baselevel,BaseLevel;
+		set .@map$,strcharinfo(3);
+		getpartymember .@partyid,1;
+		getpartymember .@partyid,2;
+		while( .@i < $@partymembercount ) {
+			if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
+				if ( attachrid( $@partymemberaid[.@i] ) )
+					if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
+						getexp (.@mob_base_exp + .@mob_base_exp%3)/3, (.@mob_job_exp + .@mob_job_exp%3)/3;
+						//dispbottom "[ROTD Party] : "+.@mob_base_exp/3*3+" BEXP, "+.@mob_job_exp/3*3+" JEXP";
+					}
+			set .@i,.@i + 1;
+		}
+		attachrid( .@aid );
+	}
+	else {
+		getexp (.@mob_base_exp + .@mob_base_exp%3)/3, (.@mob_job_exp + .@mob_job_exp%3)/3;
+		//dispbottom "[ROTD SOLO] : "+.@mob_base_exp/3*3+" BEXP, "+.@mob_job_exp/3*3+" JEXP";
+	}
+	//if ( rand( 100 ) < .rotd_item_rate && .rotd_zeny ) 
+		//set Zeny,Zeny + rand( .rotd_zeny );
+	if ( .@partyid ){
+		set .@baselevel,BaseLevel;
+		set .@map$,strcharinfo(3);
+		getpartymember .@partyid,1;
+		getpartymember .@partyid,2;
+		while( .@j < $@partymembercount ) {
+			if ( isloggedin( $@partymemberaid[.@j],$@partymembercid[.@j] ) )
+				if ( attachrid( $@partymemberaid[.@j] ) )
+					if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {
+						if ( rand( 100 ) < .rotd_item_rate && .rotd_item_amount ) 
+							getitem .rotd_item_id,.rotd_item_amount,$@partymemberaid[.@j];
+				}
+			set .@j,.@j + 1;
+		}
+		attachrid( .@aid );
+	}else{
+		if ( rand( 100 ) < .rotd_item_rate && .rotd_item_amount ){
+			//getitem .rotd_item_id,rand( 1, .rotd_item_amount ),.@aid;
+			getitem .rotd_item_id,.rotd_item_amount,.@aid;
+		}
+	}
+	
+	if( .killcount < .milestone[.today_rotd]){
+		set .killcount, .killcount + 1;
+	}
+	if( .killcount == .milestone[.today_rotd]){
+		set .killcount, .killcount + 1;
+		set .rotd_exp_bonus, .rotd_exp_bonus + .rotd_bonus_milestone;
+		//announce "[ ROTD ] : Se ha llegado al logro de hoy y la mob de tipo " + .rotd$[.today_rotd] + " dara un +" + .rotd_bonus_milestone + "% de exp adicional.",bc_all;
+	}
+	
+}
+end;
+}
+
+
+

@@ -1,0 +1,74 @@
+//      ______  __    __
+//     /\  _  \/\ \__/\ \
+//     \ \ \_\ \ \ ,_\ \ \___      __    ___      __
+// _____\ \  __ \ \ \/\ \  _ `\  /'__`\/' _ `\  /'__`\
+///\  __\\ \ \/\ \ \ \_\ \ \ \ \/\  __//\ \/\ \/\ \_\.\_
+//\ \_\_/ \ \_\ \_\ \__\\ \_\ \_\ \____\ \_\ \_\ \__/.\_\
+// \/_/    \/_/\/_/\/__/ \/_/\/_/\/____/\/_/\/_/\/__/\/_/
+//
+//========================================================
+// ---           Control de Eventos Automáticos        ---
+//========================================================
+// ---                   by DanielArt                  ---
+//========================================================
+// El siguiente script controla al resto de los eventos.
+// Al minuto 25 hay 75% de probabilidad de ejecutar uno de los eventos programados.
+// Para activar un evento, escribir npc::BUSCAPO por ejemplo, sustituyendo el nombre según el evento.
+-	script	EventClock	-1,{
+OnClock1005:
+OnClock1105:
+OnClock1205:
+OnClock1305:
+OnClock1405:
+OnClock1505:
+OnClock1605:
+OnClock1705:
+OnClock1805:
+OnClock1905:
+OnClock2005:
+OnClock2105:
+OnClock2205:
+OnClock2305:
+OnClock2405:
+OnClock0005:
+OnClock0105:
+OnClock0205:
+	if(rand(100) < 75) {
+		switch (rand(1,5)) {
+			case 1:
+				//LastMan DanielArt
+				donpcevent "LASTMAN::On02Lastman";
+				break;
+			case 2:
+				//Cuenta Hongos
+				donpcevent "CUENT::OnCuentaHongos";
+				break;
+			case 3:
+				//Dados
+				donpcevent "DADOS::OnDadosEvt";
+				break;
+			case 4:
+				//Gallina
+				donpcevent "Cluckers::OnGallina";
+				break;
+			case 5:
+				//LMS
+				donpcevent "LMS::OnLastMan";
+				break;
+		}
+	}
+end;
+}
+
+/**********************
+ * Función de Premios
+ **********************/
+function	script	F_Event	{
+	switch (getarg(0)) {
+		case 1:
+			message strcharinfo(0),"Haz recibido tus premios en tu inventario.";
+			getitem 19502,5;
+			return;
+	}
+return 0;
+}

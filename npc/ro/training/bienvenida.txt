@@ -1,0 +1,223 @@
+//======================================================================
+//   Scripts de Bienvenida por Jobs by NRCRO (Con Mensaje de bienvenida)
+//======================================================================
+
+-	script	arriving	-1,{
+OnPCLoginEvent:
+if ( !#new_account ) {
+announce "¡El jugador "+strcharinfo(0)+" a llegado a Seal Private Server",bc_blue;
+set #new_account,1;
+}
+else
+end;
+}
+
+seal,147,28,4	script	Bienvenida Seal Pack	10049,{
+if(#packB==1){
+dispbottom strcharinfo(0)+" Ya has cobrado tu Job Pack, Disfruta tu estadia en el servidor.";
+close;
+}
+mes "^870F9A[Bienvenida Seal Pack]^000000";
+mes "Hola bienvenid"+(Sex?"o":"a")+" seas "+strcharinfo(0)+".";
+mes "Yo soy ^c50000Bienvenida Seal Pack^000000, puedo darte packs para diferentes jobs.";
+next;
+mes "^870F9A[Bienvenida Seal Pack]^000000";
+mes "Selecciona una opción:";
+next;
+        if(select("^5533ff [>] ^000000 Elegir:^5533ff [>] ^000000 Al azar")==2){
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Seleccionaste el modo aleatorio:";
+                next;
+                switch(rand(1,10)){
+                case 1:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Acolyte";
+                set .@pack,13947;
+                close2;
+                goto entrega_pack;
+                break;
+                case 2:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Swordman";
+                set .@pack,13945;
+                close2;
+                goto entrega_pack;
+                break;
+                case 3:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Archer";
+                set .@pack,13948;
+                close2;
+                goto entrega_pack;
+                break;
+                case 4:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Thief";
+                set .@pack,13950;
+                close2;
+                goto entrega_pack;
+                break;
+                case 5:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Merchant";
+                set .@pack,13949;
+                close2;
+                goto entrega_pack;
+                break;
+                case 6:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Mage";
+                set .@pack,13946;
+                close2;
+                goto entrega_pack;
+                break;
+				case 7:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Super Novice";
+                set .@pack,13951;
+                next;
+                goto entrega_pack;
+                break;
+				case 8:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Taekwon";
+                set .@pack,13955;
+                next;
+                goto entrega_pack;
+                break;
+				case 9:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Ninja";
+                set .@pack,13954;
+                next;
+                goto entrega_pack;
+                break;
+				case 10:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Gunslinger";
+                set .@pack,13952;
+                next;
+                goto entrega_pack;
+                break;
+                }
+        }
+        switch(select("Acolyte:Swordman:Archer:Thief:Merchant:Mage:Super Novice:Taekwon:Ninja:Gunslinger")){
+        case 1:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Acolyte";
+                set .@pack,13947;
+                next;
+                goto entrega_pack;
+                break;
+                case 2:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Swordman";
+                set .@pack,13945;
+                next;
+                goto entrega_pack;
+                break;
+				case 3:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Archer";
+                set .@pack,13948;
+                next;
+                goto entrega_pack;
+                break;
+                case 4:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Thief";
+                set .@pack,13950;
+                next;
+                goto entrega_pack;
+                break;
+                case 5:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Merchant";
+                set .@pack,13949;
+                next;
+                goto entrega_pack;
+                break;
+                case 6:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Mage";
+                set .@pack,13946;
+                next;
+                goto entrega_pack;
+                break;
+				case 7:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Super Novice";
+                set .@pack,13951;
+                next;
+                goto entrega_pack;
+                break;
+				case 8:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Taekwon";
+                set .@pack,13955;
+                next;
+                goto entrega_pack;
+                break;
+				case 9:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Ninja";
+                set .@pack,13954;
+                next;
+                goto entrega_pack;
+                break;
+				case 10:
+                mes "^870F9A[Bienvenida Seal Pack]^000000";
+                mes "Pack: Gunslinger";
+                set .@pack,13952;
+                next;
+                goto entrega_pack;
+                break;
+                }
+               
+entrega_pack:
+mes "^870F9A[Bienvenida Seal Pack]^000000";
+mes "¿Estás de acuerdo?";
+next;
+if(select("^5533ff [>] ^000000 Sí:^5533ff [>] ^000000 No")==2){
+mes "^870F9A[Bienvenida Seal Pack]^000000";
+mes "Regresa pronto.";
+close;
+}
+mes "^870F9A[Bienvenida Seal Pack]^000000";
+mes "Aquí tienes";
+mes "Esperamos su estancia en el servidor sea de tu agrado.";
+mes "Atte. Seal Private Server Staff";
+set #packB,1;
+getitem .@pack,1;
+close;
+end;
+
+OnInit:
+	do {
+		delwaitingroom;
+		waitingroom "",0;
+		sleep 500; 
+		delwaitingroom;
+		waitingroom "Ven por tu pack",0;
+		sleep 2500;
+		delwaitingroom;
+		waitingroom "Escoje tu pack o hazlo al azar",0;
+		sleep 2500;
+		delwaitingroom;
+		waitingroom "",0;
+		sleep 550;
+		delwaitingroom;
+		waitingroom "Solo en....",0;
+		sleep 1500;
+		delwaitingroom;
+		waitingroom "",0;
+		sleep 250;
+		delwaitingroom;
+		waitingroom "Seal Private Server !!",0;
+		sleep 3500; // Evites super infinity loop
+	} while(1); // End Loop		close;
+}
+
+//duplicados
+seal_in02,152,30,4	duplicate(Bienvenida Seal Pack)	Bienvenida Seal Pack#1	10049
+// new_2-2,182,183,4	duplicate(Bienvenida Seal Pack)	Bienvenida Seal Pack#2	759

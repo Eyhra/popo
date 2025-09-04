@@ -1,0 +1,225 @@
+-	script	LMS#desactivado	-1,{
+OnWhisperGlobal:
+OnInit:
+disablenpc "Agente LMS#L1";
+disablenpc "Agente LMS#L0";
+end;
+}
+
+-	script	LMS#activado	-1,{
+OnWhisperGlobal:
+OnClock0140:
+OnClock0440:
+OnClock0740:
+OnClock1040:
+OnClock1340:
+OnClock1640:
+OnClock1940:
+OnClock2240:// Edit this to what ever you want. note : OnClock0000 is 12 midnight and OnClock1200 is 12 Noon
+goto startlmsevent;
+
+startlmsevent:
+disablenpc "Agent LMS#L1";
+announce "The Last Man Standing event will start shortly, if you want to participate, register with Prontera.",0;
+sleep2 5000;
+enablenpc "Agent LMS#L0";
+initnpctimer;
+end;
+
+OnTimer30000:
+announce "Last 30 seconds to register for Last Man Standing",0;
+end;
+
+OnTimer60000:
+//announce "Se cerró el registro a Last Man Standing",0;
+end;
+
+OnTimer61000:
+disablenpc "Agente LMS#L0";
+donpcevent "Agente LMS#L1::OnEnable";
+stopnpctimer;
+end;
+}
+//---------All Job Registration---------------
+prontera,155,178,5	script	Agente LMS#L0	588,{
+
+mes "[Agent LMS]:";
+mes "Hello, what can I do for you?";
+next;
+menu "Register",-,"What is LMS?",what,"Salir",leave;
+next;
+mes "[Agent LMS]";
+mes "Thanks for signing up. " + strcharinfo(0);
+close2;
+warp "new_5-4",99,179;
+end;
+what:
+mes "[Agent LMS]";
+mes "LMS is known as Last Man Standing";
+next;
+mes "[Agent LMS]";
+mes "LMS is similar to PvP.";
+mes "The only difference is that you will earn 10 poring coins for winning this Event.";
+next;
+mes "LMS hours are...";
+	mes "^0000FF[        01:40AM        ]^000000";
+	mes "^0000FF[        04:40AM        ]^000000";
+	mes "^0000FF[        07:40AM        ]^000000";
+	mes "^0000FF[        10:40AM        ]^000000";
+	mes "^0000FF[        13:40PM        ]^000000";
+	mes "^0000FF[        16:40PM        ]^000000";
+	mes "^0000FF[        19:40PM        ]^000000";
+next;
+mes "[Agent LMS]";
+mes "That's it";
+close;
+leave:
+mes "[Agent LMS]";
+mes "I hope you sign up next time.";
+close;
+
+
+}
+
+quiz_02,241,389,5	script	Agente de LMS#quiz	106,{
+
+mes "[Agent LMS]:";
+mes "Hello, what can I do for you?";
+next;
+menu "What is LMS?",whatt,"Salir",leavee;
+next;
+whatt:
+mes "[Agent LMS]";
+mes "LMS is known as Last Man Standing";
+next;
+mes "[Agent LMS]";
+mes "LMS is similar to PvP.";
+mes "The only difference is that you will earn a few poring coins for winning this event.";
+next;
+mes "LMS hours are ...";
+	mes "^0000FF[        01:40AM        ]^000000";
+	mes "^0000FF[        04:40AM        ]^000000";
+	mes "^0000FF[        07:40AM        ]^000000";
+	mes "^0000FF[        10:40AM        ]^000000";
+	mes "^0000FF[        13:40PM        ]^000000";
+	mes "^0000FF[        16:40PM        ]^000000";
+	mes "^0000FF[        19:40PM        ]^000000";
+next;
+mes "[Agent LMS]";
+mes "That's it";
+close;
+leavee:
+mes "[Agent LMS]";
+mes "Have a nice day";
+close;
+
+
+}
+
+//--------------------------
+
+//--------------------------
+new_5-4,99,179,4	script	Agente LMS#L1	56,{
+
+mes "[Agent LMS]";
+mes "Congratulations. Win.";
+next;
+//announce "[Agente LMS]: We have a winner for LMS. Excellent, keep showing that strength in PVP "+strcharinfo(0)+".",0;
+getitem 7539,10;
+mes "I'll send you to Prontera.";
+warp "prontera",155,182;
+disablenpc "Agente LMS#L1";
+close;
+end;
+OnEnable:
+pvpoff "new_5-4";
+mapannounce "new_5-4","[ARENA LMS]: LMS will start soon.",0;
+sleep2 5000;
+mapannounce "new_5-4","[ARENA LMS]: Some clarifications...",0;
+sleep2 5000;
+mapannounce "new_5-4","[ARENA LMS]: Only the last one standing wins.",0;
+sleep2 5000;
+mapannounce "new_5-4","[ARENA LMS]: We started !!!...",0;
+sleep2 10000;
+goto L_Start;
+end;
+L_Start:
+set $playerslms,getmapusers("new_5-4");
+if(getmapusers("new_5-4") == 1 && $playerslms > 1) goto L_Champ;
+if(getmapusers("new_5-4") == 0) goto L_None;
+if(getmapusers("new_5-4") > 1) {
+mapannounce "new_5-4","[ARENA LMS]: We start at the count of 5...",0;
+sleep2 10000;
+mapannounce "new_5-4","5",0;
+sleep2 1000;
+mapannounce "new_5-4","[ARENA LMS]: 4",0;
+sleep2 1000;
+mapannounce "new_5-4","[ARENA LMS]: 3",0;
+sleep2 1000;
+mapannounce "new_5-4","[ARENA LMS]: 2",0;
+sleep2 1000;
+mapannounce "new_5-4","[ARENA LMS]: 1",0;
+sleep2 1000;
+pvpon "new_5-4";
+goto timer;
+end;
+}
+timer:
+initnpctimer;
+end;
+
+OnTimer1000:
+end;
+
+OnTimer1100:
+if(getmapusers("new_5-4") == 1 && $playerslms > 1) goto L_Champ;
+if(getmapusers("new_5-4") > 2) goto timer;
+if(getmapusers("new_5-4") == 2) goto champ;
+stopnpctimer;
+end;
+
+champ:
+//announce "[ARENA LMS]: Only 2 warriors left standing!",0;
+sleep2 10000;
+if(getmapusers("new_5-4") == 1 && $playerslms > 1) goto L_Champ;
+if(getmapusers("new_5-4") > 1) goto timer;
+end;
+
+L_Champ:
+mapannounce "new_5-4","[ARENA LMS]: It's time to get your prize, come talk to me...",2500000;
+pvpoff "new_5-4";
+enablenpc "Agente LMS#L1";
+end;
+
+L_None:
+disablenpc "Agente LMS#L1";
+pvpoff "new_5-4";
+end;
+}
+//----- Die = warp prt -----
+-	script	Killa_warp	-1,{
+
+OnPCDieEvent:
+	getmapxy(.@map$,.@x,.@y,0);
+	if(.@map$=="new_5-4")
+	{
+	sleep2 1;
+	atcommand "@alive "+ strcharinfo(0);
+	warp "prontera",156,223;
+	atcommand "@alive "+ strcharinfo(0);
+	mapannounce "new_5-4","["+strcharinfo(0)+"] died and leaves the competition.",0;
+	}
+}
+
+
+// == Mapflags
+new_5-4	mapflag	nowarp
+new_5-4	mapflag	nowarpto
+new_5-4	mapflag	noteleport
+new_5-4	mapflag	nosave
+new_5-4	mapflag	nomemo
+new_5-4	mapflag	nobranch
+new_5-4	mapflag	pvp_noguild
+new_5-4	mapflag	pvp_noparty
+new_5-4	mapflag	restricted	3
+	

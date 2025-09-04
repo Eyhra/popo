@@ -1,0 +1,143 @@
+//      ______  __    __                                 
+//     /\  _  \/\ \__/\ \    Uso exclusivo para Poring RO
+//     \ \ \_\ \ \ ,_\ \ \___      __    ___      __     
+// _____\ \  __ \ \ \/\ \  _ `\  /'__`\/' _ `\  /'__`\   
+///\  __\\ \ \/\ \ \ \_\ \ \ \ \/\  __//\ \/\ \/\ \_\.\_ 
+//\ \_\_/ \ \_\ \_\ \__\\ \_\ \_\ \____\ \_\ \_\ \__/.\_\
+// \/_/    \/_/\/_/\/__/ \/_/\/_/\/____/\/_/\/_/\/__/\/_/
+//
+//========================================================
+// ---                   MvP vs. MvP                   ---
+//========================================================
+// ---                   by DanielArt                  ---
+//========================================================
+
+g_room1-2	mapflag	monster_noteleport
+g_room1-2	mapflag	noteleport
+g_room1-2	mapflag	nobranch
+g_room1-2	mapflag	nosave
+g_room1-2	mapflag	noloot
+g_room1-2	mapflag	novending
+g_room1-2	mapflag	nowarp
+
+prontera,192,177,4	script	Mvp Vs. Mvp::MVP_NPC	10127,{
+	mes "[^ff8800MvP vs. MvP^000000]";
+	mes "¡Hola ^5533ff"+strcharinfo(0)+"^000000!, ¿deseas participar?";
+	next;
+	switch(select("Información:^5533ffParticipar^000000 [ ^ff0000"+getmapusers("g_room1-2")+"^000000 ]:^777777Salir^000000")) {
+		case 1:
+			mes "[^ff8800MvP vs. MvP^000000]";
+			mes "El evento consiste en apostar por uno de los dos MvP que aparecerán en el mapa.";
+			next;
+			mes "[^ff8800MvP vs. MvP^000000]";
+			mes "Ellos pelearán entre sí y los usuarios no los podrán atacar";
+			next;
+			mes "[^ff8800MvP vs. MvP^000000]";
+			mes "El MvP que quede de pie será el vencedor.";
+			close;
+		case 2:
+			mes "[^ff8800MvP vs. MvP^000000]";
+			if(callfunc("F_CheckMac")) {
+				mes "Lo siento pero no puedes entrar a este evento mientras hagas double-login.";
+				close2;
+				emotion ET_SORRY;
+				end;
+			}
+			mes "De acuerdo, antes de entrar necesito que votes por uno de los siguientes MvP:";
+			next;
+			if(select(" ~ Votar por ^5533ff"+getvariableofnpc(.mN$[0],"MVP_EVENT")+"^000000: ~ Votar por ^5533ff"+getvariableofnpc(.mN$[1],"MVP_EVENT")+"^000000") == 1)
+				query_sql("INSERT INTO `mvp_event` VALUES ('"+strcharinfo(4)+"','1')");
+			else
+				query_sql("INSERT INTO `mvp_event` VALUES ('"+strcharinfo(4)+"','2')");
+			mes "[^ff8800MvP vs. MvP^000000]";
+			mes "De acuerdo, ahora te llevaré a la sala del encuentro.";
+			close2;
+			warp "g_room1-2",40,380;
+			end;
+		case 3:
+			mes "[^ff8800MvP vs. MvP^000000]";
+			mes "Ven de nuevo si deseas participar.";
+			close2;
+			emotion ET_THANKS;
+			end;
+	}
+OnEnable:
+	enablenpc strnpcinfo(3);
+	movenpc strnpcinfo(3),156,179;
+	waitingroom "MvP vs. MvP",0;
+	end;
+OnDisable:
+	delwaitingroom;
+	movenpc strnpcinfo(3),192,177;
+OnInit:
+	disablenpc strnpcinfo(3);
+	end;
+}
+-	script	MVP_EVENT	-1,{
+OnInit:
+	query_sql("CREATE TABLE IF NOT EXISTS `mvp_event` (`mac` varchar(18) DEFAULT NULL,`opcion` tinyint(1) DEFAULT NULL)");
+	end;
+OnMvpStart:
+	query_sql "TRUNCATE TABLE `mvp_event`";
+	$MVP_WIN = 0;
+	donpcevent "Premiador#mvp::OnEventStart";
+	killmonsterall "g_room1-2";
+	setarray .@m,1511,1647,1785,1039,1874,2068,1272,1719,1046,1871,1768,1832,1734,2022,1087,1190,1623,1708,1751,1917,1832,2022,1646,1650,1708;
+	do {
+		setarray .@mId,.@m[rand(0,(getarraysize(.@m)-1))],.@m[rand(0,(getarraysize(.@m)-1))];
+		setarray .mN$,getmonsterinfo(.@mId[0],MOB_NAME),getmonsterinfo(.@mId[1],MOB_NAME);
+		setarray .@mLv,getmonsterinfo(.@mId[0],MOB_LV),getmonsterinfo(.@mId[1],MOB_LV);
+		
+		if( (.@mLv[0] > .@mLv[1] && (.@mLv[0] - .@mLv[1]) > 25) || (.@mLv[1] > .@mLv[0] && (.@mLv[1] - .@mLv[0]) > 25) )
+			.@e++;
+		else
+			.@e = 0;
+	} while(.@e < 1);
+	donpcevent "MVP_NPC::OnEnable";
+	announce "[MvP vs. MvP]: ¡El evento de MvP vs. MvP está por comenzar!",bc_all,0xFF8800;
+	sleep2 2000;
+	announce "[MvP vs. MvP]: Dirígete con el NPC en la Ciudad de Prontera para participar.",bc_all,0xFF8800;
+	sleep2 5000;
+	announce "[MvP vs. MvP]: El evento empezará en 2 minutos.",bc_all,0xFF8800;
+	sleep2 60000;
+	announce "[MvP vs. MvP]: El evento empezará en 1 minuto.",bc_all,0xFF8800;
+	sleep2 30000;
+	announce "[MvP vs. MvP]: ¡El evento empezará en tan sólo 30 segundos, ¡apresúrate a entrar!",bc_all,0xFF8800;
+	sleep2 30000;
+	announce "[MvP vs. MvP]: ¡El evento ha comenzado!.",bc_all,0xFF8800;
+	donpcevent "MVP_NPC::OnDisable";
+	if(getmapusers("g_room1-2") < 1) {
+		mapwarp "g_room1-2","prontera",150,180;
+		end;
+	}
+	sleep2 1000;
+	announce "[MvP vs. MvP]: ¡La batalla ha iniciado!",bc_all,0xFF7070;
+	smob "g_room1-2",44,369,.mN$[0],.@mId[0],0,1,0,0,50000,4,0,0,0,0,0,0,0,strnpcinfo(3)+"::OnFirstMvp";
+	smob "g_room1-2",40,369,.mN$[1],.@mId[1],0,1,0,0,50000,4,0,0,0,0,0,0,0,strnpcinfo(3)+"::OnSecondMvp";
+	end;
+OnFirstMvp: callsub S_Win,.mN$[1],2;
+OnSecondMvP: callsub S_Win,.mN$[0],1;
+S_Win:
+	if($MVP_WIN < 1) {
+		donpcevent "Premiador#mvp::OnEnable";
+		mapannounce "g_room1-2","[MvP vs MvP]: ¡"+getarg(0)+" ha ganado!, si resultaste ganador, habla con el Premiador.",bc_map,0xFF7070; 
+		$MVP_WIN = getarg(1);
+	}
+	end;
+}
+
+g_room1-2,44,380,4	script	Premiador#mvp	10191,{
+	query_sql("SELECT `opcion` FROM `mvp_event` WHERE `mac`='"+strcharinfo(4)+"'",.@opt);
+	if(.@opt == $MVP_WIN)
+		F_Event 1,rand(1,3);
+	warp "prontera",150,180;
+	end;
+OnEventStart:
+	hideonnpc strnpcinfo(0);
+	end;
+OnEnable:
+	specialeffect 91;
+	sleep2 100;
+	hideoffnpc strnpcinfo(0);
+	end;
+}

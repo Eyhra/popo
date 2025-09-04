@@ -1,0 +1,71 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= Necro [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena,rAmod,eAthena
+//===== Additional Comments: =================================
+//= Ideas Avollene,Programacion Necro
+//============================================================
+
+paramk,107,73,4	script	Farter	51,{
+    cutin "god_nelluad01",2;
+	mes "[^000000Farter^000000]";
+	mes "Hola!!";
+	mes "Me contrato Siegerth para hacerte reir, perdon para ortorgarte una ";
+	mes "mision especial para ti, si me traes te dare mi sombrero para que lo ";
+	mes "utilizes para tu beneficio o para otras quest, pero no sera facil";
+	next;
+	menu "Que necesito?",L_required,"Tengo tus items!",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Farter^000000]";
+		mes "^FF000050^000000 Feather"; //949
+		mes "^FF00002^000000 Darkgreen Dyestuff"; //979
+		mes "^FF000050^000000 Green Bijou"; //7445
+		mes "^FF0000100^000000 Green Herb"; //511
+		mes "^FF00001^000000 Silk Robe [0]"; //2321
+		mes "^0000FF100000^000000 zeny";
+		cutin "",255;
+		close;
+
+	L_check:
+		if(countitem(949) < 50) goto L_manque;
+		if(countitem(979) < 2) goto L_manque;
+		if(countitem(7445) < 50) goto L_manque;
+		if(countitem(511) < 100) goto L_manque;
+		if(countitem(2321) < 1) goto L_manque;
+		if(Zeny < 100000) goto L_manque;
+		mes "[^000000Farter^000000]";
+		mes "Gracias mi buen ciudano, aca estare por si necesitas otras mis ";
+		mes "servicios, disfruta tu premio";
+		delitem 949,50;
+		delitem 979,2;
+		delitem 7445,50;
+		delitem 511,100;
+		delitem 2321,1;
+		set Zeny, Zeny - 100000;
+		getitem 5188,1;
+		cutin "",255;
+		close;
+
+	L_manque:
+		mes "[^000000Farter^000000]";
+		mes "Te falta";
+		if(countitem(949) < 50) mes "^FF0000"+(50 - countitem(949)) +"^000000 Feather";
+		if(countitem(979) < 2) mes "^FF0000"+(2 - countitem(979)) +"^000000 Darkgreen Dyestuff";
+		if(countitem(7445) < 50) mes "^FF0000"+(50 - countitem(7445)) +"^000000 Green Bijou";
+		if(countitem(511) < 100) mes "^FF0000"+(100 - countitem(511)) +"^000000 Green Herb";
+		if(countitem(2321) < 1) mes "^FF0000"+(1 - countitem(2321)) +"^000000 Silk Robe [0]";
+		if(Zeny < 100000) mes "^0000FF"+(100000 - Zeny)+"^000000 Zeny";
+		cutin "",255;
+		close;
+
+	L_partir:
+		mes "[^000000Farter^000000]";
+		mes "Para la proxima";
+		cutin "",255;
+		close;
+}

@@ -1,0 +1,55 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= NRCRO,Siegerth [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eA SVN 5000+
+//===== Additional Comments: =================================
+//= NPC de evento programado por NRCRO y las ideas de Siegerth para Britoniah RO, Especial de Halloween
+//============================================================
+
+niflheim,194,188,4	script	Vexia	856,{
+	mes "[^000000Vexia^000000]";
+	mes "Hola,querid"+(Sex?"o":"a")+" aventurer"+(Sex?"o":"a")+" estas son las fechas donde festejamos a";
+	mes "todos los monstruos muertos";
+	next;
+	menu "Me Interesa,Que Necesito?",L_required,"Aca tienes tus cartas",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Vexia^000000]";
+		mes "^FF00001^000000 Lude Card"; //4193
+		mes "^FF00001^000000 Disguise Card"; //4181
+		mes "^FF00001^000000 Dullahan Card"; //4176
+		mes "^FF00001^000000 Loli Ruri Card"; //4191
+		close;
+
+	L_check:
+	    if(countitem(4193) < 1) goto L_manque;
+		if(countitem(4181) < 1) goto L_manque;
+		if(countitem(4176) < 1) goto L_manque;
+		if(countitem(4191) < 1) goto L_manque;
+		mes "[^000000Vexia^000000]";
+		mes "Bueno Vuelve cuando quieras";
+		delitem 4193,1;
+		delitem 4181,1;
+		delitem 4176,1;
+		delitem 4191,1;
+		getitem 25059,1;
+		close;
+
+	L_manque:
+		mes "[^000000Vexia^000000]";
+		mes "Te Falta..";
+		if(countitem(4193) < 1) mes "^FF0000"+(1 - countitem(4193)) +"^000000 Lude Card";
+		if(countitem(4181) < 1) mes "^FF0000"+(1 - countitem(4181)) +"^000000 Disguise Card";
+		if(countitem(4176) < 1) mes "^FF0000"+(1 - countitem(4176)) +"^000000 Dullahan Card";
+		if(countitem(4191) < 1) mes "^FF0000"+(1 - countitem(4191)) +"^000000 Loli Ruri Card";
+		close;
+
+	L_partir:
+		mes "[^000000Vexia^000000]";
+		mes "Aca estare esperandote";
+		close;
+}

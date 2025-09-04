@@ -1,0 +1,15 @@
+-	script	OkaniHidden	-1,{
+
+OnPCLoginEvent:
+	if (getgmlevel() > 1){
+		atcommand "@speed 1";
+		atcommand "@hide";
+		if (getgmlevel() < 99) atcommand "@monsterignore";
+	}
+	atcommand "@autoloot rate 100";
+	atcommand "@join #main";
+	atcommand "@join #trade";
+	atcommand "@join #party";
+	atcommand "@join #bg";
+	end;
+}

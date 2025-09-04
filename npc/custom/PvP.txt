@@ -1,0 +1,287 @@
+prontera.gat,148,191,5	script	PVP#PvP::PvPW	420,{
+mes "[^CC0000Recruiter^000000]";
+mes "Where do you want to fight?";
+next;
+switch(select("PvP Normal ^FF0000["+getmapusers("guild_vs3")+"]^000000:PvP No Pots ^FF0000["+getmapusers("pvp_n_1-5")+"]^000000:PvP 1 Vs 1 ^FF0000["+getmapusers("guild_vs2")+"]^000000:PvP No Buff ^FF0000["+getmapusers("pvp_n_1-3")+"]^000000")) {
+
+	//PVP Normal	
+	case 1:
+	switch (rand(1,5)) {
+		case 1: // Izquierda
+			warp "guild_vs3",19,51;
+			atcommand "@undisguise "+@b[2];
+			break;
+			
+		case 2: // Arriba
+			warp "guild_vs3",49,82;
+			atcommand "@undisguise "+@b[2];
+			break;
+			
+		case 3: // Abajo
+			warp "guild_vs3",50,20;
+			atcommand "@undisguise "+@b[2];
+			break;
+			
+		case 4: // Derecha
+			warp "guild_vs3",81,50;
+			atcommand "@undisguise "+@b[2];
+			break;
+			
+		case 5: // Ni idea
+			warp "guild_vs3",77,71;
+			atcommand "@undisguise "+@b[2];
+			break;
+
+	} // End switch	
+	end;
+	
+	case 2:
+  	  	switch (rand(1,5)) {
+		case 1: // Izquierda
+			warp "pvp_n_1-5",65,99;
+			atcommand "@undisguise "+@b[2];
+			break;
+			
+		case 2: // Abajo
+			warp "pvp_n_1-5",99,65;
+			atcommand "@undisguise "+@b[2];
+			break;
+			
+		case 3: // Derecha
+			warp "pvp_n_1-5",134,100;
+			atcommand "@undisguise "+@b[2];
+			break;
+			
+		case 4: // Arriba
+			warp "pvp_n_1-5",100,134;
+			atcommand "@undisguise "+@b[2];
+			break;
+			
+		case 5: // Aleatorio
+			warp "pvp_n_1-5",0,0;
+			atcommand "@undisguise "+@b[2];
+			break;
+	}
+	end;
+
+	//PvP 1 Vs 1
+	case 3:
+	if(getmapusers("guild_vs2") == 2){
+	mes "Lo siento pero la sala esta llena.";
+	close;
+	} else {
+	}
+	switch( rand(4) )
+			{
+			case 0: warp "guild_vs2",7,50;
+			sc_end SC_SPIRIT;
+			sc_end SC_ASSUMPTIO;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_SUFFRAGIUM;
+			sc_end SC_MAGNIFICAT;
+			sc_end SC_GOSPEL;
+			sc_end SC_BASILICA;
+			sc_end SC_MAGICPOWER;
+			sc_end SC_MARIONETTE;
+			sc_end SC_MARIONETTE2;
+			sc_end SC_DEVOTION;
+			sc_end SC_SACRIFICE;
+			sc_end SC_ENDURE;
+			sc_end SC_POEMBRAGI;
+			sc_end SC_ASSNCROS;
+			sc_end SC_APPLEIDUN;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_ASPERSIO;
+			sc_end SC_KYRIE;
+			sc_end SC_GOSPEL;
+			sc_end SC_KAUPE;
+			sc_end SC_KAIZEL;
+			atcommand "@undisguise "+@b[2];
+			end;
+
+				case 1: warp "guild_vs2",50,92;
+			sc_end SC_SPIRIT;
+			sc_end SC_ASSUMPTIO;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_SUFFRAGIUM;
+			sc_end SC_MAGNIFICAT;
+			sc_end SC_GOSPEL;
+			sc_end SC_BASILICA;
+			sc_end SC_MAGICPOWER;
+			sc_end SC_MARIONETTE;
+			sc_end SC_MARIONETTE2;
+			sc_end SC_DEVOTION;
+			sc_end SC_SACRIFICE;
+			sc_end SC_ENDURE;
+			sc_end SC_POEMBRAGI;
+			sc_end SC_ASSNCROS;
+			sc_end SC_APPLEIDUN;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_ASPERSIO;
+			sc_end SC_KYRIE;
+			sc_end SC_GOSPEL;
+			sc_end SC_KAUPE;
+			sc_end SC_KAIZEL;
+			atcommand "@undisguise "+@b[2];
+			end;
+
+				case 2: warp "guild_vs2",50,7;
+			sc_end SC_SPIRIT;
+			sc_end SC_ASSUMPTIO;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_SUFFRAGIUM;
+			sc_end SC_MAGNIFICAT;
+			sc_end SC_GOSPEL;
+			sc_end SC_BASILICA;
+			sc_end SC_MAGICPOWER;
+			sc_end SC_MARIONETTE;
+			sc_end SC_MARIONETTE2;
+			sc_end SC_DEVOTION;
+			sc_end SC_SACRIFICE;
+			sc_end SC_ENDURE;
+			sc_end SC_POEMBRAGI;
+			sc_end SC_ASSNCROS;
+			sc_end SC_APPLEIDUN;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_ASPERSIO;
+			sc_end SC_KYRIE;
+			sc_end SC_GOSPEL;
+			sc_end SC_KAUPE;
+			sc_end SC_KAIZEL;
+			atcommand "@undisguise "+@b[2];
+			end;
+
+				case 3: warp "guild_vs2",91,50;
+			sc_end SC_SPIRIT;
+			sc_end SC_ASSUMPTIO;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_SUFFRAGIUM;
+			sc_end SC_MAGNIFICAT;
+			sc_end SC_GOSPEL;
+			sc_end SC_BASILICA;
+			sc_end SC_MAGICPOWER;
+			sc_end SC_MARIONETTE;
+			sc_end SC_MARIONETTE2;
+			sc_end SC_DEVOTION;
+			sc_end SC_SACRIFICE;
+			sc_end SC_ENDURE;
+			sc_end SC_POEMBRAGI;
+			sc_end SC_ASSNCROS;
+			sc_end SC_APPLEIDUN;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_ASPERSIO;
+			sc_end SC_KYRIE;
+			sc_end SC_GOSPEL;
+			sc_end SC_KAUPE;
+			sc_end SC_KAIZEL;
+			atcommand "@undisguise "+@b[2];
+			end;
+			}
+ 
+	//PVP NO BUFF
+		case 4:	switch( rand(2) )
+			{
+				case 0: warp "pvp_n_1-3",100,61;
+				sc_end SC_ALL;
+				atcommand "@undisguise "+@b[2];
+				break;
+
+
+				case 1: warp "pvp_n_1-3",99,139;
+				sc_end SC_ALL;
+				atcommand "@undisguise "+@b[2];
+				break;
+
+			}
+
+
+}//End Switch
+end;
+
+	//OnInit:
+	do {
+		delwaitingroom;
+		waitingroom "",0;
+		sleep 500; 
+		delwaitingroom;
+		waitingroom "PvP Normal [" +getmapusers("guild_vs3") +"]",0;
+		sleep 2500;
+		delwaitingroom;
+		waitingroom "",0;
+		sleep 500;
+		delwaitingroom;
+		waitingroom "PvP No Pots [" +getmapusers("pvp_n_1-5") +"]",0;
+		sleep 2500;
+		delwaitingroom;
+		waitingroom "",0;
+		sleep 500;
+		delwaitingroom;
+		waitingroom "PvP 1 vs 1 [" +getmapusers("guild_vs2") +"]",0;
+		sleep 2500; // Evites super infinity loop
+	} while(1); // End Loop
+
+} // End Script
+
+
+
+/* DUPLICADOS */
+morocc.gat,171,102,4	duplicate(PvPW)	PVP Rooms#1	420
+geffen.gat,112,69,5	duplicate(PvPW)	PVP Rooms#2	420
+//payon.gat,166,106,5	duplicate(PvPW)	PVP Rooms#3	420
+alberta.gat,29,240,5	duplicate(PvPW)	PVP Rooms#4	420
+izlude.gat,132,120,4	duplicate(PvPW)	PVP Rooms#5	420
+aldebaran.gat,147,128,4	duplicate(PvPW)	PVP Rooms#6	420
+xmas.gat,140,136,5	duplicate(PvPW)	PVP Rooms#7	420
+comodo.gat,193,158,4	duplicate(PvPW)	PVP Rooms#8	420
+yuno.gat,142,175,5	duplicate(PvPW)	PVP Rooms#9	420
+amatsu.gat,100,162,5	duplicate(PvPW)	PVP Rooms#10	420
+gonryun.gat,165,122,4	duplicate(PvPW)	PVP Rooms#11	420
+umbala.gat,95,163,5	duplicate(PvPW)	PVP Rooms#12	420
+niflheim.gat,211,188,5	duplicate(PvPW)	PVP Rooms#13	420
+louyang.gat,212,105,5	duplicate(PvPW)	PVP Rooms#14	420
+ayothaya.gat,212,180,5	duplicate(PvPW)	PVP Rooms#15	420
+einbroch.gat,59,208,5	duplicate(PvPW)	PVP Rooms#16	420
+lighthalzen.gat,159,100,4	duplicate(PvPW)	PVP Rooms#17	420
+einbech.gat,205,128,4	duplicate(PvPW)	PVP Rooms#18	420
+hugel.gat,98,165,4	duplicate(PvPW)	PVP Rooms#19	420
+rachel.gat,109,145,5	duplicate(PvPW)	PVP Rooms#20	420
+veins.gat,211,137,5	duplicate(PvPW)	PVP Rooms#21	420
+moscovia.gat,212,199,5	duplicate(PvPW)	PVP Rooms#22	420
+manuk.gat,289,146,4	duplicate(PvPW)	PVP Rooms#23	420
+splendide.gat,187,153,5	duplicate(PvPW)	PVP Rooms#24	420
+brasilis.gat,191,221,5	duplicate(PvPW)	PVP Rooms#25	420
+dicastes01.gat,194,194,5	duplicate(PvPW)	PVP Rooms#26	420
+dewata.gat,190,184,5	duplicate(PvPW)	PVP Rooms#27	420
+payon.gat,166,107,5	duplicate(PvPW)	PVP Rooms#28	420
+//prontera.gat,146,99,6	duplicate(PvPW)	PVP Rooms#29	420
+prontera.gat,42,212,5	duplicate(PvPW)	PVP Rooms#30	420
+prontera.gat,267,212,4	duplicate(PvPW)	PVP Rooms#31	420
+malaya.gat,221,205,5	duplicate(PvPW)	PVP Rooms#32	420
+alberta.gat,104,53,7	duplicate(PvPW)	PVP Rooms#33	420
+sec_in01.gat,130,110,5	duplicate(PvPW)	PVP Rooms#34	420
+p_track01.gat,69,38,5	duplicate(PvPW)	PVP Rooms#35	420
+quiz_02.gat,308,241,4	duplicate(PvPW)	Rooms PVP#36	420
+cmd_fild07.gat,247,122,5	duplicate(PvPW)	PVP Rooms#37	420
+moc_para01.gat,37,22,9	duplicate(PvPW)	PVP Rooms#38	420
+//dprontera.gat,149,194,5	duplicate(PvPW)	PVP Rooms#39	420
+lasagna.gat,159,161,5	duplicate(PvPW)	PVP Rooms#40	420
+ecl_in01.gat,41,60,5	duplicate(PvPW)	PVP Rooms#41	420
+jawaii.gat,241,136,5	duplicate(PvPW)	PVP Rooms#42	420
+malangdo.gat,145,124,5	duplicate(PvPW)	PVP Rooms#43	420
+mora.gat,60,138,4	duplicate(PvPW)	PVP Rooms#44	420
+harboro1.gat,305,200,4	duplicate(PvPW)	PVP Rooms#45	420
+thor_camp.gat,235,78,5	duplicate(PvPW)	PVP Rooms#46	420
+verus04.gat,130,236,4	duplicate(PvPW)	PVP Rooms#47	420
+lroom00.gat,118,73,6	duplicate(PvPW)	PVP Rooms#48	420
+manuk.gat,271,236,6	duplicate(PvPW)	PVP Rooms#49	420
+mid_camp.gat,197,289,6	duplicate(PvPW)	PVP Rooms#50	420
+paramk.gat,114,89,4	duplicate(PvPW)	PVP Rooms#51	420
+prontera.gat,171,279,4	duplicate(PvPW)	PVP Rooms#52	420
+
+
+
+
+
+
+
+

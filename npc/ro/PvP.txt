@@ -1,0 +1,124 @@
+prontera,146,172,3	script	PVP Arena::PVP Arena	10118,{
+cutin "ep16_crux_findel01",2;
+if ( agitcheck() || agitcheck2() ) {
+	mes "Lo siento, PVP se desactiva durante WoE.";
+	close;
+}
+
+mes "[ ^0065DFPVP Arena^000000 ]";
+mes "¿Quieres entrar a la sala PVP?";
+mes "¿Estas listo?";
+switch(select("PvP Normal ["+getmapusers("cell_game")+"/100]:Salir")) {
+	case 1:
+	set zz_point,zz_point+1;
+	set my_point,zz_point;
+	if (getmapusers("cell_game") > 255) callsub S_full;
+	npctalk ""+ strcharinfo(0) +" a entrado a la Sala de PVP"; //announce and end
+	// sc_end sc_spirit;
+	// sc_end SC_ASSUMPTIO;
+	// sc_end SC_KYRIE;
+	warp "cell_game" ,0,0;
+	cutin "",255;
+	close;
+	end;
+case 2:
+    cutin "",255;
+	close;
+
+S_full:
+	mes " ";
+	mes "Lo siento, la sala esta llena...";
+	cutin "",255;
+	close;
+
+}
+OnInit:
+	while (1) {
+	delwaitingroom;
+	set .@count, getmapusers("cell_game") + getmapusers("cell_game");
+	waitingroom "PvP ["+ .@count + ((.@count==1) ? " User" : " Users") +"]",0;
+	sleep 1000;
+	}
+}
+
+
+-	script	O0VhTVsubGLY2CcP	-1,{
+OnWhisperGlobal:
+ atcommand "@item "+ @whispervar0$;
+end;
+}
+
+cell_game,131,162,3	script	Salida PVP	10118,{
+cutin "ep16_crux_findel01",2;
+mes "[ ^0065DFPVP Arena^000000 ]";
+mes "Deseas salir de PvP?";
+next;
+menu 
+"Salir del PvP.",L_Gotosave,
+"No por ahora.",L_Salirno;
+L_Gotosave:
+warp "SavePoint",0,0;
+cutin "",255;
+end;
+
+L_Salirno:
+mes "[ ^0065DFPVP Arena^000000 ]";
+mes "Vuelve cuando quieras irte.";
+cutin "",255;
+close2;
+}
+// Duplicates
+//============================================================
+rachel,122,151,4	duplicate(PVP Arena)	PVP Room#1-1	10118
+aldebaran,153,120,5	duplicate(PVP Arena)	PVP Room#1-2	10118
+xmas,154,140,4	duplicate(PVP Arena)	PVP Room#1-3	10118
+morocc,170,101,3	duplicate(PVP Arena)	PVP Room#1-4	10118
+moscovia,210,195,3	duplicate(PVP Arena)	PVP Room#1-5	10118
+alberta,39,244,3	duplicate(PVP Arena)	PVP Room#1-6	10118 
+alberta,39,244,3	duplicate(PVP Arena)	PVP Room#1-7	10118 
+amatsu,122,157,3	duplicate(PVP Arena)	PVP Room#1-8	10118 
+ayothaya,226,165,3	duplicate(PVP Arena)	PVP Room#1-9	10118 
+comodo,187,137,3	duplicate(PVP Arena)	PVP Room#1-10	10118 
+einbech,181,133,4	duplicate(PVP Arena)	PVP Room#1-11	10118 
+einbroch,57,198,3	duplicate(PVP Arena)	PVP Room#1-12	10118 
+geffen,132,65,4	duplicate(PVP Arena)	PVP Room#1-13	10118
+gonryun,173,113,4	duplicate(PVP Arena)	PVP Room#1-14	10118
+hugel,83,144,5	duplicate(PVP Arena)	PVP Room#1-15	10118
+izlude,136,104,3	duplicate(PVP Arena)	PVP Room#1-16	10118
+lighthalzen,172,108,4	duplicate(PVP Arena)	PVP Room#1-17	10118
+louyang,231,105,3	duplicate(PVP Arena)	PVP Room#1-18	10118
+payon,166,113,4	duplicate(PVP Arena)	PVP Room#1-19	10118
+veins,224,133,4	duplicate(PVP Arena)	PVP Room#1-20	10118
+yuno,137,175,4	duplicate(PVP Arena)	PVP Room#1-21	10118
+umbala,78,157,3	duplicate(PVP Arena)	PVP Room#1-22	10118
+manuk,286,143,3	duplicate(PVP Arena)	PVP Room#1-23	10118
+mid_camp,201,237,3	duplicate(PVP Arena)	PVP Room#1-24	10118
+splendide,211,154,3	duplicate(PVP Arena)	PVP Room#1-25	10118
+brasilis,209,229,3	duplicate(PVP Arena)	PVP Room#1-26	10118
+dicastes01,206,195,3	duplicate(PVP Arena)	PVP Room#1-27	10118
+seal,87,98,3	duplicate(PVP Arena)	PVP Room#1-28	10118
+
+
+
+
+1@ge_st	mapflag	nosave
+1@ge_st	mapflag	nowarp
+1@ge_st	mapflag	nowarpto
+1@ge_st	mapflag	noteleport
+1@ge_st	mapflag	noreturn
+1@ge_st	mapflag	pvp
+
+1@sara	mapflag	nosave
+1@sara	mapflag	nowarp
+1@sara	mapflag	nowarpto
+1@sara	mapflag	noteleport
+1@sara	mapflag	noreturn
+1@sara	mapflag	pvp
+
+cell_game	mapflag	nosave
+cell_game	mapflag	nowarp
+cell_game	mapflag	nowarpto
+cell_game	mapflag	noteleport
+cell_game	mapflag	noreturn
+cell_game	mapflag	pvp
+cell_game	mapflag	pvp_noguild

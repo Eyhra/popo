@@ -1,0 +1,98 @@
+seal,59,66,4	script	Plagiarism NPC	779,{
+	mes "[^FF7070Plagiarism NPC^000000]";
+	mes "Seleccione qué habilidad desea copiar, la existente se sobrescribirá.";
+	next;
+	set .@menu, select(.menu$) -1;
+	if ( getskilllv(.skill$[.@menu * 3 +1]) ) {
+		mes "Ya copiaste esta habilidad.";
+		close;
+	}
+	mes "[^FF7070Plagiarism NPC^000000]";
+	mes "¿Estás seguro de que quieres copiar "+ .skill$[.@menu * 3] +"?";
+	mes "debes pagar ^ff000015,000 Zeny^000000 y re-logear";
+	next;
+	if ( select ( "^5533ff [>] ^000000 Si", "^5533ff [>] ^000000 No" ) == 2 ) close;
+	if ( Zeny < 15000 ) {
+	mes "[^FF7070Plagiarism NPC^000000]";	
+	mes "No tienes suficiente zeny";
+	mes "Por favor vuelve más tarde";
+    close; }
+	Set Zeny, Zeny - 15000;
+	.@text$ = atoi( .skill$[.@menu * 3 +2] ) > 1 ? "-" + .skill$[.@menu * 3 +2] : "" ;
+	mes "Nivel de Skill (1" + .@text$ + ")";
+	if ( input( .@input, 1, ( atoi( .skill$[.@menu * 3 +2] ) > 1 ? atoi( .skill$[.@menu * 3 +2] ) : 1 )) != 0 ) {
+		mes "Nivel Equivocado";
+		close;
+	}
+	set CLONE_SKILL, atoi( .skill$[.@menu * 3 +1] );
+	set CLONE_SKILL_LV, .@input;
+	// atcommand "@kick "+ strcharinfo(0);
+	end;
+
+OnInit:
+    setarray .skill$,
+	"Bash", 5, 10,
+	"Magnum Break", 7, 10,
+	"Bowling Bash", 62 ,10,
+	"Grand Cross", 254 ,10,
+	"Holy Cross", 253 ,10,
+	"Shield Boomerang", 251 ,5,
+	"Shield Charge", 250 ,5,
+    "Fire Bolt", 19, 10,
+	"Fire Ball", 17, 10,
+	"Fire Wall", 18, 10,
+    "Cold Bolt", 14, 10,
+	"Frost Driver", 15, 10,
+	"Napalm Beat", 11, 10,
+	"Soul Strike", 13, 10,
+    "Lightning Bolt", 20, 10,
+	"Thunder Storm", 21, 10,
+	"Jupitel Thunder", 84, 10,
+	"Lord Of Vermillion", 85, 10,
+	"Storm Gust", 89, 10,
+	"Water Ball", 86, 5,
+	"Frost Nova", 88, 10,
+	"Meteor Storm", 83, 10,
+	"Sightrasher", 81, 10,
+	"Earth Spike", 90, 5,
+	"Heaven's Drive", 91, 5,
+	"Charge Arrow", 148, 1,
+	"Arrow Shower", 47, 10,
+	"Blast Mine", 122, 5,
+	"Claymore Trap", 123, 5,
+	"Land Mine", 116, 5,
+	"Mammonite", 42, 10,
+	"Acid Terror", 230, 5,
+	"Demostration", 229, 5,
+	"Throw Venom Knife", 1004, 1,
+	"Venom Splasher", 141, 10,
+	"Heal", 28, 10,
+	"Holy Light", 156, 1,
+	"Ruwach", 24, 1,
+	"Aspersio", 68, 5,
+	"B.S Sacramenti", 69, 5,
+	"Magnus Exorcismus", 79, 10,
+	"Turn Undead", 77, 10,
+	"Sanctuary", 70, 10,
+	"Resurrection", 54, 4,
+	"Asura Strike", 271, 5,
+	"Investigate", 266, 5,
+	"Finger Offensive", 267, 5,
+	"Triple Attack", 263 ,10,
+	"Spear of Ice", 537, 10,
+	"Raging Fire Dragon", 536, 5,
+	"Crimson Fire Formation", 535, 10,
+	"North Wind", 542, 5,
+	"Crimson Fire Blossom", 534, 10,
+	"Reverse Tatami", 527, 5,
+	"Mist Slash", 528, 5,
+	"Lightning Crash", 541, 5,
+	"Falling Ice Pillar", 539, 5,
+	"Shadow Slash", 530, 5,
+	"Wind Blade", 540, 10,
+	"Flying Kick", 421 ,7;
+    set .@skillsize, getarraysize(.skill$);
+    for ( set .@i,0; .@i < .@skillsize; set .@i, .@i +3 )
+        set .menu$, .menu$ + .skill$[.@i] +":";
+    end;
+}

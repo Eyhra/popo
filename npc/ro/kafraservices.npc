@@ -1,0 +1,622 @@
+// ________                   .__         .__      _____             __
+// \______ \  _____     ____  |__|  ____  |  |    /  _  \  _______ _/  |_
+//  |    |  \ \__  \   /    \ |  |_/ __ \ |  |   /  /_\  \ \_  __ \\   __\
+//  |    `   \ / __ \_|   |  \|  |\  ___/ |  |__/    |    \ |  | \/ |  |
+// /_______  /(____  /|___|  /|__| \___  >|____/\____|__  / |__|    |__|
+//         \/      \/      \/          \/               \/
+//                             www.danielart.net
+//==========================================================================
+// ---             Servicios Kafra Premium             ---
+//========================================================
+// ---                  by DanielArt                   ---
+//========================================================
+-	script	KAF_S	-1,{
+	cutin "kafra_09",2;
+	mes "[^cc6600Servicios Kafra^000000]";
+	mes "Te doy la bienvenida ^5533ff"+strcharinfo(0)+"^000000.";
+	mes "Aquí podrás hacer uso de distintos servicios útiles para tu aventura"," ";
+	mes "Por favor elige lo que necesites:";
+	next;
+	switch(select("^5533ff [>] ^000000Almacén:^5533ff [>] ^000000Gremios:^5533ff [>] ^000000Guardar ubicación actual:^5533ff [>] ^000000Identificar objetos:^5533ff [>] ^000000Platinum Skills:^5533ff [>] ^000000Rentas:^777777Salir^000000")) {
+		case 1:
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "Puedes abrir tu almacén, o protegerlo con una contraseña, ¿en qué te ayudo?";
+			switch(select("Abrir almacén:Abrir almacén especial:Abrir almacén VIP:Configurar contraseña:^777777Salir^000000")) {
+				case 1:
+					if (#kafra_code) {
+						mes "Por favor ingresa la contraseña de tu almacén.";
+						input .@code_;
+						if (.@code_ != #kafra_code) {
+							dispbottom "La contraseña no es correcta.";
+							close3;
+						}
+						@kafcode_try = 0;
+					}
+					clear;
+					mes "[^cc6600Servicios Kafra^000000]";
+					mes "De acuerdo, dame un minuto para darte acceso a tu almacén.";
+					close2;
+					cutin "",255;
+					emotion ET_BEST;
+					openstorage;
+					end;
+				case 2:
+					if (#kafra_code) {
+						mes "Por favor ingresa la contraseña de tu almacén.";
+						input .@code_;
+						if (.@code_ != #kafra_code) {
+							dispbottom "La contraseña no es correcta.";
+							close3;
+						}
+						@kafcode_try = 0;
+					}
+					clear;
+					mes "[^cc6600Servicios Kafra^000000]";
+					mes "De acuerdo, dame un minuto para darte acceso a tu almacén especial.";
+					close2;
+					cutin "",255;
+					emotion ET_BEST;
+					openstorage2 2,STOR_MODE_GET|STOR_MODE_PUT;
+					end; 
+				case 3:
+					if (#kafra_code) {
+						mes "Por favor ingresa la contraseña de tu almacén.";
+						input .@code_;
+						if (.@code_ != #kafra_code) {
+							dispbottom "La contraseña no es correcta.";
+							close3;
+						}
+						@kafcode_try = 0;
+					}
+					clear;
+					mes "[^cc6600Servicios Kafra^000000]";
+					mes "De acuerdo, dame un minuto para darte acceso a tu almacén VIP.";
+					close2;
+					cutin "",255;
+					emotion ET_BEST;
+					if (vip_status(VIP_STATUS_ACTIVE))
+						openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+					else
+						openstorage2 1,STOR_MODE_GET;
+					end;
+				case 4:
+					if (#kafra_code == 0) {
+						mes "De acuerdo, ¿qué buscas?";
+						next;
+						if (select( "Configurar nueva contraseña -> 5000z", "Salir" ) == 1) {
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "Ahora ingresa tu ^FF0000nueva contraseña^000000 para proteger tu almacén de los ladrones.";
+							mes "Ingresa un número del 1000~10000000:";
+							@kafcode_try += 1;
+							if (@kafcode_try > 10) {
+								@kafcode_try = 0;
+								logmes "Ha intentado ingresar demasiadas veces una contraseña.";
+							}
+							if (input(.@code) == 1) {
+								mes "No puedes usar una contraseña tan grande.";
+								close3;
+							}
+							if (.@code < 1000) {
+								mes "No puedes usar una contraseña tan corta.";
+								close3;
+							}
+							if (!.@code) {
+								mes "No has ingresado nada.";
+								emotion ET_SCRATCH;
+								close3;
+							}
+							next;
+							mes "[^cc6600Servicios Kafra^000000]";
+							if (Zeny < 5000) {
+								mes "No tienes suficiente zeny.";
+								emotion ET_MONEY;
+								close3;
+							}
+							Zeny -= 5000;
+							#kafra_code = .@code;
+							mes "Ahora tu almacén se encuentra seguro, gracias por usar este servicio.";
+							emotion ET_THANKS;
+							close3;
+						}
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Vuelve cuando quieras.";
+						close3;
+					}
+					mes "Tu almacén ya se encuentra protegido por una contraseña, ¿qué quieres hacer?";
+					next;
+					switch( select( "Cambiar la contraseña -> 5000z", "Eliminar la contraseña -> 1000z", "Salir" ) ) {
+						case 1:
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "Primeramente, ingresa tu ^0000FFantigua contraseña^000000.";
+							mes "Ingresa un número del 1000~10000000:";
+							@kafcode_try += 1;
+							if (@kafcode_try > 10) {
+								@kafcode_try = 0;
+								logmes "Ha intentado ingresar demasiadas veces una contraseña.";
+							}
+							if (input(.@code) == 1) {
+								mes "No puedes usar una contraseña tan grande.";
+								close3;
+							}
+							if (.@code < 1000) {
+								mes "No puedes usar una contraseña tan corta.";
+								close3;
+							}
+							if (!.@code || .@code != #kafra_code) {
+								mes "Contraseña incorrecta, no puedes ingresar una nueva contraseña.";
+								emotion ET_SCRATCH;
+								close3;
+							}
+							next;
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "Ahora ingresa tu ^FF0000nueva contraseña^000000 para proteger tu almacén de los ladrones.";
+							mes "Ingresa un número del 1000~10000000:";
+							@kafcode_try += 1;
+							if (@kafcode_try > 10) {
+								@kafcode_try = 0;
+								logmes "Ha intentado ingresar demasiadas veces una contraseña.";
+							}
+							if (input(.@code) == 1) {
+								mes "No puedes usar una contraseña tan grande.";
+								close3;
+							}
+							if (.@code < 1000) {
+								mes "No puedes usar una contraseña tan corta.";
+								close3;
+							}
+							if (!.@code) {
+								mes "No has ingresado nada.";
+								emotion ET_SCRATCH;
+								close3;
+							}
+							next;
+							mes "[^cc6600Servicios Kafra^000000]";
+							if (Zeny < 5000) {
+								mes "No tienes suficiente zeny.";
+								emotion ET_MONEY;
+								close3;
+							}
+							Zeny -= 5000;
+							#kafra_code = .@code;
+							mes "Ahora tu almacén se encuentra seguro, gracias por usar este servicio.";
+							emotion ET_THANKS;
+							close3;
+						case 2:
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "Por favor ingresa tu contraseña antes de removerla.";
+							@kafcode_try += 1;
+							if (@kafcode_try > 10) {
+								@kafcode_try = 0;
+								logmes "Ha intentado ingresar demasiadas veces una contraseña.";
+							}
+							if (input(.@code) == 1) {
+								mes "No puedes usar una contraseña tan grande.";
+								close3;
+							}
+							if (.@code < 1000) {
+								mes "No puedes usar una contraseña tan corta.";
+								close3;
+							}
+							if (!.@code) {
+								mes "Tu contraseña no ha sido removida.";
+								emotion ET_SCRATCH;
+								close3;
+							}
+							next;
+							mes "[^cc6600Servicios Kafra^000000]";
+							if (Zeny < 1000) {
+								mes "No tienes suficiente zeny.";
+								emotion ET_MONEY;
+								close3;
+							}
+							Zeny -= 1000;
+							if (.@code == #kafra_code) {
+								#kafra_code = 0;
+								mes "Has removido satisfactoriamente tu contraseña.";
+								emotion ET_THANKS;
+							} else {
+								mes "Contraseña incorrecta, no te devolveremos los 1,000z.";
+								emotion ET_SORRY;
+							}
+							close3;
+						case 3:
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "Vuelve cuando quieras.";
+							emotion ET_BEST;
+							close3;
+					}
+				case 5:
+					clear;
+					mes "[^cc6600Servicios Kafra^000000]";
+					mes "Vuelve cuando quieras.";
+					emotion ET_BEST;
+					close3;
+			}
+		case 2:
+			mes "[^cc6600Servicios Kafra^000000]";
+			if(!getcharid(2)) {
+				mes "Debes de estar en un gremio para usar estos servicios.";
+				close3;
+			}
+			mes "Dime en qué te puedo ayudar.";
+			switch(select("Abrir almacén del gremio:^777777Salir^000000")) {
+				case 1:
+					close2;
+					switch(guildopenstorage()) {
+						case GSTORAGE_OPEN:
+							cutin "",255;
+							end;
+						case GSTORAGE_STORAGE_ALREADY_OPEN:
+						case GSTORAGE_ALREADY_OPEN:
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "El almacén lo está usando otro miembro.";
+							break;
+						case GSTORAGE_NO_GUILD:
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "No te encuentras en ningun gremio.";
+							break;
+						case GSTORAGE_NO_STORAGE:
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "Asegúrate de subir la skill Guild Storage Expansion.";
+							break;
+						case GSTORAGE_NO_PERMISSION:
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "No cuentas con los permisos para abrir el almacén, en la pestaña ^5533ffPosition^000000 tu rango debe estar marcado con ^ff7070Strg Permit^000000 para poder usar el Almacén del Gremio.";
+							break;
+					}
+					close3;
+				case 2:
+					clear;
+					mes "[^cc6600Servicios Kafra^000000]";
+					mes "Vuelve cuando gustes.";
+					close3;
+			}
+		case 3:
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "¿Estás segur"+(Sex?"o":"a")+" de guardar tu ubicación en este lugar?";
+			next;
+			if(select("^008800Claro que si^000000:No, olvídalo") == 2) {
+				mes "[^cc6600Servicios Kafra^000000]";
+				mes "Yo también pienso que es mala idea, vuelve si cambias de opinión.";
+				close3;
+			}
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "De acuerdo, tu ubicación ha sido guardada con éxito.";
+			getmapxy(.@m$,.@x,.@y,BL_PC);
+			savepoint .@m$,.@x,.@y;
+			emotion ET_BEST;
+			specialeffect2 402;
+			close3;
+		case 4:
+			disable_items;
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "Tomaré en cuenta tus habilidades, descuento y Magnifier en tu inventario.";
+			next;
+			if(select("Identificar:No, gracias") == 2) {
+				emotion ET_SORRY;
+				mes "[^cc6600Servicios Kafra^000000]";
+				mes "Vale, tu te lo pierdes.";
+				close3;
+			}
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "He identificado todos los objetos que tenías en tu inventario, regresa cuando quieras.";
+			callfunc("F_Identificar");
+			emotion ET_BEST;
+			close3;
+		case 5:
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "Yo puedo darte tus Skills Platinum dependiendo de tu Job.";
+			mes "¿Quieres tenerlas ahora?";
+			next;
+			if ( select ("Obtener Skills:No, gracias") == 2 ) {
+				mes "[^cc6600Servicios Kafra^000000]";
+				mes "Vuelve cuando quieras.";
+				close3;
+			}
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "Veo que eres un ^5533ff"+ jobname(basejob) +"^000000.";
+			mes "En un momento te otorgaré tus skills.";
+			progressbar "5533ff",3;
+			skill 142,1,0;
+			emotion ET_BEST;
+			if ( basejob == Job_Novice )
+				skill 143,1,0;
+			if ( baseclass == Job_Swordman) {
+				skill 144,1,0;
+				skill 145,1,0;
+				skill 146,1,0;
+			} else if ( baseclass == Job_Mage ) {
+				skill 157,1,0;
+			} else if ( baseclass == Job_Archer ) {
+				skill 147,1,0;
+				skill 148,1,0;
+			} else if ( baseclass == Job_Acolyte ) {
+				skill 156,1,0;
+			} else if ( baseclass == Job_Merchant ) {
+				skill 153,1,0;
+				skill 154,1,0;
+				skill 155,1,0;
+                                skill 2544,1,0;
+			} else if ( baseclass == Job_Thief ) {
+				skill 149,1,0;
+				skill 150,1,0;
+				skill 151,1,0;
+				skill 152,1,0;
+			}
+			if ( basejob == Job_Knight ) {
+				skill 1001,1,0;
+			} else if ( basejob == Job_Crusader ) {
+				skill 1002,1,0;
+			} else if ( basejob == Job_Wizard ) {
+				skill 1006,1,0;
+			} else if ( basejob == Job_Sage ) {
+				skill 1008,1,0;
+				skill 1018,1,0;
+				skill 1017,1,0;
+				skill 1019,1,0;
+				skill 1007,1,0;
+			} else if ( basejob == Job_Hunter ) {
+				skill 1009,1,0;
+			} else if ( basejob == Job_Bard ) {
+				skill 1010,1,0;
+			} else if ( basejob == Job_Dancer ) {
+				skill 1011,1,0;
+			} else if ( basejob == Job_Priest ) {
+				skill 1014,1,0;
+			} else if ( basejob == Job_Monk ) {
+				skill 1015,1,0;
+				skill 1016,10,0;
+			} else if ( basejob == Job_Blacksmith ) {
+				skill 1012,1,0;
+				skill 1013,1,0;
+			} else if ( basejob == Job_Alchemist ) {
+				skill 238,1,0;
+				if( getskilllv(228) == 10 )
+					skill 2495,2,SKILL_PERM;
+				if ( !alch_bock ) {
+					getitem 7434,1;
+					set alch_bock,1;
+				}
+			} else if ( basejob == Job_Assassin ) {
+				skill 1003,1,0;
+				skill 1004,1,0;
+			} else if ( basejob == Job_Rogue ) {
+				skill 1005,1,0;
+			}
+			specialeffect2 456;
+			mes "Muy bien, ahora tienes todas tus Platinum Skills";
+			next;
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "Suerte con tu aventura.";
+			close3;
+		case 6:
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "Por favor elige lo que necesitas.";
+			next;
+			switch(select("Carro Mercantil:Halcón:Peco Peco:^777777Salir^000000")) {
+				case 1:
+					if(checkcart() == 0 && getskilllv("MC_PUSHCART")>0) {
+						setcart;
+						specialeffect2 62;
+						emotion ET_BEST;
+						close3;
+					} else {
+						emotion ET_SORRY;
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Lo siento, pero no cumples con los requisitos necesarios para esta renta, por favor asegúrate de tener la clase y habilidad requeridas para usar lo que me has pedido.";
+						close3;
+					}
+				case 2:
+					if (!checkfalcon() && getskilllv("HT_FALCON") && !checkoption(Option_Wug) && !checkoption(Option_Wugrider)) {
+						setfalcon;
+						specialeffect2 62;
+						emotion ET_BEST;
+						close3;
+					} else {
+						emotion ET_SORRY;
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Lo siento, pero no cumples con los requisitos necesarios para esta renta, por favor asegúrate de tener la clase y habilidad requeridas para usar lo que me has pedido.";
+						close3;
+					}
+				case 3:
+					if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("KN_RIDING")>0 && Class != 4054 && Class != 4060 && Class != 4066 && Class != 4073) {
+						setriding;
+						specialeffect2 62;
+						emotion ET_BEST;
+						close3;
+					} else {
+						emotion ET_SORRY;
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Lo siento, pero no cumples con los requisitos necesarios para esta renta, por favor asegúrate de tener la clase y habilidad requeridas para usar lo que me has pedido.";
+						close3;
+					}
+				case 4:
+					mes "[^cc6600Servicios Kafra^000000]";
+					mes "Vuelve cuando quieras.";
+					close3;
+			}
+		case 8:
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "Reinicios hechos: ^ff0000"+( (reset_cnt) < 0 ? 0 : reset_cnt)+"^000000"," ";
+			mes "¿En que te puedo ayudar hoy?";
+			next;
+				switch (select("Resetear:Información:^777777Salir^000000")) {
+					case 1:
+						if(BaseLevel < .minlv) {
+							mes "[^cc6600Servicios Kafra^000000]";
+							mes "¿Que deseas resetear?";
+								switch (select("Status ^5533ff=>^000000 ^ff0000"+callfunc("F_InsertComma",.p[0])+"^000000z:Skills ^5533ff=>^000000 ^ff0000"+callfunc("F_InsertComma",.p[1])+"^000000z:Ambos ^5533ff=>^000000 ^ff0000"+callfunc("F_InsertComma",.p[2])+"^000000z")) {
+									case 1:
+										if (Zeny < .p[0]) {
+											emotion ET_SORRY;
+											mes "No tienes el Zeny suficiente.";
+											close3;
+										}
+										Zeny -= .p[0];
+										ResetStatus;
+										emotion ET_BEST;
+										mes "Te he reiniciado tus estadísticas satisfactoriamente, vuelve cuando quieras.";
+										close3;
+									case 2:
+										if (Zeny < .p[1]) {
+											emotion ET_SORRY;
+											mes "No tienes el Zeny suficiente.";
+											close3;
+										}
+										Zeny -= .p[1];
+										ResetSkill;
+										emotion ET_BEST;
+										mes "Te he reiniciado tus habilidades satisfactoriamente, vuelve cuando quieras.";
+										close3;
+									case 3:
+										if (Zeny < .p[2]) {
+											emotion ET_SORRY;
+											mes "No tienes el Zeny suficiente.";
+											close3;
+										}
+										Zeny -= .p[2];
+										ResetStatus;
+										ResetSkill;
+										emotion ET_BEST;
+										mes "Te he reiniciado ambos parámetros exitosamente, vuelve cuando quieras, claro, mientras tengas suficiente dinero.";
+										close3;
+								}
+						}
+						if (reset_cnt < 0)
+							reset_cnt = 0;
+						.@rpc = (.p[0]*reset_cnt);
+						.@rpc = .@rpc * reset_cnt;
+						.@dpc = (.p[2]*reset_cnt);
+						.@dpc = .@dpc * reset_cnt;
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "¿Que deseas resetear?";
+						switch (select("Status ^5533ff=>^000000 ^ff0000"+callfunc("F_InsertComma",.@rpc)+"^000000z:Skills ^5533ff=>^000000 ^ff0000"+callfunc("F_InsertComma",.@rpc)+"^000000z:Ambos ^5533ff=>^000000 ^ff0000"+callfunc("F_InsertComma",.@dpc)+"^000000z")) {
+							case 1:
+								if (Zeny < .@rpc) {
+									emotion ET_SORRY;
+									mes "No tienes el Zeny suficiente.";
+									close3;
+								}
+								Zeny -= .@rpc;
+								ResetStatus;
+								reset_cnt += 1;
+								emotion ET_BEST;
+								mes "Te he reiniciado tus estadísticas satisfactoriamente, vuelve cuando quieras.";
+								close3;
+							case 2:
+								if (Zeny < .@rpc) {
+									emotion ET_SORRY;
+									mes "No tienes el Zeny suficiente.";
+									close3;
+								}
+								Zeny -= .@rpc;
+								ResetSkill;
+								reset_cnt += 1;
+								emotion ET_BEST;
+								mes "Te he reiniciado tus habilidades satisfactoriamente, vuelve cuando quieras.";
+								close3;
+							case 3:
+								if (Zeny < .@dpc) {
+									emotion ET_SORRY;
+									mes "No tienes el Zeny suficiente.";
+									close3;
+								}
+								Zeny -= .@dpc;
+								ResetStatus;
+								ResetSkill;
+								reset_cnt += 1;
+								emotion ET_BEST;
+								mes "Te he reiniciado ambos parámetros exitosamente, vuelve cuando quieras, claro, mientras tengas suficiente dinero.";
+								close3;
+						}
+					case 2:
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Te puedo resetear Status y Skills por un precio razonable.";
+						next;
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Primero comenzarás con un servicio gratis, y posterior a eso tendrás que pagar "+callfunc("F_InsertComma",.p[0])+" z.";
+						next;
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Dependiendo de cuantas veces hayas reseteado esa cantidad de "+callfunc("F_InsertComma",.p[0])+"z se multiplicará por dos.";
+						next;
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Ten cuidado de cuantas veces lo haces, que llegará a precios inimaginables.";
+						next;
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Si eres menor de nivel "+.minlv+" te costará solo "+callfunc("F_InsertComma",.p[2])+" z el paquete completo.";
+						close3;
+					case 3:
+						mes "[^cc6600Servicios Kafra^000000]";
+						mes "Nos vemos pronto.";
+						close3;
+				}
+		case 7:
+			mes "[^cc6600Servicios Kafra^000000]";
+			mes "Vuelve cuando gustes.";
+			close3;
+	}
+// Configuraciones
+OnInit:
+	// Nivel mínimo para reset sin penalización
+	.minlv = 70;
+
+	// Precios exponenciales
+	setarray .p,5000,5000,15000;
+	end;
+}
+prontera,150,186,5	duplicate(KAF_S)	Servicios Kafra#1	861
+aldebaran,143,119,4	duplicate(KAF_S)	Servicios Kafra#3	861
+geffen,113,70,4	duplicate(KAF_S)	Servicios Kafra#4	861
+geffen,203,123,2	duplicate(KAF_S)	Servicios Kafra#5	861
+morocc,156,97,4	duplicate(KAF_S)	Servicios Kafra#6	861
+morocc,160,258,4	duplicate(KAF_S)	Servicios Kafra#7	861
+payon,181,104,4	duplicate(KAF_S)	Servicios Kafra#8	861
+payon,175,226,4	duplicate(KAF_S)	Servicios Kafra#9	861
+pay_arche,55,123,0	duplicate(KAF_S)	Servicios Kafra#10	861
+prontera,152,326,3	duplicate(KAF_S)	Servicios Kafra#11	861
+prontera,151,29,0	duplicate(KAF_S)	Servicios Kafra#12	861
+prontera,29,207,6	duplicate(KAF_S)	Servicios Kafra#13	861
+prontera,282,200,2	duplicate(KAF_S)	Servicios Kafra#14	861
+prontera,146,89,6	duplicate(KAF_S)	Servicios Kafra#15	861
+yuno,152,187,4	duplicate(KAF_S)	Servicios Kafra#16	861
+yuno,327,108,4	duplicate(KAF_S)	Servicios Kafra#17	861
+yuno,277,221,4	duplicate(KAF_S)	Servicios Kafra#18	861
+alberta,28,229,0	duplicate(KAF_S)	Servicios Kafra#19	861
+alberta,113,60,6	duplicate(KAF_S)	Servicios Kafra#20	861
+comodo,195,150,4	duplicate(KAF_S)	Servicios Kafra#21	861
+cmd_fild07,136,134,4	duplicate(KAF_S)	Servicios Kafra#22	861
+moscovia,230,199,3	duplicate(KAF_S)	Servicios Kafra#23	861
+amatsu,102,149,4	duplicate(KAF_S)	Servicios Kafra#24	861
+ayothaya,212,169,5	duplicate(KAF_S)	Servicios Kafra#25	861
+einbech,171,133,5	duplicate(KAF_S)	Servicios Kafra#26	861
+einbroch,242,205,5	duplicate(KAF_S)	Servicios Kafra#27	861
+einbroch,59,203,6	duplicate(KAF_S)	Servicios Kafra#28	861
+gonryun,159,122,4	duplicate(KAF_S)	Servicios Kafra#29	861
+lighthalzen,164,100,4	duplicate(KAF_S)	Servicios Kafra#30	861
+lighthalzen,191,320,4	duplicate(KAF_S)	Servicios Kafra#31	861
+lhz_in02,237,284,4	duplicate(KAF_S)	Servicios Kafra#32	861
+louyang,210,104,5	duplicate(KAF_S)	Servicios Kafra#33	861
+umbala,87,160,4	duplicate(KAF_S)	Servicios Kafra#34	861
+niflheim,202,180,3	duplicate(KAF_S)	Servicios Kafra#35	861
+izlu2dun,106,58,8	duplicate(KAF_S)	Servicios Kafra#36	861
+prt_fild05,290,224,3	duplicate(KAF_S)	Servicios Kafra#37	861
+mjolnir_02,83,362,4	duplicate(KAF_S)	Servicios Kafra#38	861
+moc_ruins,59,157,5	duplicate(KAF_S)	Servicios Kafra#39	861
+alb2trea,59,69,5	duplicate(KAF_S)	Servicios Kafra#41	861
+izlude,134,87,3	duplicate(KAF_S)	Servicios Kafra#42	861
+xmas,148,134,4	duplicate(KAF_S)	Servicios Kafra#43	861
+rachel,126,141,4	duplicate(KAF_S)	Servicios Kafra#44	861
+britoniah,73,54,4	duplicate(KAF_S)	Servicios Kafra#45	861
+verus04,114,260,4	duplicate(KAF_S)	Servicios Kafra#46	861
+hugel,91,145,4	duplicate(KAF_S)	Servicios Kafra#47	861
+dicastes01,192,190,4	duplicate(KAF_S)	Servicios Kafra#48	861
+mid_camp,218,241,4	duplicate(KAF_S)	Servicios Kafra#40	861
+brasilis,191,224,4	duplicate(KAF_S)	Servicios Kafra#55	861
+jawaii,253,128,4	duplicate(KAF_S)	Servicios Kafra#2	861
+manuk,272,148,4	duplicate(KAF_S)	Servicios Kafra#51	861
+veins,210,132,4	duplicate(KAF_S)	Servicios Kafra#a51	861
+splendide,207,154,4	duplicate(KAF_S)	Servicios Kafra#a52	861
+paramk,45,185,4	duplicate(KAF_S)	Servicios Kafra#a53	861
+1@air1,233,62,4	duplicate(KAF_S)	Servicios Kafra#a54	861
+seal,72,90,4	duplicate(KAF_S)	Servicios Kafra#a55	861
+bat_room,148,147,4	duplicate(KAF_S)	Servicios Kafra#a56	861

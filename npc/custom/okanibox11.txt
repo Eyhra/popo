@@ -1,0 +1,10 @@
+function	script	MvPBox11	{
+	setarray .BoxItems[0],20416,20417,20418,20419,20420,20421,20424,20425,20426,20427,20428;
+	
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	end;
+}
+
+
+//  globos

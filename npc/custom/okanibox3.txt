@@ -1,0 +1,10 @@
+function	script	MvPBox3	{
+	setarray .BoxItems[0],20764,20746,20727,20761,20500,20762,20516,20509,31313,20504,31561;
+	
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	end;
+}
+
+
+// Wings Egg

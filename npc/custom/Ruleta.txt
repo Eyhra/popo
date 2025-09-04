@@ -1,0 +1,290 @@
+//===== eAthena Script =======================================
+//= PVP Russian Roulette
+//===== By: ==================================================
+//= acky (god@acky.com)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= Player vs Player russian roulette. Works on
+//= a challenge system.
+//===== Additional Comments: =================================
+//= - Note: Player 2 always shoots first
+//= + Announces if a player 'chickens out'
+//= + Kills player if challenges self
+//= * Minor bug fixes
+//============================================================ 
+
+lroom00.gat,158,43,8	script	Pistolero	731,{
+delwaitingroom "Pistolero";
+//waitingroom "Ruleta Rusa",0;
+if ($@pistol1$ == "" && $@pistolstage == 0) goto L_New; // No current challenges
+if (strcharinfo(0) == $@pistol1$ && $@pistolstage == 1) goto L_Waiting; // Player 1 waiting for Player 2 to accept
+if (strcharinfo(0) == $@pistol2$ && $@pistolstage == 1) goto L_Accept; // Player 2 accept menu
+if (strcharinfo(0) == $@pistol1$ && $@pistolstage > 1) goto L_Check1; // Player 1 shoots
+if (strcharinfo(0) == $@pistol2$ && $@pistolstage > 1) goto L_Check2; // Player 2 shoots
+
+// Is not player's turn or is not a participant
+L_NotTurn:
+	mes "[Pistolero]";
+	if (strcharinfo(0) == $@pistol1$) mes "Es el turno de ^FF0000"+$@pistol2$+".";
+	if (strcharinfo(0) == $@pistol2$) mes "Es el turno de ^FF0000"+$@pistol1$+"^000000.";
+	if (strcharinfo(0) != $@pistol1$ && strcharinfo(0) != $@pistol2$) mes "Es entre ^FF0000"+$@pistol1$+" ^000000y^FF0000 "+$@pistol2$+", ^000000no te metas."; 
+	if (getgmlevel() > 10) menu "Cancelar Juego",GM_Cancel,"Salir",L_Exit;
+	close;
+	
+	GM_Cancel:
+		mes "[Pistolero]";
+		mes "Como desees.";
+		Announce "El juego de la Ruleta Rusa ha sido cancelado por un GM.",bc_all,0x00FF00;
+		goto L_ResetVars;
+
+L_Check1:
+if ($@pistolstage == 3 || $@pistolstage == 5 || $@pistolstage == 7) goto L_Shot1;
+goto L_NotTurn;
+
+L_Check2:
+if ($@pistolstage == 2 || $@pistolstage == 4 || $@pistolstage == 6) goto L_Shot2;
+goto L_NotTurn;
+
+// Player 1 Shoots
+L_Shot1:
+	mes "[Pistolero]";
+	mes $@pull$[rand (8)];
+	mes $@odds$[$@chamber];
+	stopnpctimer;
+	initnpctimer;
+	next;
+	stopnpctimer;
+	initnpctimer;
+	mes "^777777Aprietas el gatillo de la Beretta...^000000";
+	Announce ""+$@pistol1$+" apreta el gatillo...",bc_map,0xFF0000;
+
+	next;
+	stopnpctimer;
+	initnpctimer;
+	set @shot,rand (1,$@chamber);
+	if (@shot == 1) goto L_Die1;
+	
+	mes "^777777... Click ...^000000";
+	Announce "... Click ...",bc_map,0xFF0000;
+	next;
+	stopnpctimer;
+	initnpctimer;
+	mes "[Pistolero]";
+	mes $@safe$[rand(8)];
+	Announce "¡"+$@pistol1$+" sobrevive!. "+$@pistol2$+" es tu turno. Hablame ",bc_map,0xFF0000;
+	mes "¡¡Por favor que ^FF0000"+$@pistol2$+"^000000 hable conmigo!!.";
+	set $@pistolstage,$@pistolstage+1;
+	set $@chamber,$@chamber-1;
+	close;
+
+// Player 2 Shoots
+L_Shot2:
+	mes "[Pistolero]";
+	mes $@pull$[rand (8)];
+	mes $@odds$[$@chamber];
+	stopnpctimer;
+	initnpctimer;
+	next;
+	stopnpctimer;
+	initnpctimer;
+	mes "^777777Tu presionas el gatillo de la Colt...^000000";
+	Announce ""+$@pistol2$+" aprieta el gatillo de su arma...",bc_map,0x00FFFF;
+
+	next;
+	stopnpctimer;
+	initnpctimer;
+	set @shot,rand (1,$@chamber);
+	if (@shot == 1) goto L_Die2;
+	
+	mes "^777777... Click ...^000000";
+	Announce "... Click ...",bc_map,0x00FFFF;
+	next;
+	stopnpctimer;
+	initnpctimer;
+	mes "[Pistolero]";
+	mes $@safe$[rand(8)];
+	Announce "¡"+$@pistol2$+" sobrevive!. "+$@pistol1$+" es tu turno. Hablame",bc_map,0x00FFFF;
+	mes "¡¡Por favor que ^FF0000"+$@pistol1$+"^000000 hable conmigo!!.";
+	set $@pistolstage,$@pistolstage+1;
+	set $@chamber,$@chamber-1;
+	close;
+
+	// Player 1 Dies
+	L_Die1:
+		specialeffect2 183;
+		specialeffect2 267;
+		Announce "¡¡¡BANG!!!",bc_map,0x00FF00;
+		Announce "¡"+strcharinfo(0)+" se ha pegado un tiro! ¡"+$@pistol2$+" es el ganador!",bc_map,0x00FFFF;
+		percentheal -100,0;
+		goto L_ResetVars;
+	
+	// Player 2 Dies
+	L_Die2:
+		specialeffect2 183;
+		specialeffect2 267;
+		Announce "¡¡¡BANG!!!",bc_map,0x00FF00;
+		Announce "¡"+strcharinfo(0)+" se ha pegado un tiro! ¡"+$@pistol1$+" es el ganador!",bc_map,0xFF0000;
+		percentheal -100,0;
+		goto L_ResetVars;
+
+// Player 2 accepts Player 1's challenge
+L_Accept:
+	mes "[Pistolero]";
+	mes "Hola" + strcharinfo(0);
+	mes "^FF0000"+$@pistol1$ + "^000000 quiere jugar contigo a la ^FF0000Ruleta Rusa.^000000";
+	next;
+	mes "[Pistolero]";
+	mes "¿Tienes valor para jugar?";
+	next;
+	menu "Si",-,"No",L_Deny;
+	Announce "¡El jugador "+$@pistol2$+" acepta el reto de la Ruleta Rusa!",bc_all,0x00FF00;
+	stopnpctimer;
+	mes "[Pistolero]";
+	if (readparam(21) == 0) mes "¡Bravo!";
+	if (readparam(21) == 1) mes "¡Bien hecho!";
+	mes "Como has sido invitado a jugar, dispararás primero.";
+	set $@pistolstage,2;
+	next;
+	goto L_Shot2;
+	close;
+
+// Player 2 denies Player 1's challenge
+L_Deny:
+	if ($@pistolstage == 1) Announce "El jugador "+$@pistol2$+" no tiene valor para aceptar el reto de la Ruleta Rusa.",bc_all,0x00FF00;
+	mes "[Pistolero]";
+	if (readparam(21) == 0) mes "No te lo debias haber pensado";
+	if (readparam(21) == 1) mes "¡Así se hace!.";
+	goto L_ResetVars;
+
+// Player 1 initiates dialog with NPC after challenge but before it is accepted
+L_Waiting:
+	mes "[Pistolero]";
+	mes "Por favor " + $@pistol2$ + " habla conmigo,";
+	mes "¿Quieres cancelar el reto?.";
+	next;
+	menu "Esperaré",-,"Cancelar el reto",L_Cancel;
+	close;
+
+	// Player 1 may cancel the challenge
+	L_Cancel:
+	stopnpctimer;
+		Announce strcharinfo(0)+" ha cancelado el juego de la Ruleta Rusa.",bc_all,0x00FF00;
+		mes "[Pistolero]";
+		mes "No me hagas perder el tiempo...";
+		mes "Piénsalo.";
+		goto L_ResetVars;
+
+// Player 1 may challenge a player
+L_New:
+	mes "[Pistolero]";
+	mes "¿Quieres retar a alguien para jugar a la ^FF0000Ruleta Rusa^000000?";
+	next;
+	menu "Sí",-,"No",L_Exit;
+	
+	mes "[Pistolero]";
+	mes "Escribe su nombre.";
+	next;
+	input $@pistol2$;
+	if(isloggedin(getcharid(3,""+$@pistol2$+""))==0) { mes "[Pistolero]";	mes "El personaje que quieres retar no está conectado.";	close; }
+
+	if ($@pistolstage != 0) goto L_New_Cancel; // Re-checks to see if 2 players challenged at the same time
+	set $@pistol2backup$,$@pistol2$; // Backs up the var in case somebody has already challenged
+	
+	set $@pistol1$,strcharinfo(0);
+
+	if ($@pistol1$ == $@pistol2$) goto L_Suicide; // Player challenges self
+	
+	set $@pistolstage,1;
+	initnpctimer;
+	goto OnStart;
+	end;
+
+OnStart:
+	Announce strcharinfo(0)+" a retado a "+$@pistol2$+" para jugar a la Ruleta Rusa en la Main Office.",bc_all,0x00FF00;
+	mes "[Pistolero]";
+	mes "^FF0000"+$@pistol2$+"^000000 ha sido retado a la Ruleta Rusa.";
+	mes "^777777Él tiene un minuto para hablar conmigo.^000000";
+	close;
+
+OnTimer60000:
+Announce "El reto de la Ruleta Rusa ha sido cancelado. Demasiado tiempo en espera.",bc_all,0x00FF00;
+set $@pistol1$,"";
+set $@pistol2$,"";
+set $@pistolstage,0;
+set $@chamber,6;
+stopnpctimer;
+close;
+end;
+
+		// Another player challenged before
+		L_New_Cancel:
+		set $@pistol2$,$@pistol2backup$;
+		mes "[Pistolero]";
+		mes "Lo siento pero otro jugador ha solicitado mi servicio antes que tú.";
+		close;
+		
+		// Player challenges self
+		L_Suicide:
+		mes "[Pistolero]";
+		mes "¿Te quieres suicidar?";
+		mes "Naa, ¡Te mataré yo mismo!...jajajaj.";
+		next;
+		specialeffect2 183;
+		specialeffect2 267;
+		Announce "¡¡¡BANG!!!",bc_map,0x00FF00;
+		Announce ""+strcharinfo(0)+" a muerto por cobarde.",bc_map,0x00FF00;
+		percentheal -100,0;
+		stopnpctimer;
+		goto L_ResetVars;
+		
+
+// Cancel the challenge
+L_Exit:
+	mes "[Pistolero]";
+	mes "Tienes narices.";
+	close;
+
+// Reset Variables
+OnInit:
+set $@odds$[6],"Posibilidades: ^0000FF1^000000 de ^0000FF6^000000";
+set $@odds$[5],"Posibilidades: ^0000FF1^000000 de ^0000FF5^000000";
+set $@odds$[4],"Posibilidades: ^0000FF1^000000 de ^0000FF4^000000";
+set $@odds$[3],"Posibilidades: ^0000FF1^000000 de ^0000FF3^000000";
+set $@odds$[2],"Posibilidades: ^0000FF1^000000 de ^0000FF2^000000";
+set $@odds$[1],"Posibilidades: ^FF0000Estás muerto^000000";
+
+set $@pull$[0],"Es tu turno.";
+set $@pull$[1],"Disparaaaaa!!!!.";
+set $@pull$[2],"No seas gallina. Es tu turno.";
+set $@pull$[3],"Aprieta el gatillo cobarde!";
+set $@pull$[4],"No quieres morir, dime la verdad.";
+set $@pull$[5],"Puedes hacerlo!";
+set $@pull$[6],"Tu oponente se lo piensa!";
+set $@pull$[7],"Date prisa, no tengo todo el dia.";
+set $@pull$[8],"Buena suerte...";
+
+set $@safe$[0],"Bien!";
+set $@safe$[1],"Sobreviviste, buena suerte!";
+set $@safe$[2],"Tu tienes mucha coña!";
+set $@safe$[3],"Tienes valor.";
+set $@safe$[4],"Eres un gangster!";
+set $@safe$[5],"Lo has hecho bien!";
+set $@safe$[6],"Enorabuena campeón!";
+set $@safe$[7],"Bien hecho hermano!";
+set $@safe$[8],"Oh!! Gracias a dios sobreviste!";
+
+//waitingroom "Ruleta Rusa",0;
+end;
+
+L_ResetVars:
+set $@pistol1$,"";
+set $@pistol2$,"";
+set $@pistolstage,0;
+set $@chamber,6;
+stopnpctimer;
+close;
+end;
+}

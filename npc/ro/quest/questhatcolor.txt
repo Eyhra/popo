@@ -1,0 +1,340 @@
+// ----------------------- Random Feather Color Beret ----------------------
+paramk,99,178,5	script	Feather Beret Colorido#1	686,{
+mes "[Feather Beret Colorido]";
+mes "Hola, yo te puedo dar Feather Beret al azar de los siguentes colores:";
+mes "Negro,Azul,Cafe,Cian,Dorado,Verde,Naranjo,Rosado,Morado,Rojo,Blanco o Plomo pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Feather Beret Colorido]";
+mes "1 Feather Beret";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Feather Beret Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5170) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5170,1; //Feather Beret
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randfb", 25002,25003,25004,25005,25006,25007,25008,25009,25010,25011,25012,25013 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randfb	{
+	return getarg(rand(getargcount()));
+}
+// ----------------------- Random Color Gangster Scarf ----------------------
+paramk,105,172,5	script	Gangster Scarf Colorido	498,{
+mes "[Gangster Scarf Colorido]";
+mes "Hola, yo te puedo dar un Gangster Scarf al azar de los siguentes colores:";
+mes "Negro,Azul,Cafe,Cian,Dorado,Verde,Naranjo,Rosado,Morado,Blanco o Plomo pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Gangster Scarf Colorido]";
+mes "1 Gangster Scarf";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Gangster Scarf Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5361) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5361,1; //Feather Beret
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randgs", 25014,25015,25016,25017,25018,25019,25020,25021,25022,25024,25025 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randgs	{
+	return getarg(rand(getargcount()));
+}
+// ----------------------- Random Color mage Hat ----------------------
+paramk,116,175,5	script	Mage Hat Colorido	502,{
+mes "[Mage Hat Colorido]";
+mes "Hola, yo te puedo dar un Mage Hat al azar de los siguentes colores:";
+mes "Azul,Cafe,Rojo,Plomo o Amarillo pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Mage Hat Colorido]";
+mes "1 Mage Hat";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Mage Hat Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5027) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5027,1; //Mage Hat
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randmh", 5238,5239,5240,5241,5242 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randmh	{
+	return getarg(rand(getargcount()));
+}
+
+// ----------------------- Random Color Deviruchi Hat ----------------------
+paramk,127,172,5	script	Deviruchi Colorido	675,{
+mes "[Deviruchi Hat Colorido]";
+mes "Hola, yo te puedo dar un Deviruchi al azar de los siguentes colores:";
+mes "Rojo,Gris o Cafe pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Deviruchi Colorido]";
+mes "1 Deviruchi Hat";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Deviruchi Hat Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5038) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5038,1; //Deviruchi Hat
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randdh", 5227,5228,5229 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randdh	{
+	return getarg(rand(getargcount()));
+}
+// ----------------------- Random Color Drooping Cat ----------------------
+paramk,122,168,5	script	Drooping Cat Colorido	877,{
+mes "[Drooping Cat Colorido]";
+mes "Hola, yo te puedo dar un Drooping Cat al azar de los siguentes colores:";
+mes "Azul,Cafe,Amarillo,Gris o Rosado pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Drooping Cat Colorido]";
+mes "1 Drooping Cat";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Drooping Cat Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5058) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5058,1; //Drooping Cat
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randdc", 5230,5231,5232,5233,5234 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randdc	{
+	return getarg(rand(getargcount()));
+}
+
+// ----------------------- Random Color Captain Hat ----------------------
+paramk,110,169,5	script	Captain Hat Colorido	873	,{
+mes "[Captain Hat Colorido]";
+mes "Hola, yo te puedo dar un 	Ship Captain Hat [1] al azar de los siguentes colores:";
+mes "Azul,Negro,Dorado,Verde,Cyan o Morado pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Captain Hat Colorido]";
+mes "1 	Ship Captain Hat [1]";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Captain Hat Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5359) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5359,1; //	Ship Captain Hat [1]
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randch", 28037,28038,28039,28040,28041,28042 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randch	{
+	return getarg(rand(getargcount()));
+}
+// ----------------------- Random Color Large Baphomet Horn ----------------------
+paramk,94,172,5	script	Large Baphomet Horn Colorido	736	,{
+mes "[Large Baphomet Horn Colorido]";
+mes "Hola, yo te puedo dar un Large Baphomet Horn al azar de los siguentes colores:";
+mes "Azul,Negro,Dorado,Verde,Rojo,Rosado,Ruby,Amarillo,Blanco o Morado pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Large Baphomet Horn Colorido]";
+mes "1 Large Baphomet Horn";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Large Baphomet Horn Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5518) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5518,1; //Large Baphomet Horn
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randlbh", 25038,25039,25041,25042,25044,25045,25046,25047,25048,25049 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randlbh	{
+	return getarg(rand(getargcount()));
+}
+// ----------------------- Random Color Gigantic Majestic Goat ----------------------
+paramk,98,169,5	script	Gigantic Majestic Goat Colorido	736	,{
+mes "[Gigantic Majestic Goat Colorido]";
+mes "Hola, yo te puedo dar un Gigantic Majestic Goat al azar de los siguentes colores:";
+mes "Azul,Negro,Dorado,Verde,Rojo,Rosado,Naranjo,Amarillo,Blanco,Plomo,Cyan,Cafe o Morado pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Gigantic Majestic Goat Colorido]";
+mes "1 Gigantic Majestic Goat";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Gigantic Majestic Goat Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5374) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5374,1; //Gigantic Magestic Goat
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randgmg", 25026,25027,25028,25029,25030,25031,25032,25033,25034,25035,25036,25037 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randgmg	{
+	return getarg(rand(getargcount()));
+}
+// ----------------------- Random Color Dragon Helm ----------------------
+itemmall,185,66,5	script	Dragon Helm Colorido	10108	,{
+mes "[Dragon Helm Colorido]";
+mes "Hola, yo te puedo dar un RWC 2008 Dragon Helm Gold [1] al azar de los siguentes colores:";
+mes "Azul,Negro,Dorado,Verde,Rojo,Blanco,Cyan,Cafe o Morado pero no sera gratis tienes que traerme los siguentes items.";
+next;
+mes "[Dragon Helm Colorido]";
+mes "RWC 2008 Dragon Helm Gold [1]";
+mes "3 Mysterius Dyestuff";
+next;
+mes "[Dragon Helm Colorido]";
+mes "Tu tienes los items?";
+switch(select("-Si, dame mi hat:-No, para la proxima")) {
+case 1:
+mes "Muy bien, veamos...";
+if(countitem(6220) < 3 || countitem(5451) < 1){
+mes "No tienes los items, ve por ellos y luego vuelve...";
+}
+else 	
+{
+mes "Muy bien, parece que los tienes, aqui tienes, suerte!";
+delitem 5451,1; //RWC 2008 Dragon Helm Gold [1]
+delitem 6220,3; //Mysterius Dyestuff
+	getitem callfunc( "F_Randrwc", 25251,25252,25253,25254,25255,25256,25257,25258,25259 ), 1;
+}
+close;
+case 2:
+mes "Muy Bien, que tengas una linda aventura";
+}
+	end;
+}
+function	script	F_Randrwc	{
+	return getarg(rand(getargcount()));
+}
+
+// ----------------------- CODIGO DE RESPALDO ----------------------
+/* itemmall,188,77,5	script	Random Prize#1	100,{
+mes "[Random Prize]";
+mes "Hello, you can earn 1 random item of the following:";
+mes "Beret, Giant Baphomet Horns, Ghostring Card, Angeling Card or a Valkyrie Helm if you give me the following items.";
+next;
+mes "3 Evil Horn";
+mes "100 Jellopy";
+mes "1 Evil Druid Card";
+next;
+mes "Do you have the items?";
+switch(select("-Yes, i have them:-No, let me go fot them")) {
+case 1:
+mes "Allright, let's see...";
+if(countitem(923)<=2 && countitem(4141) ==0 && countitem(909) <=99){
+mes "You don't have them, go for them and then comeback...";
+}
+else
+{
+mes "Allright, seems like you have them, here you go, good luck!";
+	getitem callfunc( "F_Rand", 5172,5374,4047,4054,5171 ), 1;
+}
+close;
+case 2:
+mes "Allright, good luck on the hunting";
+}
+	end;
+}
+function	script	F_Rand	{
+	return getarg(rand(getargcount()));
+} */

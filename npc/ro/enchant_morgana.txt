@@ -1,0 +1,17 @@
+1@tnm3,87,23,6	script	Morgana#enchant1	10191,{
+ 
+	mes "[^FF7070Morgana^000000]";
+	mes "Mi experiencia en batalla me ha dado la sabiduría para encantar objetos con bonificaciones especiales.";
+	mes "¿Probamos tu suerte?";
+	next;
+	.@menu$ = "^5533ff [>] ^000000 Enchant 1:^5533ff [>] ^000000 Enchant 2:^5533ff [>] ^000000 Enchant 3:^5533ff [>] ^000000 Salir";
+	switch(select(.@menu$)){
+		case 1: F_Enchant01("Morgana",0,0,0); break;
+		case 2: F_Enchant02("Morgana",0,0,0); break;
+		case 3: F_Enchant03("Morgana",0,0,0); break;
+		case 4: mes "[^FF7070Morgana^000000]"; mes "Vuelve cuando quieras."; close;
+	}
+	end;
+OnInit:
+	end;
+}

@@ -1,0 +1,63 @@
+// http://rathena.org/board/topic/83017-pro-lotti-girl-refine-master/
+alberta,90,195,5	script	Chaser Min Ho#1	648,10,10,{
+	mes "[Chaser Min Ho]";
+	mes "Hola, yo te puedo dar unos ^0000FFSunglasses [1]^000000 al azar, entre estos 2 modelos:";
+	mes "^ff0000Normal Sunglasses^000000 o ^ff0000Rayban Sunglasses^000000 pero no sera gratis tienes que traerme los siguentes items.";
+	next;
+	mes "^FF0000[Cantidad]              [Item]^000000";
+	mes "^0000FF[1]                 Sunglasses [0]^000000";
+	mes "^0000FF[500]                     Feathers^000000";
+	mes "^0000FF[5]                1 Carat Diamond^000000";
+	mes "^00FF00$2,000,000z^000000";
+	if(countitem(2201) < 1 || countitem(949) < 500 || countitem(730) < 5 || Zeny < 2000000) goto Lne;
+	next;
+	if(select("Damelos!:Mejor no...")==2)
+		close;
+	mes "[Chaser Min Ho]";
+	mes "Aqui tienes.";
+    delitem 2201,1; //Sunglasses
+    delitem 949,500; //Feather
+    delitem 730,5; //1 Carat Diamond
+	set Zeny, Zeny - 2000000;
+	set .@Total,1;
+	//<%>,<ItemID>,<Amount>
+	setarray .@P1[0],40,25092,1;
+	setarray .@Default[0],2202,1;
+	set .@i, rand(1,.@Total);
+	if (rand(1,100) > getd(".@P"+.@i+"[0]"))
+	{
+		for(set .@j,0; .@j<getarraysize(.@Default); set .@j,.@j+2)
+		{
+			getitem .@Default[.@j], .@Default[.@j+1];
+			if(!.@k[0])
+				setarray .@k[0], .@Default[.@j], .@Default[.@j+1];
+		}
+	}
+	else{
+		for(set .@j,1; .@j<getarraysize(getd(".@P"+.@i)); set .@j,.@j+2)
+		{
+			getitem getd(".@P"+.@i+"["+.@j+"]"), getd(".@P"+.@i+"["+(.@j+1)+"]");
+			if (!.@k[0])
+			{
+				set .@gz,.@i;
+				setarray .@k[0], getd(".@P"+.@i+"["+.@j+"]"), getd(".@P"+.@i+"["+(.@j+1)+"]");
+				break;
+			}
+		}
+	}
+	if(1<=.@gz&&.@gz<=1)
+		// announce "Felicidades! "+strcharinfo(0)+" obtuvo unos "+getitemname(.@k[0])+" x "+.@k[1]+" del Chaser Min Ho!",0;
+	specialeffect2 248;
+	close;
+Lne:
+next;
+mes "[Chaser Min Ho]";
+mes "No tienes todos los items, no intentes timarme..";
+
+        close2;
+                cutin "",255;
+                end;
+OnTouch:
+   showevent 1,1;    
+ end;
+}

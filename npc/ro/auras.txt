@@ -1,0 +1,40 @@
+seal,71,101,4	script	Aura Changer	493,{
+    cutin "ep13_ahat_f",2;
+	mes "[^FF7070Aura Changer^000000]";
+	mes "Oh, ¡hola!","Dime, ¿quieres tener un aura mas hermosa y colorida?";
+	
+	setarray .@auras_max[1], 152, 117, 35;
+
+	set .@s, select("^5533ff [>] ^000000Aura parte 1:^5533ff [>] ^000000Aura parte 2:^5533ff [>] ^000000Aura parte 3");
+	set .@revert, get_aura_part(.@s);
+
+	set .@current, 0;
+
+	while(1)
+	{
+		set_aura_part(.@s, .@current);
+		message strcharinfo(0),"Aura "+ .@s +" parte == " + .@current;
+		set .@menu$, "^777777~^000000 Siguiente (^0055FF"+((.@current!=.@auras_max[.@s])?.@current+1:1)+"^000000): ^777777~^000000 Anterior (^0055FF"+((.@current!=1 && .@current!=0)?.@current-1:.@auras_max[.@s])+"^000000): ^777777~^000000 Ir a...: ^777777~^000000 Revertir al original (^0055FF"+.@revert+"^000000)";
+
+		switch (select(.@menu$)) 
+		{
+			case 1: 
+				set .@current, ((.@current!=.@auras_max[.@s])?.@current+1:1);
+			break;
+
+
+			case 2:
+				set .@current, ((.@current!=1 && .@current!=0)?.@current-1:.@auras_max[.@s]); 
+			break;
+
+			case 3: 
+				message strcharinfo(0),"Elija un tipo entre 1 - "+.@auras_max[.@s]+".";
+				input .@current, 0, .@auras_max[.@s];
+			break;
+
+			case 4: 
+				set .@current, .@revert; set_aura_part(.@s, .@revert); 
+			break;
+		}
+	}
+}

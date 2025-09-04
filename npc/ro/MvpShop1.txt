@@ -1,0 +1,32 @@
+-	shop	custom_seller7	-1,501:2000000
+pvp_n_room,87,34,6	script	Tienda MVP	736,{
+	mes "Esta tienda es exclusiva para las " + getitemname(.CoinID) +", Puedes conseguir estas gold coins matando mvps.";
+	mes "Todos los gorros de esta tienda NO OTORGAN el efecto que dice la descripción.";
+	mes "^0000FFChi Low Rates.^000000";
+	callshop "custom_seller7",1;
+	npcshopattach "custom_seller7";
+	end;
+	OnBuyItem:
+	for(set .@i,0; .@i<getarraysize(.customs); set .@i,.@i+1) {
+		for(set .@d,0; .@d<getarraysize(@bought_nameid); set .@d,.@d+1) {
+			if(@bought_nameid[.@d]==.customs[.@i]) {
+				if(checkweight(@bought_nameid[.@d],@bought_quantity[.@d])) {
+					if(countitem(.CoinID) >= .Price[.@i]*@bought_quantity[.@d]) {
+						delitem .CoinID,.Price[.@i]*@bought_quantity[.@d];
+						getitem @bought_nameid[.@d],@bought_quantity[.@d];
+					} else dispbottom "No tienes suficientes "+getitemname(.CoinID)+" para comprar este producto.";
+				} else dispbottom "Purchasing these items will put you over the weight limit!";
+			}
+		}
+	}
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	close;
+OnInit:
+	setarray .customs[0],20301,20302,20311,20312,20313,20314,20315,20316,20317,20318,20319,20321,20322,20324,20325,20326,20327,20328,20329,20332,20334,20338,20339,20345,20346,20347,20371,20372,20373,20374,20375,20376,20377,20378,20379,20380,20381,20382,20383,20384,20385,20386,20392,20393,20400,20401,20402,20403,20404,20405,20406,20407,20408,20409,20431,20432,20434,20435,20437,20438,20440;
+	set .CoinID,19501; // Enter the ID of the coin here.
+	setarray .Price[0],900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900,900;// Price for each custom is set to 20 coins
+	npcshopitem "custom_seller7",0,0; // Don't touch any coding beyond here
+	for(set .i,0; .customs[.i]; set .i,.i+1) npcshopadditem "custom_seller7",.customs[.i],.Price[.i];
+	end;
+}

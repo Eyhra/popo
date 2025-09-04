@@ -1,0 +1,26 @@
+prontera,164,173,4	script	Players Online	852,{
+	mes "^5555FF[Users]^000000";
+	mes "";
+	query_sql "SELECT `char`.`name` FROM `char` INNER JOIN `login` ON `login`.`account_id` = `char`.`account_id` where `char`.`online` = 1 AND `group_id` = 0",.@nombreson$[0]; // Aquí almacenamos los jugadores online
+	set .@i, 1;
+	for (set .@c, 0; .@c < getarraysize(.@nombreson$); set .@c, .@c + 1) {
+		mes "^FF0000" +.@i +"^000000- ^0000FF" +.@nombreson$[.@c] +"^000000";
+		set .@i, .@i + 1;
+	}
+	close;
+
+OnInit:
+	//setarray .message$,"Users Online","";
+	set .message_size,getarraysize( .message$ );
+	while( .message_size ){
+		delwaitingroom; 
+		waitingroom ""+.message$[ rand( .message_size ) ],0;
+		sleep 1000;
+	}
+	end;
+
+}
+
+
+paramk,95,89,6	duplicate(Players Online)	Players Online#3323	903
+//lroom00,114,52,5	duplicate(Players Online)	Players Online#3324	874

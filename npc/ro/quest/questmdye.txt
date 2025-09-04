@@ -1,0 +1,77 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= Lucifer [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena
+//===== Additional Comments: =================================
+//= Quest creada para cualquier servidor
+//============================================================
+
+paramk,111,177,4	script	Mysterius Man	503,{
+	mes "[^000000Mysterius Man^000000]";
+	mes "Hola !";
+	mes "Me contaron que necesitas de mis servicios ?";
+	mes "Excelente yo trabajo rapido !";
+	next;
+	menu "Que necesitas?",L_required,"Tengo tus items!",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Mysterius Man^000000]";
+		mes "^FF000010^000000 Black Dyestuff"; //983
+		mes "^FF000010^000000 Cobaltblue Dyestuffs"; //978
+		mes "^FF000010^000000 Darkgreen Dyestuffs"; //979
+		mes "^FF000010^000000 Lemon Dyestuffs"; //976
+		mes "^FF000010^000000 Orange Dyestuffs"; //980
+		mes "^FF000010^000000 Scarlet Dyestuffs"; //975
+		mes "^FF000010^000000 Violet Dyestuffs"; //981
+		mes "^FF000010^000000 White Dyestuffs"; //982
+		mes "^0000FF35000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(983) < 10) goto L_manque;
+		if(countitem(978) < 10) goto L_manque;
+		if(countitem(979) < 10) goto L_manque;
+		if(countitem(976) < 10) goto L_manque;
+		if(countitem(980) < 10) goto L_manque;
+		if(countitem(975) < 10) goto L_manque;
+		if(countitem(981) < 10) goto L_manque;
+		if(countitem(982) < 10) goto L_manque;
+		if(Zeny < 35000) goto L_manque;
+		mes "[^000000Mysterius Man^000000]";
+		mes "Excelente Aventutero,";
+		mes "Si Necesitas mas Dyestuff avisame";
+		delitem 983,10;
+		delitem 978,10;
+		delitem 979,10;
+		delitem 976,10;
+		delitem 980,10;
+		delitem 975,10;
+		delitem 981,10;
+		delitem 982,10;
+		set Zeny, Zeny - 35000;
+		getitem 6220,1;
+		close;
+
+	L_manque:
+		mes "[^000000Mysterius Man^000000]";
+		mes "No tienes los items, ve por ellos y vuelve";
+		if(countitem(983) < 10) mes "^FF0000"+(10 - countitem(983)) +"^000000 Black Dyestuffs";
+		if(countitem(978) < 10) mes "^FF0000"+(10 - countitem(978)) +"^000000 Cobaltblue Dyestuffs";
+		if(countitem(979) < 10) mes "^FF0000"+(10 - countitem(979)) +"^000000 Darkgreen Dyestuffs";
+		if(countitem(976) < 10) mes "^FF0000"+(10 - countitem(976)) +"^000000 Lemon Dyestuffs ";
+		if(countitem(980) < 10) mes "^FF0000"+(10 - countitem(980)) +"^000000 Orange Dyestuffs";
+		if(countitem(975) < 10) mes "^FF0000"+(10 - countitem(975)) +"^000000 Scarlet Dyestuffs";
+		if(countitem(981) < 10) mes "^FF0000"+(10 - countitem(981)) +"^000000 Violet Dyestuffs";
+		if(countitem(982) < 10) mes "^FF0000"+(10 - countitem(982)) +"^000000 White Dyestuffs";
+		if(Zeny < 35000) mes "^0000FF"+(35000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Mysterius Man^000000]";
+		mes "Ok, sera para la proxima";
+		close;
+}

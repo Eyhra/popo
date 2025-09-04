@@ -1,0 +1,35 @@
+lroom00,79,161,4	script	Alvis#12547::note5	429,{
+	delwaitingroom;
+	//goto L_chat;	
+	//------------------AquÃƒÂ­ va tu contenido----------------------
+	
+	mes"[^0000FFInformation^000000]";
+
+	
+	mes"Coming Soon!!";
+
+		
+	
+	
+	//--------------------Fin del contenido-----------------------	
+	end;	
+	
+	
+	
+OnInit:
+	goto L_chat;
+	end;
+
+L_chat:
+setarray .message$,
+	"<---- Room Monster Hunting",
+	"";
+set .message_size,getarraysize( .message$ );
+while( .message_size ){
+	delwaitingroom; 
+	waitingroom ""+.message$[ rand( .message_size ) ],0;
+	sleep 1000;
+}
+end;
+
+}

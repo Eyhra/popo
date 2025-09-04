@@ -1,0 +1,68 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= Republic Of Midgard [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eA SVN 5000+
+//===== Additional Comments: =================================
+//= v1.0 thanks to QM
+//============================================================
+
+paramk,119,31,5	script	Deviruchi Man	738,{
+	mes "[^008080Deviruchi Man^000000]";
+	mes "Inservible ser humano, hoy estoy para proporcionarte varios de mis ";
+	mes "poderes pero tienes que traerme a cambio unos materiales que me ";
+	mes "ayudaran a sobrevivir en este lugar...";
+	next;
+	menu "¿Que Necesito?",L_required,"Señor, le entrego sus materiales",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^008080Deviruchi Man^000000]";
+		mes "^FF00001^000000 Deviruchi Card"; //4122
+		mes "^FF00001^000000 Deviruchi Egg"; //9023
+		mes "^FF000010^000000 Gold"; //969
+		mes "^FF000050^000000 Little Evil Horn"; //1038
+		mes "^FF000050^000000 Little Evil Wing"; //1029
+		mes "^FF00005^000000 Hand of God "; //1009
+		mes "^0000FF5000000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(4122) < 1) goto L_manque;
+		if(countitem(9023) < 1) goto L_manque;
+		if(countitem(969) < 10) goto L_manque;
+		if(countitem(1038) < 50) goto L_manque;
+		if(countitem(1029) < 50) goto L_manque;
+		if(countitem(1009) < 5) goto L_manque;
+		if(Zeny < 5000000) goto L_manque;
+		mes "[^008080Deviruchi Man^000000]";
+		mes "Aqui lo tienes, escoria de la vida, Disfrutalo ser inservible.";
+		delitem 4122,1;
+		delitem 9023,1;
+		delitem 969,10;
+		delitem 1038,50;
+		delitem 1029,50;
+		delitem 1009,5;
+		set Zeny, Zeny - 5000000;
+		getitem 5227,1;
+		close;
+
+	L_manque:
+		mes "[^008080Deviruchi Man^000000]";
+		mes "TRAEME TODOS LOS MATERIALES O SENTIRAS MI FURIA!";
+		if(countitem(4122) < 1) mes "^FF0000"+(1 - countitem(4122)) +"^000000 Deviruchi Card";
+		if(countitem(9023) < 1) mes "^FF0000"+(1 - countitem(9023)) +"^000000 Deviruchi Egg";
+		if(countitem(969) < 10) mes "^FF0000"+(10 - countitem(969)) +"^000000 Gold";
+		if(countitem(1038) < 50) mes "^FF0000"+(50 - countitem(1038)) +"^000000 Little Evil Horn";
+		if(countitem(1029) < 50) mes "^FF0000"+(50 - countitem(1029)) +"^000000 Little Evil Wing";
+		if(countitem(1009) < 5) mes "^FF0000"+(5 - countitem(1009)) +"^000000 Hand of God ";
+		if(Zeny < 5000000) mes "^0000FF"+(5000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^008080Deviruchi Man^000000]";
+		mes "Largate ahora maldito!";
+		close;
+}

@@ -1,0 +1,46 @@
+seal_in02,167,28,4	script	Informacion	857,{
+waitingroom "Informacion del servidor",0;
+set .@name$,"^0000FFBienvenido/a a Seal-RO!^000000";
+mes .@name$;
+mes "Hola "+strcharinfo(0)+" soy el tablon de informacion.";
+next;
+switch(select("Informacion:Staff")){
+case 1:
+mes .@name$;
+mes "Rates: 30x30x";
+mes "Drops: 20x";
+mes "Card Normales: 0.20%";
+mes "Card MvP: 0.01% ";
+mes "Pre-Renewall";
+mes "Episodio 13.3 El Discates";
+mes "Max Base Level 99";
+mes "Max Job Level 70";
+mes "Max aspd 190";
+next;
+mes .@name$;
+mes "Conoce el gremio de aventureros! Mas de 15 Misiones Custom de cazeria obten recompensas extras al levear! ";
+next;
+mes .@name$;
+mes "Obten MVP coins al matar cualquier Boss podras intercambiar estas por gorro exclusivos! En el gremio de aventureros";
+next;
+mes .@name$;
+mes "Todo el Spawn de monstruos del servidor ha sido aumentado.Mobea como nunca!";
+next;
+mes .@name$;
+mes "Encuentra todo lo que necesitas en nuestra hermanosa ciudad principal custom! hecha enteramente por nosotros";
+next;
+mes .@name$;
+mes "Todos los monstruos del juego tiene la posibilidad de soltarte una de estas monedas!juntalas e intercambialas por objetos de valor!";
+Close;
+break;
+case 2:
+mes .@name$;
+mes "En el juego podras encontrar a los miembros de nuestro staff:";
+next;
+mes .@name$;
+mes "^c50000Administrador^000000";
+mes "Seal";
+close;
+break;
+}
+}

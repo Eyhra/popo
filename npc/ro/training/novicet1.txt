@@ -1,0 +1,273 @@
+
+seal_in02,152,150,3	script	Guia de Nuevos::novtra01	635,{
+cutin "aca_sword",2;
+
+if (NoviceTraining >= 10) end;
+if (NoviceTraining >= 1) goto fin;
+
+mes "[^CC0000Guia de Principiantes^000000]";
+mes "¡Hola Pequeñ"+( (sex)?"o!. ":"a!. " )+" Bienvenid"+( (sex)?"o ":"a " )+" al Servidor.";
+mes "Este es el campo de entrenamiento para novatos.";
+goto continua;
+
+continua:
+next;
+mes "[^CC0000Guia de Novatos^000000]";
+mes "Aquí te enseñaremos lo básico de este gran juego para orientarte y que no tengas problemas.";
+next;
+mes "[^CC0000Guia de Novatos^000000]";
+mes "Antes de nada...";
+mes "¿Eres un usuario nuevo o ya tienes conocimientos sobre este juego?";
+next;
+menu "^5533ff [>] ^000000 Soy nuevo, quiero aprender algo",nuevo,"^5533ff [>] ^000000 Cancelar",out;
+
+nuevo:
+mes "[^CC0000Guia de Novatos^000000]";
+mes "Perfecto ^^";
+mes "Para empezar habla con el ^0000CCGuia de Batalla^000000, el te enseñará lo básico para empezar aquí.";
+next;
+mes "[^CC0000Guia de Novatos^000000]";
+mes "Te dejo una marca en tu minimapa para que puedas encontrarlo rapidamente.";
+mes "Cruza el puente y llega al Portal.";
+next;
+mes "[^CC0000Guia de Novatos^000000]";
+mes "Cuando entres verás a un noble Caballero, háblale y sigue el trayecto.";
+mes "(Tienes el minimapa en la esquina superior derecha de la pantalla y la <NAVI>Navegación<INFO>seal_in02,133,177,0,000,0</INFO></NAVI>)";
+	viewpoint 1,133,178,1,0xFF0000;
+	set NoviceTraining,1;
+	getitem 5055,1;
+	getitem 2112,1;
+	getitem 1243,1;
+	getitem 2414,1;
+	getitem 2510,1;
+	getitem 2352,1;
+	getitem 569,350;
+	getitem 601,20;
+	getitem 602,3;
+	cutin "", 255;
+	close;
+
+out:
+mes "[^CC0000Guia de Novatos^000000]";
+mes "El Entrenador te esta esperando...";
+cutin "", 255;
+close;
+
+fin:
+mes "[^CC0000Guia de Novatos^000000]";
+mes "Te dejo una marca en tu minimapa para que puedas encontrarlo rapidamente";
+mes "(Tienes el minimapa en la esquina superior derecha de la pantalla y la <NAVI>Navegación<INFO>seal_in02,133,177,0,000,0</INFO></NAVI>.)";
+viewpoint 1,133,178,1,0xFF0000;
+cutin "aca_sword",2;
+close2;
+cutin "", 255;
+end;
+
+babjob:
+	callfunc "babyjob";
+end;
+}
+
+seal_in02,133,178,3	script	Guia de Batalla::novtra02	10180,{
+	cutin "16go_01",2;
+if (checkquest(60356) != -1) {
+		if (checkquest(60356,HUNTING) != 2 ) {
+			mes "[^CC0000Guia de Batalla^000000]";
+			mes "¿Has terminado de cazar la 10 Seals?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero renunciar")) {
+			case 1:
+				mes "[^CC0000Guia de Batalla^000000]";
+				mes "Hmm, no creo que hayas cazado 10 todavía.";
+				cutin "", 255;
+				close;
+			case 2:
+				mes "[^CC0000Guia de Batalla^000000]";
+				mes "Recuerda, tu mision es acabar con las Seals, así que ve y caza 10 de ellas.";
+				cutin "", 255;
+				close;
+			case 3:
+				mes "[^CC0000Guia de Batalla^000000]";
+				mes "¿Estás segur"+( (sex)?"o!. ":"a!. " )+" de que quieres dejar de cazar?";
+                mes "Cualquier progreso que hayas hecho será borrado";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[^CC0000Guia de Batalla^000000]";
+					mes "Vale, entonces, vuelve aquí si cambias de opinión.";
+					erasequest 60356;
+					cutin "", 255;
+					close;
+				case 2:
+					mes "[^CC0000Guia de Batalla^000000]";
+					mes "Por favor, mata a 10 Seals para hacer de este un lugar donde la gente pueda ir y reunir experiencia.";
+					cutin "", 255;
+					close;
+				}
+			}
+		}
+		mes "[^CC0000Guia de Batalla^000000]";
+		mes "Increíble pequeñ"+( (sex)?"o!. ":"a!. " )+", pasaste mi prueba! aca tienes un pequeño regalo de graduación.";
+		getexp 818,818;
+		sc_start SC_FOOD_VIT_CASH,7200000,10; 
+		sc_start SC_FOOD_LUK_CASH,7200000,10;
+		sc_start SC_FOOD_DEX_CASH,7200000,10;
+		sc_start SC_FOOD_INT_CASH,7200000,10;
+		sc_start SC_FOOD_AGI_CASH,7200000,10;
+		sc_start SC_FOOD_STR_CASH,7200000,10;
+		erasequest 60356;
+		cutin "", 255;
+		close;
+	}
+	if ((BaseLevel > 0) && (BaseLevel < 3)) {
+		mes "[^CC0000Guia de Batalla^000000]";
+        mes "¡Hola Pequeñ"+( (sex)?"o!. ":"a!. " )+" yo te enseñare a defenderte y valerte por ti mismo.";
+        mes "Yo te puedo preparar muy bien...";
+		mes "asi que tu me dices ¿ Estas prepara"+( (sex)?"o ":"a " )+" para mi curso?";
+		next;
+		switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+		case 1:
+			mes "[^CC0000Guia de Batalla^000000]";
+			mes "¡Bien chic"+( (sex)?"o!. ":"a!. " )+"! ¡ese espiritu me gusta!";
+			mes "como te lo mencione antes, yo te enseñare a defenderte para que te puedas valer por ti mismo";
+			mes "pero mi prueba no sera facil, tendras que cazar unas focas...";
+			next;
+			mes "[^CC0000Guia de Batalla^000000]";
+			mes "Entonces,¿Estas segur"+( (sex)?"o!. ":"a!. " )+" de seguir en mi curso?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+			case 1:
+				if (BaseLevel > 2) {
+					mes "[^CC0000Guia de Batalla^000000]";
+					mes "Ok, entonces empezaremos";
+					mes "la misión de caza es algo dificil, pero si quieres sobrevivir,mejorar tu nivel y surgir en alguna clase, tendras que cazar...";
+					cutin "", 255;
+					close;
+				}
+				mes "[^CC0000Guia de Batalla^000000]";
+				mes "Ve y cazame 10 Seals yo te llevare al mapa para observar tu progreso en la caza.";
+				setquest 60356;
+				warp "novice" ,51,39;
+				cutin "", 255;
+				close;
+			case 2:
+				mes "[^CC0000Guia de Batalla^000000]";
+				mes "¡Dudo que surgas dentro de este mundo si no te vales por ti mism"+( (sex)?"o!. ":"a!. " )+"!";
+				cutin "", 255;
+				close;
+			}
+		case 2:
+			mes "[^CC0000Guia de Batalla^000000]";
+			mes "¡Dudo que surgas dentro de este mundo si no te vales por ti mism"+( (sex)?"o!. ":"a!. " )+"!";
+			cutin "", 255;
+			close;
+		}
+    }
+	mes "[^CC0000Guia de Batalla^000000]";
+	mes "Tu misión ha terminado aca";
+	next;
+	mes "[^CC0000Guia de Batalla^000000]";
+	mes "Ahora estas preparado para enfrentar grandes desafios en el mundo de Rune-Midgard.";
+	next;
+	mes "[^CC0000Guia de Batalla^000000]";
+	mes "Te llevare al mundo de Rune-Midgard para que puedas empezar tu aventura, !Mucho Exito Muchach"+( (sex)?"o!. ":"a!. " )+"";
+	next;
+	warp "seal" ,82,61;
+	savepoint "seal",81,88,1,1;
+	cutin "", 255;
+	close;
+		}
+
+
+novice,39,50,3	script	Guia de Batalla::novtra03		10180,{
+	cutin "16go_01",2;
+mes "[^CC0000Guia de Batalla^000000]";
+mes "Al parecer completaste la misión de caza...";
+mes "¿List"+( (sex)?"o!. ":"a!. " )+" para volver?";
+
+menu "^5533ff [>] ^000000 Si",O_Si,"^5533ff [>] ^000000 No",O_No;
+
+O_Si:
+warp "seal_in02" ,141,184;
+cutin "", 255;
+close;
+
+O_No:
+mes "[^CC0000Guia de Batalla^000000]";
+mes "Bueno, cuando realmene hallas completado la misión, me avisas y nos vamos";
+cutin "", 255;
+close;
+}	
+
+// Primer Npc 
+seal_in02,155,26,3	script	Guia TrainingGround::novtra04	10183,{
+cutin "ep162_est01",2;
+mes "[^CC0000Guia TrainingGround^000000]";
+mes "¡Hola Aventurer"+( (sex)?"o!. ":"a!. " )+" Bienvenid"+( (sex)?"o ":"a " )+" a tu nueva aventura.";
+next;
+mes "[^CC0000Guia TrainingGround^000000]";
+mes "En la parte de arriba veras una hermosa foca la cual te dara tu regalo de bienvenida";
+mes "(Tienes el minimapa en la esquina superior derecha de la pantalla)";
+	viewpoint 1,152,30,1,0xFF0000;
+next;
+mes "[^CC0000Guia TrainingGround^000000]";
+mes "Ahora te recomiendo que tomes el curso del capitan.";
+mes "¿Deseas tomarlo?";
+next;
+switch(select("^5533ff [>] ^000000 Si","^5533ff [>] ^000000 No")) {
+case 1:
+mes "[^CC0000Guia TrainingGround^000000]";
+mes "Busca a ^CC0000Guia de Nuevos^000000, para saber donde esta <NAVI>Click Aqui<INFO>seal_in02,152,149,0,000,0</INFO></NAVI>.";
+cutin "", 255;
+close;
+
+case 2:
+mes "[^CC0000Guia TrainingGround^000000]";
+mes "Mi sugerencia es que lo tomes.";
+cutin "", 255;
+close;
+}
+
+}
+
+//mobs TrainingGround
+novice,0,0,0,0	monster	Seal	20852,15,0,0,0
+novice,0,0,0,0	monster	Aquaring	20721,5,0,0,0
+novice,0,0,0,0	monster	Small Aqua	2117,5,0,0,0
+novice,0,0,0,0	monster	Sick Spore	3501,5,0,0,0
+
+//mapflag TrainingGround
+seal_in02	mapflag	nomemo
+seal_in02	mapflag	nopenalty
+seal_in02	mapflag	nobranch
+seal_in02	mapflag	noteleport
+
+novice	mapflag	nomemo
+novice	mapflag	nopenalty
+novice	mapflag	nobranch
+novice	mapflag	noteleport
+
+// Borrar los // para la apertura
+seal_in02,139,29,0	warp	zwarp	1,1,seal_in02,135,132
+seal_in02,135,129,0	warp	zwarp1	1,1,seal_in02,139,25
+
+// no tocar
+// seal_in02,174,179,0	warp	zwarp2	1,1,seal_in02,140,147
+// seal_in02,143,147,0	warp	zwarp3	1,1,seal_in02,177,179
+
+seal_in02,129,186,5	script	Ayudante	100,{
+mes "[^CC0000Ayudante^000000]";
+mes "¿Deseas volver al campo de entrenamiento?";
+next;
+switch(select("^5533ff [>] ^000000 Si","^5533ff [>] ^000000 	No")) {
+case 1:
+warp "novice" ,51,39;
+close;
+
+case 2:
+mes "[^CC0000Ayudante^000000]";
+mes "Aca estare para llevarte al campo de entranamiento.";
+close;
+}
+
+}

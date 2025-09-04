@@ -1,0 +1,36 @@
+-	script	automensaje	-1,{
+
+	OnClock0100:
+	OnClock0300:
+	OnClock0431:
+	OnClock0500:
+	OnClock0600:
+	OnClock0800:
+	OnClock0900:
+	OnClock1101:
+	OnClock1200:
+	OnClock1300:
+	OnClock1401:
+	OnClock1500:
+	OnClock1600:
+	OnClock1800:
+	OnClock1900:
+	OnClock2001:
+	OnClock2200:
+	OnClock2300:
+
+		setarray	$mensajeAUTO$[0],	"Servidor Mid Rates 50x/50x/50x",
+							"Recuerda invitar a tus amigos para que el servidor crezca",
+							"El abuso de bugs está severamente castigado, si encuentras uno por favor repórtalo!",
+							"Ayúdanos a votar por el servidor para que sigamos creciendo!",
+							"Tu opinión sí nos importa, recuerda visitar el Discord constantemente!",
+							"Entretenidos eventos sorpresa, recuerda visitar el Discord constantemente!",
+							"¿Deseas visitar nuestros npcs? Utiliza el npc Warper para llegar a la zona BritoniaH Ro!";
+	
+		setarray $colores$[0],"ff0000","ff4000","ff8000","ffbf00","ffff00","bfff00","80ff00","40ff00","00ff00","00ff40","00ff80","00ffbf","00ffff";
+	
+		announce "[ Servidor Anuncio ]: " + $mensajeAUTO$[rand(0,getarraysize( $mensajeAUTO$ )-1)] + ".",bc_all,"0x" + $colores$[rand(0,getarraysize($colores$))];
+		
+	end;
+
+}

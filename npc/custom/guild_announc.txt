@@ -1,0 +1,18 @@
+-	script	guild_announce	-1,{
+OnWhisperGlobal:
+	.@guild_id = getcharid(2);
+	if ( getguildmasterid( .@guild_id ) != getcharid(0) ) end;
+	if ( @accountid_member == 0 )
+		@total_guild_member = query_sql( "select `account_id`, `char_id` from `guild_member` where `guild_id` = "+ .@guild_id, @accountid_member, @charid_member );
+	.@mes$ = @whispervar0$;
+	.@name$ = strcharinfo(0);
+	.@origin = getcharid(3);
+	while( .@i < @total_guild_member ) {
+		if ( isloggedin( @accountid_member[.@i], @charid_member[.@i] ) ) {
+			attachrid @accountid_member[.@i];
+			announce "[ "+ .@name$ +" ]: "+ .@mes$, bc_self;
+			attachrid .@origin;
+		}
+		.@i++;
+	}
+}

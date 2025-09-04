@@ -1,0 +1,31 @@
+lasa_fild01.gat,55,300,4	script	Tom	544,{
+	mes "¡Hello!";
+	mes "Welcome to MahoneyRO. I will give you a survival pack.";
+	mes "Good luck in your adventures!";
+
+	if(!#Freebie) {
+		mes "Now I will give you your survival pack.";
+		next;
+		switch(select("Survival pack")) {
+			case 1:
+getitembound 12208,1,1; 
+getitembound 501,70,1; 
+getitembound 2765,1,1; 
+getitembound 1109,1,1;   
+getitembound 533,60,1; 
+getitembound 601,30,1;
+getitembound 2501,1,1; 
+getitembound 2401,1,1;
+	 				
+
+				break;
+				
+			}
+			set #Freebie, 1;
+			close;
+	}
+	OnInit:
+        delwaitingroom;
+	waitingroom "Survival pack.",0;
+	end;
+}

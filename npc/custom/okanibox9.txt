@@ -1,0 +1,10 @@
+function	script	MvPBox9	{
+	setarray .BoxItems[0],20441,31453,20239,31586,31531,31533,31300,31527,19518,19676,20010,20262,20269;
+	
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	end;
+}
+
+
+//  Mystic Egg 

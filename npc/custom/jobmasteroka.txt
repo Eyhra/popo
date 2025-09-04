@@ -1,0 +1,1367 @@
+//= ==== eAthena Script ============================================= =\\
+//= Zephon's Job Master                     Job Master Sprite          \\
+//= ==== By: ======================================================== =\\
+//= Zephon (zephonro@gmail.com, shtl_morgue@hotmail.com) y             \\
+//= Copyright © 2006 - Todos los derechos reservados                   \\
+//= ==== Current Version: =========================================== =\\
+//= Version: 10.0                                                      \\
+//= ==== Compatible With: =========================================== =\\
+//= eAthena SVN	SQL y TXT					       \\
+//= ==== Description: =============================================== =\\
+//= Una de mis mejores NPCs ;), cumple la función de cambiarte de job  \\
+//= incluso hasta Baby incluído, con sus requerimientos detallados y   \\
+//= una NPC muy bien organizada, pero medio ofensiva por amargada.     \\
+//= Posee sonidos, efectos y traducida al español.                     \\
+//= ==== Additional Comments: ======================================= =\\
+//= Comentarios Adicionales:                                           \\
+//= NPC original del server Zephon Ragnarok Online. Gracias ;)         \\
+//= ================================================================= =\\
+// Okani
+
+prontera.gat,147,166,5	script	Job Master	654,{
+// Variable Setup
+	set @MinimumJB, 40; //Mínimo level de job para el cambio entre 2nd y Clase avanzada (Default : 40)
+	set @GivePlat, 0; //Dar algunas platinum skills (Default : 1-Sí)
+	set @SupNovM, 45; //Base Level para cambiar a Super Novice (Default : 45)
+// Check Jobtype
+	if(Class == 0) goto L_novice;
+	if(Class == 4023) goto L_Jobaby;
+	if(Class == 1) goto L_iSword;
+	if(Class == 2) goto L_iMage;
+	if(Class == 3) goto L_iArcher;
+	if(Class == 4) goto L_iAcolyte;
+	if(Class == 5) goto L_iMerchant;
+	if(Class == 6) goto L_iThief;
+	if(Class == 4024) goto L_iBabySword;
+	if(Class == 4025) goto L_iBabyMage;
+	if(Class == 4026) goto L_iBabyArcher;
+	if(Class == 4027) goto L_iBabyAcolyte;
+	if(Class == 4028) goto L_iBabyMerchant;
+	if(Class == 4029) goto L_iBabyThief;
+	if(Class == 4046) goto L_iTaekwon;
+	if(Class == 7) goto L_rebirth;
+	if(Class == 8) goto L_rebirth;
+	if(Class == 9) goto L_rebirth;
+	if(Class == 10) goto L_rebirth;
+	if(Class == 11) goto L_rebirth;
+	if(Class == 12) goto L_rebirth;
+	if(Class == 14) goto L_rebirth;
+	if(Class == 15) goto L_rebirth;
+	if(Class == 16) goto L_rebirth;
+	if(Class == 17) goto L_rebirth;
+	if(Class == 18) goto L_rebirth;
+	if(Class == 19) goto L_rebirth;
+	if(Class == 20) goto L_rebirth;
+	if(Class == 4030) goto L_cantCh2;
+	if(Class == 4031) goto L_cantCh2;
+	if(Class == 4032) goto L_cantCh2;
+	if(Class == 4033) goto L_cantCh2;
+	if(Class == 4034) goto L_cantCh2;
+	if(Class == 4035) goto L_cantCh2;
+	if(Class == 4037) goto L_cantCh2;
+	if(Class == 4038) goto L_cantCh2;
+	if(Class == 4039) goto L_cantCh2;
+	if(Class == 4040) goto L_cantCh2;
+	if(Class == 4041) goto L_cantCh2;
+	if(Class == 4042) goto L_cantCh2;
+	if(Class == 4043) goto L_cantCh2;
+	if(Class == 4045) goto L_cantCh2;
+	if(Class == 4047) goto L_cantCh2;
+	if(Class == 4049) goto L_cantCh2;
+	if(Class == 25) goto L_cantCh2;
+	if(Class == 24) goto L_cantCh2;
+	if((Class == 4001) && ((lastJob == 7) || (lastJob == 14))) goto L_cHsword;
+	if((Class == 4001) && ((lastJob == 9) || (lastJob == 16))) goto L_cHmage;
+	if((Class == 4001) && ((lastJob == 11) || (lastJob == 19) || (lastJob == 20))) goto	L_cHarcher;
+	if((Class == 4001) && ((lastJob == 8) || (lastJob == 15))) goto L_cHacolyte;
+	if((Class == 4001) && ((lastJob == 10) || (lastJob == 18))) goto L_cHmerchant;
+	if((Class == 4001) && ((lastJob == 12) || (lastJob == 17))) goto L_cHthief;
+	if((Class == 4002) && (lastJob == 7)) goto L_iKnight;
+	if((Class == 4005) && (lastJob == 8)) goto L_iPriest;
+	if((Class == 4003) && (lastJob == 9)) goto L_iWizard;
+	if((Class == 4006) && (lastJob == 10)) goto L_iBlacksmith;
+	if((Class == 4004) && (lastJob == 11)) goto L_iHunter;
+	if((Class == 4007) && (lastJob == 12)) goto L_iAssassin;
+	if((Class == 4002) && (lastJob == 14)) goto L_iCrusader;
+	if((Class == 4005) && (lastJob == 15)) goto L_iMonk;
+	if((Class == 4003) && (lastJob == 16)) goto L_iSage;
+	if((Class == 4007) && (lastJob == 17)) goto L_iRogue;
+	if((Class == 4006) && (lastJob == 18)) goto L_iAlchemist;
+	if((Class == 4004) && (lastJob == 19)) goto L_iBard;
+	if((Class == 4004) && (lastJob == 20)) goto L_iDancer;
+	if(Upper == 1 && Class >= 4008) goto L_cantCh2;
+	close;
+
+// Novice
+	L_novice:
+		skill 142,1,0;
+		skill 143,1,0;
+// Change to Baby
+			if(JobLevel == 1) goto L_nov1;
+			if(JobLevel == 10) goto L_nov2;
+
+		L_nov1:
+	soundeffect "siroma_move.wav",0;
+			mes "^ff0000[Job Master]^000000";
+			mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+			next;
+	soundeffect "siroma_move.wav",0;
+			mes "^ff0000[Job Master]^000000";
+			mes "Do you wish to become a baby class or preffer to mantain your normal class?";
+			menu "Baby",-,"Continue with my training",L_quit;	
+	soundeffect "siroma_move.wav",0;	
+			mes "Are you sure?";
+			menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			if (BaseLevel != 1 || JobLevel != 1) goto No_baby;
+			jobchange 4023;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffect "complete.wav",0;
+			announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Baby.",bc_map,0x00FFFF;
+			atcommand "@effect 158 1";
+			callfunc "F_ClearJobVar";
+			close;
+
+
+		L_nov2:
+	       if(JobLevel < 10) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+                mes "^ff0000[Job Master]^000000";
+	soundeffect "siroma_move.wav",0;
+                mes "You need 10 Job levels.";
+                mes "To which class do you want to change?";
+		menu "Swordsman",L_sword,"Mage",L_mage,"Archer",L_archer,"Acolyte",L_acolyte,"Merchant",L_merchant,"Thief",L_thief,"Super Novice",L_superN,"Taekwon",L_taekwon,"Gunslinger",L_gun,"Ninja",L_ninja,"Baby Class (Level 1/1)",L_baby;
+// Change to Swordsman
+			L_sword:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 1;
+				atcommand "@effect 158 1";
+				close;
+// Change to Mage
+			L_mage:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 2;
+				atcommand "@effect 158 1";
+				close;
+// Change to Archer
+			L_archer:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 3;
+				atcommand "@effect 158 1";
+				close;
+// Change to Acolyte
+			L_acolyte:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4;
+				atcommand "@effect 158 1";
+				close;
+// Change to Merchant
+			L_merchant:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 5;
+				atcommand "@effect 158 1";
+				close;
+// Change to Thief
+			L_thief:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 6;
+				atcommand "@effect 158 1";
+				close;
+// Change to Super Novice
+			L_superN:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+				if(BaseLevel<@SupNovM) goto L_notSup;
+	soundeffect "siroma_move.wav",0;
+				jobchange 23;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Super Novice!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+				close;
+// Change to Taekwon
+			L_taekwon:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange Job_Taekwon;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;
+// Change to Gunslinger
+			L_gun:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 24;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Gunslinger!",bc_map,0x00FFFF;
+				atcommand "@effect 158 1";
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				callfunc "F_ClearJobVar";
+				close;
+// Change to Ninja
+			L_ninja:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 25;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Ninja!",bc_map,0x00FFFF;
+				atcommand "@effect 158 1";
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				callfunc "F_ClearJobVar";
+				close;
+
+// Change to Baby
+			L_baby:
+				if (BaseLevel != 1 || JobLevel != 1) goto No_baby;
+				close;
+
+			L_Jobaby:
+			if(SkillPoint != 0) goto L_skillUsed;
+			if(JobLevel < 10) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+			mes "^ff0000[Job Master]^000000";
+			mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+			next;
+	soundeffect "siroma_move.wav",0;
+                	mes "^ff0000[Job Master]^000000";
+                	mes "You will need Job level 10.";
+                	mes "To which class do you want to change?";			
+			menu "Baby Swordman",L_babysword,"Baby Magician",L_babymage,"Baby Archer",L_babyarcher,"Baby Acolyte",L_babyacolyte,"Baby Merchant",L_babymerchant,"Baby Thief",L_babythief,"Super Baby",L_superbaby;
+
+// Change to Baby Swordman
+			L_babysword:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4024;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;
+// Change to Baby Mage
+			L_babymage:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4025;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;	
+// Change to Baby Archer
+			L_babyarcher:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4026;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;		
+// Change to Baby Acolyte
+			L_babyacolyte:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4027;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;		
+// Change to Baby Merchant
+			L_babymerchant:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4028;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;		
+// Change to Baby Thief
+			L_babythief:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4029;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;
+// Change to Super Baby
+			L_superbaby:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+				if(BaseLevel<@SupNovM) goto L_notSup;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4045;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Super Baby!",bc_map,0x00FFFF;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;						
+
+// Change to Knight/Crusader
+	L_iSword:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Knight",L_knight,"Crusader",L_crusader;
+			L_knight:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 7;
+				atcommand "@effect 158 1";
+				close;
+			L_crusader:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 14;
+				atcommand "@effect 158 1";
+				close;
+// Change to Wizard/Sage
+	L_iMage:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Wizard",L_wizard,"Sage",L_sage;
+			L_wizard:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 9;
+				atcommand "@effect 158 1";
+				close;
+			L_sage:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 16;
+				atcommand "@effect 158 1";
+				close;
+// Change to Hunter/Bard/Dancer
+	L_iArcher:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Hunter",L_hunter,"Bard/Dancer",L_bandd;
+			L_hunter:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 11;
+				atcommand "@effect 158 1";
+				close;
+			L_bandd:
+				if(sex==0) goto L_dancer;
+				if(sex==1) goto L_bard;
+				L_bard:
+	soundeffect "siroma_move.wav",0;
+					mes "Are you sure?";
+					menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+					jobchange 19;
+				atcommand "@effect 158 1";
+					close;
+				L_dancer:
+	soundeffect "siroma_move.wav",0;
+					mes "Are you sure?";
+					menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+					jobchange 20;
+				atcommand "@effect 158 1";
+					close;
+// Change to Priest/Monk
+	L_iAcolyte:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Priest",L_priest,"Monk",L_monk;
+			L_priest:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 8;
+				atcommand "@effect 158 1";
+				close;
+			L_monk:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 15;
+				atcommand "@effect 158 1";
+				close;
+// Change to Blacksmith/Alchemist
+	L_iMerchant:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Blacksmith",L_blacksmith,"Alchemist",L_alchemist;
+			L_blacksmith:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 10;
+				atcommand "@effect 158 1";
+				close;
+			L_alchemist:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 18;
+				atcommand "@effect 158 1";
+				close;
+// Change to Assassin/Rogue
+	L_iThief:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Assassin",L_assassin,"Rogue",L_rogue;
+			L_assassin:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 12;
+				atcommand "@effect 158 1";
+				close;
+			L_rogue:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 17;
+				atcommand "@effect 158 1";
+				close;
+// Change to Star Gladiator/Soul Linker
+	L_iTaekwon:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Star Gladiator",L_SG,"Soul Linker",L_SL;
+			L_SG:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4047;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Star Gladiator!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;
+			L_SL:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4049;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Soul Linker!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+				callfunc "F_ClearJobVar";
+				close;
+
+// Change to Baby Knight/Crusader
+	L_iBabySword:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Baby Knight",L_babyknight,"Baby Crusader",L_babycrusader;
+			L_babyknight:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4030;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Knight!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+			L_babycrusader:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4037;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Crusader!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Baby Wizard/Sage
+	L_iBabyMage:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Baby Wizard",L_babywizard,"Baby Sage",L_babysage;
+			L_babywizard:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4032;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Wizard!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+			L_babysage:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4039;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Sage!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Baby Hunter/Bard/Dancer
+	L_iBabyArcher:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+               mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Baby Hunter",L_babyhunter,"Baby Bard/Dancer",L_babybandd;
+			L_babyhunter:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4034;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Hunter!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+			L_babybandd:
+				if(sex==0) goto L_babydancer;
+				if(sex==1) goto L_babybard;
+				L_babybard:
+	soundeffect "siroma_move.wav",0;
+					mes "Are you sure?";
+					menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+					jobchange 4042;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Bard!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+				L_babydancer:
+	soundeffect "siroma_move.wav",0;
+					mes "Are you sure?";
+					menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+					jobchange 4043;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Dancer!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Baby Priest/Monk
+	L_iBabyAcolyte:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Baby Priest",L_babypriest,"Baby Monk",L_babymonk;
+			L_babypriest:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4031;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Priest!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+			L_babymonk:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4038;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Monk!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Baby Blacksmith/Alchemist
+	L_iBabyMerchant:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Baby Blacksmith",L_babyblacksmith,"Baby Alchemist",L_babyalchemist;
+			L_babyblacksmith:
+	soundeffect "siroma_move.wav",0;mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4033;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Blacksmith!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+			L_babyalchemist:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4041;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Alchemist",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Baby Assassin/Rogue
+	L_iBabyThief:
+		if(JobLevel < 40) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Welcome to Veterans of Midgard, I am the Job Master at your service, I am in charge of changing your class.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+                mes "To which class do you want to change?";
+		menu "Baby Assassin",L_babyassassin,"Baby Rogue",L_babyrogue;
+			L_babyassassin:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4035;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Assassin!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+			L_babyrogue:
+	soundeffect "siroma_move.wav",0;
+				mes "Are you sure?";
+				menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+				jobchange 4040;
+				announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has changed to Baby Rogue!",bc_map,0x00FFFF;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				soundeffectall "complete.wav",0;
+				atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+
+// Rebirth
+	L_rebirth:
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you want to be reborn?";
+		next;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+                //mes "You need to be Base level 99, Job level 50 and pay 1.285.000 Zeny";
+		mes "Are you sure?";
+		menu "No",L_quit,"Yes",-;
+		if(checkcart()) goto L_CART;
+		if(checkfalcon()) goto L_FALCON;
+		if(checkriding()) goto L_PECO;
+		if(SkillPoint != 0) goto L_skillUsed;
+		if ((BaseLevel < 99) || (JobLevel < 50)) goto L_cantCh3;
+		//if (Zeny < 1285000) goto L_cantzy;
+		set lastJob, readparam(19);
+		jobchange 4001;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has been reborn",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+		resetlvl(1);
+		skill 142,1,0;
+		skill 143,1,0;
+	soundeffect "siroma_move.wav",0;
+		mes "Congratulations! You are now a High Novice!";
+		mes "Come back later!";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+                mes "You will need it hehehe...";
+		close;
+	L_cHsword:
+		if(JobLevel<10) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to High Swordman?";
+                mes "You will need to be Job level 10.";
+		next;
+	soundeffect "siroma_move.wav",0;
+		menu "No",L_quit,"Yes",-;
+		jobchange 4002;
+		atcommand "@effect 158 1";
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Your class has changed! Come back later ;).";
+		close;
+	L_cHmage:
+		if(JobLevel<10) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to High Magician?";
+                mes "You will need to be Job level 10.";
+		next;
+	soundeffect "siroma_move.wav",0;
+		menu "No",L_quit,"Yes",-;
+		jobchange 4003;
+		atcommand "@effect 158 1";
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Your class has changed! Come back later ;).";
+		close;
+	L_cHarcher:
+		if(JobLevel<10) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to High Archer?";
+                mes "You will need to be Job level 10.";
+		next;
+	soundeffect "siroma_move.wav",0;
+		menu "No",L_quit,"Yes",-;
+		jobchange 4004;
+		atcommand "@effect 158 1";
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Your class has changed! Come back later ;).";
+		close;
+	L_cHacolyte:
+		if(JobLevel<10) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to High Acolyte?";
+                mes "You will need to be Job level 10.";
+		next;
+	soundeffect "siroma_move.wav",0;
+		menu "No",L_quit,"Yes",-;
+		jobchange 4005;
+		atcommand "@effect 158 1";
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Your class has changed! Come back later ;).";
+		close;
+	L_cHmerchant:
+		if(JobLevel<10) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to High Merchant?";
+                mes "You will need to be Job level 10.";
+		next;
+	soundeffect "siroma_move.wav",0;
+		menu "No",L_quit,"Yes",-;
+		jobchange 4006;
+		atcommand "@effect 158 1";
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Your class has changed! Come back later ;).";
+		close;
+	L_cHthief:
+		if(JobLevel<10) goto L_notEn;
+		if(SkillPoint != 0) goto L_skillUsed;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to High Thief?";
+                mes "You will need to be Job level 10.";
+		next;
+	soundeffect "siroma_move.wav",0;
+		menu "No",L_quit,"Yes",-;
+		jobchange 4007;
+		atcommand "@effect 158 1";
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Your class has changed! Come back later ;).";
+		close;	
+// Change to Lord Knight
+	L_iKnight:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Lord Knight?";
+                 mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+		jobchange 4008;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Lord Knight!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Paladin
+	L_iCrusader:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Paladin?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4015;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Paladin!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to High Priest
+	L_iPriest:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to High Priest?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4009;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a High Priest!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Champion
+	L_iMonk:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Champion?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4016;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Champion!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Whitesmith
+	L_iBlacksmith:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Whitesmith?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4011;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Whitesmith!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Creator
+	L_iAlchemist:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Creator?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4019;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Creator!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to High Wizard
+	L_iWizard:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to High Wizard?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4010;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a High Wizard!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Professor
+	L_iSage:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Professor?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4017;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Professor!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Sniper
+	L_iHunter:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Sniper?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4012;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Sniper!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Clown
+	L_iBard:
+	soundeffect "siroma_move.wav",0;
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Clown?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4020;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Clown!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Gypsy
+	L_iDancer:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Gypsy?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4021;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Gypsy!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Assassin Cross
+	L_iAssassin:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Assasin Cross?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4013;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become an Assassin Cross!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Change to Stalker
+	L_iRogue:
+		if(SkillPoint != 0) goto L_skillUsed;
+		if(JobLevel < 40) goto L_notEn;
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "Hi again, do you wish to change to Stalker?";
+                mes "You will need a minimum of job level 40, to a maximum of 50.";
+		menu "No",L_quit,"Yes",-;
+	soundeffect "siroma_move.wav",0;
+			jobchange 4018;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		soundeffectall "complete.wav",0;
+		announce "[Veterans of Midgard Server]: "+ strcharinfo(0) +" has become a Stalker!",bc_map,0x00FFFF;
+		atcommand "@effect 158 1";
+			close2;
+			goto L_GivePlat;
+			end;
+// Errors
+	L_cantCh:
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "I'm sorry, you don't meet the requirements to change your class";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Lose yourself !!";
+		close;
+	L_cantCh2:
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "I'm sorry but you can't make any more changes to your class";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Lose yourself !!";
+		close;
+	L_cantCh3:
+	soundeffect "siroma_move.wav",0;
+		mes "I'm sorry, you don't have the requirements for this action";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Lose yourself !!";
+		close;
+	L_cantzy:
+	soundeffect "siroma_move.wav",0;
+		mes "I'm sorry but you don't have the Zeny amount to be reborn";
+		next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";		
+		mes "Lose yourself !!";
+		close;		
+	L_skillUsed:
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "I'm sorry but you have to spend all your skill points before proceeding";
+		mes "Come back later!";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Lose yourself !!";
+		close;
+	L_notEn:
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "I'm sorry, you need more Job levels to change your class";
+		mes "Come back later!";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Lose yourself !!";
+		close;
+	L_notSup:
+	soundeffect "siroma_move.wav",0;
+		mes "I'm sorry, you need to be Base level 45 or greater to change your class.";
+		mes "Come back later!";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Bye!";
+		close;
+	L_remove:
+	soundeffect "siroma_move.wav",0;
+		mes "^ff0000[Job Master]^000000";
+		mes "I can't change your class like this, please remove your mount, cart or falcon to make my job easier, will you?";
+		mes "Come back later!";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Bye!";
+		close;
+
+	L_quit:
+	soundeffect "siroma_move.wav",0;
+		mes "Come back whenever you want. ^^";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Bye!";
+		close;
+
+	L_CART:
+	soundeffect "siroma_move.wav",0;
+		mes "You need to get rid of your cart before doing this";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Bye!!";
+		close;
+
+	L_FALCON:
+	soundeffect "siroma_move.wav",0;
+		mes "Please remove your falcon before changing your class";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Bye!";
+		close;
+
+	L_PECO:
+	soundeffect "siroma_move.wav",0;
+		mes "I'm sorry but I can't change your class if you are riding a Pecopeco";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Bye!";
+		close;
+
+	No_baby:
+	soundeffect "siroma_move.wav",0;
+		mes "I'm sorry, if you wish to be a baby you need to be Base and Job level 1.";
+                next;
+	soundeffect "siroma_move.wav",0;
+                mes "^ff0000[Job Master]^000000";
+		mes "Bye!";
+		close;
+
+L_GivePlat:
+	//if (BaseClass==Job_SuperNovice) goto L_sSuperN;
+	//if (BaseClass==Job_Swordman) goto L_sSword;
+	//if (BaseClass==Job_Mage) goto L_sMage;
+	//if (BaseClass==Job_Archer) goto L_sArcher;
+	//if (BaseClass==Job_Acolyte) goto L_sAcolyte;
+	//if (BaseClass==Job_Merchant) goto L_sMerchant;
+	//if (BaseClass==Job_Thief) goto L_sThief;
+	end;
+L_sSuperN:
+	skill 142,1,0;
+	end;
+L_sSword:
+	skill 142,1,0;
+	skill 144,1,0;
+	skill 145,1,0;
+	skill 146,1,0;
+	end;
+L_sMage:
+	skill 142,1,0;
+	skill 157,1,0;
+	end;
+L_sArcher:
+	skill 142,1,0;
+	skill 147,1,0;
+	skill 148,1,0;
+	end;
+L_sAcolyte:
+	skill 142,1,0;
+	skill 156,1,0;
+	end;
+L_sMerchant:
+	skill 142,1,0;
+	skill 153,1,0;
+	skill 154,1,0;
+	skill 155,1,0;
+	end;
+L_sThief:
+	skill 142,1,0;
+	skill 149,1,0;
+	skill 150,1,0;
+	skill 151,1,0;
+	skill 152,1,0;
+	end;		
+}

@@ -1,0 +1,32 @@
+-	shop	custom_seller9	-1,501:2000000
+pvp_n_room,31,83,6	script	Tienda Silver Coin	562,{
+	mes "En esta tienda solo se puede comprar con " + getitemname(.CoinID) +", las silver coins se obtienen reciclando cartas.";
+	mes "La tienda al lado mio puede canjear 3 cartas por una silver coin.";
+	mes "^0000FFChi Ragnarok Online.^000000";
+	callshop "custom_seller9",1;
+	npcshopattach "custom_seller9";
+	end;
+	OnBuyItem:
+	for(set .@i,0; .@i<getarraysize(.customs); set .@i,.@i+1) {
+		for(set .@d,0; .@d<getarraysize(@bought_nameid); set .@d,.@d+1) {
+			if(@bought_nameid[.@d]==.customs[.@i]) {
+				if(checkweight(@bought_nameid[.@d],@bought_quantity[.@d])) {
+					if(countitem(.CoinID) >= .Price[.@i]*@bought_quantity[.@d]) {
+						delitem .CoinID,.Price[.@i]*@bought_quantity[.@d];
+						getitem @bought_nameid[.@d],@bought_quantity[.@d];
+					} else dispbottom "No tienes suficientes "+getitemname(.CoinID)+" para comprar este producto.";
+				} else dispbottom "Purchasing these items will put you over the weight limit!";
+			}
+		}
+	}
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	close;
+OnInit:
+	setarray .customs[0],12202,12203,12204,12205,12206,12207,12208;
+	set .CoinID,675; // Enter the ID of the coin here.
+	setarray .Price[0],2,2,2,2,2,2,1;// Price for each custom is set to 1 coins
+	npcshopitem "custom_seller9",0,0; // Don't touch any coding beyond here
+	for(set .i,0; .customs[.i]; set .i,.i+1) npcshopadditem "custom_seller9",.customs[.i],.Price[.i];
+	end;
+}

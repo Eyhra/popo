@@ -1,0 +1,224 @@
+lroom00.gat,146,51,4	script	Mr. Aglao	4_EP16_MEYER,{
+	set .NombreNPC$, "[ ^3209FFMr. Aglao^000000 ]";
+	cutin "16mye_nor",2;
+
+	INICIO:
+	mes .NombreNPC$;
+	mes "Hello, "+strcharinfo(0);
+	mes "In which channels would you like to participate?";
+	next;
+	menu "#main ["+( (canal_principal)? "^00BB22On^000000" : "^FF2200Off^000000")+"]",c_principal,
+		"#commerce ["+( (canal_soporte)? "^00BB22On^000000" : "^FF2200Off^000000")+"]",c_soporte,
+		"#party ["+( (canal_ventas)? "^00BB22On^000000" : "^FF2200Off^000000")+"]",c_ventas,
+		"#english ["+( (canal_mapa)? "^00BB22On^000000" : "^FF2200Off^000000")+"]",c_mapa,
+		"#spanish ["+( (canal_aliados)? "^00BB22On^000000" : "^FF2200Off^000000")+"]",c_aliados,
+		"#french ["+( (canal_french)? "^00BB22On^000000" : "^FF2200Off^000000")+"]",c_french,
+		"#tagalog ["+( (canal_tagalog)? "^00BB22On^000000" : "^FF2200Off^000000")+"]",c_tagalog,
+		"- Cancel",L_quit;
+	
+	// ********
+	// #main 
+	c_principal:
+	next;
+	mes .NombreNPC$;
+	mes "State: "+( (canal_principal) ? "^00BB22On^000000" : "^FF2200Off^000000");
+	menu "- I want "+((!canal_principal) ? "^00BB22activate^000000" : "^FF2200deactivate^000000")+" this.",-,"- Nothing.",L_quit;
+
+	next;
+	mes .NombreNPC$;
+	if(canal_principal == 0) {
+		mes "#main is now ^00BB22On^000000.";
+		mes "You must send a private message","to #main to chat on the channel";
+		set canal_principal,1;
+		atcommand "@join #main";//para encender
+		
+	} else if(canal_principal == 1) {
+		mes "#main is now ^FF2200Off^000000.";
+		set canal_principal,0;
+		atcommand "@channel leave #main";//para apagar
+	}
+	next;
+	goto INICIO;// Return to the main menu, in case you want to use the service more.
+
+	// ********
+	// #commerce
+	c_soporte:
+	next;
+	mes .NombreNPC$;
+	mes "State: "+( (canal_soporte) ? "^00BB22On^000000" : "^FF2200Off^000000");
+	menu "- I want "+((!canal_soporte) ? "^00BB22activate^000000" : "^FF2200deactivate^000000")+" this.",-,"- Nothing.",L_quit;
+
+	next;
+	mes .NombreNPC$;
+	if(canal_soporte == 0) {
+		mes "#commerce is now ^00BB22On^000000.";
+		mes "You must send a private message","to #commerce to chat on the channel";
+		set canal_soporte,1;
+		atcommand "@join #commerce";//para encender
+		
+	} else if(canal_soporte == 1) {
+		mes "#commerce is now ^FF2200Off^000000.";
+		set canal_soporte,0;
+		atcommand "@channel leave #commerce";//para apagar
+	}
+	next;
+	goto INICIO;// Return to the main menu, in case you want to use the service more.
+	
+
+	// ********
+	// #party
+	c_ventas:
+	next;
+	mes .NombreNPC$;
+	mes "State: "+( (canal_ventas) ? "^00BB22On^000000" : "^FF2200Off^000000");
+	menu "- I want "+((!canal_ventas) ? "^00BB22activate^000000" : "^FF2200deactivate^000000")+" this.",-,"- Nothing.",L_quit;
+
+	next;
+	mes .NombreNPC$;
+	if(canal_ventas == 0) {
+		mes "#party is now ^00BB22On^000000.";
+		mes "You must send a private message","to #party to chat on the channel";
+		set canal_ventas,1;
+		atcommand "@join #party";//para encender
+		
+	} else if(canal_ventas == 1) {
+		mes "#party is now ^FF2200Off^000000.";
+		set canal_ventas,0;
+		atcommand "@channel leave #party";//para apagar
+	}
+	next;
+	goto INICIO;// Return to the main menu, in case you want to use the service more.
+	
+	
+	// ********
+	// #english
+	c_mapa:
+	next;
+	mes .NombreNPC$;
+	mes "State: "+( (canal_mapa) ? "^00BB22On^000000" : "^FF2200Off^000000");
+	menu "- I want "+((!canal_mapa) ? "^00BB22activate^000000" : "^FF2200deactivate^000000")+" this.",-,"- Nothing.",L_quit;
+
+	next;
+	mes .NombreNPC$;
+	if(canal_mapa == 0) {
+		mes "#english is now ^00BB22On^000000.";
+		mes "You must send a private message","to #english to chat on the channel";
+		set canal_mapa,1;
+		atcommand "@join #english";//para encender
+		
+	} else if(canal_mapa == 1) {
+		mes "#english is now ^FF2200Off^000000.";
+		set canal_mapa,0;
+		atcommand "@channel leave #english";//para apagar
+	}
+	next;
+	goto INICIO;// Return to the main menu, in case you want to use the service more.
+	
+
+	// ********
+	// #spanish
+	c_aliados:
+	next;
+	mes .NombreNPC$;
+	mes "State: "+( (canal_aliados) ? "^00BB22On^000000" : "^FF2200Off^000000");
+	menu "- I want "+((!canal_aliados) ? "^00BB22activate^000000" : "^FF2200deactivate^000000")+" this.",-,"- Nothing.",L_quit;
+
+	next;
+	mes .NombreNPC$;
+	if(canal_aliados == 0) {
+		mes "#spanish is now ^00BB22On^000000.";
+		mes "You must send a private message","to #spanish to chat on the channel";
+		set canal_aliados,1;
+		atcommand "@join #spanish";//para encender
+		
+	} else if(canal_aliados == 1) {
+		mes "#spanish is now ^FF2200Off^000000.";
+		set canal_aliados,0;
+		atcommand "@channel leave #spanish";//para apagar
+	}
+	next;
+	goto INICIO;// Return to the main menu, in case you want to use the service more.
+
+
+	// ********
+	// #french
+	c_french:
+	next;
+	mes .NombreNPC$;
+	mes "State: "+( (canal_french) ? "^00BB22On^000000" : "^FF2200Off^000000");
+	menu "- I want "+((!canal_french) ? "^00BB22activate^000000" : "^FF2200deactivate^000000")+" this.",-,"- Nothing.",L_quit;
+
+	next;
+	mes .NombreNPC$;
+	if(canal_french == 0) {
+		mes "#french is now ^00BB22On^000000.";
+		mes "You must send a private message","to #french to chat on the channel";
+		set canal_french,1;
+		atcommand "@join #french";//para encender
+		
+	} else if(canal_french == 1) {
+		mes "#french is now ^FF2200Off^000000.";
+		set canal_french,0;
+		atcommand "@channel leave #french";//para apagar
+	}
+	next;
+	goto INICIO;// Return to the main menu, in case you want to use the service more.
+
+
+	// ********
+	// #tagalog
+	c_tagalog:
+	next;
+	mes .NombreNPC$;
+	mes "State: "+( (canal_tagalog) ? "^00BB22On^000000" : "^FF2200Off^000000");
+	menu "- I want "+((!canal_tagalog) ? "^00BB22activate^000000" : "^FF2200deactivate^000000")+" this.",-,"- Nothing.",L_quit;
+
+	next;
+	mes .NombreNPC$;
+	if(canal_tagalog == 0) {
+		mes "#tagalog is now ^00BB22On^000000.";
+		mes "You must send a private message","to #tagalog to chat on the channel";
+		set canal_tagalog,1;
+		atcommand "@join #tagalog";//para encender
+		
+	} else if(canal_tagalog == 1) {
+		mes "#tagalog is now ^FF2200Off^000000.";
+		set canal_tagalog,0;
+		atcommand "@channel leave #tagalog";//para apagar
+	}
+	next;
+	goto INICIO;// Return to the main menu, in case you want to use the service more.
+
+
+	// ********
+	//SALIR
+	L_quit:
+	next;
+	mes .NombreNPC$;
+	mes "¡Nos vemos!";
+	mes "Regresa cuando quieras.";
+	cutin "",255;
+	close;
+
+//OnPCLoginEvent:
+// ************************************
+// CANALES ACTIVADOS AUTOMATICAMENTE
+//
+//if(canal_principal == 1)	{
+//	atcommand "@channel join #main";
+//}
+//if(canal_soporte == 1) {
+//	atcommand "@channel join #commerce";
+//}
+//if(canal_ventas == 1) {
+//	atcommand "@channel join #party";
+//}
+//if(canal_mapa == 1) {
+//	atcommand "@channel join #english";
+//}
+//if(canal_aliados == 1) {
+//	atcommand "@channel join #spanish";
+//}
+//***************************
+end;
+}

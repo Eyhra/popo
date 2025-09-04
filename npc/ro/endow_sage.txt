@@ -1,0 +1,167 @@
+//===== eAthena & Freya Script ===============================
+//= Drogador NPC
+//===== Creado Por ===========================================
+//= [Stinger]
+//===== Modificado por =======================================
+//= 2Wire,Shura
+//===== Descripcion: =========================================
+//= Encanta armas con elementos,holy,water,fire,wind,earth.
+//============================================================
+seal,59,81,5	script	Elemental Charlotte::Endow	10053,{
+M_Menu:
+cutin "dalle01",2;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "¿Deseas algun tipo de elemento en tu arma?  puede incrementar tu fuerza sorprendemente.";
+next;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Puedo transformar tu arma a Elemental por solo 20.000z mas el item correspondiente a cada elemento:";
+next;
+if(Zeny < 20000) goto M_NotEnough;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Selecciona el elemento que deseas que convierta tu arma:";
+menu "^10B2D2 [ > ] ^000000 Aspersio - ^5533FF20k + Holy Water^000000",M_Holy,"^10B2D2 [ > ] ^000000 Flame Launcher - ^5533FF20k + Red Blood^000000",M_Fire,"^10B2D2 [ > ] ^000000 Frost Weapon - ^5533FF20k + Crystal Blue^000000",M_Cold,"^10B2D2 [ > ] ^000000 Windy Loader - ^5533FF20k + Wind of Verdure^000000",M_Wind,"^10B2D2 [ > ] ^000000 Seismic Weapon - ^5533FF20k + Green Live^000000",M_Earth;
+
+M_Holy:
+if(Zeny < 20000) goto M_NotEnough;
+if(countitem(523) < 1) goto LNotEnoughH;
+next;
+sc_start 37,300000,5;
+skilleffect 68,0;
+delitem 523,1;
+set Zeny, Zeny - 20000;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Listo. Vuelve cuando quieras.";
+emotion 21;
+cutin "",255;
+close;
+
+
+M_Fire:
+if(Zeny < 20000) goto M_NotEnough;
+if((countitem(990) < 1)) goto LNotEnoughF;
+next;
+sc_start 96,1800000,5;
+skilleffect 280,0;
+set Zeny, Zeny - 20000;
+delitem 990,1;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Listo. Vuelve cuando quieras.";
+emotion 21;
+cutin "",255;
+close;
+
+M_Cold:
+if(Zeny < 20000) goto M_NotEnough;
+if((countitem(991) < 1)) goto LNotEnoughA;
+next;
+sc_start 97,1800000,5;
+skilleffect 281,0;
+delitem 991,1;
+set Zeny, Zeny - 20000;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Listo. Vuelve cuando quieras.";
+emotion 21;
+cutin "",255;
+close;
+
+M_Wind:
+if(Zeny < 20000) goto M_NotEnough;
+if((countitem(992) < 1)) goto LNotEnoughV;
+next;
+sc_start 98,1800000,5;
+skilleffect 282,0;
+delitem 992,1;
+set Zeny, Zeny - 20000;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Listo. Vuelve cuando quieras.";
+emotion 21;
+cutin "",255;
+close;
+
+M_Earth:
+if(Zeny < 20000) goto M_NotEnough;
+if((countitem(993) < 1)) goto LNotEnoughT;
+next;
+sc_start 99,1800000,5;
+skilleffect 283,0;
+delitem 992,1;
+set Zeny, Zeny - 20000;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Listo. Vuelve cuando quieras.";
+emotion 21;
+cutin "",255;
+close;
+
+LNotEnoughH:
+next;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Primero necesitas un ^5533FFHoly Water^000000, luego podre hacer tu arma ^5533FFTipo Holy^000000.";
+cutin "",255;
+close;
+
+LNotEnoughF:
+next;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Primero necesitas un ^5533FFRed Blood^000000, luego podre hacer tu arma ^5533FFTipo Fuego^000000.";
+cutin "",255;
+close;
+
+LNotEnoughA:
+next;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Primero necesitas un ^5533FFCrystal Blue^000000, luego podre hacer tu arma ^5533FFTipo Agua^000000.";
+cutin "",255;
+close;
+
+LNotEnoughV:
+next;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Primero necesitas un ^5533FFWind Of Verdure^000000, luego podre hacer tu arma ^5533FFTipo Viento^000000.";
+cutin "",255;
+close;
+
+
+LNotEnoughT:
+next;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "Primero necesitas un ^5533FFGreen Live^000000, luego podre hacer tu arma ^5533FFTipo Tierra^000000.";
+cutin "",255;
+close;
+
+M_NotEnough:
+next;
+mes "[ ^0065DFElemental Charlotte^000000 ]";
+mes "No tienes el zeny suficiente. Lo siento, vuelve mas tarde.";
+cutin "",255;
+close;
+
+
+}
+
+prontera,140,181,4	duplicate(Endow)	Elemental Charlotte#1	10053
+morocc,147,101,4	duplicate(Endow)	Elemental Charlotte#2	10053
+geffen,108,65,4	duplicate(Endow)	Elemental Charlotte#3	10053
+payon,166,104,4	duplicate(Endow)	Elemental Charlotte#4	10053
+alberta,23,243,4	duplicate(Endow)	Elemental Charlotte#5	10053
+izlude,120,98,4	duplicate(Endow)	Elemental Charlotte#6	10053
+aldebaran,146,115,4	duplicate(Endow)	Elemental Charlotte#7	10053
+xmas,141,126,4	duplicate(Endow)	Elemental Charlotte#8	10053
+comodo,183,155,4	duplicate(Endow)	Elemental Charlotte#9	10053
+yuno,149,188,4	duplicate(Endow)	Elemental Charlotte#10	10053
+amatsu,122,153,4	duplicate(Endow)	Elemental Charlotte#11	10053
+gonryun,166,117,4	duplicate(Endow)	Elemental Charlotte#12	10053
+umbala,96,158,4	duplicate(Endow)	Elemental Charlotte#13	10053
+louyang,210,109,4	duplicate(Endow)	Elemental Charlotte#14	10053
+ayothaya,220,183,4	duplicate(Endow)	Elemental Charlotte#15	10053
+einbroch,71,197,4	duplicate(Endow)	Elemental Charlotte#16	10053
+lighthalzen,150,101,4	duplicate(Endow)	Elemental Charlotte#17	10053
+einbech,168,119,4	duplicate(Endow)	Elemental Charlotte#18	10053
+hugel,101,145,4	duplicate(Endow)	Elemental Charlotte#19	10053
+rachel,112,140,4	duplicate(Endow)	Elemental Charlotte#20	10053
+veins,212,137,4	duplicate(Endow)	Elemental Charlotte#21	10053
+moscovia,230,193,4	duplicate(Endow)	Elemental Charlotte#22	10053
+mid_camp,231,237,4	duplicate(Endow)	Elemental Charlotte#23	10053
+manuk,282,151,4	duplicate(Endow)	Elemental Charlotte#24	10053
+splendide,195,149,4	duplicate(Endow)	Elemental Charlotte#25	10053
+brasilis,208,225,4	duplicate(Endow)	Elemental Charlotte#26	10053
+dicastes01,187,182,4	duplicate(Endow)	Elemental Charlotte#27	10053

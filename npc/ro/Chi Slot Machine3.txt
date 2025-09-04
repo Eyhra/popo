@@ -1,0 +1,177 @@
+
+pvp_n_room,73,32,5	script	Slot Machine	563,{
+
+mes "^FF9900Slot Machine^000000";
+mes "Bienvenidos a la maquina de suerte... aca puedes ganar muchos items o consumibles dependiendo de su suerte!!!";
+close2;
+menu
+"^cc00ccInsert 1 Chi Coin^000000",play,"^0000FFChange Chi Coins^000000",canje,"Exit",L_sal;
+
+canje:
+mes "^FF9900Slot Machine^000000";
+mes "En esta opcion puedo cambiar 50000 Chi coins por 2 cash points";
+mes "click Next to confirm";
+next;
+if(countitem(6242) < 5000) callsub Falta;
+mes "^FF9900Slot Machine^000000";
+mes "Earned 2, Cash Point !";
+delitem 6242,50000;
+specialeffect2 18;
+set #CASHPOINTS,#CASHPOINTS+2;
+dispbottom "[CashPoints +2] Total ["+#CASHPOINTS+"]";
+end;
+
+
+
+
+play:
+if( countitem(6242) < 1) callsub Falta2;
+delitem 6242,1;
+switch( rand(11) ) {
+
+case 0: goto Pierde1;
+
+case 1: goto Pierde2;
+
+case 2: goto winner;
+
+case 3: goto winner2;
+
+case 4: goto almost;
+
+case 5: goto Pierde1;
+
+case 6: goto ultralose;
+
+case 7: goto ultrasafe;
+
+case 8: goto sandiW;
+
+case 9: goto sandiL;
+
+case 10: goto GCW;
+
+
+L_sal:
+npctalk "Adios";
+close;
+
+winner:
+specialeffect 540; specialeffect 500; sleep2 220; cutin "StartP0",2; sleep2 220; specialeffect 18; cutin "StartP1",2; sleep2 220; specialeffect 18; cutin "StartP2",2; sleep2 220;
+specialeffect 18; cutin "Pwin",2; sleep2 220; soundeffectall "poring_attack.wav",0;  cutin "Pwin1",2; sleep2 220; soundeffectall "poring_attack.wav",0; cutin "Pwin2",2; sleep2 220;
+soundeffectall "poring_attack.wav",0; cutin "Pwin3",2; sleep2 220; soundeffectall "poring_attack.wav",0; cutin "Pwin1",2; sleep2 220; soundeffectall "poring_attack.wav",0; cutin "Pwin2",2; 
+sleep2 220; cutin "Pwin3",2; soundeffectall "poring_attack.wav",0; sleep2 220; cutin "Pwin3",255; specialeffect 10; getitem 6242,5; end;
+
+GCW:
+specialeffect 540; specialeffect 500; sleep2 300; cutin "StartGC0",2; sleep2 300; specialeffect 18;  cutin "StartGC1",2; sleep2 300; specialeffect 18; cutin "StartGC2",2; sleep2 300;
+specialeffect 18; cutin "StartGC3",2; sleep2 300;  cutin "StartGCW",2; specialeffect2 565; sleep2 300; cutin "StartGCW1",2; sleep2 300; specialeffect2 566; cutin "StartGCW2",2; sleep2 300; cutin "StartGCW3",2; specialeffect2 567; sleep2 300; cutin "StartGCW4",2; 
+sleep2 300; cutin "StartGC3",2; sleep2 300; specialeffect2 969; cutin "StartGCW4",2; sleep2 300; cutin "StartGCW4",255; specialeffect 10; npctalk "x3 Ghost Chills"; getitem 6471,3; end;
+
+winner2:
+specialeffect 540; specialeffect 500; sleep2 220; cutin "StartP0",2; sleep2 220; specialeffect 18; cutin "Starte",2; sleep2 220; specialeffect 18; cutin "Starte2",2; sleep2 220;
+specialeffect 18; cutin "Starte3",2; sleep2 220; specialeffect 18; cutin "ewin1",2; sleep2 220; specialeffect 18; cutin "ewin2",2; sleep2 220;
+specialeffect 18; cutin "ewin3",2; sleep2 220; specialeffect 18; cutin "ewin1",2; sleep2 220; specialeffect 18; cutin "ewin2",2; sleep2 220;
+specialeffect 18; cutin "ewin3",2; sleep2 220;  sleep2 100; cutin "ewin3",255; specialeffect 10; specialeffect 18; npctalk "Random Item Prize"; 
+switch( rand(13) ) {
+case 0: getitem 14590,1; break;
+case 1: getitem 14588,1; break;
+case 2: getitem 14589,1; break;
+case 3: getitem 984,1; break;
+case 4: getitem 985,1; break;
+case 5: getitem 607,1; break;
+case 6: getitem 13994,5; break;
+case 7: getitem 12928,5; break;
+
+case 8: specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2;  sleep2 120; specialeffect 311; specialeffect2 268; cutin "StartR",2; sleep2 120; 
+specialeffect2 268; specialeffect 311; cutin "StartR2",2; sleep2 120; specialeffect2 268; specialeffect 31; cutin "StartRW",2; specialeffect 40; sleep2 120;
+mapannounce "prontera","Slots Machine: " + strcharinfo(0) + " ha ganado un premio especial.",0; getitem 6242,30; sleep2 120; cutin "StartRW",255; break;
+
+case 9:
+specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2;  sleep2 120; specialeffect 380; specialeffect2 268; cutin "StartR",2; sleep2 120; 
+specialeffect2 268; specialeffect 380; cutin "StartR2",2; sleep2 120; specialeffect2 268; specialeffect 160; cutin "StartRL",2; specialeffect 40; npctalk "Perdiste a Lo Grande"; sleep2 120; cutin "StartRL",255; break;
+
+case 10: getitem 7621,2; break;
+
+case 11: specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2;  sleep2 120; specialeffect 311; specialeffect2 268; cutin "StartR",2; sleep2 120; 
+specialeffect2 268; specialeffect 311; cutin "StartR2",2; sleep2 120; specialeffect2 268; specialeffect 31; cutin "StartRW",2; specialeffect 40; sleep2 120;
+mapannounce "prontera","Slots Machine: " + strcharinfo(0) + " ha ganado un premio especial.",0; getitem 6242,25; sleep2 120; cutin "StartRW",255; break;		
+
+case 12: specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2;  sleep2 120; specialeffect 311; specialeffect2 268; cutin "StartR",2; sleep2 120; 
+specialeffect2 268; specialeffect 311; cutin "StartR2",2; sleep2 120; specialeffect2 268; specialeffect 31; cutin "StartRW",2; specialeffect 40; sleep2 120;
+mapannounce "prontera","Slots Machine: " + strcharinfo(0) + " ha ganado un premio especial.",0; getitem 12300,1; sleep2 120; cutin "StartRW",255; break;
+
+}
+end;
+
+almost:
+specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2; sleep2 120; specialeffect 18; cutin "Starte",2; sleep2 120; specialeffect 18; cutin "Starte2",2; sleep2 120;
+specialeffect 18; cutin "Starte2p",2; sleep2 200; cutin "Starte2p1",2; sleep2 120; cutin "Starte2p2",2; sleep2 200; cutin "Starte2p3",2; soundeffectall "yoyo_die.wav",0; sleep2 200; 
+cutin "Starte2p4",2; sleep2 300; specialeffect2 501; cutin "Starte2p4",255; specialeffect2 2; specialeffect 734; percentheal -6,0; sleep2 190; specialeffect 734; specialeffect2 1; percentheal -5,0; sleep2 220;
+specialeffect2 3; specialeffect 734; percentheal -7,0; specialeffect2 2; sleep2 400; specialeffect2 4; sleep2 190; npctalk "Haz Perdido Energia Vital!"; heal -400,0; end;
+
+Pierde1:
+specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2; sleep2 120; specialeffect 18; cutin "StartP1",2; sleep2 120; specialeffect 18; cutin "StartP2",2; sleep2 120;
+specialeffect 18; cutin "Lose",2; emotion e_whisp; sleep2 120; specialeffect2 380; cutin "Lose2",2; emotion e_whisp; sleep2 120; soundeffectall "wraith_die.wav",0; cutin "Lose3",2; sleep2 120; emotion e_whisp; cutin "Lose4",2; sleep2 120; cutin "Lose4",255; end;
+
+Pierde2:
+specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2; sleep2 120; specialeffect 18; cutin "Starte",2; sleep2 120; specialeffect 18; cutin "Starte2",2; sleep2 120;
+specialeffect 18; cutin "StarteL",2; sleep2 200; specialeffect2 380; soundeffectall "isilla_die.wav",0; cutin "Startel1",2; sleep2 120; cutin "Startel2",2; sleep2 120;
+cutin "Startel3",2; sleep2 100; cutin "Startel4",2; sleep2 200; cutin "Startel5",2; sleep2 200; cutin "Startel5",255; sleep2 100; specialeffect 268; sleep2 120;
+specialeffect2 274; npctalk "Perdiste 1 Chi Coin"; delitem 6242,1; end;
+
+ultralose:
+specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2;  sleep2 120; specialeffect 380; specialeffect2 268; cutin "StarL1",2; sleep2 120; specialeffect2 268;
+specialeffect 380; cutin "StarL2",2; sleep2 120; specialeffect 380; npctalk "Dame tus Zeny haha!"; specialeffect2 268; cutin "StarL3",2;
+soundeffectall "naght_sieger_die.wav",0; specialeffect2 268; sleep2 50; specialeffect2 1; sleep2 50;
+makeitem 530,1,"prontera",161,167; sleep2 50; makeitem 530,1,"prontera",158,164; sleep2 50; specialeffect2 1; makeitem 530,1,"prontera",167,166; sleep2 120; specialeffect2 1; 
+cutin "ultralose",2; delitem 6242,1; sleep2 50; specialeffect2 1; sleep2 50; specialeffect2 1; monster "prontera",158,170,"Thief",1261,1;
+sleep2 200; cutin "ultralose1",2; sleep2 200; cutin "ultralose2",2; sleep2 200; cutin "ultralose3",2; sleep2 200; cutin "ultralose4",2; delitem 6242,1;
+sleep2 200; cutin "ultralose4",255; delitem 6242,1; npctalk "1 Chi Coins Stolen"; percentheal -50,-50; end;
+
+ultrasafe:
+specialeffect 540; specialeffect 500; sleep2 120; cutin "StartP0",2; sleep2 120; specialeffect 380; specialeffect2 268; cutin "StarL1",2; sleep2 120; specialeffect2 268;
+specialeffect 380; cutin "StarL2",2; sleep2 120; specialeffect 380; specialeffect2 268; cutin "StarL3",2; sleep2 120; cutin "ultrasafe1",2; sleep2 300; specialeffect 40; cutin "ultrasafe2",2;
+sleep2 120; specialeffect 75; cutin "ultrasafe3",2; sleep2 120; cutin "ultrasafe4",2; soundeffectall "poring_attack.wav",0; sleep2 120; cutin "ultrasafe5",2; soundeffectall "poring_die.wav",0; sleep2 50;
+soundeffectall "poring_die.wav",0; sleep2 100; cutin "ultrasafe6",2; soundeffectall "poring_attack.wav",0; sleep2 120;  cutin "ultrasafe7",2; soundeffectall "poring_die.wav",0; specialeffect2 82; sleep2 120; 
+cutin "ultrasafe8",2; specialeffect2 84; sleep2 120; cutin "ultrasafe9",2; sleep2 50; specialeffect 18; getitem 6242,1; sleep2 120; cutin "ultrasafe10",2; sleep2 50; specialeffect 18; sleep2 50; 
+specialeffect 18;cutin "ultrasafe10",255; npctalk "Salvado por el angeling! Recuperaste 1 chi coin"; percentheal 100,100; end;
+
+sandiW:
+specialeffect 540; specialeffect 500; sleep2 300; cutin "StartP0",2; sleep2 300; soundeffectall "rafflesia_attack.wav",0; cutin "StartS1",2;
+sleep2 300; cutin "StartS2",2; soundeffectall "rafflesia_attack.wav",0; sleep2 300;  cutin "StartS3",2; soundeffectall "rafflesia_attack.wav",0;
+sleep2 370; cutin "StartSW1",2; specialeffect 18;  sleep2 370; cutin "StartSW2",2; specialeffect 18; sleep2 370; specialeffect 18; cutin "StartSW3",2; 
+sleep2 370; cutin "StartSW4",2; specialeffect 18; sleep2 370; cutin "StartSW5",2; sleep2 100; specialeffect 18; cutin "StartSW1",2; sleep2 100;
+specialeffect 18; sleep2 100; cutin "StartSW2",2; sleep2 100; cutin "StartSW3",2; specialeffect 18; sleep2 100; specialeffect 18; cutin "StartSW4",2; sleep2 100;
+specialeffect 18; cutin "StartSW5",2; sleep2 100; cutin "StartSW5",255; specialeffect2 568; npctalk "Premio Frutal!";  sleep2 300; specialeffect 10; getitem 6411,10; end;
+
+sandiL:
+specialeffect 540; specialeffect 500; sleep2 300; cutin "StartP0",2;  sleep2 300; soundeffectall "rafflesia_attack.wav",0; cutin "StartS1",2;
+sleep2 350; soundeffectall "rafflesia_attack.wav",0; cutin "StartS2",2; sleep2 350; specialeffect 380; npctalk "OMG que cerca!!"; specialeffect2 268; cutin "StartSL1",2;
+soundeffectall "naga_attack.wav",0; sleep2 300; cutin "StartSL2",2; sleep2 300; cutin "StartSL3",2; sleep2 300; cutin "StartSL4",2; sleep2 300; cutin "StartSL5",2;
+soundeffectall "rafflesia_attack.wav",0; sleep2 300; cutin "StartSL6",2; soundeffectall "naga_attack.wav",0; sleep2 300; cutin "StartSL7",2; sleep2 300;
+cutin "StartSL8",2; sleep2 300; soundeffectall "rafflesia_attack.wav",0; sleep2 300; specialeffect 380; cutin "StartSL9",2; sleep2 300;
+cutin "StartSL10",2; sleep2 300; cutin "StartSL11",2; sleep2 300; cutin "StartSL11",255;  npctalk "Almost!";
+percentheal -50,-50; heal -300,0;  end;
+
+Falta2:
+mes "Necesitas 1 chi coin para jugar!";
+next;
+specialeffect 571;
+sleep2 300;
+specialeffect2 108;
+sleep2 300;
+warp "prontera",162,189;
+end;
+
+Falta:
+npctalk "No tienes chi coins para jugar!";
+specialeffect 571;
+sleep2 300;
+specialeffect2 108;
+sleep2 300;
+warp "prontera",162,189;
+end;
+}
+}
+
+

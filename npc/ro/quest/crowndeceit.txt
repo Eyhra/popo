@@ -1,0 +1,44 @@
+paramk,67,98,4	script	Crown Of Deceit	680,{
+	mes "[^000000Crown Of Deceit^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte una Crown Of Deceit, te interesa?";
+	mes "Este item se sitúa en up y da int+4 reduce variable cast time by 10%.";
+	next;
+	menu "Qué necesito?",L_required,"Claro que sí, aquí están tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Crown Of Deceit^000000]";
+		mes "^FF00003^000000 Broken Crown"; //7754
+		mes "^FF00001^000000 Crown [1]"; //5165
+		mes "^FF00007^000000 Jewel Crown"; //5002
+		mes "^FF000010^000000 Matchstick"; //7035
+		close;
+
+	L_check:
+		if(countitem(7754) < 3) goto L_manque;
+		if(countitem(5165) < 1) goto L_manque;
+		if(countitem(5002) < 7) goto L_manque;
+		if(countitem(7035) < 10) goto L_manque;
+		mes "[^000000Crown Of Deceit^000000]";
+		mes "Aquí está tu Crown Of Deceit";
+		delitem 7754,3;
+		delitem 5165,1;
+		delitem 5002,7;
+		delitem 7035,10;
+		getitem 5564,1;
+		close;
+
+	L_manque:
+		mes "[^000000SCrown Of Deceit^000000]";
+		mes "Te faltan: ";
+		if(countitem(7754) < 3) mes "^FF0000"+(3 - countitem(7754)) +"^000000 Broken Crown";
+		if(countitem(5165) < 1) mes "^FF0000"+(1 - countitem(5165)) +"^000000 Crown [1]";
+		if(countitem(5002) < 7) mes "^FF0000"+(7 - countitem(5002)) +"^000000 Jewel Crown";
+		if(countitem(7035) < 10) mes "^FF0000"+(10 - countitem(7035)) +"^000000 Matchstick";
+		close;
+
+	L_partir:
+		mes "[^000000Crown Of Deceit^000000]";
+		mes "Disfruta de tu nuevo item, que tengas un buen día en CHIRO.";
+		close;
+}

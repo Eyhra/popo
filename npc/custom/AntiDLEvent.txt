@@ -1,0 +1,106 @@
+-	script	AntiDLEvent	-1,{
+
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == "p_track01" || strcharinfo(3) == "ball2" || strcharinfo(3) == "guild_vs5" || strcharinfo(3) == "maze" || strcharinfo(3) == "ghmp_map" || strcharinfo(3) == "quiz_01" || strcharinfo(3) == "new_5-4" || strcharinfo(3) == "miner_camp" || 
+	strcharinfo(3) == "bat_a01" || strcharinfo(3) == "bat_a02" || strcharinfo(3) == "bat_a03" || strcharinfo(3) == "bat_a04" || strcharinfo(3) == "bat_a05" || 
+	strcharinfo(3) == "bat_b01" || strcharinfo(3) == "bat_b02" || strcharinfo(3) == "bat_b03" || strcharinfo(3) == "bat_b04" || strcharinfo(3) == "bat_b05" || 
+	strcharinfo(3) == "bat_c01" || strcharinfo(3) == "bat_c02" || strcharinfo(3) == "bat_c03" || strcharinfo(3) == "bat_c04" || strcharinfo(3) == "bat_c05" || strcharinfo(3) == "bat_c06" || strcharinfo(3) == "bat_c07" || strcharinfo(3) == "bat_c08" || 
+	strcharinfo(3) == "region_8" || strcharinfo(3) == "bat_room" || strcharinfo(3) == "guild_vs2" || strcharinfo(3) == "guild_vs3" || strcharinfo(3) == "pvp_n_1-3" || strcharinfo(3) == "pvp_n_1-5" || 
+	strcharinfo(3) == "prtg_cas01" || strcharinfo(3) == "prtg_cas02" || strcharinfo(3) == "prtg_cas03" || strcharinfo(3) == "prtg_cas04" || strcharinfo(3) == "prtg_cas05" || 
+	strcharinfo(3) == "payg_cas01" || strcharinfo(3) == "payg_cas02" || strcharinfo(3) == "payg_cas03" || strcharinfo(3) == "payg_cas04" || strcharinfo(3) == "payg_cas05" || 
+	strcharinfo(3) == "gefg_cas01" || strcharinfo(3) == "gefg_cas02" || strcharinfo(3) == "gefg_cas03" || strcharinfo(3) == "gefg_cas04" || strcharinfo(3) == "gefg_cas05" || 
+	strcharinfo(3) == "aldeg_cas01" || strcharinfo(3) == "aldeg_cas02" || strcharinfo(3) == "aldeg_cas03" || strcharinfo(3) == "aldeg_cas04" || strcharinfo(3) == "aldeg_cas05" || 
+	strcharinfo(3) == "schg_cas01" || strcharinfo(3) == "schg_cas02" || strcharinfo(3) == "schg_cas03" || strcharinfo(3) == "schg_cas04" || strcharinfo(3) == "schg_cas05" || strcharinfo(3) == "schg_cas06" || strcharinfo(3) == "schg_cas07" || strcharinfo(3) == "schg_cas08" || 
+	strcharinfo(3) == "arug_cas01" || strcharinfo(3) == "arug_cas02" || strcharinfo(3) == "arug_cas03" || strcharinfo(3) == "arug_cas04" || strcharinfo(3) == "arug_cas05" || strcharinfo(3) == "arug_cas06" || strcharinfo(3) == "arug_cas07" || strcharinfo(3) == "arug_cas08" || 
+	strcharinfo(3) == "rush_cas01" || strcharinfo(3) == "rush_cas02" || strcharinfo(3) == "rush_cas03" || strcharinfo(3) == "rush_cas04" || strcharinfo(3) == "nguild_alde" || strcharinfo(3) == "nguild_gef" || strcharinfo(3) == "nguild_pay" || strcharinfo(3) == "nguild_prt") {	
+		set .@len, query_sql("select `char`.`account_id` from `char` right join `login` on `login`.`account_id` = `char`.`account_id` where `char`.`online` = 1 and `login`.`last_unique_id` = '"+get_unique_id()+"'",.@a );
+		if(.@len-1) {
+			for(set(.@d,0);.@d<.@len;set(.@d,.@d+1)) {
+				getmapxy(.@map$,.@x,.@y,0,rid2name(.@a[.@d]));
+				if(strcharinfo(3)==.@map$ && rid2name(.@a[.@d])!=strcharinfo(0)) {
+					dispbottom "Doble Login no es permitido aquí.";
+					sleep2 2000;
+					warp "SavePoint",0,0;
+				}
+			}
+		}
+		end;
+	}
+}
+
+miner_camp	mapflag	loadevent
+ball2	mapflag	loadevent
+p_track01	mapflag	loadevent
+guild_vs5	mapflag	loadevent
+maze	mapflag	loadevent
+ghmp_map	mapflag	loadevent
+quiz_01	mapflag	loadevent
+new_5-4	mapflag	loadevent
+guild_vs2	mapflag	loadevent
+pvp_n_1-5	mapflag	loadevent
+pvp_n_1-3	mapflag	loadevent
+guild_vs3	mapflag	loadevent
+bat_room	mapflag	loadevent
+nguild_alde	mapflag	loadevent
+nguild_gef	mapflag	loadevent
+nguild_pay	mapflag	loadevent
+nguild_prt	mapflag	loadevent
+schg_cas01	mapflag	loadevent
+schg_cas02	mapflag	loadevent
+schg_cas03	mapflag	loadevent
+schg_cas04	mapflag	loadevent
+schg_cas05	mapflag	loadevent
+arug_cas01	mapflag	loadevent
+arug_cas02	mapflag	loadevent
+arug_cas03	mapflag	loadevent
+arug_cas04	mapflag	loadevent
+arug_cas05	mapflag	loadevent
+aldeg_cas01	mapflag	loadevent
+aldeg_cas02	mapflag	loadevent
+aldeg_cas03	mapflag	loadevent
+aldeg_cas04	mapflag	loadevent
+aldeg_cas05	mapflag	loadevent
+gefg_cas01	mapflag	loadevent
+gefg_cas02	mapflag	loadevent
+gefg_cas03	mapflag	loadevent
+gefg_cas04	mapflag	loadevent
+gefg_cas05	mapflag	loadevent
+payg_cas01	mapflag	loadevent
+payg_cas02	mapflag	loadevent
+payg_cas03	mapflag	loadevent
+payg_cas04	mapflag	loadevent
+payg_cas05	mapflag	loadevent
+prtg_cas01	mapflag	loadevent
+prtg_cas02	mapflag	loadevent
+prtg_cas03	mapflag	loadevent
+prtg_cas04	mapflag	loadevent
+prtg_cas05	mapflag	loadevent
+schg_cas07	mapflag	loadevent
+schg_cas08	mapflag	loadevent
+schg_cas06	mapflag	loadevent
+arug_cas06	mapflag	loadevent
+arug_cas07	mapflag	loadevent
+arug_cas08	mapflag	loadevent
+region_8	mapflag	loadevent
+bat_a05	mapflag	loadevent
+bat_a04	mapflag	loadevent
+bat_a02	mapflag	loadevent
+bat_a03	mapflag	loadevent
+bat_a01	mapflag	loadevent
+rush_cas01	mapflag	loadevent
+rush_cas02	mapflag	loadevent
+rush_cas03	mapflag	loadevent
+rush_cas04	mapflag	loadevent
+bat_c08	mapflag	loadevent
+bat_c07	mapflag	loadevent
+bat_c06	mapflag	loadevent
+bat_c05	mapflag	loadevent
+bat_c04	mapflag	loadevent
+bat_c03	mapflag	loadevent
+bat_c02	mapflag	loadevent
+bat_c01	mapflag	loadevent
+bat_b05	mapflag	loadevent
+bat_b04	mapflag	loadevent
+bat_b03	mapflag	loadevent
+bat_b02	mapflag	loadevent
+bat_b01	mapflag	loadevent

@@ -1,0 +1,2 @@
+//prontera,156,158,0	warp	custom	1,1,jupe_ele,41,44
+prontera,156,158,0	warp	custom	1,1,pvp_2vs2,49,33

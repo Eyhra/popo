@@ -1,0 +1,69 @@
+# Generated with Secret's Attendance Generator version 1.1.0
+Header:
+  Type: ATTENDANCE_DB
+  Version: 1
+  
+Body:
+#  - Start: 20200912
+#    End: 20210629
+#    Rewards:
+#      - Day: 1
+#        ItemId: 12212
+#        Amount: 1
+#      - Day: 2
+#        ItemId: 11501
+#        Amount: 10
+#      - Day: 3
+#        ItemId: 14534
+#        Amount: 2
+#      - Day: 4
+#        ItemId: 12422
+#        Amount: 5
+#      - Day: 5
+#        ItemId: 12216
+#        Amount: 5
+#      - Day: 6
+#        ItemId: 14543
+#        Amount: 2
+#      - Day: 7
+#        ItemId: 14606
+#        Amount: 1
+#      - Day: 8
+#        ItemId: 14541
+#        Amount: 2
+#      - Day: 9
+#        ItemId: 14525
+#        Amount: 3
+#      - Day: 10
+#        ItemId: 12260
+#        Amount: 1
+#      - Day: 11
+#        ItemId: 12299
+#        Amount: 3
+#      - Day: 12
+#        ItemId: 14537
+#        Amount: 5
+#      - Day: 13
+#        ItemId: 12215
+#        Amount: 5
+#      - Day: 14
+#        ItemId: 11502
+#        Amount: 10
+#      - Day: 15
+#        ItemId: 12221
+#        Amount: 1
+#      - Day: 16
+#        ItemId: 12235
+#        Amount: 5
+#      - Day: 17
+#        ItemId: 14526
+#        Amount: 3
+#      - Day: 18
+#        ItemId: 12425
+#        Amount: 5
+#      - Day: 19
+#        ItemId: 14532
+#        Amount: 1
+#      - Day: 20
+#        ItemId: 564
+#        Amount: 20

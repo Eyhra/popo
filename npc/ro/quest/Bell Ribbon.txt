@@ -1,0 +1,68 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= Republic of Midgard [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eA SVN 5000+
+//===== Additional Comments: =================================
+//= v1.0 thanks to QM
+//============================================================
+
+paramk,102,97,4	script	Bell riboon	436,{
+	mes "[^008080Bell riboon^000000]";
+	mes "Hola Visitante!, Soy una de las haditas que hace el Bell Ribbon pero ";
+	mes "necesito unos items ya que el Bell ribbon es uno de los hats mas ";
+	mes "Bonitos~! ";
+	next;
+	menu "¿Qué Necesito?",L_required,"Tengo todos los items!",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^008080Bell riboon^000000]";
+		mes "^FF00001^000000 Big Ribbon"; //2244
+		mes "^FF00001^000000 Small Ribbons"; //5085
+		mes "^FF00001^000000 Ribbon [1]"; //2209
+		mes "^FF00001^000000 Silk Ribbon"; //10007
+		mes "^FF00001^000000 Wrapping Lace "; //7174
+		mes "^FF000010^000000 Gold"; //969
+		mes "^0000FF5000000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(2244) < 1) goto L_manque;
+		if(countitem(5085) < 1) goto L_manque;
+		if(countitem(2209) < 1) goto L_manque;
+		if(countitem(10007) < 1) goto L_manque;
+		if(countitem(7174) < 1) goto L_manque;
+		if(countitem(969) < 10) goto L_manque;
+		if(Zeny < 5000000) goto L_manque;
+		mes "[^008080Bell riboon^000000]";
+		mes "Tienes mucha suerte por tener este hat~";
+		delitem 2244,1;
+		delitem 5085,1;
+		delitem 2209,1;
+		delitem 10007,1;
+		delitem 7174,1;
+		delitem 969,10;
+		set Zeny, Zeny - 5000000;
+		getitem 5382,1;
+		close;
+
+	L_manque:
+		mes "[^008080Bell riboon^000000]";
+		mes "Vaya! Que perdida de tiempo!";
+		if(countitem(2244) < 1) mes "^FF0000"+(1 - countitem(2244)) +"^000000 Big Ribbon";
+		if(countitem(5085) < 1) mes "^FF0000"+(1 - countitem(5085)) +"^000000 Small Ribbons";
+		if(countitem(2209) < 1) mes "^FF0000"+(1 - countitem(2209)) +"^000000 Ribbon [1]";
+		if(countitem(10007) < 1) mes "^FF0000"+(1 - countitem(10007)) +"^000000 Silk Ribbon";
+		if(countitem(7174) < 1) mes "^FF0000"+(1 - countitem(7174)) +"^000000 Wrapping Lace ";
+		if(countitem(969) < 10) mes "^FF0000"+(10 - countitem(969)) +"^000000 Gold";
+		if(Zeny < 5000000) mes "^0000FF"+(5000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^008080Bell riboon^000000]";
+		mes "Adios Viajero! Ese hat es muy bonito!~";
+		close;
+}

@@ -1,0 +1,32 @@
+-	shop	custom_seller2	-1,501:2000000
+1@tnm3,147,66,5	script	Sigur [ROTD Coins]	653,{
+	mes "[ ^308304Sigur ^000000 ]";
+	mes "Solo se acepta " + getitemname(.CoinID) + " como medio de pago.";
+	callshop "custom_seller2",1;
+	npcshopattach "custom_seller2";
+	end;
+	OnBuyItem:
+	for(set .@i,0; .@i<getarraysize(.customs); set .@i,.@i+1) {
+		for(set .@d,0; .@d<getarraysize(@bought_nameid); set .@d,.@d+1) {
+			if(@bought_nameid[.@d]==.customs[.@i]) {
+				if(checkweight(@bought_nameid[.@d],@bought_quantity[.@d])) {
+					if(countitem(.CoinID) >= .Price[.@i]*@bought_quantity[.@d]) {
+						delitem .CoinID,.Price[.@i]*@bought_quantity[.@d];
+						getitem @bought_nameid[.@d],@bought_quantity[.@d];
+					} else dispbottom "No tienes suficientes "+getitemname(.CoinID)+" para comprar este producto.";
+				} else dispbottom "Purchasing these items will put you over the weight limit!";
+			}
+		}
+	}
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	close;
+
+OnInit:
+	setarray .customs[0],19504,19505,19524,19525,19526,19527,19528,19529,19533,19545,19546,19547,19548,19549,19550,19551,19552,19553,19554,19583,19585,19616,19617,19618,19619,19620,19621,19625,19628,19629,19630,19637,19639,19640,19644,19662,19666,19719,19720,19731,19732,19733,19734,19735,19736,19765,19782,19784,19785,19786,19789,19791,19795,19796,19797,19828,19829,19832,19843,19845,19846,19850,19851,19852,19858,19865,19931,19932,19939,19982,20303,20304,20320,20330,20348;
+	set .CoinID,19500; // Enter the ID of the coin here.
+	setarray .Price[0],500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500,500;// Price for each custom is set to 20 coins
+	npcshopitem "custom_seller2",0,0; // Don't touch any coding beyond here
+	for(set .i,0; .customs[.i]; set .i,.i+1) npcshopadditem "custom_seller2",.customs[.i],.Price[.i];
+	end;
+}

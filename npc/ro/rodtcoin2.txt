@@ -1,0 +1,31 @@
+-	shop	custom_seller1	-1,501:2000000
+1@tnm3,147,49,5	script	Helga [ROTD Coins]	677,{
+	mes "[ ^308304Helga ^000000 ]";
+	mes "Solo se acepta " + getitemname(.CoinID) + " como medio de pago.";
+	callshop "custom_seller1",1;
+	npcshopattach "custom_seller1";
+	end;
+	OnBuyItem:
+	for(set .@i,0; .@i<getarraysize(.customs); set .@i,.@i+1) {
+		for(set .@d,0; .@d<getarraysize(@bought_nameid); set .@d,.@d+1) {
+			if(@bought_nameid[.@d]==.customs[.@i]) {
+				if(checkweight(@bought_nameid[.@d],@bought_quantity[.@d])) {
+					if(countitem(.CoinID) >= .Price[.@i]*@bought_quantity[.@d]) {
+						delitem .CoinID,.Price[.@i]*@bought_quantity[.@d];
+						getitem @bought_nameid[.@d],@bought_quantity[.@d];
+					} else dispbottom "No tienes suficientes "+getitemname(.CoinID)+" para comprar este producto.";
+				} else dispbottom "Purchasing these items will put you over the weight limit!";
+			}
+		}
+	}
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	close;
+OnInit:
+	setarray .customs[0],20034,20062,20130,20152,20153,20155,20156,20164,20167,20168,20169,20172,20173,20174,20175,20176,20183,20191,20200,20201,20202,20215,20216,20217,20218,20243,20247,20257,20274,20333,20335,20345,20346,20347,20349,20372,20373,20374,20375,20376,20377,20378,20396,20397,20398,20399,20462,20463,20465,20468;
+	set .CoinID,19500; // Enter the ID of the coin here.
+	setarray .Price[0],1000,1000,750,1000,1000,700,770,860,900,1000,1100,600,700,700,650,650,600,600,600,650,650,750,750,600,750,750,650,700,750,750,600,650,700,700,700,600,700,750,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000;// Price for each custom is set to 20 coins
+	npcshopitem "custom_seller1",0,0; // Don't touch any coding beyond here
+	for(set .i,0; .customs[.i]; set .i,.i+1) npcshopadditem "custom_seller1",.customs[.i],.Price[.i];
+	end;
+}

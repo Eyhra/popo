@@ -1,0 +1,97 @@
+prontera.gat,163,177,4	script	Beta Test	756,{
+delwaitingroom;
+waitingroom "Beta Testing",0;
+	set .@namenpctest$,"[Beta Testing]";
+
+	mes .@namenpctest$;
+	mes "Bienvenid@ a Okani RO BETA Test, aquí podrás solicitarme lo que necesitas para tus pruebas. ¿Qué deseas?";
+	switch (select ("Base Level:Job Level:Zenys:CashPoints:Poring Coins:Angeling Coins:Deviling Coins:Archangeling Coins:Bravery Badges:Valor Badges:War/Heroism Badges:Nada")) {
+
+					case 1: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						set Baselevel,Baselevel+.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+
+					case 2: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						set Joblevel,Joblevel+.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+
+					case 3: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						set Zeny,Zeny+.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+				
+					case 4: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						set #CASHPOINTS,#CASHPOINTS+.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+					
+					case 5: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						getitem 7539,.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+					
+					case 6: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						getitem 40080,.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+					
+					case 7: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						getitem 40081,.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+					
+					case 8: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						getitem 40082,.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+
+					case 9: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						getitem 7828,.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+
+					case 10: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						getitem 7829,.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+
+					case 11: 
+						mes "Especifica tu cantidad";
+						input .@canttest;
+						getitem 7773,.@canttest;
+						mes "Aquí tienes, disfruta. ^^";
+						close;
+					
+					case 12: 
+						mes "De acuerdo, no pasa nada. ^^";
+						close;
+					
+	}
+end;
+
+OnInit:
+	waitingroom "Beta Testing",0;
+	end;
+}

@@ -1,0 +1,38 @@
+// https://rathena.org/board/topic/117458-channel-controller/#comment-353969
+ 
+sec_pri,19,49,5  script  Sample  4_F_KAFRA1,{
+    doevent "channel_setting_main::OnTalk";
+}
+ 
+-   script  channel_setting_main    -1,{
+    
+    OnInit:
+        setarray .channel_list_name$, "#main", "#support";
+        setarray .channel_list$, "#main", "#support";
+        
+        .channel_size = getarraysize(.channel_list$);
+        end;
+    
+    OnTalk:
+        mes "Hello "+strcharinfo(0);
+        mes "Select the Chat Channel you wish to be in.";
+        for (.@i = 0; .@i < .channel_size; .@i++)
+            .@menu$ = .@menu$ + .channel_list_name$[.@i] + (#CHANNEL_SETTINGS & (1 << .@i) ? "[On]":"[Off]")  + (1 >> .@i) + ":";
+        .@i = select(.@menu$) - 1;
+        if (#CHANNEL_SETTINGS & (1 << .@i)) 
+            #CHANNEL_SETTINGS -= (1 << .@i);
+        else 
+            #CHANNEL_SETTINGS |= (1 << .@i);
+        mes "Setting updated.";
+        close;
+    
+    OnPCLoginEvent:
+        // sleep2 1000;
+        while (.@i < .channel_size) {
+            if (#CHANNEL_SETTINGS & (1 >> .@i))
+                atcommand "@channel leave "+.channel_list$[.@i];
+            .@i++;
+        }
+        end;
+ 
+}

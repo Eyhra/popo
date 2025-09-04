@@ -1,0 +1,91 @@
+//===== rAthena Script =======================================
+//= Instance GodLike Items Maker NPC
+//===== By: ==================================================
+//= NRCRO (for BritoniahRO)
+//===== Current Version: =====================================
+//= 3.2
+//= Changelog see: http://www.eathena.ws/board/index.php?showtopic=194782
+//===== Compatible With: =====================================
+//= TXT & SQL, Must have a newer revision and updated item_db,rAthena
+//===== Description: =========================================
+//= Makes GodLike Item in Instance Quest Oklnir when brought the required items.
+//============================================================
+que_qaru05,244,371,6	script	Orbe Sagrado	10308,{
+	mes "[Orbe Sagrado]";  
+	mes "Tengo ropa sagrada de Oklnir";
+	mes "elije entre las 2 opciones"; 
+	goto OK_top;
+
+OK_top:	
+menu "Armor Brynhild",OK_Bi,"Garment Asprika",OK_As,"Cancelar",OK_cancel;
+
+OK_Bi:
+menu 
+	"Brynhild",I_Bry,
+	"Return to Menu",OK_top;	
+	
+I_Bry:
+	next;
+	mes "1 Valkyrian Armor [1]";
+	mes "100 Valhala's Flower";
+	mes "100 Gold";
+	mes "100 Emperium Anvil";
+	mes "150 Muscovite";
+	mes "150 Citrin";
+	mes "150 Biotite";
+	menu "Crear",M_Bry,"Volver al Menu",OK_top;	
+
+M_Bry:
+	if(countitem(2357)<1 || countitem(7510)<100 || countitem(969)<100 || countitem(7292)<150 || countitem(7295)<150 || countitem(7297)<150)
+	goto M_insufficient; 
+	delitem 2357,1;
+	delitem 7510,100;
+	delitem 969,100;
+	delitem 989,100;
+	delitem 7292,150;
+	delitem 7295,150;
+	delitem 7297,150;
+	getitem 2383,1;
+	close;	
+
+OK_As:
+menu 
+	"Asprika",I_As,
+	"Return to Menu",OK_top;
+I_As:
+	next;
+	mes "1 Heavenly Maiden Robe [1]";
+	mes "1000 Soft Feather";
+	mes "100 Agate";
+	mes "100 Rose Quartz";
+	mes "100 Gold";
+	mes "100 Emperium Anvil";
+	mes "50 Bloody edge";
+	menu "Crear",M_As,"Volver al Menu",OK_top;	
+
+M_As:
+	if(countitem(2513)<1 || countitem(7063)<1000 || countitem(7291)<100 || countitem(7293)<100 || countitem(969)<100 || countitem(7024)<50)
+	goto M_insufficient; 
+	delitem 2513,1;
+	delitem 7063,1000;
+	delitem 7291,100;
+	delitem 7293,100;
+	delitem 969,100;
+	delitem 989,100;
+	delitem 7024,50;
+	getitem 2541,1;
+	close;		
+	
+//________not enough or not the correct items________
+	
+M_insufficient:
+	next;
+	mes "[Orbe Sagrado]";
+	mes "Tu no tienes los materiales suficientes.";
+	mes "Por favor vuelve cuando los tengas todos";
+	menu "Volver al Menu",OK_top,"Salir",OK_cancel;
+	close;
+	
+OK_cancel:
+	close;
+}	

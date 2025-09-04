@@ -1,0 +1,178 @@
+-	script	LMS#disable	-1,{
+OnWhisperGlobal:
+OnInit:
+disablenpc "Rune-Midgard Guard#L1";
+disablenpc "Rune-Midgard Guard#L0";
+
+
+end;
+}
+
+-	script	LMS	-1,{
+OnWhisperGlobal:
+// OnClock1910:
+// OnClock2249:// Edit this to what ever you want. note : OnClock0000 is 12 midnight and OnClock1200 is 12 Noon
+goto startlmsevent;
+
+startlmsevent:
+disablenpc "Rune-Midgard Guard#L1";
+announce "[Rune-Midgard Guard]: El evento Last Man Standing comenzara en breve, si quieres participar registrate en Britoniah City.",0;
+sleep 5000;
+enablenpc "Rune-Midgard Guard#L0";
+initnpctimer;
+end;
+
+OnTimer30000:
+announce "[Rune-Midgard Guard]: Ultimos 30 segundos para registrarse en Last Man Standing",0;
+end;
+
+OnTimer60000:
+announce "[Rune-Midgard Guard]: Se cerro el registro a Last Man Standing",0;
+end;
+
+OnTimer61000:
+disablenpc "Rune-Midgard Guard#L0";
+donpcevent "Rune-Midgard Guard#L1::OnEnable";
+stopnpctimer;
+end;
+}
+//---------All Job Registration---------------
+britoniah,41,59,5	script	Rune-Midgard Guard#L0	106,{
+
+mes "[Rune-Midgard Guard]:";
+mes "¿Hola que puedo hacer por ti?";
+next;
+menu "Registrar",-,"¿Que es LMS?",what,"Salir",leave;
+next;
+mes "[Rune-Midgard Guard]";
+mes "Gracias por registrarte " + strcharinfo(0);
+close2;
+warp "new_5-4",99,179;
+end;
+what:
+mes "[Rune-Midgard Guard]";
+mes "LMS es conocido como Last Man Standing";
+next;
+mes "[Rune-Midgard Guard]";
+mes "LMS es parecido a PvP.";
+mes "La unica diferencia es que ganaras 15 Events Coins.";
+next;
+mes "[Rune-Midgard Guard]";
+mes "Eso es todo";
+close;
+leave:
+mes "[Rune-Midgard Guard]";
+mes "Espero te registres a la proxima";
+close;
+
+
+}
+
+//--------------------------
+
+//--------------------------
+new_5-4,99,179,4	script	Rune-Midgard Guard#L1	56,{
+
+mes "[Rune-Midgard Guard]";
+mes "Felicidades. Ganaste.";
+next;
+announce "[Rune-Midgard Guard]: Tenemos un ganador para LMS. Excelente "+strcharinfo(0)+".",0;
+set #CASHPOINTS, #CASHPOINTS + 0; // Change This item id to what ever you want . 
+dispbottom "Has ganado 15 Event Coins";
+getitem 19502,15;
+mes "Te enviare a Britoniah.";
+warp "britoniah",69,52;
+disablenpc "Rune-Midgard Guard#L1";
+close;
+end;
+OnEnable:
+pvpoff "new_5-4";
+mapannounce "new_5-4","[Rune-Midgard Guard]: LMS empezara pronto.",0;
+sleep 5000;
+mapannounce "new_5-4","[Rune-Midgard Guard]: Algunas aclaraciones..",0;
+sleep 5000;
+mapannounce "new_5-4","[Rune-Midgard Guard]: Solo gana el ultimo que quede de pie.",0;
+sleep 5000;
+mapannounce "new_5-4","[Rune-Midgard Guard]: ¡¡¡Que esperamos vamos!!!...",0;
+sleep 10000;
+goto L_Start;
+end;
+L_Start:
+if(getmapusers("new_5-4") == 1) goto L_Champ;
+if(getmapusers("new_5-4") == 0) goto L_None;
+if(getmapusers("new_5-4") > 1) {
+mapannounce "new_5-4","[Rune-Midgard Guard]: Empezamos a la cuenta de 5...",0;
+sleep 10000;
+mapannounce "new_5-4","[Rune-Midgard Guard]: 5",0;
+sleep 1000;
+mapannounce "new_5-4","[Rune-Midgard Guard]: 4",0;
+sleep 1000;
+mapannounce "new_5-4","[Rune-Midgard Guard]: 3",0;
+sleep 1000;
+mapannounce "new_5-4","[Rune-Midgard Guard]: 2",0;
+sleep 1000;
+mapannounce "new_5-4","[Rune-Midgard Guard]: 1",0;
+sleep 1000;
+pvpon "new_5-4";
+goto timer;
+end;
+}
+timer:
+initnpctimer;
+end;
+
+OnTimer1000:
+end;
+
+OnTimer1100:
+if(getmapusers("new_5-4") == 1) goto L_Champ;
+if(getmapusers("new_5-4") > 2) goto timer;
+if(getmapusers("new_5-4") == 2) goto champ;
+stopnpctimer;
+end;
+
+champ:
+announce "[Rune-Midgard Guard]: ¡Solo quedan 2 guerreros en pie!",0;
+sleep 10000;
+if(getmapusers("new_5-4") == 1) goto L_Champ;
+if(getmapusers("new_5-4") > 1) goto timer;
+end;
+
+L_Champ:
+mapannounce "new_5-4","[Rune-Midgard Guard]: Porfavor hablame para obtener tu premio..",2500000;
+pvpoff "new_5-4";
+enablenpc "Rune-Midgard Guard#L1";
+end;
+
+L_None:
+disablenpc "Rune-Midgard Guard#L1";
+pvpoff "new_5-4";
+end;
+}
+//----- Die = warp prt -----
+-	script	Killa_warp	-1,{
+
+OnPCDieEvent:
+	getmapxy(.@map$,.@x,.@y,0);
+	if(.@map$=="new_5-4")
+	{
+	sleep 1;
+	// atcommand "@alive "+ strcharinfo(0);
+	warp "britoniah",69,52;
+	// atcommand "@alive "+ strcharinfo(0);
+	mapannounce "new_5-4","["+strcharinfo(0)+"] murio y sale de la competencia.",0;
+	}
+}
+
+
+// == Mapflags
+new_5-4	mapflag	nowarp
+new_5-4	mapflag	nowarpto
+new_5-4	mapflag	noteleport
+new_5-4	mapflag	nosave
+new_5-4	mapflag	nomemo
+new_5-4	mapflag	nobranch
+new_5-4	mapflag	pvp_noguild
+new_5-4	mapflag	pvp_noparty
+new_5-4	mapflag	restricted	1
+// new_5-4	mapflag	gvg_castle

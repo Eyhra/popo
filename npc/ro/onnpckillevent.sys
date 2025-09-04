@@ -1,0 +1,158 @@
+// ________                   .__         .__      _____             __
+// \______ \  _____     ____  |__|  ____  |  |    /  _  \  _______ _/  |_
+//  |    |  \ \__  \   /    \ |  |_/ __ \ |  |   /  /_\  \ \_  __ \\   __\
+//  |    `   \ / __ \_|   |  \|  |\  ___/ |  |__/    |    \ |  | \/ |  |
+// /_______  /(____  /|___|  /|__| \___  >|____/\____|__  / |__|    |__|
+//         \/      \/      \/          \/               \/
+//                             www.danielart.net
+//==========================================================================
+// ---            Función de OnNPCKillEvent            ---
+//========================================================
+// ---                  by DanielArt                   ---
+//========================================================
+// Absolutamente todos los eventos que se ejecuten al
+// matar a un monstruo deben colocarse aquí, para evitar
+// sobrecargar al emulador con múltiples ejecuciones
+// al matar a un enemigo NPC (mob).
+// =======================================================
+-	script	DISABLE_OVERLAY_NPC	-1,{
+OnInit:
+// ==== Configuraciones iniciales ====
+	// Listado de frases al matar a un MvP
+	setarray .frase$,"mandado al otro mundo","mutilado","sepultado","enterrado","aniquilado","sodomizado","masacrado","asesinado","ejecutado","liquidado","hecho puré","pisoteado","extinguido","derrotado","vencido","destronado","exorcisado";
+	bindatcmd "mdia",strnpcinfo(3)+"::OnAtcommand",99,99;
+	bindatcmd "rdia",strnpcinfo(3)+"::OnAtcommand",99,99;
+	bindatcmd "mobs",strnpcinfo(3)+"::OnAtcommand",0,99;
+	setarray .rname$,"Formless","Undead","Brute","Plant","Insect","Fish","Demon","Demi-Human","Angel","Dragon";
+	setarray .mobid,1001,1002,1004,1005,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1018,1019,1020,1023,1024,1025,1026,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1040,1041,1042,1044,1045,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1076,1077,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1099,1100,1101,1102,1103,1104,1105,1106,1107,1108,1109,1110,1111,1113,1114,1116,1117,1118,1119,1121,1122,1123,1124,1125,1126,1127,1128,1129,1130,1131,1132,1133,1134,1135,1138,1139,1140,1141,1143,1144,1145,1146,1148,1149,1151,1152,1153,1154,1155,1156,1158,1160,1161,1163,1164,1165,1166,1167,1169,1170,1174,1175,1176,1177,1178,1179,1180,1182,1185,1186,1188,1189,1191,1192,1193,1194,1195,1196,1197,1199,1200,1201,1202,1203,1204,1205,1206,1207,1208,1209,1211,1212,1213,1214,1215,1216,1219,1242,1243,1245,1246,1248,1249,1250,1253,1254,1255,1256,1257,1258,1259,1260,1261,1262,1263,1264,1265,1266,1267,1268,1269,1270,1271,1273,1274,1275,1276,1277,1278,1279,1280,1281,1282,1283,1289,1290,1291,1292,1293,1294,1295,1296,1297,1298,1299,1300,1301,1302,1303,1304,1305,1306,1307,1308,1309,1310,1311,1313,1314,1315,1316,1317,1318,1319,1320,1321,1322,1323,1365,1366,1367,1368,1369,1370,1371,1372,1374,1375,1376,1377,1378,1379,1380,1381,1382,1383,1384,1385,1386,1387,1390,1391,1392,1400,1401,1402,1403,1404,1405,1406,1408,1409,1410,1412,1413,1415,1416,1417,1493,1494,1495,1497,1498,1499,1500,1503,1504,1505,1506,1507,1508,1509,1510,1512,1513,1514,1515,1516,1517,1519,1520,1582,1584,1586,1587,1613,1614,1615,1616,1617,1618,1619,1620,1621,1622,1627,1628,1629,1631,1632,1633,1664,1665,1666,1667,1668,1669,1670,1671,1672,1673,1675,1676,1677,1678,1679,1680,1681,1682,1686,1687,1692,1693,1694,1695,1696,1699,1703,1713,1714,1715,1717,1718,1736,1737,1738,1752,1753,1754,1755,1769,1770,1772,1773,1774,1775,1776,1777,1778,1780,1781,1782,1783,1784,1789;
+OnClock0000:
+	.@id = rand(0,getarraysize(.mobid)-1);
+	$MobType = .mobid[.@id];
+	announce "[Monstruo del Día]: Doble experiencia cazando '"+getmonsterinfo($MobType,0)+"'!",bc_all,0x00FF8D;
+	$RaceType = rand(0,9);
+	announce "[Raza del Día]: Doble experiencia cazando monstruos raza '"+.rname$[$RaceType]+"'!",bc_all,0x00FF2D;
+	end;
+
+OnNPCKillEvent:
+// Base Data
+	.@mobid = killedrid;
+	.@moblv = getmonsterinfo(.@mobid,MOB_LV);
+
+// ==== MvP ====
+	if ( getmonsterinfo( .@mobid,MOB_MVPEXP ) ) {
+			announce "<< [ "+getmonsterinfo(.@mobid,MOB_NAME)+" ] ha sido "+.frase$[rand(getarraysize(.frase$)-1)]+" por [ "+strcharinfo(0)+" ] >>",bc_all,"0xFF7070";
+			sleep2 500;
+	}
+
+// ==== Monstruo y Raza del día ====
+	if(.@mobid == $MobType) {
+		if(login_mdia)
+			dispbottom "[ Monstruo del Día ]: Experiencia ganada. Base: "+callfunc("F_InsertComma",strmobinfo(6,.@mobid))+" Job: "+callfunc("F_InsertComma",strmobinfo(7,.@mobid)),0x00FF8D;
+		.@b += strmobinfo(6,.@mobid);
+		.@j += strmobinfo(7,.@mobid);
+	}
+	sleep2 500;
+	if( getmonsterinfo( .@mobid, MOB_RACE ) == $RaceType ) {
+		if(login_mdia)
+			dispbottom "[ Raza del Día ]: Experiencia ganada. Base: "+callfunc("F_InsertComma",strmobinfo(6,.@mobid))+" Job: "+callfunc("F_InsertComma",strmobinfo(7,.@mobid)),0x00FF2D;
+		.@b += strmobinfo(6,.@mobid);
+		.@j += strmobinfo(7,.@mobid);
+		.@r = rand(10000);
+		if(.@r < 1000 && @CHARACTER_IDLE != 1)
+			getitem 19500,5;
+	}
+	BaseExp += .@b;
+	JobExp += .@j;
+	sleep2 500;
+
+	// ==== Mission Hunting ====
+		if(.@mobid == Mission_ID1) {
+			if(Mission_Count1 > 0) {
+				Mission_Count1 -= 1;
+				if( Mission_Count1 > 0 )
+					announce "[ Hunting : "+Mission_Count1+" '"+getmonsterinfo(.@mobid,MOB_NAME)+"' restantes ]",bc_self,0x00FFFF;
+				else
+					announce "[ Hunting : '"+getmonsterinfo(.@mobid,MOB_NAME)+"' completado ]",bc_self,0x00FFFF;
+				specialeffect2 649,AREA;
+				specialeffect2 626,AREA;
+			}
+		}
+
+	// ==== Eventos de Party (No tocar descuidadamente) ====
+		getmapxy .@map_self$, .@xl, .@yl, BL_PC;
+		getpartymember getcharid(1);
+		.@c = $@partymembercount;
+		copyarray .@n$[0], $@partymembername$[0], .@c;
+		for(.@i = 0; .@i < .@c; .@i++) {
+			if((checkisdead(getcharid(0, .@n$[.@i]))) ||
+				(!isloggedin(getcharid(3,.@n$[.@i]),getcharid(0, .@n$[.@i]))) ||
+				(.@n$[.@i] == strcharinfo(0)))
+				continue;
+			getmapxy(.@map_party_member$,.@xm,.@ym,BL_PC,.@n$[.@i]);
+			if(.@map_party_member$ == .@map_self$) {
+
+	// ==== Party Share Hunting Missions ====
+				if(	getvar(Mission_ID1,getcharid(0, .@n$[.@i])) == .@mobid &&
+						getvar(Mission_Count1,getcharid(0,.@n$[.@i])) > 0)
+				{
+					.@v = getvar(Mission_Count1,getcharid(0,.@n$[.@i]));
+					.@v -= 1;
+					set Mission_Count1,.@v,getcharid(0,.@n$[.@i]);
+					if( getvar(Mission_Count1,getcharid(0,.@n$[.@i])) > 0 )
+						announce "[ Hunting : "+getvar(Mission_Count1,getcharid(0,.@n$[.@i]))+" '"+getmonsterinfo(.@mobid,MOB_NAME)+"' restantes ]",bc_self,0x00FFFF,FW_NORMAL,12,0,0,getcharid(0,.@n$[.@i]);
+					else
+						announce "[ Hunting : '"+getmonsterinfo(.@mobid,MOB_NAME)+"' completado ]",bc_self,0x00FFFF,FW_NORMAL,12,0,0,getcharid(0,.@n$[.@i]);
+					specialeffect2 649,AREA,.@n$[.@i];
+					specialeffect2 626,AREA,.@n$[.@i];
+				}
+	// ---- más códigos de party aquí (no son códigos normales)----
+
+
+	// -----------------------------------
+			}
+		}
+
+
+// >> Insertar más códigos aquí <<
+
+// Fin de la lectura normal del script a partir de abajo son sistemas especiales.
+end;
+OnAtcommand:
+	if(.@atcmd_command$ == "@mobs") {
+		dispbottom "== Experiencia doble al cazar:",0x00FF8D;
+		dispbottom "- Monstruo del día: '"+getmonsterinfo($MobType,MOB_NAME)+"'",0x00FF8D;
+		dispbottom "- Raza del día: '"+.rname$[$RaceType]+"' ",0x00FF2D;
+	} else if(.@atcmd_command$ == "@rdia") {
+		.@ra = atoi(.@atcmd_parameters$[0]);
+		if(!.@ra || .@ra < 0 || .@ra > 9) {
+			dispbottom "@rdia - Ingresa una raza del 1 al 9.";
+			dispbottom "0  = Formless";
+			dispbottom "1  = Undead";
+			dispbottom "2  = Brute";
+			dispbottom "3  = Plant";
+			dispbottom "4  = Insect";
+			dispbottom "5  = Fish";
+			dispbottom "6  = Demon";
+			dispbottom "7  = Demi-Human";
+			dispbottom "8  = Angel";
+			dispbottom "9  = Dragon.";
+		} else {
+			$RaceType = .@ra;
+			announce "[Raza del Día]: - Doble experiencia cazando monstruos raza '"+.rname$[$RaceType]+"'!",bc_all,0x00FF2D;
+		}
+	} else if(.@atcmd_command$ == "@mdia") {
+		if(.@atcmd_parameters$[0] == "random") {
+			.@id = rand(0,getarraysize(.mobid));
+			$MobType = .mobid[.@id];
+			announce "[Monstruo del Día]: - Doble experiencia cazando '"+getmonsterinfo($MobType,0)+"'!",bc_all,0x00FF8D;
+		} else {
+			.@mobid = atoi(.@atcmd_parameters$[0]);
+			if( strmobinfo(3,.@mobid) ) {
+				$MobType = .@mobid;
+				announce "[Monstruo del Día]: - Doble experiencia cazando '"+getmonsterinfo($MobType,0)+"'!",bc_all,0x00FF8D;
+			} else
+				dispbottom "@mdia - La ID de este monstruo es inválida, usa '@mdia random' para elegir un monstruo al azar.";
+		}
+	}
+	end;
+}

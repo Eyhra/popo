@@ -1,0 +1,163 @@
+//===== rAthena Script =======================================
+//= Card Removal NPC
+//===== By: ==================================================
+//= TyrNemesis^
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Removes cards from equipped items.
+//===== Additional Comments: =================================
+//= 1.0 First version. [TyrNemesis^]
+//= 1.2 Optimized and fixed getequipname menu. [Kisuka]
+//============================================================
+
+seal_in,44,28,3	script	Viejo Sabio#eAcustom	412,{
+cutin "ins_cata_pri_n",2;	
+	set .zenycost,200000;    // base cost of the card remover services (in Zeny)
+	set .percardcost,25000;  // cost per card of the card remover services (in Zeny)
+	set .faildestroy,0;      // should the card remover have a chance of failure that destroys items? (1=yes, 0=no)
+
+	disable_items;
+	mes "[^FF7070Viejo Sabio^000000]";
+	mes "Buenos días, joven. Tengo el poder de eliminar cartas que hayas compuesto en tu equipo. ¿Te agrada esta idea?";
+	next;
+	switch(select("^5533ff [>] ^000000 Sí, hazlo.:^5533ff [>] ^000000 ¿Qué cobras?:^5533ff [>] ^000000 No, gracias.")) {
+	case 1:
+		mes "[^FF7070Viejo Sabio^000000]";
+		mes "Muy bien. ¿Qué artículo debo examinar para usted?";
+		next;
+
+		setarray .@position$[1], "^5533ff [>] ^000000 Accessory 1","^5533ff [>] ^000000 Shoes","^5533ff [>] ^000000 Robe","^5533ff [>] ^000000 Head 3","^5533ff [>] ^000000 Head 2","^5533ff [>] ^000000 Head","^5533ff [>] ^000000 Body","^5533ff [>] ^000000 Right hand","^5533ff [>] ^000000 Left hand","^5533ff [>] ^000000 Head 4";
+		set .@menu$,"";
+		for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
+		{
+			if( getequipisequiped(.@i) )
+			set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+
+			set .@menu$, .@menu$ + ":";
+		}
+		set .@part,select(.@menu$);
+		if(!getequipisequiped(.@part)) {
+			mes "[^FF7070Viejo Sabio^000000]";
+			mes "Joven... No llevas nada allí de lo que pueda quitar las cartas.";
+			close;
+		}
+		if(getequipcardcnt(.@part) == 0) {
+			mes "[^FF7070Viejo Sabio^000000]";
+			mes "Joven... No hay cartas compuestas en este artículo. No puedo hacer nada con eso, me temo.";
+			close;
+		}
+		set .@cardcount,getequipcardcnt(.@part);
+		
+		if (!checkweight(1202,(.@cardcount+1))) { 
+		    mes "[^FF7070Viejo Sabio^000000]";
+			mes "^3355FF¡Solo un minuto!";
+			mes "No puedo ofrecer ninguno de mis";
+			mes "servicios para ti porque";
+			mes "estas cargando demasiado";
+			mes "peso. Pon tus artículos adicionales en el";
+			mes "Kafra Storage y ven de nuevo~";
+			cutin "",255;
+			close;
+		}
+		mes "[^FF7070Viejo Sabio^000000]";
+		mes "Este artículo tiene " + .@cardcount + " cartas compuestas en él. Para realizar mi magia, necesitaré " + (.zenycost+(.@cardcount * .percardcost)) + " zeny, 1 ^0000FFStar Crumb^000000, y 1 ^0000FFYellow Gemstone^000000.";
+		next;
+		if(select("^5533ff [>] ^000000 Muy bien. Hazlo.:^5533ff [>] ^000000 No importa.") == 2) {
+			mes "[^FF7070Viejo Sabio^000000]";
+			mes "Muy bien. Regresa de inmediato si buscas mis servicios.";
+			cutin "",255;
+			close;
+		}
+		if((zeny < (.zenycost+(.@cardcount * .percardcost))) || (countitem(1000) < 1) || (countitem(715) < 1)) {
+			mes "[^FF7070Viejo Sabio^000000]";
+			mes "No tienes todos los elementos que necesito para hacer funcionar mi magia, niña. Ven de nuevo cuando lo hagas.";
+			cutin "",255;
+			close;
+		}
+		mes "[^FF7070Viejo Sabio^000000]";
+		mes "Antes de comenzar, debo advertirle que puedo fallar. Si lo hago, puedo destruir las cartas, el objeto o ambos. No doy devoluciones. Dicho esto, ¿qué es más importante para ti: las cartas o el objeto?";
+		next;
+		switch(select("^5533ff [>] ^000000 Cambié de opinión sobre esto.:^5533ff [>] ^000000 El item.:^5533ff [>] ^000000 La carta.")) {
+		case 1:
+			mes "[^FF7070Viejo Sabio^000000]";
+			mes "Muy bien. Regresa de inmediato si buscas mis servicios.";
+			cutin "",255;
+			close;
+		case 2:
+			set .@failtype,1;
+			break;
+		case 3:
+			set .@failtype,2;
+		}
+		mes "[^FF7070Viejo Sabio^000000]";
+		mes "Muy bien. voy a empezar";
+		set Zeny, Zeny - (.zenycost+(.@cardcount * .percardcost));
+		delitem 1000,1; //Star_Crumb
+		delitem 715,1; //Yellow_Gemstone
+		
+		// Replace the constants in the next 3 lines with failure chance values defined in refine_db.txt
+		// First value = Total failure chance (item and cards destroyed)
+		// Second value = Partial failure chance (one or the other is destroyed, player decides which one is safe)
+		// Third value = Harmless failure chance (all that's lost is your investment)
+
+		set .@failchance,rand(100);
+		if (.faildestroy==1) {
+			if(.@failchance < 2) {
+				next;
+				failedremovecards .@part,0;
+				mes "[^FF7070Viejo Sabio^000000]";
+				mes "El proceso fue un fracaso total. Me temo que el artículo y las tarjetas fueron destruidos.";
+				cutin "",255;
+				close;
+			}
+
+			if(.@failchance < 8) {
+				if (.@failtype == 1) {
+					next;
+					failedremovecards .@part,1;
+					mes "[^FF7070Viejo Sabio^000000]";
+					mes "Si bien logré eliminar las tarjetas del artículo, se destruyeron en el proceso. El artículo, sin embargo, está bien.";
+					cutin "",255;
+					close;
+				}
+
+				if (.@failtype == 2) {
+					next;
+					failedremovecards .@part,2;
+					mes "[^FF7070Viejo Sabio^000000]";
+					mes "Muy desafortunado. Logré quitar las cartas, pero el objeto en sí se destruyó en el proceso.";
+					cutin "",255;
+					close;
+				}
+			}
+		}
+
+		if(.@failchance < 10) {
+			next;
+			failedremovecards .@part,3;
+			mes "[^FF7070Viejo Sabio^000000]";
+			mes "No he podido quitar las cartas. Sin embargo, afortunadamente, tanto el artículo como las cartas todavía están bien.";
+			cutin "",255;
+			close;
+		}
+		next;
+		successremovecards .@part;
+		mes "[^FF7070Viejo Sabio^000000]";
+		mes "El proceso fue un exito. Aqui estan tus cartas y tu equipo. Adios!.";
+		cutin "",255;
+		close;
+	case 2:
+		mes "[^FF7070Viejo Sabio^000000]";
+		mes "Cobro una tarifa fija de "+callfunc("F_InsertComma",.zenycost)+" zeny, mas "+callfunc("F_InsertComma",.percardcost)+" zeny por cada carta removida. Ademas, necesito una Star Crumb y una Yellow Gemstone para hacer mi magia.";
+		cutin "",255;
+		close;
+	case 3:
+		mes "[^FF7070Viejo Sabio^000000]";
+		mes "Muy bien. Regrese de inmediato si busca mis servicios.";
+		cutin "",255;
+		close;
+	}
+}

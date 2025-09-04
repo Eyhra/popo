@@ -1,0 +1,134 @@
+britoniah,62,70,5	script	Broadcast	625,{
+cutin "nines01",2;
+
+
+set .@nomA$,"[^6600CCBroadcast^000000]"; 
+set .@prixA,1000; 
+set .@temporisation,30;
+
+setarray .@color$[0],
+	"0x8282FF",
+	"6600CC",
+	"0xFF9900", 
+	"0x00FF00";
+
+setarray .filtre$[0],
+	"Fuck","tonto","mierda","Ass","idiot","noob",
+	"estupido","pendejo","idiota","stupid","joto",
+	"jota","perra","puto","puta","marica","maricon",
+	"gay","homo","culo","pwned","mmg","owned";
+
+	if ( gettimetick(2) - (.@temporisation) < #Last_Announce )
+	{
+		mes .@nomA$;
+		mes "Debes esperar 30 segundos para enviar el siguiente anuncio.";
+		mes "Por favor vuelve mas tarde.";
+		cutin "",255;
+		close;
+	}
+	
+	mes .@nomA$;
+	mes "Hola " + strcharinfo(0) + ".";
+	mes "Soy el broadcast yo puedo mandar el mensaje a tu nombre para la comunidad.";
+	mes "Que puedo hacer por ti??";
+	next;
+
+		switch( select ( "Escribir un anuncio:Reglas:Nada") )
+		{
+
+
+		case 1:
+
+			mes .@nomA$;
+			mes "Venga!";
+			mes "El anuncio te costara " + .@prixA + " zeny.";
+			mes "Quieres continuar?";
+			next;
+
+			if ( select ( "Si:No") -1 ) break ;
+
+			if(zeny < .@prixA)
+			{
+
+				mes .@nomA$;
+				mes "Lo siento pero ... No tienes suficiente dinero.";
+				cutin "",255;
+				close;
+
+			}
+
+		
+			do
+			{
+				set @annonce$,"";
+				mes .@nomA$;
+				mes "Escribe tu anuncio.";
+				input .@annonce$;
+				next;
+				for ( set @i , 0 ; @i < getarraysize ( .filtre$ ) ; set @i , @i + 1 )
+ 					if( compare( .@annonce$, .filtre$[ @i ] ) )
+ 					{
+						mes .@nomA$;
+						mes "Ohh! Palabras prohibidas !";
+ 						close;
+					}
+				mes .@nomA$;
+				mes "Aqui esta tu anuncio :";
+				mes .@annonce$;
+				mes "Todo bien?";
+				next;
+
+			} while ( select ("Si:No, dejame repetirlo") - 1 );
+
+
+
+			mes .@nomA$;
+			mes "Elige un color :";
+			next;
+			set @color , select ( "Blue:Purpura:Orange:Green" ) - 1 ;
+
+			mes .@nomA$;
+			set Zeny, zeny - .@prixA;
+			query_sql "INSERT INTO `broadcast` (`nick` ,`mensaje`)VALUES ('"+strcharinfo(0)+"',  '"+.@annonce$+"')";
+			announce strcharinfo(0) + ": " + .@annonce$ , bc_all , .@color$[ @color ] ;
+			set #Last_Announce , gettimetick (2) ;
+			mes "Tu anuncio fue enviado.";
+			cutin "",255;
+			close;
+
+			
+		case 2:
+		mes .@nomA$;
+		mes "1. No uses palabrotas";
+		mes "2. Este NPC es para mensajes con importancia";
+		mes "3. Aclara tus mensajes:";
+		mes "'V>' para vender";
+		mes "'C>' para comprar";
+		mes "'T>' para tradear";
+		mes "4. No hagas falsas ofertas";
+		cutin "",255;
+		close;
+
+		case 3:
+		}
+		
+		mes .@nomA$;
+		mes "Vuelve cuando quieras";
+		cutin "",255;
+		close;
+		
+	OnInit:
+	while (1) {
+	delwaitingroom;
+	waitingroom "BroadCast [1,000 Zeny]",0;
+	sleep 1000;
+	}
+}
+
+//duplicados
+prt_vilg01,80,122,6	duplicate(Broadcast)	Broadcast#1	625
+prt_vilg02,114,101,6	duplicate(Broadcast)	Broadcast#2	625
+moc_vilg01,104,103,6	duplicate(Broadcast)	Broadcast#3	625
+moc_vilg02,117,110,6	duplicate(Broadcast)	Broadcast#4	625
+gef_vilg00,120,116,6	duplicate(Broadcast)	Broadcast#5	625
+caspen,161,209,6	duplicate(Broadcast)	Broadcast#6	625

@@ -1,0 +1,41 @@
+//===== rAthena Script =======================================
+//= Freebies NPC with Gepard Function supported
+//===== By: ==================================================
+//= BeWan
+//https://rathena.org/board/profile/62232-bewan/
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= this freebies npc is supported gepard function " unique_id "
+//= you can add multiple reward items
+//============================================================
+
+prontera,150,150,4	script	Freebies NPC	617,{
+
+
+	.@unique_id$ = get_unique_id();
+
+	if(getd("$ID_" + .@unique_id$) > 0 || #FreebiesReward > 0){
+		mes "[FairYang]";
+		mes "Ya has reclamado tu ticket x2.";
+		close;
+	}
+	
+	mes "[FairYang]";
+	mes "Aquí está tu obsequio un ticket de donación x2. ¡Que tenga un lindo día!";
+	setd "$ID_" + .@unique_id$,1;
+	#FreebiesReward = 1;
+	$freebies_count -= 1;
+	for (.@i = 0; .@i < getarraysize(.items); .@i += 2)
+		getitem .items[.@i],.items[.@i+1];
+	if ($freebies_count == 0)
+		$reward_status = 1;
+	end;
+	
+OnInit:
+	setarray .items, 19491,1;
+	end;
+}
+
+new_1-1,63,109,5	duplicate(Freebies NPC)	Freebies NPC#01	617
+britoniah,38,56,5	duplicate(Freebies NPC)	Freebies NPC#02	617

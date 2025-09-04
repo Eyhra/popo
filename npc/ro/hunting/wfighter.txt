@@ -1,0 +1,223 @@
+//===== rAthena Script =======================================
+//= Seal Private Server Repeatable EXP Quests.
+//===== By: ==================================================
+//= NRCRO
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//= 1.5 Agregado Teleport al lugar de quest.
+//= 2.0 Agregado Rangos de Niveles.
+//============================================================
+
+seal_in01,161,23,4	script	Erwin#Wootan Fighter_Hunt	784,{
+	if (checkquest(60456) != -1) {
+		if (checkquest(60456,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 30 ^FF0000 [Wootan Fighter].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 30 todavía...";
+				close;
+			case 2:
+				mes "[Hunting Quest]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Wootan Fighter].^000000, así que ve y caza 30 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60456;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 30 ^FF0000 [Wootan Fighter].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 500860,250734;
+			erasequest 60456;
+			close;
+		}
+	}
+	if (checkquest(60457) != -1) {
+		if (checkquest(60457,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 60 ^FF0000 [Wootan Fighter].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 60 todavía...";
+				close;
+			case 2:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Wootan Fighter].^000000, así que ve y caza 60 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[Hunting Quest]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60457;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 60 ^FF0000 [Wootan Fighter].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 500860,250734;
+			getexp 500860,250734;
+			erasequest 60457;
+			close;
+		}
+	}
+	if (checkquest(60458) != -1) {
+		if (checkquest(60458,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 90 ^FF0000 [Wootan Fighter].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 90 todavía...";
+				close;
+			case 2:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Wootan Fighter].^000000, así que ve y caza 90 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60458;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 90 ^FF0000 [Wootan Fighter].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 500860,250734;
+			getexp 500860,250734;
+			getexp 500860,250734;
+			erasequest 60458;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 39) {
+		//for maximum level
+		if (BaseLevel < 71) {
+			mes "[Hunting Quest]";
+			mes "¡Buen dia ^cc6600"+strcharinfo(0)+"^000000!";
+			mes "Aca podras tomar la quest de caza de ^FF0000 [Wootan Fighter].^000000!";
+			next;
+				switch(select("^5533ff [>] ^000000 Tomar Quest:^5533ff [>] ^000000 Cancelar")) {
+				case 1:
+					// Kill Count Quest
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Selecciona la que deseas tomar.";
+					next;
+					switch(select("^5533ff [>] ^000000 Cazar 30:^5533ff [>] ^000000 Cazar 60:^5533ff [>] ^000000 Cazar 90")) {
+					case 1:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60456;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "um_fild02" ,31,268;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+					case 2:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60457;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "um_fild02" ,31,268;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+						close;
+					case 3:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60458;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "um_fild02" ,31,268;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+						close;
+					}
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Si cambias de opinión, vuelve.";
+					close;
+				}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "No cumples los requisitos de nivel para realizar esta quest.";
+			close;
+		}
+	}
+	else {
+		mes "[^5533ff Hunting Quest ^000000]";
+		mes "No cumples los requisitos de nivel para realizar esta quest.";
+		close;
+	}
+	OnInit:
+	do { 
+		delwaitingroom;
+		waitingroom "[Wootan Fighter] Lv 40-70",0;
+	sleep 5000;
+	} while(1);
+end;
+}

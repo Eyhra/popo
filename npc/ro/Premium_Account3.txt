@@ -1,0 +1,84 @@
+seal,118,77,4	script	Estado VIP	10119,{
+	// Settings: -----------------------------
+	set .@item,	7608;
+	//set .@Time, 1 * 7 * 24 * 60 * 60; // Time in Seconds = 4 weeks, 7 days per week, 24 hours per day, 60 minutes per day, 60 seconds per minute. = 1 month in this sample.
+	set .@Time, 43800; // 30 dias
+	set .@Time$, "30 Días";
+	// ---------------------------------------
+	cutin "ep16_kronecker_granz_heine",1;
+	mes "[^5533ff Estado VIP ^000000]";
+	mes "Estado actual del VIP:";
+	mes " - "+(vip_status(VIP_STATUS_ACTIVE) ? "^008800Activado":"^ff0000Desactivado")+"."," ";
+	if ( vip_status(VIP_STATUS_ACTIVE) )
+		mes "Su cuenta VIP expira en ^FF0000" + vip_status(VIP_STATUS_EXPIRE) + "^000000.";
+	next;
+	mes "[^5533ff Estado VIP ^000000]";
+	mes "¿Qué puedo hacer por ti, ^cc6600"+strcharinfo(0)+"^000000?";
+	mes "Actualmente tienes:";
+	mes " - ^FF0000" +countitem(.@item) + "^000000x <ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>.";
+	next;
+
+	// isPremium() returns 1 if the current user Account is Premium and it have not expired.
+	// It works together with #Premium_Tick, which is a Account Var set with a Unix Time value, representing when the Premium Account expires.
+	// isPremium() is the same as #Premium_Tick > gettimetick(2)
+
+	switch( select("^5533ff [>] ^000000Obtener cuenta VIP :^5533ff [>] ^000000Información cuenta VIP:^777777Salir^000000") )
+	{
+	case 1:
+		mes "[^5533ff Estado VIP ^000000]";
+		if ( vip_status(VIP_STATUS_ACTIVE) )
+			mes "¿Realmente desea extender su VIP?";
+		else
+			mes "¿De verdad quieres convertir tu cuenta en VIP?";
+		mes "Tiempo VIP ^FF0000" + .@Time$ + "^000000";
+		mes "El valor es 1x <ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+		next;
+		if( select("^5533ff [>] ^000000Sí:^5533ff [>] ^000000No") == 2 )
+		{
+			mes "[^5533ff Estado VIP ^000000]";
+			mes "Vuelve si cambias de opinion.";
+			close3;
+		}
+		if(!countitem(.@item))
+		{
+			mes "[^5533ff Estado VIP ^000000]";
+			mes "Necesitas un <ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>, para obtener tu Estado VIP.";
+			close3;
+		}
+		delitem .@item,1;
+		vip_time .@Time;
+		getitem 16683,1;
+
+		mes "[^5533ff Estado VIP ^000000]";
+		mes "¡¡Felicitaciones!!..";
+		mes "Recuerde que su Cuenta VIP expira en:"," - ^FF0000" + vip_status(VIP_STATUS_EXPIRE) + "^000000.";
+		close3;
+
+	case 2:
+
+		// Edit this messages to explain your Users about the Premium Account in your server.
+		// ----------------------------------------------------------------------------------
+
+		mes "[^5533ff Estado VIP ^000000]";
+		mes "Información VIP:";
+		mes "Obtienes Experencia de Exp base y Exp Job.";
+		mes "Los beneficios son:";
+		next;
+		mes "[^5533ff Estado VIP ^000000]";
+		mes "25%+ de experiencia Base y Job.";
+		next;
+		mes "[^5533ff Estado VIP ^000000]";
+		mes "Perdida de exp suspendida mientras dure la cuenta premium.";
+		next;
+		mes "[^5533ff Estado VIP ^000000]";
+		mes "Montura por 30 dias de regalo cuando canjeas el VIP.";
+		next;
+		mes "[^5533ff Estado VIP ^000000]";
+		mes "Fly Wing y Butterfly infinita mientras dure la cuenta premium.";
+		close3;
+	case 3:
+		mes "[^5533ff Estado VIP ^000000]";
+		mes "Vuelve cuando gustes.";
+		close3;
+	}
+}

@@ -1,0 +1,9 @@
+function	script	MvPBox	{
+	setarray .BoxItems[0],31395,31396,31398,31399,20491,31392,31394;
+	
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	end;
+}
+
+// Mystical Box

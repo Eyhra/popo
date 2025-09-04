@@ -1,0 +1,223 @@
+//===== rAthena Script =======================================
+//= Seal Private Server Repeatable EXP Quests.
+//===== By: ==================================================
+//= NRCRO
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//= 1.5 Agregado Teleport al lugar de quest.
+//= 2.0 Agregado Rangos de Niveles.
+//============================================================
+
+seal_in01,182,21,9	script	Gozu#Blue Acidus_Hunt	468,{
+	if (checkquest(60501) != -1) {
+		if (checkquest(60501,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 35 ^FF0000 [Blue Acidus].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 35 todavía...";
+				close;
+			case 2:
+				mes "[Hunting Quest]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Blue Acidus].^000000, así que ve y caza 35 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60501;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 35 ^FF0000 [Blue Acidus].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 3027275,1008921;
+			erasequest 60501;
+			close;
+		}
+	}
+	if (checkquest(60502) != -1) {
+		if (checkquest(60502,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 75 ^FF0000 [Blue Acidus].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 75 todavía...";
+				close;
+			case 2:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Blue Acidus].^000000, así que ve y caza 75 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[Hunting Quest]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60502;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 75 ^FF0000 [Blue Acidus].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 3027275,1008921;
+			getexp 3027275,1008921;
+			erasequest 60502;
+			close;
+		}
+	}
+	if (checkquest(60503) != -1) {
+		if (checkquest(60503,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 105 ^FF0000 [Blue Acidus].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 105 todavía...";
+				close;
+			case 2:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Blue Acidus].^000000, así que ve y caza 105 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60503;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 105 ^FF0000 [Blue Acidus].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 3027275,1008921;
+			getexp 3027275,1008921;
+			getexp 3027275,1008921;
+			erasequest 60503;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 83) {
+		//for maximum level
+		if (BaseLevel < 100) {
+			mes "[Hunting Quest]";
+			mes "¡Buen dia ^cc6600"+strcharinfo(0)+"^000000!";
+			mes "Aca podras tomar la quest de caza de ^FF0000 [Blue Acidus].^000000!";
+			next;
+				switch(select("^5533ff [>] ^000000 Tomar Quest:^5533ff [>] ^000000 Cancelar")) {
+				case 1:
+					// Kill Count Quest
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Selecciona la que deseas tomar.";
+					next;
+					switch(select("^5533ff [>] ^000000 Cazar 35:^5533ff [>] ^000000 Cazar 75:^5533ff [>] ^000000 Cazar 105")) {
+					case 1:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60501;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "abyss_02" ,262,201;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+					case 2:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60502;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "abyss_02" ,262,201;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+						close;
+					case 3:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60503;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "abyss_02" ,262,201;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+						close;
+					}
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Si cambias de opinión, vuelve.";
+					close;
+				}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "No cumples los requisitos de nivel para realizar esta quest.";
+			close;
+		}
+	}
+	else {
+		mes "[^5533ff Hunting Quest ^000000]";
+		mes "No cumples los requisitos de nivel para realizar esta quest.";
+		close;
+	}
+	OnInit:
+	do { 
+		delwaitingroom;
+		waitingroom "[Blue Acidus] Lv 84-99",0;
+	sleep 5000;
+	} while(1);
+end;
+}

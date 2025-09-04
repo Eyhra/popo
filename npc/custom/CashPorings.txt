@@ -1,0 +1,100 @@
+//////////////////////////////////
+//===== Script =======================================
+//= Atlas Script
+//===== By: ==================================================
+//= Atlas
+//===== Version: =====================================
+//= 1.0
+//===== Compatible =====================================
+//= Hercules - rAthena
+//===== Additional Comments: =================================
+//============================================================
+//// Asistente del Mercado ////
+prontera,164,162,4	script	Donations	872,{
+
+	set @npcname$,"[^8000FFHarold^000000]";
+	set @cantidad,0;
+
+	cutin "lhz_karl",2;
+	mes @npcname$;
+	mes (Sex?"Welcome":"Welcome")+" to the market "+(Sex?"boy":"girl")+",";
+	mes "I am ^8000FFHarold^000000 and I'm in charge of the exchanges.";
+	mes "I can change your ^F79F81Poring Coin^000000 (^F79F81PC^000000) for ^04B404Cash Points^000000 (^04B404CP^000000) and vice versa!";
+	mes "And also I can tell you how many ^04B404CP^000000 you have in your account!";
+	next;
+	switch(select("Information:^F79F81PC^000000 for ^04B404CP^000000:^04B404CP^000000 for ^F79F81PC^000000")) {
+		case 1:
+			switch(select("See my ^04B404Cash Points^000000:Currency exchange")) {
+				case 1:
+					mes @npcname$;
+					mes "You have [^04B404"+#CASHPOINTS+"^000000] ^04B404CP^000000.";
+					close2;
+					cutin "",255;
+					end;
+				case 2:
+					mes @npcname$;
+					mes "At present, the price at the market of ^F79F81PC^000000 and ^04B404CP^000000 is the same, for example, I can have [^F79F8120^000000] ^F79F81PC^000000 be changed for [^04B40420^000000] ^04B404CP^000000!";
+					close2;
+					cutin "",255;
+					end;
+			}
+			
+		case 2:
+			mes @npcname$;
+			mes "How many ^F79F81PC^000000 you wish to change for ^04B404CP^000000?";
+			next;
+			input @cantidad;
+			mes @npcname$;
+			mes "Are you sure that you want to change the total of [^F79F81"+@cantidad+"^000000] ^F79F81PC^000000?";
+			next;
+			menu "Yes",-,"No",L_Cancel;
+			if ( countitem(7539) < @cantidad) goto L_NoPC;
+			delitem 7539,@cantidad;
+			set #CASHPOINTS, #CASHPOINTS + @cantidad;
+			mes @npcname$;
+			mes "Your [^F79F81"+@cantidad+"^F79F81] ^F79F81PC^000000 are now [^04B404"+@cantidad+"^000000] ^04B404CP^000000!";
+			close2;
+			cutin "",255;
+			end;
+			
+		case 3:
+			mes @npcname$;
+			mes "How many ^04B404CP^000000 you wish to change for ^F79F81PC^000000?";
+			next;
+			input @cantidad;
+			mes @npcname$;
+			mes "Are you sure that you want to change the total of [^04B404"+@cantidad+"^000000] ^04B404CP^000000?";
+			next;
+			menu "Yes",-,"No",L_Cancel;
+			if ( #CASHPOINTS < @cantidad) goto L_NoCP;
+			set #CASHPOINTS, #CASHPOINTS - @cantidad;
+			getitem 7539,@cantidad;
+			mes @npcname$;
+			mes "Your [^04B404"+@cantidad+"^000000] ^04B404CP^000000 are now [^F79F81"+@cantidad+"^000000] ^F79F81PC^000000!";
+			close2;
+			cutin "",255;
+			end;
+	}
+
+L_NoPC:
+	mes @npcname$;
+	mes "I'm sorry ^0080FF"+strcharinfo(0)+"^000000, but you are missing ^F79F81Poring Coins^000000 to make the exchange.";
+	close2;
+	cutin "",255;
+	end;
+	
+L_NoCP:
+	mes @npcname$;
+	mes "LI'm sorry ^0080FF"+strcharinfo(0)+"^000000, but you are missing ^04B404Cash Points^000000 to make the exchange.";
+	close2;
+	cutin "",255;
+	end;
+	
+L_Cancel:
+	mes @npcname$;
+	mes "As you wish, have a great day!";
+	close2;
+	cutin "",255;
+	end;
+		
+}

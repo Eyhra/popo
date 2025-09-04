@@ -1,0 +1,223 @@
+//===== rAthena Script =======================================
+//= Seal Private Server Repeatable EXP Quests.
+//===== By: ==================================================
+//= NRCRO
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//= 1.5 Agregado Teleport al lugar de quest.
+//= 2.0 Agregado Rangos de Niveles.
+//============================================================
+
+seal_in01,110,19,4	script	Jill#Zombie_Hunt	10199,{
+	if (checkquest(60408) != -1) {
+		if (checkquest(60408,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 15 ^FF0000 [Zombie].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 15 todavía...";
+				close;
+			case 2:
+				mes "[Hunting Quest]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Zombie].^000000, así que ve y caza 15 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60408;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 15 ^FF0000 [Zombie].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 23437,18494;
+			erasequest 60408;
+			close;
+		}
+	}
+	if (checkquest(60409) != -1) {
+		if (checkquest(60409,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 30 ^FF0000 [Zombie].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 30 todavía...";
+				close;
+			case 2:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Zombie].^000000, así que ve y caza 30 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[Hunting Quest]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60409;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 30 ^FF0000 [Zombie].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 23437,18494;
+			getexp 23437,18494;
+			erasequest 60409;
+			close;
+		}
+	}
+	if (checkquest(60410) != -1) {
+		if (checkquest(60410,HUNTING) != 2 ) {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "¿Has terminado de cazar las 45 ^FF0000 [Zombie].^000000?";
+			next;
+			switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No:^5533ff [>] ^000000 Quiero Renunciar")) {
+			case 1:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Hmm, no creo que hayas cazado 45 todavía...";
+				close;
+			case 2:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "Recuerda, Necesito ayuda para cazar ^FF0000 [Zombie].^000000, así que ve y caza 45 de ellas..";
+				close;
+			case 3:
+				mes "[^5533ff Hunting Quest ^000000]";
+				mes "¿Estás segur"+(Sex?"o":"a")+" de que quieres dejar de cazar?";
+				mes "Cualquier progreso que hayas hecho se borrará";
+				next;
+				switch(select("^5533ff [>] ^000000 Si:^5533ff [>] ^000000 No")) {
+				case 1:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Vale, entonces vuelve aquí si cambias de opinión.";
+					erasequest 60410;
+					close;
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Por favor elimina 45 ^FF0000 [Zombie].^000000.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "Impresionante, lo hiciste con rapidez.";
+			getexp 23437,18494;
+			getexp 23437,18494;
+			getexp 23437,18494;
+			erasequest 60410;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 9) {
+		//for maximum level
+		if (BaseLevel < 41) {
+			mes "[Hunting Quest]";
+			mes "¡Buen dia ^cc6600"+strcharinfo(0)+"^000000!";
+			mes "Aca podras tomar la quest de caza de ^FF0000 [Zombie].^000000!";
+			next;
+				switch(select("^5533ff [>] ^000000 Tomar Quest:^5533ff [>] ^000000 Cancelar")) {
+				case 1:
+					// Kill Count Quest
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Selecciona la que deseas tomar.";
+					next;
+					switch(select("^5533ff [>] ^000000 Cazar 15:^5533ff [>] ^000000 Cazar 30:^5533ff [>] ^000000 Cazar 45")) {
+					case 1:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60408;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "pay_dun00" ,21,179;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+					case 2:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60409;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "pay_dun00" ,21,179;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+						close;
+					case 3:
+						mes "[^5533ff Hunting Quest ^000000]";
+						mes "Vuelve cuando hayas terminado tu tarea y te daré una pequeña recompensa.";
+						setquest 60410;
+						switch(select("^5533ff [>] ^000000 Viajar al Lugar:^5533ff [>] ^000000 Cancelar")) {
+						case 1:	
+					        warp "pay_dun00" ,21,179;
+					        close;
+						case 2:	
+							mes "[^5533ff Hunting Quest ^000000]";
+					        mes "Si cambias de opinión, vuelve.";
+					        close;
+							}
+						close;
+					}
+				case 2:
+					mes "[^5533ff Hunting Quest ^000000]";
+					mes "Si cambias de opinión, vuelve.";
+					close;
+				}
+		}
+		else {
+			mes "[^5533ff Hunting Quest ^000000]";
+			mes "No cumples los requisitos de nivel para realizar esta quest.";
+			close;
+		}
+	}
+	else {
+		mes "[^5533ff Hunting Quest ^000000]";
+		mes "No cumples los requisitos de nivel para realizar esta quest.";
+		close;
+	}
+	OnInit:
+	do { 
+		delwaitingroom;
+		waitingroom "[Zombie] Lv 10-40",0;
+	sleep 5000;
+	} while(1);
+end;
+}

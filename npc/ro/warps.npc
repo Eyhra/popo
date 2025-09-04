@@ -1,0 +1,742 @@
+// Warper DeadBranch
+//============================================================
+britoniah,37,95,4	script	DeadBranch Room#1	454,{
+mes "[ ^308304DeadBranch Room^000000 ]";
+mes "Hola, " + strcharinfo(0) + "";
+mes "Yo te puedo llevar al salon en el cual podras elejir donde romper tus ramitas.";
+mes "quieres que te lleve?";
+next;
+switch(select("Si,Por Favor:No,Para la proxima")) {
+case 1:
+warp "paramk",32,180;
+break;
+case 2:
+OnInit:
+        waitingroom "DeadBranch Room",0;
+end;
+close;
+}
+}
+// Warp Capita Julie Instances Britoniah
+//============================================================
+//Warper Ida
+britoniah,101,95,5	script	Capitana Julie::julie1	10183,{
+cutin "ep162_est01",2;	
+mes "[^5533ffCapitana Julie^000000]";
+mes "Hola,querid"+(Sex?"o":"a")+" aventurer"+(Sex?"o":"a")+" te contare un secreto esta bien?";
+switch(select("Si:No")) {
+case 1:
+mes "En este mismo instante tengo a un grupo de élite haciendo expedición a una nuevas tierras.";
+mes "estas nuevas tierras tienen instancias como lo son endless tower , great demon baphomet , orc memory";
+mes "por lo tanto necesito reclutar nuevos talentos como lo son los aventureros";
+mes "la verdad los he estado observando  y tienen bastante talento incluso mayor nivel que nuestro mejor grupo de elite";
+mes "Entonces te Gustaria participar en esta expedicion!?";
+break;
+case 2:
+mes "[^5533ffCapitana Julie^000000]";
+		mes "Tu te lo pierdes.";
+		cutin "",255;
+		close;
+}
+	if(select("Lleveme por favor capitana!:No, gracias") == 2) {
+		clear;
+		mes "[^5533ffCapitana Julie^000000]";
+		mes "Aca estare por si quieres participar.";
+		cutin "",255;
+		close;
+	}
+	warp "1@air1",243,31;
+	cutin "",255;
+	end;
+}
+//warper regreso britoniah
+1@air1,242,67,5	script	Capitana Julie::julie2	10183,{
+	cutin "ep162_est01",2;
+	mes "[^5533ffCapitana Julie^000000]";
+	mes "Realmente tengo muchas expectativas de ti  da el 100% en estas nuevas instancias   o te estas arrepitiendo ?";
+	if(select("Tengo miedo sacame de aca:Muchas gracias por elegirme daré mi máximo potencial") == 2) {
+		clear;
+		mes "[^5533ffCapitana Julie^000000]";
+		mes "Mi intuición era la correcta en escogerte para esta mision aventurer"+(Sex?"o":"a")+".";
+		cutin "",255;
+		close;
+	}
+	warp "britoniah",106,99;
+	cutin "",255;
+	end;
+}
+// Warp Instance Britoniah
+//============================================================
+1@air1,215,60,5	script	Carlos::CARLOS1	10181,{
+	cutin "16loo_01",2;
+	mes "[^5533ffCarlos^000000]";
+	mes "hola compañer"+(Sex?"o":"a")+". hace algunas semanas estuvimos  investigando las ruinas de juperos a fondo y la verdad encontramos algo hermoso.";
+	mes "es una ciudad que estuvo habitada hace bastantes Centurias (Siglos) con una tecnología muy extraña.";
+	mes "según un equipo de exploración que envié hace algunas semanas atrás dejo 1 reporte de que existe una caverna que te puede hacer viajar en el tiempo.";
+	mes "te gustaría ir a la ciudad perdida de Verus a investigarla?";
+	if(select("Por Supuesto:Me Retracto, Me dio miedo") == 2) {
+		clear;
+		mes "[^5533ffCarlos^000000]";
+		mes "Cuando tengas las agallas vuelve a hablar conmigo.";
+		cutin "",255;
+		close;
+	}
+	warp "verus04",122,265;
+	cutin "",255;
+	end;
+}
+
+1@air1,90,172,5	script	Christian::CHRISTIAN1	10118,{
+	cutin "ep16_crux_findel01",2;
+	mes "[^5533ffChristian^000000]";
+	mes "Hola compañer"+(Sex?"o":"a")+" de aventuras.";
+	mes "Te gustaria adentrarte conmigo en este gran descubrimiento?";
+	if(select("Si:No") == 2) {
+		clear;
+		mes "[^5533ffChristian^000000]";
+		mes "Adios";
+		cutin "",255;
+		close;
+	}
+	    clear;  
+	    mes "[^5533ffChristian^000000]";
+		mes "Al parecer estás interesado en saber más sobre los misterios de esta tierra, a riesgo de que me llamen loco, te contaré algo que de seguro no conocías:";
+		next;
+		mes "[^5533ffChristian^000000]";
+		mes "Existe un compendio de libros antiguos, conocidos como Eddas, las antiguas historias dicen que son un resumen de todo lo pasado, presente y futuro, una especie de diario atemporal de nuestra realidad. ";
+		next;
+		mes "[^5533ffChristian^000000]";
+		mes "Imagínate, un poder como ese pudiera cambiar al mundo.";
+		next;
+		mes "[^5533ffChristian^000000]";
+		mes "¿De verdad desperté tu interés?";
+		next;
+		if(select("Si:No") == 2) {
+		clear;
+		mes "[^5533ffChristian^000000]";
+		mes "Cobarde!";
+		cutin "",255;
+		close;
+	}
+	clear;
+	mes "[^5533ffChristian^000000]";
+		mes "Que esperamos. Vamos!!";
+	warp "for_port",133,58;
+	cutin "",255;
+	end;
+}
+
+for_port,142,60,5	script	Omar El Espadachin::OMAR	10134,{
+	mes "[^5533ffOmar El Espadachin^000000]";
+	mes "Bienvenid"+(Sex?"o":"a")+" aventurer"+(Sex?"o":"a")+",a leguas se te nota tus deseos de descubrir los misterios de estas tierras.";
+	mes "¿Chris te convenció de venir?";
+	if(select("Si:No") == 2) {
+		clear;
+		mes "[^5533ffOmar El Espadachin^000000]";
+		mes "Adios.";
+		close;
+	}
+	clear;  
+	    mes "[^5533ffOmar El Espadachin^000000]";
+		mes "En mi opinión creo que su relato es fantasioso por decir algo amable, no obstante estas tierras son extrañas";
+		next;
+		mes "[^5533ffOmar El Espadachin^000000]";
+		mes "hay una pesadez en el ambiente, siento como si cada minuto borrara parte de mi";
+		next;
+		mes "[^5533ffOmar El Espadachin^000000]";
+		mes "es como si olvida...";
+		next;
+		mes "[^5533ffOmar El Espadachin^000000]";
+		mes "Hola aventurer"+(Sex?"o":"a")+", bienvenid"+(Sex?"o":"a")+" a las tierras de..., un lugar ideal para explorar y saciar el hambre de aventuras";
+		next;
+		mes "[^5533ffOmar El Espadachin^000000]";
+		mes "recuerda que el único modo de salir de este reino es derrotando a ya sabes quien...";
+		close;
+}
+
+1@tnm1,157,24,5	script	Morrys Loghard::ML1	10038,{
+	cutin "morocc_kid",2;
+	mes "[^5533ffMorrys Loghard^000000]";
+	mes "Al parecer pudieron encontrarme llegando  a mi dimensión donde estoy descansando..";
+	mes "ahora que han encontrado les daré un  desafió yo con mi poder puedo teletransportarlos  a una dimensión donde solíamos habitar los humanos  pero por la culpa de cierto monstruo ya no es ";
+	mes "habitable para humanos su misión ahora es matar a líder  y recobrar nuestro territorio las compensas se las darán los monstruos ya que como ven soy simplemente un niño jeje";
+	mes "Te gustaria investigar?";
+	if(select("Por Supuesto:Me Retracto, Me dio miedo") == 2) {
+		clear;
+		mes "[^5533ffMorrys Loghard^000000]";
+		mes "Cuando tengas las agallas vuelve a hablar conmigo.";
+		cutin "",255;
+		close;
+	}
+	warp "moro_vol",201,181;
+	cutin "",255;
+	end;
+}
+1@face,116,348,5	script	Lidya Loghard::LL1	10039,{
+	cutin "lunain01",2;
+	mes "[^5533ffLidya Loghard^000000]";
+	mes "Holiwis soy de la Familia LogHard una familia de magos  exiliada de midgard por causar grandes desastres  actualmente estamos haciendo algunos viajes buscando nuestro nuevo hogar";
+	mes "que hago a ca te preguntaras ando en una búsqueda de mi hermano pequeño el es muy escurridizo y puede esconderse en cualquier lugar si lo vez le avisas que tenemos que irnos";
+	mes "déjame contarte que el puede viajar de un lugar a otro en un abrir y cerrar de ojos.";
+	mes "Me ayudarías a buscarlo?";
+	if(select("Por Supuesto:Nel") == 2) {
+		clear;
+		mes "[^5533ffLidya Loghard^000000]";
+		mes "Bueno, es tu desición aventurer"+(Sex?"o":"a")+".";
+		cutin "",255;
+		close;
+	}
+	clear;
+	mes "[^5533ffLidya Loghard^000000]";
+	mes "Buena Suerte aventurer"+(Sex?"o":"a")+".";
+	cutin "",255;
+	close;
+}
+1@face,153,93,5	script	Viento Extraño Celeste::V1	10043,{
+	warp "1@face",158,106;
+	end;
+	}
+1@face,154,105,5	script	Viento Extraño Celeste::V2	10043,{
+	warp "1@face",161,94;
+	end;
+	}
+1@face,221,277,5	script	Viento Extraño Rosado::V3	10042,{
+	warp "1@face",211,297;
+	end;
+	}
+1@face,219,261,5	script	Viento Extraño Rosado::V4	10042,{
+	warp "1@face",220,302;
+	end;
+	}
+	
+1@tnm1,155,86,5	script	Dartz::bro_warp	651,{
+	mes "[^5533ffDartz^000000]";
+	mes "¿List"+(Sex?"o":"a")+" para salir de Toness Forest?";
+	if(select("Si,Termine mi misión aca:Aun no,Espera") == 2) {
+		clear;
+		mes "[^5533ffDartz^000000]";
+		mes "Avisame cuando estes list"+(Sex?"o":"a")+".";
+		close;
+	}
+	warp "britoniah",104,94;
+	end;
+}
+
+1@face,127,92,5	warp	warpins3-1	1,1,1@tnm1,90,23	
+moro_vol,190,213,5	script	Viento Extraño Dorado::V6	10044,{
+	warp "1@tnm1",140,102;
+	end;
+	}
+1@tnm1,123,117,5	script	Morrys LogHard::ML2	10038,{
+cutin "morocc_kid",2;		
+if(#cML==1){
+dispbottom strcharinfo(0)+", ya recibiste tu Costume Loyal Servant of Devil.";
+cutin "",255;
+end;
+}
+mes "^870F9A[Morrys LogHard]^000000";
+mes "La verdad era una broma con lo de que las recompensas te las dan los monstruos jejeje";
+next;
+mes "^870F9A[Morrys LogHard]^000000";
+mes "Toma querido aventurero esto es para ti.";
+set #cML,1;
+getitem 20430,1;
+cutin "",255;
+close;
+end;
+}
+1@tnm1,124,86,5	script	Lidya Loghard::LL2	10039,{
+cutin "lunain01",2;
+if(#cLL==1){
+dispbottom strcharinfo(0)+", ya recibiste tu Old Card Album.";
+cutin "",255;
+end;
+}	
+mes "^870F9A[Lidya Loghard]^000000";
+mes "Gracias por encontrar a mi hermanito";
+next;
+mes "^870F9A[Lidya Loghard]^000000";
+mes "y como recompensa te dare esto.";
+set #cLL,1;
+getitem 616,1;
+cutin "",255;
+close;
+end;
+}		
+// Warps Britoniah RO City
+//============================================================
+//Refine
+britoniah,108,70,0	warp	ref001	1,1,bri_in,59,72
+bri_in,60,75,0	warp	ref002-1	1,1,britoniah,106,70
+bri_in,234,163,0	warp	ref003-1	1,1,bri_in,65,66
+bri_in,67,66,0	warp	ref004-1	1,1,bri_in,238,163
+bri_in,248,173,0	warp	ref005-1	1,1,bri_in,283,125
+bri_in,283,122,0	warp	ref006-1	1,1,bri_in,247,170
+bri_in,262,164,0	warp	ref007-1	1,1,bri_in,277,164
+bri_in,274,163,0	warp	ref008-1	1,1,bri_in,259,164
+//cashshop
+britoniah,31,69,0	warp	cash001	1,1,1@tnm3,98,8,0
+1@tnm3,97,4,0	warp	cash001-1	1,1,britoniah,35,69
+//zonaquest
+britoniah,103,40,0	warp	mall001	1,1,paramk,96,7
+paramk,97,4,0	warp	mall001-1	1,1,britoniah,102,43
+
+// Nyd warps extras
+//============================================================
+nyd_dun02,99,200,0	warp	nyd001-1	1,1,1@nyd,32,39,0
+1@nyd,32,34,0	warp	nyd002-1	1,1,nyd_dun02,97,196,0
+1@nyd,280,285,0	warp	nyd003-1	1,1,2@nyd,200,17,0
+2@nyd,199,8,0	warp	nyd004-1	1,1,1@nyd,285,277,0
+2@nyd,199,253,0	warp	nyd005-1	1,1,2@nyd,199,174,0
+2@nyd,198,178,0	warp	nyd006-1	1,1,2@nyd,199,257,0
+
+// Discates dungeon warps extras
+//============================================================
+dic_dun01,289,107,0	warp	dic001-1	1,1,dic_dun02,102,143,0
+
+// Instance Warps
+//============================================================
+ver_tunn,83,86,0	warp	iwp-1	1,1,1@uns,135,192,0
+1@uns,131,188,0	warp	iwp-2	1,1,verus04,209,158,0
+1@uns,53,168,0	warp	iwp-3	1,1,1@uns,96,123,0
+1@uns,53,168,0	warp	iwp-4	1,1,1@uns,96,123,0
+1@uns,142,26,0	warp	iwp-5	1,1,1@uns,27,204,0
+1@uns,185,275,0	warp	iwp-6	1,1,1@uns,266,218,0
+1@uns,273,30,0	warp	iwp-7	1,1,ma_fild02,315,323,0
+ma_fild02,249,32,0	warp	iwp-8	1,1,ma_fild01,266,359,0
+for_dun01,100,99,0	warp	iwp-9	1,1,for_dun02,99,15,0
+1@air1,254,55,0	warp	iwp-10	1,1,1@air1,94,67,0
+1@air1,87,67,0	warp	iwp-11	1,1,1@air1,250,54,0
+1@air1,107,52,0	warp	iwp-12	1,1,1@air1,97,176,0
+1@air1,104,175,0	warp	iwp-13	1,1,1@air1,112,52,0
+moc_dugn01,30,23,0	warp	iwp-14	1,1,moc_dugn02,36,27,0
+moc_dugn02,30,27,0	warp	iwp-15	1,1,moc_dugn01,26,23,0
+moc_dugn02,75,182,0	warp	iwp-16	1,1,moc_dugn01,50,185,0
+moc_dugn01,44,185,0	warp	iwp-17	1,1,moc_dugn02,69,181,0
+moc_dugn01,181,126,0	warp	iwp-18	1,1,moc_dugn02,182,123,0
+moc_dugn02,181,117,0	warp	iwp-19	1,1,moc_dugn01,182,120,0
+prt_dugn01,189,10,0	warp	iwp-20	1,1,prt_dugn02,178,183,0
+prt_dugn02,178,187,0	warp	iwp-21	1,1,prt_dugn01,181,18,0
+prt_dugn02,97,116,0	warp	iwp-22	1,1,prt_dugn03,102,85,0
+prt_dugn03,102,90,0	warp	iwp-23	1,1,prt_dugn02,97,121,0
+dungeon000,133,125,0	warp	iwp-24	1,1,dungeon001,100,116,0
+dungeon001,100,109,0	warp	iwp-25	1,1,dungeon000,126,124,0
+1@xm_d,130,80,0	warp	iwp-26	1,1,1@xm_d,129,70,0
+1@xm_d,129,75,0	warp	iwp-27	1,1,1@xm_d,130,87,0
+1@xm_d,178,130,0	warp	iwp-28	1,1,1@xm_d,188,130,0
+1@xm_d,183,130,0	warp	iwp-29	1,1,1@xm_d,173,130,0
+1@xm_d,130,179,0	warp	iwp-30	1,1,1@xm_d,54,162,0
+1@xm_d,22,162,0	warp	iwp-31	1,1,1@xm_d,130,173,0
+1@xm_d,80,129,0	warp	iwp-32	1,1,1@xm_d,73,129,0
+1@xm_d,55,105,0	warp	iwp-33	1,1,1@xm_d,85,129,0
+1@dth1,323,103,0	warp	iwp-34	1,1,1@dth2,19,93,0
+
+// Carteles Britoniah RO City
+//============================================================ 
+ 
+britoniah,98,43,4	script	Zona Quest#ZQ	837,{
+	mes "^993300- Zona Quest -^000000";
+	mes "Bienvenido a la zona quest entra por el warp.";
+	close;
+}
+
+gld2_prt,81,63,1	script	Zona Cash#ZC	837,{
+	mes "^993300- Zona Cash -^000000";
+	mes "Bienvenido a la zona cash entra por el warp.";
+	close;
+}
+1@tnm3,135,92,5	script	Bulletin Board#merca3	837,{
+	mes "^6B1312Donation Coins!^000000";
+	OnInit:
+        waitingroom "<------ Donations Coins",0;
+end;
+	close;
+}
+1@tnm3,60,92,5	script	Bulletin Board#merca2	837,{
+	mes "^6B1312Donation Coins!^000000";
+	OnInit:
+        waitingroom "Donations Coins ------>",0;
+end;
+	close;
+}
+//==============Zona Merchants====================
+britoniah,77,91,5	script	Zona de Comercio#l1-1	857,{
+
+	mes "== Zona de Comercio ==";
+	mes " ";
+	mes "Esta zona es exclusiva para el comercio.";
+	Close;
+
+	OnInit:
+	delwaitingroom;
+	waitingroom "Zona de Comercio",0;
+	end;
+
+}
+britoniah,46,91,5	script	Zona de Comercio#l2-1	857,{
+
+	mes "== Zona de Comercio ==";
+	mes " ";
+	mes "Esta zona es exclusiva para el comercio.";
+	Close;
+
+	OnInit:
+	delwaitingroom;
+	waitingroom "Zona de Comercio",0;
+	end;
+
+}
+britoniah,93,91,5	script	Zona de Comercio#l3-1	857,{
+
+	mes "== Zona de Comercio ==";
+	mes " ";
+	mes "Esta zona es exclusiva para el comercio.";
+	Close;
+
+	OnInit:
+	delwaitingroom;
+	waitingroom "Zona de Comercio",0;
+	end;
+
+}
+
+// Instancias NPCs
+//============================================================ 
+1@uns,224,220,5	script	Bebe Dinosaurio#bbdino	10102,{
+	mes "^6B1312 gaaaaaw ^000000";
+	close;
+}
+1@uns,33,38,5	script	Bebe Dinosaurio#bbdino1	10102,{
+	mes "^6B1312 craaaaaaw ^000000";
+	close;
+}
+1@uns,59,261,5	script	Bebe Dinosaurio#bbdino2	10102,{
+	mes "^6B1312 Crawm ^000000";
+	close;
+}
+1@uns,228,162,5	script	Bebe Dinosaurio#bbdino3	10102,{
+	mes "^6B1312 Cruam ^000000";
+	close;
+}
+ma_fild02,199,304,5	script	Bebe Dinosaurio#bbdino4	10106,{
+	mes "^6B1312 rag rag rag ^000000";
+	close;
+}
+ma_fild02,107,303,5	script	Bebe Dinosaurio#bbdino5	10106,{
+	mes "^6B1312 haw haw haw ^000000";
+	close;
+}
+ma_fild02,308,144,5	script	Bebe Dinosaurio#bbdino6	10106,{
+	mes "^6B1312 Aguak aguak guakkkkkkkk! ^000000";
+	close;
+}
+ma_fild02,198,32,5	script	Bebe Dinosaurio#bbdino7	10106,{
+	mes "^6B1312 roawk roawk roawk  ^000000";
+	close;
+}
+ma_fild01,306,239,5	script	Bebe Dinosaurio#bbdino8	10104,{
+	mes "^6B1312 o,,o  ^000000";
+	close;
+}
+ma_fild01,68,322,5	script	Bebe Dinosaurio#bbdino9	10104,{
+	mes "^6B1312 rawm maar  ^000000";
+	close;
+}
+ma_fild01,101,238,5	script	Bebe Dinosaurio#bbdino10	10104,{
+	mes "^6B1312 Grrrr grrrrr grrr grrr  ^000000";
+	close;
+}
+ma_fild01,242,179,5	script	Bebe Dinosaurio#bbdino11	10104,{
+	mes "^6B1312 blooooooooooooooooooooooooooom!!!!!!!!!  ^000000";
+	close;
+}
+ma_fild01,273,349,5	script	llak#23	10105,{
+	mes "^6B1312 goooooooooooooooooooooooooooooguooooooooooooooooooooooooo!!!!!!  ^000000";
+	close;
+}
+ma_fild02,248,320,5	script	Mook#23	10107,{
+	mes "^6B1312 gaaaaaaaaaaaaam!!!!  ^000000";
+	close;
+}
+1@uns,145,201,5	script	Rong#23	10103,{
+	mes "^6B1312 ..................................  ^000000";
+	close;
+}
+ver_tunn,80,80,5	script	Clohe::CLOHE2	10190,{
+	mes "[^5533ffClohe^000000]";
+	mes "Aventureros se me olvido contarles un detalle antes de que entren a la instancia. bueno ademas de  ser difícil existen unos cofres muy valiosos con items que te podrían hacer millonario.";
+	next;
+	mes "[^5533ffClohe^000000]";
+	mes "Estos cofres tienen un tiempo de cooldown de 12 horas";
+	next;
+	mes "[^5533ffClohe^000000]";
+	mes "ahhhhh!!!! se me olvidaba algo mas la forma de encontrar estos cofres  es bastante sencillo tienes que encontrar a los Dinosaurios Bebe.";
+	next;
+	mes "[^5533ffClohe^000000]";
+	mes "Buena Suerte y me mandan reportes de todo que exploren :D!!!!";
+	close;
+}
+
+for_port,172,50,5	script	Lucia::LUCIA1	645,{
+	mes "[^5533ffLucia^000000]";
+	mes "Hey! colega con mi grupo pronto investigaremos el castillo!";
+	close;
+}
+
+for_port,171,45,4	script	Latus::LATUS1	635,{
+	mes "[^5533ffLatus^000000]";
+	mes "Con mi espada los destruire a todos :P";
+	close;
+}
+
+for_port,169,49,5	script	Mirla::MIRLA1	696,{
+	mes "[^5533ffMirla^000000]";
+	mes "Estoy preparada para ser un buen soporte!";
+	close;
+}
+for_port,186,52,3	script	Josepth::JOSEPTH1	10307,{
+	mes "[^5533ffJosepth^000000]";
+    mes "Aventureros tengo algo que contarles.";
+    next;
+	mes "[^5533ffJosepth^000000]";
+    mes "En los profundo del bosque existe un pasadiso secreto";
+	next;
+	mes "[^5533ffJosepth^000000]";
+	mes "Se dice que en esa zona se consigue las medallas que pide Wallace.";
+	close;
+}
+
+for_port,169,35,3	script	Gary::GARY1	753,{
+	mes "[^5533ffGary^000000]";
+	mes "Veamos lo fuerte que son.";
+	close;
+}
+
+for_dun01,128,53,4	script	Spirit Keen	10240,{
+mes "^870F9A[Spirit Keen]^000000";
+mes "La verdad lo intentamos pero son mucho mas fuertes que nosotros...";
+getitem 7575,1;
+close;
+}
+
+for_dun01,195,42,4	script	Spirit Urgent	10239,{
+mes "^870F9A[Spirit Urgent]^000000";
+mes "Solo queria estar con mis camaradas y ya no podremos festejar...";
+getitem 7576,1;
+close;
+}
+
+for_dun01,87,108,4	script	Spirit Sleepy	10241,{
+mes "^870F9A[Spirit Sleepy]^000000";
+mes "Dile a reno que estaremos bien :).";
+getitem 7577,1;
+close;
+}
+
+for_dun01,10,38,2	script	Soul	10172,{
+mes "^870F9A[Soul]^000000";
+mes "Soy El Guardian de este castillo sin tener los crystales jamas podran entrar.";
+if(countitem(7575) < 1);
+if(countitem(7576) < 1);
+if(countitem(7577) < 1);
+delitem 7575,1;
+delitem 7576,1;
+delitem 7577,1;
+warp "for_dun01",21,9;
+close;
+}
+
+for_dun01,5,192,5	script	Zona Secreta::in_warp3	111,{
+	mes "[^5533ffZona Secreta^000000]";
+	mes "¿Quieres entrar a una zona secreta?";
+	if(select("Si:No") == 2) {
+		clear;
+		mes "[^5533ffZona Secreta^000000]";
+		mes "Avisame cuando estes preparad"+(Sex?"o":"a")+".";
+		close;
+	}
+	warp "job_ko",162,30;
+	end;
+} 
+
+
+for_dun02,86,112,5	script	Shadow Portal::bro_warp1	723,{
+	mes "[^5533ffShadow Portal^000000]";
+	mes "¿List"+(Sex?"o":"a")+" para salir de Forgotten Castle?";
+	if(select("Si,Termine mi misión aca:Aun no,Espera") == 2) {
+		clear;
+		mes "[^5533ffShadow Portal^000000]";
+		mes "Avisame cuando estes list"+(Sex?"o":"a")+".";
+		close;
+	}
+	warp "britoniah",104,94;
+	end;
+}    
+
+britoniah,25,64,2	script	Portal Dimensional	10237,{
+mes "[^5533ffPortal Dimensional^000000]";
+mes "Para pasar el portal dimensional necesitas:";
+if(countitem(7758) < 1) mes "^FF0000"+(1 - countitem(7758)) +"^000000 Dimensional Crystal";
+delitem 7758,1;
+warp "prt_vilg01",100,28;
+close;
+}
+
+moc_dugn02,180,15,2	script	Freida	10010,{
+	cutin "lydia_a",2;
+mes "[^5533ffFreida^000000]";
+mes "Veo que ya terminaste tu mision en pyramide";
+mes "Deseas regresar a la ciudad?";
+if(select("Si:No") == 2) {
+		clear;
+		mes "[^5533ffFreida^000000]";
+		mes "Avisame cuando estes list"+(Sex?"o":"a")+".";
+		cutin "",255;
+		close;
+	}
+getitem 512,1;
+warp "moc_vilg01",58,156;
+cutin "",255;
+close;
+}
+
+que_qaru05,133,134,2	script	Espiritu de Piamette	10083,{
+mes "[^5533ffEspiritu de Piamette^000000]";
+mes "Para poder invocarme necesitas:";
+if(countitem(31489) < 25) mes "^FF0000"+(25 - countitem(31489)) +"^000000 False Soul Piamette";
+delitem 31489,25;
+atcommand "@monster 1930";;
+close;
+}
+
+que_qaru05,150,105,2	script	Aruna	10173,{
+cutin "pops_nor",2;
+mes "[^5533ffAruna^000000]";
+mes "Hola joven " + strcharinfo(0) + "si quieres avanzar desde este punto tendras que traer:";
+if(countitem(31490) < 1) mes "^FF0000"+(1 - countitem(31490)) +"^000000 Soul Piamette";
+mes "cada aventurer"+(Sex?"o":"a")+"i tendra que darme este item para poder pasar.";
+delitem 31490,1;
+warp "que_qaru05",129,103;
+cutin "",255;
+close;
+}
+
+1@xm_d,229,240,5	script	Kato::KATO1	10088,{	
+if(#kAT==1){
+dispbottom strcharinfo(0)+", ya recibiste tu Red Xmas Box.";
+end;
+}
+mes "^870F9A[Kato]^000000";
+mes "miau! toma tu Regalito.";
+set #kAT,1;
+getitem 19492,1;
+close;
+end;
+}
+
+1@xm_d,241,86,5	script	Ketek::KETEK1	10089,{	
+if(#kET==1){
+dispbottom strcharinfo(0)+", ya recibiste tu Yellow Xmas Box.";
+end;
+}
+mes "^870F9A[Ketek]^000000";
+mes "Feliz navimiau!";
+set #kET,1;
+getitem 19493,1;
+close;
+end;
+}
+
+1@xm_d,12,19,5	script	Kity::KITY1	10090,{	
+if(#kYT==1){
+dispbottom strcharinfo(0)+", ya recibiste tu Green Xmas Box.";
+end;
+}
+mes "^870F9A[Kity]^000000";
+mes "Felicidades por encontrarme toma un presente <3.";
+set #kYT,1;
+getitem 19495,1;
+close;
+end;
+}
+
+1@xm_d,166,177,5	script	Katty::KATTY1	10091,{	
+if(#kTY==1){
+dispbottom strcharinfo(0)+", ya recibiste tu Blue Xmas Box.";
+end;
+}
+mes "^870F9A[Katty]^000000";
+mes "Me encontraste este regalo miau esta para ti.";
+set #kTY,1;
+getitem 19494,1;
+close;
+end;
+}
+
+1@xm_d,97,208,2	script	Kimi MVP Instancia	10034,{
+mes "[^5533ffKimi MVP Instancia^000000]";
+mes "Este mes es mi cumpleaños me traerias una torta?";
+if(countitem(5024) < 1) mes "^FF0000"+(1 - countitem(5024)) +"^000000 Cake Hat";
+delitem 5024,1;
+warp "1@xm_d",108,208;
+close;
+}
+
+1@xm_d,151,208,2	script	Jefe Gato Navideño	10086,{
+mes "[^5533ffJefe Gato Navideño^000000]";
+mes "Para poder ingresar a esta area necesitan los Cuatro Regalos que tienen mi familia para mi:";
+if(select("Si:No") == 2) {
+		clear;
+		mes "[^5533ffJefe Gato Navideño^000000]";
+		mes "Avisame cuando estes list"+(Sex?"o":"a")+".";
+		cutin "",255;
+		close;
+	}
+if(countitem(19492) < 1) mes "^FF0000"+(1 - countitem(19492)) +"^000000 Red Xmas Box";
+if(countitem(19493) < 1) mes "^FF0000"+(1 - countitem(19493)) +"^000000 Yellow Xmas Box";
+if(countitem(19494) < 1) mes "^FF0000"+(1 - countitem(19494)) +"^000000 Blue Xmas Box";
+if(countitem(19495) < 1) mes "^FF0000"+(1 - countitem(19495)) +"^000000 Green Xmas Box";
+delitem 19492,1;
+delitem 19493,1;
+delitem 19494,1;
+delitem 19495,1;
+warp "1@xm_d",161,207;
+close;
+}
+
+1@dth2,324,103,5	script	Wish Maiden::in_warp4	403,{
+	mes "[^5533ffWish Maiden^000000]";
+	mes "Finalmente llegaron para desafiar a una hermosa batalla donde dejaran todo por Ganarle a ^5533ffRein^000000";
+	next;
+	mes "[^5533ffWish Maiden^000000]";
+	mes "les tengo que decir que ella es igual de poderosa que nosotras tendran que pensar bien como derrotarla ya que es un espacio reducido";
+	next;
+	mes "[^5533ffWish Maiden^000000]";
+	mes "este nuevo desafio pide unas mecanicas de alto nivel y buena comunicacion grupal les deseo suerte.";
+	next;
+	mes "[^5533ffWish Maiden^000000]";
+	mes "Deseas tomar el desafio?";
+	if(select("Si:No") == 2) {
+		clear;
+		mes "[^5533ffWish Maiden^000000]";
+		mes "Tanto camino para un no? ochs";
+		close;
+	}
+	warp "1@dth3",70,68;
+	end;
+} 
+
+//codigo de respaldo xd
+/* prontera,230,63,5	script	Volver al Centro::prt_warp	748,{
+	mes "[^5533ffVolver al Centro^000000]";
+	mes "¿List"+(Sex?"o":"a")+" para volver al centro de prontera?";
+	if(select("Vamos:No, gracias") == 2) {
+		clear;
+		mes "[^5533ffVolver al Centro^000000]";
+		mes "Tu te lo pierdes.";
+		close;
+	}
+	warp "prontera",150,180;
+	end;
+}
+ */

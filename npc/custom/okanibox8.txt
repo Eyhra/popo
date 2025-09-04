@@ -1,0 +1,10 @@
+function	script	MvPBox8	{
+	setarray .BoxItems[0],31301,31398,20172,20098,19824,31123,31062,20450,20798,19910;
+	
+	set .Random, getarraysize( .BoxItems );
+	getitem .BoxItems[ rand( .Random ) ], 1;
+	end;
+}
+
+
+//  Hallowen Egg

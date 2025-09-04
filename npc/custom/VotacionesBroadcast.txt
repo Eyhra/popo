@@ -1,0 +1,48 @@
+-	script	borrarvotos	-1,{
+
+OnClock0848:
+OnClock0918:
+OnClock0948:
+OnClock1018:
+OnClock1048:
+OnClock1118:
+OnClock1148:
+OnClock1218:
+OnClock1248:
+OnClock1318:
+OnClock1348:
+OnClock1418:
+OnClock1448:
+OnClock1518:
+OnClock1548:
+OnClock1618:
+OnClock1648:
+OnClock1718:
+OnClock1748:
+OnClock1818:
+OnClock1848:
+OnClock1918:
+OnClock1948:
+OnClock2018:
+OnClock2048:
+OnClock2118:
+OnClock2148:
+OnClock2218:
+OnClock2248:
+OnClock2318:
+OnClock2348:
+OnClock0018:
+OnClock0048:
+OnClock0118:
+OnClock0148:
+OnClock0218:
+OnClock0248:
+OnClock0318:
+OnClock0348:
+announce "[Advertising]: ¡Recuerda Votar diariamente por el Servidor!",bc_all,0x00FFFF;end;
+
+OnClock0600:
+query_sql "DELETE FROM votaciones";
+query_sql "DELETE FROM oboro_vote_points";
+end;
+}

@@ -1,0 +1,39 @@
+paramk,70,31,6	script	Snake Hat	1025,{
+	mes "[^000000Snake Hat^000000]";
+	mes "Hola!";
+	mes "Puedo hacerte un Snake Hat, te interesa?";
+	next;
+	menu "Qué necesito?",L_required,"Claro que sí, aquí están tus items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Snake Hat^000000]";
+		mes "^FF0000300^000000 Venom Canine"; //937
+		mes "^FF00001^000000 Ph.D Hat"; //5012
+		mes "^0000FF5000000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(937) < 300) goto L_manque;
+		if(countitem(5012) < 1) goto L_manque;
+		if(Zeny < 5000000) goto L_manque;
+		mes "[^000000Snake Hat^000000]";
+		mes "Aquí está tu Snake Hat";
+		delitem 937,300;
+		delitem 5012,1;
+		set Zeny, Zeny - 5000000;
+		getitem 5388,1;
+		close;
+
+	L_manque:
+		mes "[^000000Snake Hat^000000]";
+		mes "Te faltan: ";
+		if(countitem(937) < 300) mes "^FF0000"+(300 - countitem(937)) +"^000000 Venom Canine";
+		if(countitem(5012) < 1) mes "^FF0000"+(1 - countitem(5012)) +"^000000 Ph.D Hat";
+		if(Zeny < 5000000) mes "^0000FF"+(5000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Snake Hat^000000]";
+		mes "Buen día";
+		close;
+}

@@ -1,0 +1,37 @@
+new_1-1,57,114,4	script	Elsa	91,{
+	//mes "¡Beienvenid@!";
+	mes "Bienvenid@ a Veterans of Midgard. Te daré un paquete básico de supervivencia.";
+	mes "¡Suerte en tu aventura!";
+
+	if(!#Freebie) {
+		//mes "Ahora le entregaré su paquete de bienvenida.";
+		next;
+		switch(select("Pack de Bienvenida.")) {
+			case 1:
+getitembound 12208,1,1; 
+getitembound 501,10,1; 
+getitembound 2765,1,1; 
+getitembound 1109,1,1;   
+getitembound 533,50,1; 
+//getitembound 601,20,1;
+//getitembound 2501,1,1; 
+//getitembound 2401,1,1;
+getitembound 503,10,1;
+getitembound 502,10,1;
+getitembound 504,10,1;
+getitembound 20307,1,1;
+getitembound 20182,1,1;
+//getitembound 19634,1,1;				 				
+
+				break;
+				
+			}
+			set #Freebie, 1;
+			close;
+	}
+	OnInit:
+        delwaitingroom;
+	//waitingroom "Welcome Pack !!",0;
+	end;
+}
+

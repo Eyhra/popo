@@ -1,0 +1,43 @@
+prontera,144,204,6	script	Quest Verano	10055,{
+	mes "[^000000Quest Verano^000000]";
+	mes "Hola Bienvenido a la nueva quest de verano!";
+	mes "Los Dioses me dieron un poder extraordinario, Puedo crearte unas excelentes Blue Swords(1) es un item muy poderoso y magistral";
+	next;
+	menu "Qué necesito?",L_required,"Callate y dame mi espada azul",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Quest Verano^000000]";
+		mes "^FF0000200^000000 Broken Sword"; //7110
+		mes "^FF000025^000000 Valhalla's Flower"; //7510
+		mes "^FF000010^000000 Orcish Sword "; //1124
+		mes "^0000FF10000000^000000 zeny";
+		close;
+
+	L_check:
+		if(countitem(7110) < 200) goto L_manque;
+		if(countitem(7510) < 25) goto L_manque;
+		if(countitem(1124) < 10) goto L_manque;
+		if(Zeny < 10000000) goto L_manque;
+		mes "[^000000Quest Verano^000000]";
+		mes "Aquí está tu poderosa Blue Sword (1)";
+		delitem 7110,200;
+		delitem 7510,25;
+		delitem 1124,10;
+		set Zeny, Zeny - 10000000;
+		getitem 27245,1;
+		close;
+
+	L_manque:
+		mes "[^000000Quest Verano^000000]";
+		mes "Te faltan: ";
+		if(countitem(7110) < 200) mes "^FF0000"+(200 - countitem(7110)) +"^000000 Broken Sword";
+		if(countitem(7510) < 25) mes "^FF0000"+(25 - countitem(7510)) +"^000000 Valhalla's Flower";
+		if(countitem(1124) < 10) mes "^FF0000"+(10 - countitem(1124)) +"^000000 Orcish Sword";
+		if(Zeny < 10000000) mes "^0000FF"+(10000000 - Zeny)+"^000000 Zeny";
+		close;
+
+	L_partir:
+		mes "[^000000Quest Verano^000000]";
+		mes "Buen día";
+		close;
+}

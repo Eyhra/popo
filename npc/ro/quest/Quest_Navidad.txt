@@ -1,0 +1,117 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= NRCRO,Siegerth [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eA SVN 5000+
+//===== Additional Comments: =================================
+//= NPC de evento programado por NRCRO y las ideas de Siegerth para Britoniah RO, Especial de Navidad
+//============================================================
+
+xmas,143,116,4	script	Santa Claus#1	718,{
+	mes "[^000000Santa Claus^000000]";
+	mes "jo jo jo buenos dias aventurer"+(Sex?"o":"a")+" yo puedo crearte una fabulosa bolsa ";
+	mes "que trae algunos item que te van servir ";
+	next;
+	menu "Que Necesito?",L_required,"Tengo Tus Items",L_check,"Salir",L_partir;
+
+	L_required:
+		mes "[^000000Santa Claus^000000]";
+		mes "^FF00001^000000 Santa Poring Card"; //4005
+		mes "^FF0000100^000000 Wrapping Paper"; //7175
+		mes "^FF0000100^000000 Wrapping Lace"; //7174
+		mes "^FF00001^000000 Gift Box"; //644
+		close;
+
+	L_check:
+		if(countitem(4005) < 1) goto L_manque;
+		if(countitem(7175) < 100) goto L_manque;
+		if(countitem(7174) < 100) goto L_manque;
+		if(countitem(644) < 1) goto L_manque;
+		mes "[^000000Santa Claus^000000]";
+		mes "gracias por traer los materiales. ten tu Regalo Feliz Navidad";
+		mes "";
+		delitem 4005,1;
+		delitem 7175,100;
+		delitem 7174,100;
+		delitem 644,1;
+		getitem 19489,1;
+		close;
+
+	L_manque:
+		mes "[^000000Santa Claus^000000]";
+		mes "Lo siento amigo pero te falta:";
+		if(countitem(4005) < 1) mes "^FF0000"+(1 - countitem(4005)) +"^000000 Santa Poring Card";
+		if(countitem(7175) < 100) mes "^FF0000"+(100 - countitem(7175)) +"^000000 Wrapping Paper";
+		if(countitem(7174) < 100) mes "^FF0000"+(100 - countitem(7174)) +"^000000 Wrapping Lace";
+		if(countitem(644) < 1) mes "^FF0000"+(1 - countitem(644)) +"^000000 Gift Box";
+		close;
+
+	L_partir:
+		mes "[^000000Santa Claus^000000]";
+		mes "Que tengas una feliz navidad";
+		close;
+}
+
+//respawn Mob
+prontera,0,0	monster	Xmas Event	1245,2,7200000,3600000
+morocc,0,0	monster	Xmas Event	1245,2,7200000,3600000
+alberta,0,0	monster	Xmas Event	1245,2,7200000,3600000
+aldebaran,0,0	monster	Xmas Event	1245,2,7200000,3600000
+geffen,0,0	monster	Xmas Event	1245,2,7200000,3600000
+payon,0,0	monster	Xmas Event	1245,2,7200000,3600000
+comodo,0,0	monster	Xmas Event	1245,2,7200000,3600000
+izlude,0,0	monster	Xmas Event	1245,2,7200000,3600000
+yuno,0,0	monster	Xmas Event	1245,2,7200000,3600000
+einbroch,0,0	monster	Xmas Event	1245,2,7200000,3600000
+lighthalzen,0,0	monster	Xmas Event	1245,2,7200000,3600000
+hugel,0,0	monster	Xmas Event	1245,2,7200000,3600000
+umbala,0,0	monster	Xmas Event	1245,2,7200000,3600000
+amatsu,0,0	monster	Xmas Event	1245,2,7200000,3600000
+gonryun,0,0	monster	Xmas Event	1245,2,7200000,3600000
+louyang,0,0	monster	Xmas Event	1245,2,7200000,3600000
+ayothaya,0,0	monster	Xmas Event	1245,2,7200000,3600000
+moscovia,0,0	monster	Xmas Event	1245,2,7200000,3600000
+einbech,0,0	monster	Xmas Event	1245,2,3600000,3000000
+
+prontera,0,0	monster	Xmas Event	1244,2,7200000,3600000
+morocc,0,0	monster	Xmas Event	1244,2,7200000,3600000
+alberta,0,0	monster	Xmas Event	1244,2,7200000,3600000
+aldebaran,0,0	monster	Xmas Event	1244,2,7200000,3600000
+geffen,0,0	monster	Xmas Event	1244,2,7200000,3600000
+payon,0,0	monster	Xmas Event	1244,2,7200000,3600000
+comodo,0,0	monster	Xmas Event	1244,2,7200000,3600000
+izlude,0,0	monster	Xmas Event	1244,2,7200000,3600000
+yuno,0,0	monster	Xmas Event	1244,2,7200000,3600000
+einbroch,0,0	monster	Xmas Event	1244,2,7200000,3600000
+lighthalzen,0,0	monster	Xmas Event	1244,2,7200000,3600000
+hugel,0,0	monster	Xmas Event	1244,2,7200000,3600000
+umbala,0,0	monster	Xmas Event	1244,2,7200000,3600000
+amatsu,0,0	monster	Xmas Event	1244,2,7200000,3600000
+gonryun,0,0	monster	Xmas Event	1244,2,7200000,3600000
+louyang,0,0	monster	Xmas Event	1244,2,7200000,3600000
+ayothaya,0,0	monster	Xmas Event	1244,2,7200000,3600000
+moscovia,0,0	monster	Xmas Event	1244,2,7200000,3600000
+einbech,0,0	monster	Xmas Event	1244,2,3600000,3000000
+
+prontera,0,0	monster	Xmas Event	1588,2,7200000,3600000
+morocc,0,0	monster	Xmas Event	1588,2,7200000,3600000
+alberta,0,0	monster	Xmas Event	1588,2,7200000,3600000
+aldebaran,0,0	monster	Xmas Event	1588,2,7200000,3600000
+geffen,0,0	monster	Xmas Event	1588,2,7200000,3600000
+payon,0,0	monster	Xmas Event	1588,2,7200000,3600000
+comodo,0,0	monster	Xmas Event	1588,2,7200000,3600000
+izlude,0,0	monster	Xmas Event	1588,2,7200000,3600000
+yuno,0,0	monster	Xmas Event	1588,2,7200000,3600000
+einbroch,0,0	monster	Xmas Event	1588,2,7200000,3600000
+lighthalzen,0,0	monster	Xmas Event	1588,2,7200000,3600000
+hugel,0,0	monster	Xmas Event	1588,2,7200000,3600000
+umbala,0,0	monster	Xmas Event	1588,2,7200000,3600000
+amatsu,0,0	monster	Xmas Event	1588,2,7200000,3600000
+gonryun,0,0	monster	Xmas Event	1588,2,7200000,3600000
+louyang,0,0	monster	Xmas Event	1588,2,7200000,3600000
+ayothaya,0,0	monster	Xmas Event	1588,2,7200000,3600000
+moscovia,0,0	monster	Xmas Event	1588,2,7200000,3600000
+einbech,0,0	monster	Xmas Event	1588,2,3600000,3000000

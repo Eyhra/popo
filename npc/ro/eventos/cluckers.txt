@@ -1,0 +1,128 @@
+//===== rAthena Script =======================================
+//= Cluck! Cluck! Boom!
+//===== By: ==================================================
+//= Keale
+//===== Traducido Por: ==================================================
+//= ShadowZoro
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Click the chicken and try retrieve the item at a low 
+//= chance. If you fail he will nuke, freeze, stone, 
+//= stun, or make you fall asleep.
+//= The prize is configurable and triggered by the NPC.
+//===== Additional Comments: =================================
+//= 1.0 First release.
+//= 1.1 Using 'switch rand' instead.
+//= 1.2 Cleaned and standardized. [Euphy]
+//= 1.2a Switched 'atcommand' to 'unitskilluseid'.
+//= 1.3 Switched 'unitskilluseid' to 'unitkill'.
+//= 1.4 Traducido al español [ShadowZoro].
+//============================================================
+britoniah,38,78,4	script	Cluckers	800,{
+
+	set .@GMAccess,1;	// GM level required to access NPC
+
+	if (.startcluck) {
+		specialeffect2 EF_HIT3;
+		switch(rand(15)) {
+			case 0: npctalk "CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 1: npctalk "Cluuuuuck!~"; break;
+			case 2: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
+			case 3: sc_start SC_Freeze,10000,0; break;
+			case 4: npctalk "CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 5: sc_start SC_Sleep,10000,0; break;
+			case 6: sc_start SC_Stone,10000,0; emotion e_gg; break;
+			case 7: npctalk "CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 8: npctalk "Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 9: sc_start SC_Stun,10000,0; break;
+			case 10: sc_start SC_Sleep,10000,0; emotion e_gg; break;
+			case 11: npctalk "Cluck! Cluck!"; break;
+			case 12: sc_start SC_Stun,10000,0; break;
+			case 13: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
+			default:
+				if (rand(50) < 4) {
+					npctalk "WOOF!...........";
+					specialeffect2 EF_SPHERE;
+					announce "[Cluck! Cluck! Boom!] " + strcharinfo(0) + "  ha extraido el premio! Bien hecho!",0;
+					getitem $cluck_item_id,$cluck_item_amount;
+					set .startcluck,0;
+				} else {
+					npctalk "Cluck! CLUUUCK!!";
+					unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1;
+				}
+				break;
+		}
+		end;
+	}
+	mes "[Cluckers]";
+	if (getgmlevel() >= .@GMAccess) {
+		mes "Cluck cluck! Cluuuuuck? ^FF0000~Hola GM  " + strcharinfo(0) + " , Quieres jugar hoy?~^000000";
+		mes "Cluck cluck... CLUCK! ^FF0000~Solo dime que hacer!~^000000";
+		next;
+		while(1) switch(select("Iniciar Evento:Comprobar Premio:Ingresar Premio:Hoy no Cluckers")) {
+			case 1:
+				mes "[Cluckers]";
+				mes "CLUCK! ^FF0000~Cosa segura!~^000000";
+				emotion e_ok;
+				close2;
+				announce "[Cluck! Cluck! Boom!] Esta a punto de comenzar en Prontera, arriba de las Banderas de WoE!",bc_blue;
+				initnpctimer;
+				end;
+			case 2:
+				mes "[Cluckers]";
+				mes "Cluck, cluck cluck... Cluck! ^FF0000~El premio actual es^000000 ^008000"+ $cluck_item_amount +" "+ getitemname($cluck_item_id) +".^000000";
+				next;
+				break;
+			case 3:
+				mes "[Cluckers]";
+				mes "Cluck cluck? Cluck??? ^FF0000~Cuál debe ser el premio por ganar? Por favor introduce el ID.~^000000";
+				input $cluck_item_id;
+				next;
+				mes "[Cluckers]";
+				mes "Cluck? cluuuck? ^FF0000~Cuanta Cantidad de item deberia regalar?~^000000";
+				input $cluck_item_amount;
+				next;
+				mes "[Cluckers]";
+				mes "Cluck cluck..? Cluck. ^FF0000~Por lo tanto, el premio es^000000 ^008000"+ $cluck_item_amount +" "+ getitemname($cluck_item_id) +"^000000? ^FF0000Genial.~^000000";
+				emotion e_ok;
+				next;
+				break;
+			case 4:
+				mes "[Cluckers]";
+				mes "Cluck cluck cluck...";
+				close;
+		}
+	}
+	mes "Cluck cluck! Cluuuuuck?";
+	mes "Cluck....";
+	close;
+
+OnGallina:
+announce "[Cluck! Cluck! Boom!] Esta a punto de comenzar en Britoniah City, al lado de la sala de zona especial!",bc_blue;
+initnpctimer;
+end;
+
+OnTimer2000:
+	announce "¿Que es Cluck! Cluck! Boom!? es el evento de debes dar un click a la gallina.",bc_blue;
+	end;
+OnTimer5000:
+	announce "Tiene tomado unos premios sorpresa, quien logre quitarselos puede conservarlos.",bc_blue;
+	end;
+OnTimer7000:
+	announce "GO! Haga clic en el pollo para obtener el premio!",bc_blue;
+	stopnpctimer;
+	if (!$cluck_item_id) set $cluck_item_id,19502 ;
+	if (!$cluck_item_amount) set $cluck_item_amount,100;
+	set .startcluck,1;
+	end;
+
+
+	OnInit:
+        waitingroom "Evento Gallina",0;
+end;
+	close;
+
+}

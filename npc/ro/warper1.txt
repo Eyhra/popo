@@ -1,0 +1,1559 @@
+//===== rAthena Script ======================================= 
+//= Warp Agent
+//===== By: ================================================== 
+//= Bahmut
+//= http://rathena.org/board/user/1604-bahmut/
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Description: =========================================
+//= Warps you to:
+//=  - Your last warp location
+//=  - Towns
+//=  - Market
+//=  - Last Hope (After finishing the related Quest)
+//=  - Your Savepoint
+//=  - Dungeons
+//=		 + every Dungeon has its own sign
+//=  	 + sign has to be activated to allow dungeon warp
+//============================================================
+
+-	script	Warp Agent	-1,{
+	cutin "gc_mayssel01",2;
+	mes "[^5533ffWarper^000000]";
+	if (#language == 1) {
+		mes "Guten Tag, die Warp Agency";
+		mes "wird sie auch heute mit";
+		mes "freude zu ihrem gewünschten";
+		mes "Ziel warpen";
+	} else {
+		mes "¡Buen dia ^FF0000 " + strcharinfo(0) + "^000000!.";
+		mes "Mi nombre es Warper, y soy el servicio de teletransportación de ^FF0000Seal-RO^000000";
+	}
+	next;
+		
+	// Select Menu
+	menu "^5533ff [>] ^000000 Ultimo Warp",OTHER_lastwarp,
+		 "^5533ff [>] ^000000 Ciudades",L_Town,
+		 "^5533ff [>] ^000000 Dungeons",L_Dungeon,
+		 "^5533ff [>] ^000000 Comercio",OTHER_market,
+		 "^5533ff [>] ^000000 Ir al punto de guardado",OTHER_savepoint;
+	goto TOWN_lasthope;
+	
+	L_Info:
+		mes "[^5533ffWarper^000000]";
+		mes "The Warp Agency will warp you";
+		mes "to many different places, for";
+		mes "example Towns, Dungeons and more.";
+		next;
+		mes "[^5533ffWarper^000000]";
+		mes "To use the Dungeon Warp Service";
+		mes "you first have to activate";
+		mes "single Dungeons, by clicking";
+		mes "the sign next to the entrance.";
+		close2;
+		cutin "", 255;
+		end;
+		
+	L_EXECUTE:
+		mes "[^5533ffWarper^000000]";
+		if (.@zeny > 0) {
+			mes "El servicio tiene un costo de: ^5533ff" + .@zeny + "z.^000000 y ^5533ff Gratis ^000000 con ^5533ff Free Ticket for Kafra  Transportation^000000";
+		} else {
+			mes "El servicio tiene un costo de: ^5533ff Gratis ^000000";
+		}
+		mes "¿Esta bien?";
+		menu "^5533ff [>] ^000000 Aceptar",-,"^5533ff [>] ^000000 Cancelar",L_ABORT;
+		if (.@zeny > Zeny && countitem(7060) == 0) {
+			next;
+			mes "[^5533ffWarper^000000]";
+			mes "No tienes suficiente dinero.";
+			close2;
+			cutin "", 255;
+			end;
+		}
+		close2;
+		cutin "", 255;
+		if (countitem(7060) >= 1 && .@zeny != 0) {
+			delitem 7060,1;
+		} else {
+			set Zeny,Zeny - .@zeny;
+		}
+		warp .@map$,.@cordx,.@cordy;
+		set lastmap$,.@map$;
+		set lastcordx,.@cordx;
+		set lastcordy,.@cordy;
+		set lastzeny,.@zeny;
+		// callfunc("func_ach","3","1");	// 'Warper' Achievement
+		end;
+		
+	L_ABORT:
+		next;
+		mes "[^5533ffWarper^000000]";
+		mes "Aqui Estare para cuando necesites ^FF0000 " + strcharinfo(0) + "^000000.";
+		close2;
+		cutin "", 255;
+		end;
+		
+	L_Town:
+		mes "[^5533ffWarper^000000]";
+		mes "¿A dónde deseas ir?.";
+		next;
+		menu "^5533ff [>] ^000000 Prontera",TOWN_prontera,
+			 "^5533ff [>] ^000000 Alberta",TOWN_alberta,
+			 "^5533ff [>] ^000000 Al De Baran",TOWN_aldebaran,
+			 "^5533ff [>] ^000000 Ash Vacuum",TOWN_ashvacuum,
+			 "^5533ff [>] ^000000 Amatsu",TOWN_amatsu,
+			 "^5533ff [>] ^000000 Ayothaya",TOWN_ayothaya,
+			 "^5533ff [>] ^000000 Brasilis",TOWN_brasilis,
+			 "^5533ff [>] ^000000 Comodo",TOWN_comodo,
+			 "^5533ff [>] ^000000 El Dicastes",TOWN_dic,
+			 "^5533ff [>] ^000000 Einbroch",TOWN_einbroch,
+			 "^5533ff [>] ^000000 Einbech",TOWN_einbech,
+			 "^5533ff [>] ^000000 Geffen",TOWN_geffen,
+			 "^5533ff [>] ^000000 Gonryun",TOWN_gonryun,
+			 "^5533ff [>] ^000000 Hugel",TOWN_hugel,
+			 "^5533ff [>] ^000000 Izlude",TOWN_izlude,
+			 "^5533ff [>] ^000000 Lighthalzen",TOWN_lighthalzen,
+			 "^5533ff [>] ^000000 Morocc",TOWN_morocc,
+			 "^5533ff [>] ^000000 Moscovia",TOWN_moscovia,
+			 "^5533ff [>] ^000000 Manuk",TOWN_manuk,
+			 "^5533ff [>] ^000000 Niflheim",TOWN_niflheim,
+			 "^5533ff [>] ^000000 Payon",TOWN_payon,
+			 "^5533ff [>] ^000000 Lutie",TOWN_lutie,
+			 "^5533ff [>] ^000000 Lighthalzen",TOWN_lighthalzen,
+			 "^5533ff [>] ^000000 Louyang",TOWN_louyang,
+			 "^5533ff [>] ^000000 Rachel",TOWN_rachel,
+			 "^5533ff [>] ^000000 Splendide",TOWN_spl,
+			 "^5533ff [>] ^000000 Umbala",TOWN_umbala,
+			 "^5533ff [>] ^000000 Yuno",TOWN_yuno,
+			 "^5533ff [>] ^000000 Veins",TOWN_veins;
+			 
+	
+	L_Dungeon:
+		mes "[^5533ffWarper^000000]";
+		mes "¿A dónde deseas ir?.";
+		next;
+		menu "^5533ff [>] ^000000 Abbey, Cursed Monastery",DUNG_abbey,
+		     "^5533ff [>] ^000000 Abbys Lakes",abyss,
+		     "^5533ff [>] ^000000 Amatsu Dungeon",ama_dun,
+			 "^5533ff [>] ^000000 Anthell",DUNG_ant,
+			 "^5533ff [>] ^000000 Ayothaya Ancient Shrine",DUNG_shrine,
+			 "^5533ff [>] ^000000 Ash Vacuum Fields",ash_v,
+			 "^5533ff [>] ^000000 Brasilis Dungeon",DUNG_bra,
+			 "^5533ff [>] ^000000 Bio Laboratory",DUNG_bio,
+			 "^5533ff [>] ^000000 Beach Dungeons",beachd,
+			 "^5533ff [>] ^000000 Clock Tower",ctower,
+			 "^5533ff [>] ^000000 Coal Mines",mjolnir,
+			 "^5533ff [>] ^000000 Culverts",prt_culvert,
+			 "^5533ff [>] ^000000 Dimensional Rift",dimensional,
+			 "^5533ff [>] ^000000 Einbroch Mine Dungeon",DUNG_mine,
+			 "^5533ff [>] ^000000 Gefenia",geffenia,
+			 "^5533ff [>] ^000000 Geffen Dungeon",gefdun,
+			 "^5533ff [>] ^000000 Gonryun Dungeon",gondun,
+		     "^5533ff [>] ^000000 Glast Heim",glast, 
+			 "^5533ff [>] ^000000 Hidden Dungeon",hidden, 
+			 "^5533ff [>] ^000000 Ice Dungeon",icedun,
+			 "^5533ff [>] ^000000 Juperos Dungeons",juperos,
+			 "^5533ff [>] ^000000 Kiel Dungeon",DUNG_kiel,
+			 "^5533ff [>] ^000000 Louyang Dungeons",loudun,
+			 "^5533ff [>] ^000000 Magma Dungeons",magma,
+			 "^5533ff [>] ^000000 Moscovia Dungeons",mosk,
+			 "^5533ff [>] ^000000 Nydhogg's Dungeon",nyd,
+			 "^5533ff [>] ^000000 Odin Temple",odin,
+			 "^5533ff [>] ^000000 Orc Dungeons",orc,
+			 "^5533ff [>] ^000000 Payon Dungeons",paydun,
+			 "^5533ff [>] ^000000 Pyramids",pyramids,
+			 "^5533ff [>] ^000000 Rachel Sanctuary",rasan,
+			 "^5533ff [>] ^000000 Sphinx",sphinx,
+			 "^5533ff [>] ^000000 Scaraba Hole Dungeon",DUNG_scaraba,
+			 "^5533ff [>] ^000000 Sunken Ship",DUNG_ship,
+			 "^5533ff [>] ^000000 Thanatos Tower",tha_t,
+			 "^5533ff [>] ^000000 Thor Volcano",volcano,
+			 "^5533ff [>] ^000000 Toy Factory",DUNG_toy,
+			 "^5533ff [>] ^000000 Turtle Dungeons",turtle,
+			 "^5533ff [>] ^000000 Umbala Dungeons",umb;
+			 
+
+
+		
+//= Towns
+//============================================================
+//Example
+//TOWN_label:
+//	set .@map$,"<warp map>";
+//	set .@cordx,<warp x>;
+//	set .@cordy,<warp y>;
+//	set .@zeny,<warp price>;	<- If zero = free
+//	goto L_EXECUTE;
+
+TOWN_ashvacuum:
+	set .@map$,"mid_camp";
+	set .@cordx,210;
+	set .@cordy,291;
+	set .@zeny,2500;
+	set ep13_ryu,100;
+	goto L_EXECUTE;
+	
+TOWN_prontera:
+	set .@map$,"prontera";
+	set .@cordx,156;
+	set .@cordy,180;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_izlude:
+	set .@map$,"izlude";
+	set .@cordx,127;
+	set .@cordy,111;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_morocc:
+	set .@map$,"morocc";
+	set .@cordx,159;
+	set .@cordy,91;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_geffen:
+	set .@map$,"geffen";
+	set .@cordx,119;
+	set .@cordy,59;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+
+TOWN_payon:
+	set .@map$,"payon";
+	set .@cordx,175;
+	set .@cordy,96;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_alberta:
+	set .@map$,"alberta";
+	set .@cordx,116;
+	set .@cordy,56;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_aldebaran:
+	set .@map$,"aldebaran";
+	set .@cordx,140;
+	set .@cordy,115;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+
+TOWN_comodo:
+	set .@map$,"comodo";
+	set .@cordx,201;
+	set .@cordy,143;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_yuno:
+	set .@map$,"yuno";
+	set .@cordx,157;
+	set .@cordy,182;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_umbala:
+	set .@map$,"umbala";
+	set .@cordx,123;
+	set .@cordy,138;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_hugel:
+	set .@map$,"hugel";
+	set .@cordx,97;
+	set .@cordy,160;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_lighthalzen:
+	set .@map$,"lighthalzen";
+	set .@cordx,158;
+	set .@cordy,92;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_rachel:
+	set .@map$,"rachel";
+	set .@cordx,117;
+	set .@cordy,137;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_veins:
+	set .@map$,"veins";
+	set .@cordx,204;
+	set .@cordy,103;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_einbroch:
+	set .@map$,"einbroch";
+	set .@cordx,238;
+	set .@cordy,212;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_einbech:
+	set .@map$,"einbech";
+	set .@cordx,172;
+	set .@cordy,131;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_niflheim:
+	set .@map$,"niflheim";
+	set .@cordx,197;
+	set .@cordy,186;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_louyang:
+	set .@map$,"louyang";
+	set .@cordx,217;
+	set .@cordy,101;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_ayothaya:
+	set .@map$,"ayothaya";
+	set .@cordx,149;
+	set .@cordy,112;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_gonryun:
+	set .@map$,"gonryun";
+	set .@cordx,159;
+	set .@cordy,118;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_brasilis:
+	set .@map$,"brasilis";
+	set .@cordx,196;
+	set .@cordy,215;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_amatsu:
+	set .@map$,"amatsu";
+	set .@cordx,109;
+	set .@cordy,146;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_moscovia:
+	set .@map$,"moscovia";
+	set .@cordx,223;
+	set .@cordy,198;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+
+TOWN_dic:
+	set .@map$,"dicastes01";
+	set .@cordx,198;
+	set .@cordy,187;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+
+TOWN_manuk:
+	set .@map$,"manuk";
+	set .@cordx,282;
+	set .@cordy,138;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+
+TOWN_spl:
+	set .@map$,"dewata";
+	set .@cordx,201;
+	set .@cordy,147;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+TOWN_lutie:
+	set .@map$,"xmas";
+	set .@cordx,147;
+	set .@cordy,132;
+	set .@zeny,2500;
+	goto L_EXECUTE;
+	
+//= Dungeons
+//============================================================
+
+DUNG_abbey:
+	set .@map$,"abbey01";
+	set .@cordx,51;
+	set .@cordy,14;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+
+abyss:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Abyss Lakes Underground Cave Area 1",abyss1,
+	"^5533ff [>] ^000000 Abyss Lakes Underground Cave Area 2",abyss2;
+	
+abyss1:
+	set .@map$,"abyss_01";
+	set .@cordx,255;
+	set .@cordy,276;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+abyss2:
+	set .@map$,"abyss_02";
+	set .@cordx,270;
+	set .@cordy,267;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+ama_dun:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Tatami Maze",amatsu1,
+	"^5533ff [>] ^000000 Battlefield in the Underground Forest",amatsu2;	
+	
+amatsu1:
+	set .@map$,"ama_dun01";
+	set .@cordx,226;
+	set .@cordy,11;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+amatsu2:
+	set .@map$,"ama_dun02";
+	set .@cordx,37;
+	set .@cordy,44;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+DUNG_ant:
+	set .@map$,"anthell01";
+	set .@cordx,39;
+	set .@cordy,259;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+DUNG_shrine:
+	set .@map$,"ayo_dungeon01";
+	set .@cordx,259;
+	set .@cordy,17;
+	set .@zeny,12000;
+	goto L_EXECUTE;
+
+DUNG_bio:
+	set .@map$,"lhz_dun01";
+	set .@cordx,149;
+	set .@cordy,272;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+DUNG_bra:
+	set .@map$,"bra_dun01";
+	set .@cordx,87;
+	set .@cordy,47;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+beachd:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Luanda,The North Cave",beach1,
+	"^5533ff [>] ^000000 Mao,The East Cave",beach2;	
+	
+beach1:
+	set .@map$,"beach_dun2";
+	set .@cordx,250;
+	set .@cordy,243;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+beach2:
+	set .@map$,"beach_dun3";
+	set .@cordx,21;
+	set .@cordy,261;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+byalan:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Undersea Tunnel B1",byalan1,
+	"^5533ff [>] ^000000 Undersea Tunnel B2",byalan2,
+	"^5533ff [>] ^000000 Undersea Tunnel B3",byalan3,
+	"^5533ff [>] ^000000 Undersea Tunnel B4",byalan4,
+	"^5533ff [>] ^000000 Undersea Tunnel B5",byalan5;
+
+byalan1:
+	set .@map$,"iz_dun00";
+	set .@cordx,168;
+	set .@cordy,165;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+byalan2:
+	set .@map$,"iz_dun01";
+	set .@cordx,40;
+	set .@cordy,41;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+byalan3:
+	set .@map$,"iz_dun02";
+	set .@cordx,235;
+	set .@cordy,205;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+byalan4:
+	set .@map$,"iz_dun03";
+	set .@cordx,35;
+	set .@cordy,65;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+byalan5:
+	set .@map$,"iz_dun04";
+	set .@cordx,27;
+	set .@cordy,34;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+mjolnir:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Mjolnir Dead Pit 1",mjolnir1,
+     "^5533ff [>] ^000000 Mjolnir Dead Pit 1",mjolnir2,
+	"^5533ff [>] ^000000Mjolnir Dead Pit 1",mjolnir3;	
+	
+mjolnir1:
+	set .@map$,"mjo_dun01";
+	set .@cordx,52;
+	set .@cordy,20;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+mjolnir2:
+	set .@map$,"mjo_dun02";
+	set .@cordx,39;
+	set .@cordy,33;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+mjolnir3:
+	set .@map$,"mjo_dun03";
+	set .@cordx,306;
+	set .@cordy,255;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+ctower:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Clock Tower F1",clock1,
+     "^5533ff [>] ^000000 Clock Tower F2",clock2,
+	"^5533ff [>] ^000000 Clock Tower F3",clock3,
+	"^5533ff [>] ^000000 Clock Tower F4",clock4,
+	"^5533ff [>] ^000000 Clock Tower B1",clock5,
+	"^5533ff [>] ^000000 Clock Tower B2",clock6,
+	"^5533ff [>] ^000000 Clock Tower B3",clock7,
+	"^5533ff [>] ^000000 Clock Tower B4",clock8;
+
+clock1:
+	set .@map$,"c_tower1";
+	set .@cordx,200;
+	set .@cordy,167;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+clock2:
+	set .@map$,"c_tower2";
+	set .@cordx,148;
+	set .@cordy,283;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+clock3:
+	set .@map$,"c_tower3";
+	set .@cordx,65;
+	set .@cordy,147;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+clock4:
+	set .@map$,"c_tower4";
+	set .@cordx,56;
+	set .@cordy,155;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+clock5:
+	set .@map$,"alde_dun01";
+	set .@cordx,297;
+	set .@cordy,25;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+clock6:
+	set .@map$,"alde_dun02";
+	set .@cordx,127;
+	set .@cordy,169;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+clock7:
+	set .@map$,"alde_dun03";
+	set .@cordx,277;
+	set .@cordy,178;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+clock8:
+	set .@map$,"alde_dun04";
+	set .@cordx,268;
+	set .@cordy,74;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+prt_culvert:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Prontera Culvert 1",culvert1,
+     "^5533ff [>] ^000000 Prontera Culvert 2",culvert2,
+	"^5533ff [>] ^000000 Prontera Culvert 3",culvert3;	
+	
+culvert1:	
+	set .@map$,"prt_sewb1";
+	set .@cordx,131;
+	set .@cordy,247;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+culvert2:	
+	set .@map$,"prt_sewb2";
+	set .@cordx,19;
+	set .@cordy,19;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+culvert3:	
+	set .@map$,"prt_sewb3";
+	set .@cordx,180;
+	set .@cordy,169;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+
+DUNG_mine:
+	set .@map$,"ein_dun01";
+	set .@cordx,21;
+	set .@cordy,16;
+	set .@zeny,6000;
+	goto L_EXECUTE;
+
+glast:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Entrance",dglastent,
+	"^5533ff [>] ^000000 Castle 1",dglastcast1,
+	"^5533ff [>] ^000000 Castle 2",dglastcast2,
+	"^5533ff [>] ^000000 Chivalry 1",dglastchiv1,
+	"^5533ff [>] ^000000 Chivalry 2",dglastchiv2,
+	"^5533ff [>] ^000000 Culvert 1",dglastcul1,
+	"^5533ff [>] ^000000 Culvert 2",dglastcul1,
+	"^5533ff [>] ^000000 Culvert 3",dglastcul3,
+	"^5533ff [>] ^000000 Culvert 4",dglastcul4,
+	"^5533ff [>] ^000000 St.Abbey",dglastchur,
+	"^5533ff [>] ^000000 Staircase Dungeon",dglaststep,
+	"^5533ff [>] ^000000 Underground Cave 1",dglastcave1,
+	"^5533ff [>] ^000000 Underground Cave 2",dglastcave2,
+	"^5533ff [>] ^000000 Underground Prison 1",dglastpris1,
+	"^5533ff [>] ^000000 Underground Prison 2",dglastpris2;
+	
+dglastent:
+	set .@map$,"glast_01";
+	set .@cordx,365;
+	set .@cordy,303;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+dglastcast1:
+	set .@map$,"gl_cas01";
+	set .@cordx,199;
+	set .@cordy,29;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+dglastcast2:
+	set .@map$,"gl_cas02";
+	set .@cordx,104;
+	set .@cordy,25;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+dglastchiv1:
+	set .@map$,"gl_knt01";
+	set .@cordx,150;
+	set .@cordy,15;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+dglastchiv2:
+	set .@map$,"gl_knt02";
+	set .@cordx,157;
+	set .@cordy,287;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+dglastcul1:
+	set .@map$,"gl_sew01";
+	set .@cordx,258;
+	set .@cordy,255;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+dglastcu2:
+	set .@map$,"gl_sew02";
+	set .@cordx,108;
+	set .@cordy,291;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+dglastcul3:
+	set .@map$,"gl_sew03";
+	set .@cordx,171;
+	set .@cordy,283;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+dglastcul4:
+	set .@map$,"gl_sew04";
+	set .@cordx,68;
+	set .@cordy,277;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+dglastchur:
+	set .@map$,"gl_church";
+	set .@cordx,156;
+	set .@cordy,7;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+dglaststep:
+	set .@map$,"gl_step";
+	set .@cordx,12;
+	set .@cordy,7;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+dglastcave1:
+	set .@map$,"gl_dun01";
+	set .@cordx,133;
+	set .@cordy,271;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+dglastcave2:
+	set .@map$,"gl_dun02";
+	set .@cordx,224;
+	set .@cordy,274;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+dglastpris1:
+	set .@map$,"gl_prison";
+	set .@cordx,14;
+	set .@cordy,70;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+dglastpris2:
+	set .@map$,"gl_prison1";
+	set .@cordx,150;
+	set .@cordy,14;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+
+geffenia:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Gefenia 1",geffenia1,
+     "^5533ff [>] ^000000 Gefenia 2",geffenia2,
+	"^5533ff [>] ^000000 Gefenia 3",geffenia3,	
+	"^5533ff [>] ^000000 Gefenia 4",geffenia4;	
+
+geffenia1:
+	set .@map$,"gefenia01";
+	set .@cordx,40;
+	set .@cordy,103;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+geffenia2:
+	set .@map$,"gefenia02";
+	set .@cordx,203;
+	set .@cordy,34;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+geffenia3:
+	set .@map$,"gefenia03";
+	set .@cordx,266;
+	set .@cordy,168;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+geffenia4:
+	set .@map$,"gefenia04";
+	set .@cordx,130;
+	set .@cordy,272;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+
+gefdun:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Geffen Dungeon B1",gefdun1,
+	"^5533ff [>] ^000000 Geffenia Dungeon",gef_dun2;	
+
+gefdun1:
+	set .@map$,"gef_dun01";
+	set .@cordx,104;
+	set .@cordy,99;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+gefdun2:
+	set .@map$,"gef_dun03";
+	set .@cordx,203;
+	set .@cordy,200;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+gondun:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Shrine of Seowangmo",gondun1,
+	"^5533ff [>] ^000000 Hermit's Checkerboard",gondun2;	
+
+gondun1:
+	set .@map$,"gon_dun01";
+	set .@cordx,153;
+	set .@cordy,53;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+gondun2:
+	set .@map$,"gon_dun02";
+	set .@cordx,28;
+	set .@cordy,113;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+hidden:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Labyrinth Forest 1",hidden1,
+	"^5533ff [>] ^000000 Labyrinth Forest 2",hidden2;	
+
+hidden1:
+	set .@map$,"prt_maze01";
+	set .@cordx,176;
+	set .@cordy,7;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+hidden2:
+	set .@map$,"prt_maze02";
+	set .@cordx,93;
+	set .@cordy,21;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+icedun:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Ice Cave 1",ice1,
+	"^5533ff [>] ^000000 Ice Cave 2",ice2;	
+	
+ice1:	
+	set .@map$,"ice_dun01";
+	set .@cordx,157;
+	set .@cordy,14;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+ice2:	
+	set .@map$,"ice_dun02";
+	set .@cordx,151;
+	set .@cordy,155;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+juperos:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Juperos F1",jupe1,
+	"^5533ff [>] ^000000 Juperos F2",jupe2;	
+
+jupe1:
+	set .@map$,"juperos_01";
+	set .@cordx,53;
+	set .@cordy,247;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+jupe2:
+	set .@map$,"juperos_02";
+	set .@cordx,37;
+	set .@cordy,63;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+
+DUNG_kiel:
+	set .@map$,"kh_dun01";
+	set .@cordx,15;
+	set .@cordy,210;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+loudun:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 The Royal Tomb",lou1,
+	"^5533ff [>] ^000000 Inside The Royal Tomb",lou2;	
+
+lou1:
+	set .@map$,"lou_dun01";
+	set .@cordx,218;
+	set .@cordy,196;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+lou2:
+	set .@map$,"lou_dun02";
+	set .@cordx,282;
+	set .@cordy,20;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+magma:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Nogg Road 1",nogg1,
+	"^5533ff [>] ^000000 Nogg Road 2",nogg2;	
+	
+nogg1:	
+	set .@map$,"mag_dun01";
+	set .@cordx,126;
+	set .@cordy,68;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+nogg2:	
+	set .@map$,"mag_dun02";
+	set .@cordx,47;
+	set .@cordy,30;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+
+mosk:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Les Forest",mosk1,
+	"^5533ff [>] ^000000 Temny Forest",mosk2;	
+	
+mosk1:
+	set .@map$,"mosk_dun01";
+	set .@cordx,210;
+	set .@cordy,43;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+mosk2:
+	set .@map$,"mosk_dun02";
+	set .@cordx,164;
+	set .@cordy,31;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+nyd:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Nydhogg's Dungeon - nyd_dun01",nyd1,
+     "^5533ff [>] ^000000 Nydhogg's Dungeon - nyd_dun02",nyd2,
+	"^5533ff [>] ^000000 Nydhogg's Dungeon Next 1 - 1@nyd",nyd3;	
+	
+nyd1:
+	set .@map$,"nyd_dun01";
+	set .@cordx,61;
+	set .@cordy,239;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+nyd2:
+	set .@map$,"nyd_dun02";
+	set .@cordx,60;
+	set .@cordy,271;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+nyd3:
+	set .@map$,"1@nyd";
+	set .@cordx,32;
+	set .@cordy,45;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+odin:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Odin Shrine F1",odin1,
+	"^5533ff [>] ^000000 Odin Shrine F2",odin2;
+	
+odin1:	
+	set .@map$,"odin_tem01";
+	set .@cordx,298;
+	set .@cordy,167;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+
+odin2:	
+	set .@map$,"odin_tem02";
+	set .@cordx,224;
+	set .@cordy,149;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+
+orc:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Orc Dungeon 1",orc1,
+	"^5533ff [>] ^000000 Orc Dungeon 2",orc2;
+	
+orc1:	
+	set .@map$,"orcsdun01";
+	set .@cordx,32;
+	set .@cordy,170;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+orc2:	
+	set .@map$,"orcsdun02";
+	set .@cordx,21;
+	set .@cordy,185;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+paydun:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Payon Dungeon F1",pay1,
+    "^5533ff [>] ^000000 Payon Dungeon F2",pay2,
+	"^5533ff [>] ^000000 Payon Dungeon F3",pay3,
+	"^5533ff [>] ^000000 Payon Dungeon F4",pay4;
+	
+pay1:
+	set .@map$,"pay_dun00";
+	set .@cordx,21;
+	set .@cordy,183;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+pay2:
+	set .@map$,"pay_dun01";
+	set .@cordx,19;
+	set .@cordy,33;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+pay3:
+	set .@map$,"pay_dun02";
+	set .@cordx,19;
+	set .@cordy,63;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+pay4:
+	set .@map$,"pay_dun03";
+	set .@cordx,155;
+	set .@cordy,159;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+pyramids:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Pyramid F1",pyra1,
+    "^5533ff [>] ^000000 Pyramid F2",pyra2,
+	"^5533ff [>] ^000000 Pyramid F3",pyra3,
+	"^5533ff [>] ^000000 Pyramid B1",pyra4;
+	
+pyra1:
+	set .@map$,"moc_pryd01";
+	set .@cordx,192;
+	set .@cordy,9;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+pyra2:
+	set .@map$,"moc_pryd02";
+	set .@cordx,10;
+	set .@cordy,192;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+pyra3:
+	set .@map$,"moc_pryd03";
+	set .@cordx,100;
+	set .@cordy,92;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+pyra4:
+	set .@map$,"moc_pryd05";
+	set .@cordx,94;
+	set .@cordy,96;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+rasan:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Freya's Sacred Precinct F1",rasan1,
+    "^5533ff [>] ^000000 Freya's Sacred Precinct F2",rasan2,
+	"^5533ff [>] ^000000 Freya's Sacred Precinct F3",rasan3,
+	"^5533ff [>] ^000000 Freya's Sacred Precinct F4",rasan4;
+	
+rasan1:
+	set .@map$,"ra_san01";
+	set .@cordx,140;
+	set .@cordy,11;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+rasan2:
+	set .@map$,"ra_san02";
+	set .@cordx,32;
+	set .@cordy,21;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+rasan3:
+	set .@map$,"ra_san03";
+	set .@cordx,10;
+	set .@cordy,149;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+rasan4:
+	set .@map$,"ra_san04";
+	set .@cordx,204;
+	set .@cordy,218;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+
+sphinx:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Morocc Sphinx B1",sphinx1,
+    "^5533ff [>] ^000000 Morocc Sphinx B2",sphinx2,
+	"^5533ff [>] ^000000 Morocc Sphinx B3",sphinx3,
+	"^5533ff [>] ^000000 Morocc Sphinx B4",sphinx4;
+	
+sphinx1:
+	set .@map$,"in_sphinx1";
+	set .@cordx,288;
+	set .@cordy,9;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+sphinx2:
+	set .@map$,"in_sphinx2";
+	set .@cordx,149;
+	set .@cordy,81;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+sphinx3:
+	set .@map$,"in_sphinx3";
+	set .@cordx,210;
+	set .@cordy,54;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+sphinx4:
+	set .@map$,"in_sphinx4";
+	set .@cordx,10;
+	set .@cordy,222;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+DUNG_scaraba:
+	set .@map$,"dic_dun01";
+	set .@cordx,33;
+	set .@cordy,212;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+DUNG_ship:
+	set .@map$,"treasure01";
+	set .@cordx,69;
+	set .@cordy,29;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+tha_t:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Thanatos Tower L1",tha1,
+    "^5533ff [>] ^000000 Thanatos Tower L2",tha2,
+	"^5533ff [>] ^000000 Thanatos Tower L3",tha3,
+	"^5533ff [>] ^000000 Thanatos Tower L4",tha4,
+	"^5533ff [>] ^000000 Thanatos Tower L5",tha5,
+    "^5533ff [>] ^000000 Thanatos Tower L6",tha6,
+	"^5533ff [>] ^000000 Thanatos Tower L7",tha7,
+	"^5533ff [>] ^000000 Thanatos Tower L8",tha8,
+	"^5533ff [>] ^000000 Thanatos Tower L9",tha9,
+    "^5533ff [>] ^000000 Thanatos Tower L10",tha10,
+	"^5533ff [>] ^000000 Thanatos Tower L11",tha11,
+	"^5533ff [>] ^000000 Thanatos Tower L12",tha12;
+	
+tha1:
+	set .@map$,"tha_t01";
+	set .@cordx,150;
+	set .@cordy,39;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+tha2:
+	set .@map$,"tha_t02";
+	set .@cordx,150;
+	set .@cordy,136;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+tha3:
+	set .@map$,"tha_t03";
+	set .@cordx,220;
+	set .@cordy,158;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+tha4:
+	set .@map$,"tha_t04";
+	set .@cordx,59;
+	set .@cordy,143;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+tha5:
+	set .@map$,"tha_t05";
+	set .@cordx,62;
+	set .@cordy,11;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+tha6:
+	set .@map$,"tha_t06";
+	set .@cordx,89;
+	set .@cordy,221;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+tha7:
+	set .@map$,"tha_t07";
+	set .@cordx,35;
+	set .@cordy,166;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+tha8:
+	set .@map$,"tha_t08";
+	set .@cordx,93;
+	set .@cordy,148;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+tha9:
+	set .@map$,"tha_t09";
+	set .@cordx,29;
+	set .@cordy,107;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+tha10:
+	set .@map$,"tha_t10";
+	set .@cordx,159;
+	set .@cordy,138;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+tha11:
+	set .@map$,"tha_t11";
+	set .@cordx,19;
+	set .@cordy,20;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+tha12:
+	set .@map$,"tha_t12";
+	set .@cordx,130;
+	set .@cordy,52;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+volcano:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Thor Volcano F1",thor1,
+	"^5533ff [>] ^000000 Thor Volcano F2",thor2;
+	
+thor1:	
+	set .@map$,"thor_v01";
+	set .@cordx,21;
+	set .@cordy,228;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+	
+thor2:	
+	set .@map$,"thor_v02";
+	set .@cordx,75;
+	set .@cordy,205;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+DUNG_toy:
+	set .@map$,"xmas_dun01";
+	set .@cordx,205;
+	set .@cordy,15;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+turtle:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Turtle Island",tur1,
+    "^5533ff [>] ^000000 Turtle Island Dungeon",tur2,
+	"^5533ff [>] ^000000 Good Turtles Village",tur3;
+	
+tur1:
+	set .@map$,"tur_dun01";
+	set .@cordx,154;
+	set .@cordy,49;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+tur2:
+	set .@map$,"tur_dun02";
+	set .@cordx,148;
+	set .@cordy,261;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+	
+tur3:
+	set .@map$,"tur_dun03";
+	set .@cordx,132;
+	set .@cordy,189;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+umb:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Carpenter's Shop in the Tree",umb1,
+    "^5533ff [>] ^000000 Passage to a Foreign World",umb2;
+	
+umb1:
+	set .@map$,"um_dun01";
+	set .@cordx,42;
+	set .@cordy,31;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+umb2:
+	set .@map$,"um_dun02";
+	set .@cordx,48;
+	set .@cordy,30;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+dimensional:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Sograt Deserts Dimensional Rift 1",dime1,
+    "^5533ff [>] ^000000 Sograt Deserts Dimensional Rift 2",dime2;
+	
+dime1:
+	set .@map$,"moc_fild20";
+	set .@cordx,54;
+	set .@cordy,175;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+dime2:
+	set .@map$,"moc_fild21";
+	set .@cordx,31;
+	set .@cordy,195;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+ash_v:
+mes "[^5533ffWarper^000000]";
+mes "Selecciona un Nivel.";
+next;
+menu 	"^5533ff [>] ^000000 Manuk Field 01",manf1,
+    "^5533ff [>] ^000000 Manuk Field 02",manf2,
+	"^5533ff [>] ^000000 Splendide Field 01",splf1,
+	"^5533ff [>] ^000000 Splendide Field 02",splf2,
+	"^5533ff [>] ^000000 Splendide Field 03",splf3,
+	"^5533ff [>] ^000000 Discates Field 01",dicf1,
+	"^5533ff [>] ^000000 Discates Field 01",dicf2;
+	
+manf1:
+	set .@map$,"man_fild01";
+	set .@cordx,34;
+	set .@cordy,240;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+manf2:
+	set .@map$,"man_fild02";
+	set .@cordx,47;
+	set .@cordy,263;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+splf1:
+	set .@map$,"spl_fild01";
+	set .@cordx,289;
+	set .@cordy,39;
+	set .@zeny,5000;
+	goto L_EXECUTE;
+
+splf2:
+	set .@map$,"spl_fild02";
+	set .@cordx,367;
+	set .@cordy,216;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+splf3:
+	set .@map$,"spl_fild03";
+	set .@cordx,85;
+	set .@cordy,363;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+
+dicf1:
+	set .@map$,"dic_fild01";
+	set .@cordx,146;
+	set .@cordy,274;
+	set .@zeny,5000;
+	goto L_EXECUTE;	
+	
+dicf2:
+	set .@map$,"dic_fild02";
+	set .@cordx,71;
+	set .@cordy,363;
+	set .@zeny,5000;
+	goto L_EXECUTE;		
+
+//= Other
+//============================================================		
+OTHER_lastwarp:
+	// Check if Warper ever used
+	if (lastmap$ == "" || !lastcordx || !lastcordy) {
+		set lastmap$,"prontera";
+		set lastcordx,156;
+		set lastcordy,180;
+		set lastzeny,0;
+	}
+	set .@map$,lastmap$;
+	set .@cordx,lastcordx;
+	set .@cordy,lastcordy;
+	set .@zeny,lastzeny;
+	goto L_EXECUTE;
+			
+OTHER_market:
+	set .@map$,"market";
+	set .@cordx,100;
+	set .@cordy,111;
+	set .@zeny,0;
+	goto L_EXECUTE;
+	
+OTHER_savepoint:
+	set .@map$,getsavepoint(0);
+	set .@cordx,getsavepoint(1);
+	set .@cordy,getsavepoint(2);
+	set .@zeny,1000;
+	goto L_EXECUTE;
+}
+
+//= Duplicates
+//============================================================
+prontera,160,187,4	duplicate(Warp Agent)	Warper#0	640
+alberta,29,240,5	duplicate(Warp Agent)	Warper#1	640
+aldebaran,134,119,6	duplicate(Warp Agent)	Warper#2	640
+amatsu,102,152,4	duplicate(Warp Agent)	Warper#3	640
+ayothaya,212,174,4	duplicate(Warp Agent)	Warper#4	640
+comodo,194,157,4	duplicate(Warp Agent)	Warper#5	640
+geffen,124,70,4	duplicate(Warp Agent)	Warper#6	640
+gonryun,153,116,3	duplicate(Warp Agent)	Warper#7	640
+izlude,134,90,6	duplicate(Warp Agent)	Warper#8	640
+yuno,144,189,6	duplicate(Warp Agent)	Warper#9	640
+louyang,207,104,6	duplicate(Warp Agent)	Warper#10	640
+xmas,152,136,4	duplicate(Warp Agent)	Warper#11	640
+morocc,161,97,4	duplicate(Warp Agent)	Warper#12	640
+payon,97,122,6	duplicate(Warp Agent)	Warper#13	640
+umbala,82,161,4	duplicate(Warp Agent)	Warper#14	640
+lighthalzen,168,90,4	duplicate(Warp Agent)	Warper#15	640
+hugel,97,168,4	duplicate(Warp Agent)	Warper#16	640
+rachel,119,146,4	duplicate(Warp Agent)	Warper#17	640
+veins,214,125,4	duplicate(Warp Agent)	Warper#18	640
+einbroch,233,205,4	duplicate(Warp Agent)	Warper#19	640
+niflheim,188,191,4	duplicate(Warp Agent)	Warper#20	640
+moscovia,211,190,4	duplicate(Warp Agent)	Warper#21	640
+brasilis,191,221,4	duplicate(Warp Agent)	Warper#22	640
+einbech,166,124,4	duplicate(Warp Agent)	Warper#23	640
+
+//============================================================
